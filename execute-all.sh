@@ -4,18 +4,22 @@
 # mv reference/* .
 # mv hlaforest/scripts/* .
 
-# Create a file with all the fastq files
+# Create a file with all the fastq files:
 # ls TESTDATA/* > SAMPLES
 
-# Then run ./execute-all.sh
-
-starttime=`date +%s`
-
+# Configure this:
 celltype="IGH_HUMAN"
 mids="MIDS-miseq.txt"
 refs="IGHV_human.fasta IGHJ_human.fasta"
 v="IGHV_human"
 j="IGHJ_human"
+
+# Then run ./execute-all.sh
+
+
+#######################
+
+starttime=`date +%s`
 
 samples=`cat SAMPLES`  # get all arguments
 r1_samples=`grep R1_001 SAMPLES`
