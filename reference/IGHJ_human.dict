@@ -1,0 +1,17 @@
+@HD	VN:1.4	SO:unsorted
+@SQ	SN:J00256|IGHJ1*01|Homo	LN:52	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:a39221e2fddeac3800faf04c538d2b79
+@SQ	SN:J00256|IGHJ1P*01|Homo	LN:54	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:d84b43eb4ec9083c47b4496dd590d9d1
+@SQ	SN:J00256|IGHJ2*01|Homo	LN:53	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:f069115fa7fcaa89caee9dbfb7ec05a1
+@SQ	SN:J00256|IGHJ2P*01|Homo	LN:61	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:5d06fe4da4e69731a7c05001a94a912c
+@SQ	SN:J00256|IGHJ3*01|Homo	LN:50	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:cf91074ccb0b2e9d33ac24f1d173a631
+@SQ	SN:X86355|IGHJ3*02|Homo	LN:50	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:d86339362b238dcf3f95eb57561e262d
+@SQ	SN:J00256|IGHJ3P*01|Homo	LN:52	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:129c9655b0e3c50262ea7405238d8cad
+@SQ	SN:J00256|IGHJ4*01|Homo	LN:48	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:d11630a437d9e9e4d88ffcb1de97e0e2
+@SQ	SN:X86355|IGHJ4*02|Homo	LN:48	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:d985140eff73105356c4b944733d73aa
+@SQ	SN:M25625|IGHJ4*03|Homo	LN:48	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:10c8e7127f88190c8d44d6b1bf60ae94
+@SQ	SN:J00256|IGHJ5*01|Homo	LN:51	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:fe2b0a26190b4e42276453c5e2337338
+@SQ	SN:X86355|IGHJ5*02|Homo	LN:51	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:9fe3416db7ce3b6f6370963abdc76de2
+@SQ	SN:J00256|IGHJ6*01|Homo	LN:63	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:85a949cc5aebc09fcfe9cb891a617c18
+@SQ	SN:X86355|IGHJ6*02|Homo	LN:62	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:657c5c42f4c6d14b2027c309f0dbe341
+@SQ	SN:X86356|IGHJ6*03|Homo	LN:62	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:6aa5bb74b97502547e3e2e054e588e45
+@SQ	SN:AJ879487|IGHJ6*04|Homo	LN:63	UR:file:/home/barbera/git/hla-pipeline/IGHJ_human.fasta	M5:938b49ee574100c78a0df2bfb0b0d870

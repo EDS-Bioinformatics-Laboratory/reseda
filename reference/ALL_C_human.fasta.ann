@@ -1,0 +1,751 @@
+73582 375 11
+0 J00220|IGHA1*01|Homo sapiens|F|CH1|g,142..446|306 nt|1|+1|-1| | |306+0=306| | |
+0 306 0
+0 J00220|IGHA1*01|Homo sapiens|F|H-CH2|g,662..1020|360 nt|1|+1|-1| | |360+0=360| | |
+306 360 0
+0 J00220|IGHA1*01|Homo sapiens|F|CH3-CHS|g,1244..1635|393 nt|1|+1| | | |393+0=393| | |
+666 393 0
+0 M60193|IGHA1*01|Homo sapiens|F|M|g,226..437|213 nt|1|+1| | | |213+0=213| | |
+1059 213 0
+0 AL928768|IGHA1*02|Homo sapiens|F|H-CH2|g,13..371|360 nt|1|+1|-1| | |360+0=360| | |
+1272 360 0
+0 AL928768|IGHA1*02|Homo sapiens|F|CH3-CHS|g,595..986|393 nt|1|+1| | | |393+0=393| | |
+1632 393 0
+0 AL928768|IGHA1*02|Homo sapiens|F|M|g,3555..3766|213 nt|1|+1| | | |213+0=213| | |
+2025 213 0
+0 J00221|IGHA2*01|Homo sapiens|F|CH1|g,164..468|306 nt|1|+1|-1| | |306+0=306| | |
+2238 306 0
+0 J00221|IGHA2*01|Homo sapiens|F|H-CH2|g,684..1003|321 nt|1|+1|-1| | |321+0=321| | |
+2544 321 0
+0 J00221|IGHA2*01|Homo sapiens|F|CH3-CHS|g,1227..1618|393 nt|1|+1| | | |393+0=393| | |
+2865 393 0
+0 M60192|IGHA2*02|Homo sapiens_TOUII-5|F|CH1|g,17..321|306 nt|1|+1|-1| | |306+0=306| | |
+3258 306 0
+0 AJ012264|IGHA2*02|Homo sapiens_individual Tunisian|F|H-CH2|1..267|267 nt|1| |-1| | |267+0=267|partial in 5'| |
+3564 267 0
+0 M60192|IGHA2*02|Homo sapiens_TOUII-5|F|H-CH2|g,537..665|130 nt|1|+1| | | |130+0=130|partial in 3'| |
+3831 130 0
+0 AJ012264|IGHA2*02|Homo sapiens_individual Tunisian|F|CH3-CHS|g,491..882|393 nt|1|+1| | | |393+0=393| | |
+3961 393 0
+0 M60194|IGHA2*02|Homo sapiens_TOUII-5|F|M|g,233..444|213 nt|1|+1| | | |213+0=213| | |
+4354 213 0
+0 S71043|IGHA2*03|Homo sapiens|F|CH1|g,107..411|306 nt|1|+1|-1| | |306+0=306| | |
+4567 306 0
+0 S71043|IGHA2*03|Homo sapiens|F|H-CH2|g,627..946|321 nt|1|+1|-1| | |321+0=321| | |
+4873 321 0
+0 S71043|IGHA2*03|Homo sapiens|F|CH3-CHS|g,1170..1561|393 nt|1|+1| | | |393+0=393| | |
+5194 393 0
+0 K02875|IGHD*01|Homo sapiens_Chronic lymphotic leukemia (CLL)  patient|F|CH1|g,101..402|303 nt|1|+1|-1| | |303+0=303| | |
+5587 303 0
+0 K02876|IGHD*01|Homo sapiens_Chronic lymphotic leukemia (CLL)  patient|F|H1|g,101..202|103 nt|1|+1| | | |103+0=103| | |
+5890 103 0
+0 K02879|IGHD*01|Homo sapiens_Chronic lymphotic leukemia (CLL)  patient|F|CH3|g,101..423|324 nt|1|+1|-1| | |324+0=324| | |
+5993 324 0
+0 K02877|IGHD*01|Homo sapiens_Chronic lymphotic leukemia (CLL)  patient|F|H2|g,101..172|73 nt|1|+1| | | |73+0=73| | |
+6317 73 0
+0 K02878|IGHD*01|Homo sapiens_Chronic lymphotic leukemia (CLL)  patient|F|CH2|g,101..423|324 nt|1|+1|-1| | |324+0=324| | |
+6390 324 0
+0 K02880|IGHD*01|Homo sapiens_Chronic lymphotic leukemia (CLL)  patient|F|CHS|t,25..50|27 nt|1|+1| | | |27+0=27| | |
+6714 27 0
+0 K02881|IGHD*01|Homo sapiens_Chronic lymphotic leukemia (CLL)  patient|F|M1|t,25..182|159 nt|1|+1| | | |159+0=159| | |
+6741 159 0
+0 K02882|IGHD*01|Homo sapiens_Chronic lymphotic leukemia (CLL)  patient|F|M2|44..49|6 nt|1| | | | |6+0=6| | |
+6900 6 0
+0 X57331|IGHD*02|Homo sapiens|F|CH1|g,10747..11048|303 nt|1|+1|-1| | |303+0=303| | |
+6906 303 0
+0 X57331|IGHD*02|Homo sapiens|F|H1|g,11498..11598|102 nt|1|+1|-1| | |102+0=102| | |
+7209 102 0
+0 X57331|IGHD*02|Homo sapiens|F|H2|g,14387..14457|72 nt|1|+1|-1| | |72+0=72| | |
+7311 72 0
+0 X57331|IGHD*02|Homo sapiens|F|CH2|g,15194..15516|324 nt|1|+1|-1| | |324+0=324| | |
+7383 324 0
+0 X57331|IGHD*02|Homo sapiens|F|CH3|g,15727..16049|324 nt|1|+1|-1| | |324+0=324| | |
+7707 324 0
+0 X57331|IGHD*02|Homo sapiens|F|CHS|t,17988..18013|27 nt|1|+1| | | |27+0=27| | |
+8031 27 0
+0 X57331|IGHD*02|Homo sapiens|F|M1|t,18813..18970|159 nt|1|+1| | | |159+0=159| | |
+8058 159 0
+0 X57331|IGHD*02|Homo sapiens|F|M2|19254..19259|6 nt|1| | | | |6+0=6| | |
+8217 6 0
+0 J00222|IGHE*01|Homo sapiens|F|CH1|g,1210..1517|309 nt|1|+1|-1| | |309+0=309| | |
+8223 309 0
+0 J00222|IGHE*01|Homo sapiens|F|CH2|g,1726..2045|321 nt|1|+1|-1| | |321+0=321| | |
+8532 321 0
+0 J00222|IGHE*01|Homo sapiens|F|CH3|g,2133..2455|324 nt|1|+1|-1| | |324+0=324| | |
+8853 324 0
+0 J00222|IGHE*01|Homo sapiens|F|CH4-CHS|g,2540..2868|330 nt|1|+1| | | |330+0=330| | |
+9177 330 0
+0 X63693|IGHE*01|Homo sapiens|F|M1|g,183..304|123 nt|1|+1| | | |123+0=123| | |
+9507 123 0
+0 X63693|IGHE*01|Homo sapiens|F|M2|389..469|81 nt|1| | | | |81+0=81| | |
+9630 81 0
+0 L00022|IGHE*02|Homo sapiens|F|CH1|g,98..405|309 nt|1|+1|-1| | |309+0=309| | |
+9711 309 0
+0 L00022|IGHE*02|Homo sapiens|F|CH2|g,614..933|321 nt|1|+1|-1| | |321+0=321| | |
+10020 321 0
+0 L00022|IGHE*02|Homo sapiens|F|CH3|g,1021..1343|324 nt|1|+1|-1| | |324+0=324| | |
+10341 324 0
+0 L00022|IGHE*02|Homo sapiens|F|CH4-CHS|g,1428..1756|330 nt|1|+1| | | |330+0=330| | |
+10665 330 0
+0 M55420|IGHE*03|Homo sapiens|F|M1|g,400..521|123 nt|1|+1| | | |123+0=123| | |
+10995 123 0
+0 M55420|IGHE*03|Homo sapiens|F|M2|604..684|81 nt|1| | | | |81+0=81| | |
+11118 81 0
+0 AL928742|IGHE*04|Homo sapiens|F|CH1|g,55975..56282|309 nt|1|+1|-1| | |309+0=309| | |
+11199 309 0
+0 AL928742|IGHE*04|Homo sapiens|F|CH2|g,56491..56810|321 nt|1|+1|-1| | |321+0=321| | |
+11508 321 0
+0 AL928742|IGHE*04|Homo sapiens|F|CH3|g,56898..57220|324 nt|1|+1|-1| | |324+0=324| | |
+11829 324 0
+0 AL928742|IGHE*04|Homo sapiens|F|CH4-CHS|g,57305..57633|330 nt|1|+1| | | |330+0=330| | |
+12153 330 0
+0 AL928742|IGHE*04|Homo sapiens|F|M1|g,59722..59843|123 nt|1|+1| | | |123+0=123| | |
+12483 123 0
+0 AL928742|IGHE*04|Homo sapiens|F|M2|59928..60008|81 nt|1| | | | |81+0=81| | |
+12606 81 0
+0 J00228|IGHG1*01|Homo sapiens|F|CH1|g,210..502|294 nt|1|+1|-1| | |294+0=294| | |
+12687 294 0
+0 J00228|IGHG1*01|Homo sapiens|F|H|g,892..935|45 nt|1|+1|-1| | |45+0=45| | |
+12981 45 0
+0 J00228|IGHG1*01|Homo sapiens|F|CH3-CHS|g,1481..1800|321 nt|1|+1| | | |321+0=321| | |
+13026 321 0
+0 J00228|IGHG1*01|Homo sapiens|F|CH2|g,1055..1383|330 nt|1|+1|-1| | |330+0=330| | |
+13347 330 0
+0 X52847|IGHG1*01|Homo sapiens|F|M1|g,1..132|133 nt|1|+1| | | |133+0=133| | |
+13677 133 0
+0 X52847|IGHG1*01|Homo sapiens|F|M2|133..213|81 nt|1| | | | |81+0=81| | |
+13810 81 0
+0 Z17370|IGHG1*02|Homo sapiens|F|CH1|g,212..504|294 nt|1|+1|-1| | |294+0=294| | |
+13891 294 0
+0 Z17370|IGHG1*02|Homo sapiens|F|H|g,897..940|45 nt|1|+1|-1| | |45+0=45| | |
+14185 45 0
+0 Z17370|IGHG1*02|Homo sapiens|F|CH3-CHS|g,1487..1806|321 nt|1|+1| | | |321+0=321| | |
+14230 321 0
+0 Z17370|IGHG1*02|Homo sapiens|F|CH2|g,1060..1388|330 nt|1|+1|-1| | |330+0=330| | |
+14551 330 0
+0 Y14737|IGHG1*03|Homo sapiens|(F)|CH1|507..800|294 nt|1| | | | |294+0=294| | |
+14881 294 0
+0 Y14737|IGHG1*03|Homo sapiens|(F)|H|801..845|45 nt|1| | | | |45+0=45| | |
+15175 45 0
+0 Y14737|IGHG1*03|Homo sapiens|(F)|CH2|846..1175|330 nt|1| | | | |330+0=330| | |
+15220 330 0
+0 Y14737|IGHG1*03|Homo sapiens|(F)|CH3-CHS|1176..1496|321 nt|1| | | | |321+0=321| | |
+15550 321 0
+0 JN582178|IGHG1*04|Homo sapiens|(F)|CH1|11..304|294 nt|1| | | | |294+0=294| | |
+15871 294 0
+0 JN582178|IGHG1*04|Homo sapiens|(F)|H|305..349|45 nt|1| | | | |45+0=45| | |
+16165 45 0
+0 JN582178|IGHG1*04|Homo sapiens|(F)|CH2|350..679|330 nt|1| | | | |330+0=330| | |
+16210 330 0
+0 JN582178|IGHG1*04|Homo sapiens|(F)|CH3-CHS|680..1000|321 nt|1| | | | |321+0=321| | |
+16540 321 0
+0 AL122127|IGHG1*05|Homo sapiens|F|CH1|g,12811..13103|294 nt|1|+1|-1| | |294+0=294| |rev-compl|
+16861 294 0
+0 AL122127|IGHG1*05|Homo sapiens|F|H|g,12375..12418|45 nt|1|+1|-1| | |45+0=45| |rev-compl|
+17155 45 0
+0 AL122127|IGHG1*05|Homo sapiens|F|CH2|g,11927..12255|330 nt|1|+1|-1| | |330+0=330| |rev-compl|
+17200 330 0
+0 AL122127|IGHG1*05|Homo sapiens|F|CH3-CHS|g,11510..11829|321 nt|1|+1| | | |321+0=321| |rev-compl|
+17530 321 0
+0 AL122127|IGHG1*05|Homo sapiens|F|M1|g,10097..10227|132 nt|1|+1| | | |132+0=132| |rev-compl|
+17851 132 0
+0 AL122127|IGHG1*05|Homo sapiens|F|M2|7799..7879|81 nt|1| | | | |81+0=81| |rev-compl|
+17983 81 0
+0 J00230|IGHG2*01|Homo sapiens|F|CH1|g,216..508|294 nt|1|+1|-1| | |294+0=294| | |
+18064 294 0
+0 J00230|IGHG2*01|Homo sapiens|F|H|g,902..936|36 nt|1|+1|-1| | |36+0=36| | |
+18358 36 0
+0 J00230|IGHG2*01|Homo sapiens|F|CH2|g,1056..1381|327 nt|1|+1|-1| | |327+0=327| | |
+18394 327 0
+0 J00230|IGHG2*01|Homo sapiens|F|CH3-CHS|g,1480..1799|321 nt|1|+1| | | |321+0=321| | |
+18721 321 0
+0 AB006775|IGHG2*01|Homo sapiens|F|M1|g,23..153|132 nt|1|+1| | | |132+0=132| | |
+19042 132 0
+0 AB006776|IGHG2*01|Homo sapiens|F|M2|290..370|81 nt|1| | | | |81+0=81| | |
+19174 81 0
+0 AJ250170|IGHG2*02|Homo sapiens|F|CH1|g,217..509|294 nt|1|+1|-1| | |294+0=294| | |
+19255 294 0
+0 AJ250170|IGHG2*02|Homo sapiens|F|H|g,903..937|36 nt|1|+1|-1| | |36+0=36| | |
+19549 36 0
+0 AJ250170|IGHG2*02|Homo sapiens|F|CH2|g,1057..1382|327 nt|1|+1|-1| | |327+0=327| | |
+19585 327 0
+0 AJ250170|IGHG2*02|Homo sapiens|F|CH3-CHS|g,1481..1800|321 nt|1|+1| | | |321+0=321| | |
+19912 321 0
+0 AF449616|IGHG2*03|Homo sapiens|F|CH1|g,217..509|294 nt|1|+1|-1| | |294+0=294| | |
+20233 294 0
+0 AF449616|IGHG2*03|Homo sapiens|F|H|g,903..937|36 nt|1|+1|-1| | |36+0=36| | |
+20527 36 0
+0 AF449616|IGHG2*03|Homo sapiens|F|CH2|g,1057..1382|327 nt|1|+1|-1| | |327+0=327| | |
+20563 327 0
+0 AF449616|IGHG2*03|Homo sapiens|F|CH3-CHS|g,1481..1800|321 nt|1|+1| | | |321+0=321| | |
+20890 321 0
+0 AF449617|IGHG2*04|Homo sapiens|F|CH1|g,217..509|294 nt|1|+1|-1| | |294+0=294| | |
+21211 294 0
+0 AF449617|IGHG2*04|Homo sapiens|F|H|g,903..937|36 nt|1|+1|-1| | |36+0=36| | |
+21505 36 0
+0 AF449617|IGHG2*04|Homo sapiens|F|CH2|g,1057..1382|327 nt|1|+1|-1| | |327+0=327| | |
+21541 327 0
+0 AF449617|IGHG2*04|Homo sapiens|F|CH3-CHS|g,1481..1800|321 nt|1|+1| | | |321+0=321| | |
+21868 321 0
+0 AF449618|IGHG2*05|Homo sapiens|F|CH1|g,217..509|294 nt|1|+1|-1| | |294+0=294| | |
+22189 294 0
+0 AF449618|IGHG2*05|Homo sapiens|F|H|g,903..937|36 nt|1|+1|-1| | |36+0=36| | |
+22483 36 0
+0 AF449618|IGHG2*05|Homo sapiens|F|CH2|g,1057..1382|327 nt|1|+1|-1| | |327+0=327| | |
+22519 327 0
+0 AF449618|IGHG2*05|Homo sapiens|F|CH3-CHS|g,1481..1800|321 nt|1|+1| | | |321+0=321| | |
+22846 321 0
+0 AL928742|IGHG2*06|Homo sapiens|F|CH1|g,12913..13205|294 nt|1|+1|-1| | |294+0=294| | |
+23167 294 0
+0 AL928742|IGHG2*06|Homo sapiens|F|H|g,13599..13633|36 nt|1|+1|-1| | |36+0=36| | |
+23461 36 0
+0 AL928742|IGHG2*06|Homo sapiens|F|CH3-CHS|g,14177..14496|321 nt|1|+1| | | |321+0=321| | |
+23497 321 0
+0 AL928742|IGHG2*06|Homo sapiens|F|CH2|g,13753..14078|327 nt|1|+1|-1| | |327+0=327| | |
+23818 327 0
+0 AL928742|IGHG2*06|Homo sapiens|F|M1|g,15793..15923|132 nt|1|+1| | | |132+0=132| | |
+24145 132 0
+0 AL928742|IGHG2*06|Homo sapiens|F|M2|16654..16734|81 nt|1| | | | |81+0=81| | |
+24277 81 0
+0 X03604|IGHG3*01|Homo sapiens|F|CH1|g,216..508|294 nt|1|+1|-1| | |294+0=294| | |
+24358 294 0
+0 X03604|IGHG3*01|Homo sapiens|F|H1|g,901..950|51 nt|1|+1|-1| | |51+0=51| | |
+24652 51 0
+0 X03604|IGHG3*01|Homo sapiens|F|H2|g,1095..1138|45 nt|1|+1|-1| | |45+0=45| | |
+24703 45 0
+0 X03604|IGHG3*01|Homo sapiens|F|H3|g,1283..1326|45 nt|1|+1|-1| | |45+0=45| | |
+24748 45 0
+0 X03604|IGHG3*01|Homo sapiens|F|H4|g,1471..1514|45 nt|1|+1|-1| | |45+0=45| | |
+24793 45 0
+0 X03604|IGHG3*01|Homo sapiens|F|CH2|g,1634..1962|330 nt|1|+1|-1| | |330+0=330| | |
+24838 330 0
+0 X03604|IGHG3*01|Homo sapiens|F|CH3-CHS|g,2061..2380|321 nt|1|+1| | | |321+0=321| | |
+25168 321 0
+0 D78345|IGHG3*01|Homo sapiens|F|M1|g,11762..11892|132 nt|1|+1| || |132+0=132| | |
+25489 132 0
+0 D78345|IGHG3*01|Homo sapiens|F|M2|13706..13786|81 nt|1| | | | |81+0=81| | |
+25621 81 0
+0 K01313|IGHG3*02|Homo sapiens|F|CH1|1..34|34 nt|1| |-1| | |34+0=34|partial in 5'| |
+25702 34 0
+0 K01313|IGHG3*02|Homo sapiens|F|H1|g,426..475|51 nt|1|+1|-1| | |51+0=51| | |
+25736 51 0
+0 K01313|IGHG3*02|Homo sapiens|F|H2|g,620..663|45 nt|1|+1|-1| | |45+0=45| | |
+25787 45 0
+0 K01313|IGHG3*02|Homo sapiens|F|H3|g,808..851|45 nt|1|+1|-1| | |45+0=45| | |
+25832 45 0
+0 K01313|IGHG3*02|Homo sapiens|F|H4|g,996..1039|45 nt|1|+1|-1| | |45+0=45| | |
+25877 45 0
+0 K01313|IGHG3*02|Homo sapiens|F|CH2|g,1159..1208|51 nt|1|+1| | | |51+0=51|partial in 3'| |
+25922 51 0
+0 K01314|IGHG3*02|Homo sapiens|F|CH3|1..35|35 nt|3| | || |35+0=35|partial in 5' and in 3' | |
+25973 35 0
+0 X16110|IGHG3*03|Homo sapiens_LAT|F|CH1|g,216..508|294 nt|1|+1|-1| | |294+0=294| | |
+26008 294 0
+0 X16110|IGHG3*03|Homo sapiens_LAT|F|H1|g,902..951|51 nt|1|+1|-1| | |51+0=51| | |
+26302 51 0
+0 X16110|IGHG3*03|Homo sapiens_LAT|F|CH3-CHS|g,1874..2193|321 nt|1|+1| | | |321+0=321| | |
+26353 321 0
+0 X16110|IGHG3*03|Homo sapiens_LAT|F|H3|g,1096..1139|45 nt|1|+1|-1| | |45+0=45| | |
+26674 45 0
+0 X16110|IGHG3*03|Homo sapiens_LAT|F|H4|g,1284..1327|45 nt|1|+1|-1| | |45+0=45| | |
+26719 45 0
+0 X16110|IGHG3*03|Homo sapiens_LAT|F|CH2|g,1447..1775|330 nt|1|+1|-1| | |330+0=330| | |
+26764 330 0
+0 M60195|IGHG3*03|Homo sapiens_LAT|F|M1|g,285..415|132 nt|1|+1| | | |132+0=132| | |
+27094 132 0
+0 M60196|IGHG3*03|Homo sapiens_LAT|F|M2|385..465|81 nt|1| | | | |81+0=81| | |
+27226 81 0
+0 X99549|IGHG3*04|Homo sapiens_Mandenka individual (eastern Senegal)|F|CH1|g,7..299|294 nt|1|+1|-1| | |294+0=294| | |
+27307 294 0
+0 X99549|IGHG3*04|Homo sapiens_Mandenka individual (eastern Senegal)|F|H1|g,693..742|51 nt|1|+1|-1| | |51+0=51| | |
+27601 51 0
+0 X99549|IGHG3*04|Homo sapiens_Mandenka individual (eastern Senegal)|F|CH3-CHS|g,1477..1796|321 nt|1|+1| | | |321+0=321| | |
+27652 321 0
+0 X99549|IGHG3*04|Homo sapiens_Mandenka individual (eastern Senegal)|F|H4|g,887..930|45 nt|1|+1|-1| | |45+0=45| | |
+27973 45 0
+0 X99549|IGHG3*04|Homo sapiens_Mandenka individual (eastern Senegal)|F|CH2|g,1050..1378|330 nt|1|+1|-1| | |330+0=330| | |
+28018 330 0
+0 AJ390236|IGHG3*05|Homo sapiens_Mandenka individual (Mand-205)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+28348 294 0
+0 AJ390236|IGHG3*05|Homo sapiens_Mandenka individual (Mand-205)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+28642 51 0
+0 AJ390236|IGHG3*05|Homo sapiens_Mandenka individual (Mand-205)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+28693 45 0
+0 AJ390236|IGHG3*05|Homo sapiens_Mandenka individual (Mand-205)|F|CH3-CHS|g,1872..2191|321 nt|1|+1| | | |321+0=321| | |
+28738 321 0
+0 AJ390236|IGHG3*05|Homo sapiens_Mandenka individual (Mand-205)|F|H3|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+29059 45 0
+0 AJ390236|IGHG3*05|Homo sapiens_Mandenka individual (Mand-205)|F|H4|g,1282..1325|45 nt|1|+1|-1| | |45+0=45| | |
+29104 45 0
+0 AJ390236|IGHG3*05|Homo sapiens_Mandenka individual (Mand-205)|F|CH2|g,1445..1773|330 nt|1|+1|-1| | |330+0=330| | |
+29149 330 0
+0 AJ390237|IGHG3*06|Homo sapiens_Mandenka individual (Mand-108)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+29479 294 0
+0 AJ390237|IGHG3*06|Homo sapiens_Mandenka individual (Mand-108)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+29773 51 0
+0 AJ390237|IGHG3*06|Homo sapiens_Mandenka individual (Mand-108)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+29824 45 0
+0 AJ390237|IGHG3*06|Homo sapiens_Mandenka individual (Mand-108)|F|CH3-CHS|g,1872..2191|321 nt|1|+1| | | |321+0=321| | |
+29869 321 0
+0 AJ390237|IGHG3*06|Homo sapiens_Mandenka individual (Mand-108)|F|H3|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+30190 45 0
+0 AJ390237|IGHG3*06|Homo sapiens_Mandenka individual (Mand-108)|F|H4|g,1282..1325|45 nt|1|+1|-1| | |45+0=45| | |
+30235 45 0
+0 AJ390237|IGHG3*06|Homo sapiens_Mandenka individual (Mand-108)|F|CH2|g,1445..1773|330 nt|1|+1|-1| | |330+0=330| | |
+30280 330 0
+0 AJ390238|IGHG3*07|Homo sapiens_Mandenka individual (Mand-548)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+30610 294 0
+0 AJ390238|IGHG3*07|Homo sapiens_Mandenka individual (Mand-548)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+30904 51 0
+0 AJ390238|IGHG3*07|Homo sapiens_Mandenka individual (Mand-548)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+30955 45 0
+0 AJ390238|IGHG3*07|Homo sapiens_Mandenka individual (Mand-548)|F|CH3-CHS|g,1872..2191|321 nt|1|+1| | | |321+0=321| | |
+31000 321 0
+0 AJ390238|IGHG3*07|Homo sapiens_Mandenka individual (Mand-548)|F|H3|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+31321 45 0
+0 AJ390238|IGHG3*07|Homo sapiens_Mandenka individual (Mand-548)|F|H4|g,1282..1325|45 nt|1|+1|-1| | |45+0=45| | |
+31366 45 0
+0 AJ390238|IGHG3*07|Homo sapiens_Mandenka individual (Mand-548)|F|CH2|g,1445..1773|330 nt|1|+1|-1| | |330+0=330| | |
+31411 330 0
+0 AJ390241|IGHG3*08|Homo sapiens_Mandenka individual (Mand-114)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+31741 294 0
+0 AJ390241|IGHG3*08|Homo sapiens_Mandenka individual (Mand-114)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+32035 51 0
+0 AJ390241|IGHG3*08|Homo sapiens_Mandenka individual (Mand-114)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+32086 45 0
+0 AJ390241|IGHG3*08|Homo sapiens_Mandenka individual (Mand-114)|F|CH3-CHS|g,1872..2191|321 nt|1|+1| | | |321+0=321| | |
+32131 321 0
+0 AJ390241|IGHG3*08|Homo sapiens_Mandenka individual (Mand-114)|F|H3|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+32452 45 0
+0 AJ390241|IGHG3*08|Homo sapiens_Mandenka individual (Mand-114)|F|H4|g,1282..1325|45 nt|1|+1|-1| | |45+0=45| | |
+32497 45 0
+0 AJ390241|IGHG3*08|Homo sapiens_Mandenka individual (Mand-114)|F|CH2|g,1445..1773|330 nt|1|+1|-1| | |330+0=330| | |
+32542 330 0
+0 AJ390242|IGHG3*09|Homo sapiens_Mandenka individual (Mand-333)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+32872 294 0
+0 AJ390242|IGHG3*09|Homo sapiens_Mandenka individual (Mand-333)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+33166 51 0
+0 AJ390242|IGHG3*09|Homo sapiens_Mandenka individual (Mand-333)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+33217 45 0
+0 AJ390242|IGHG3*09|Homo sapiens_Mandenka individual (Mand-333)|F|CH3-CHS|g,1872..2191|321 nt|1|+1| | | |321+0=321| | |
+33262 321 0
+0 AJ390242|IGHG3*09|Homo sapiens_Mandenka individual (Mand-333)|F|H3|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+33583 45 0
+0 AJ390242|IGHG3*09|Homo sapiens_Mandenka individual (Mand-333)|F|H4|g,1282..1325|45 nt|1|+1|-1| | |45+0=45| | |
+33628 45 0
+0 AJ390242|IGHG3*09|Homo sapiens_Mandenka individual (Mand-333)|F|CH2|g,1445..1773|330 nt|1|+1|-1| | |330+0=330| | |
+33673 330 0
+0 AL122127|IGHG3*10|Homo sapiens|F|CH1|g,41146..41438|294 nt|1|+1|-1| | |294+0=294| |rev-compl|
+34003 294 0
+0 AL122127|IGHG3*10|Homo sapiens|F|H1|g,40703..40752|51 nt|1|+1|-1| | |51+0=51| |rev-compl|
+34297 51 0
+0 AL122127|IGHG3*10|Homo sapiens|F|H2|g,40515..40558|45 nt|1|+1|-1| | |45+0=45| |rev-compl|
+34348 45 0
+0 AL122127|IGHG3*10|Homo sapiens|F|H3|g,40327..40370|45 nt|1|+1|-1| | |45+0=45| |rev-compl|
+34393 45 0
+0 AL122127|IGHG3*10|Homo sapiens|F|H4|g,40139..40182|45 nt|1|+1|-1| | |45+0=45| |rev-compl|
+34438 45 0
+0 AL122127|IGHG3*10|Homo sapiens|F|CH2|g,39691..40019|330 nt|1|+1|-1| | |330+0=330| |rev-compl|
+34483 330 0
+0 AL122127|IGHG3*10|Homo sapiens|F|CH3-CHS|g,39274..39593|321 nt|1|+1| | | |321+0=321| |rev-compl|
+34813 321 0
+0 AL122127|IGHG3*10|Homo sapiens|F|M1|g,37847..37977|132 nt|1|+1| | | |132+0=132| |rev-compl|
+35134 132 0
+0 AL122127|IGHG3*10|Homo sapiens|F|M2|35951..36031|81 nt|1| | | | |81+0=81| |rev-compl|
+35266 81 0
+0 AJ390247|IGHG3*11|Homo sapiens_Lebanese individual (Lib-A2)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+35347 294 0
+0 AJ390247|IGHG3*11|Homo sapiens_Lebanese individual (Lib-A2)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+35641 51 0
+0 AJ390247|IGHG3*11|Homo sapiens_Lebanese individual (Lib-A2)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+35692 45 0
+0 AJ390247|IGHG3*11|Homo sapiens_Lebanese individual (Lib-A2)|F|CH3-CHS|g,1872..2191|321 nt|1|+1| | | |321+0=321| | |
+35737 321 0
+0 AJ390247|IGHG3*11|Homo sapiens_Lebanese individual (Lib-A2)|F|H3|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+36058 45 0
+0 AJ390247|IGHG3*11|Homo sapiens_Lebanese individual (Lib-A2)|F|H4|g,1282..1325|45 nt|1|+1|-1| | |45+0=45| | |
+36103 45 0
+0 AJ390247|IGHG3*11|Homo sapiens_Lebanese individual (Lib-A2)|F|CH2|g,1445..1773|330 nt|1|+1|-1| | |330+0=330| | |
+36148 330 0
+0 AJ390252|IGHG3*12|Homo sapiens_French individual (Fr-BL)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+36478 294 0
+0 AJ390252|IGHG3*12|Homo sapiens_French individual (Fr-BL)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+36772 51 0
+0 AJ390252|IGHG3*12|Homo sapiens_French individual (Fr-BL)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+36823 45 0
+0 AJ390252|IGHG3*12|Homo sapiens_French individual (Fr-BL)|F|CH3-CHS|g,1684..2003|321 nt|1|+1| | | |321+0=321| | |
+36868 321 0
+0 AJ390252|IGHG3*12|Homo sapiens_French individual (Fr-BL)|F|H4|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+37189 45 0
+0 AJ390252|IGHG3*12|Homo sapiens_French individual (Fr-BL)|F|CH2|g,1257..1585|330 nt|1|+1|-1| | |330+0=330| | |
+37234 330 0
+0 AJ390244|IGHG3*13|Homo sapiens_Mandenka individual (Mand-428)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+37564 294 0
+0 AJ390244|IGHG3*13|Homo sapiens_Mandenka individual (Mand-428)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+37858 51 0
+0 AJ390244|IGHG3*13|Homo sapiens_Mandenka individual (Mand-428)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+37909 45 0
+0 AJ390244|IGHG3*13|Homo sapiens_Mandenka individual (Mand-428)|F|CH3-CHS|g,1872..2191|321 nt|1|+1| | | |321+0=321| | |
+37954 321 0
+0 AJ390244|IGHG3*13|Homo sapiens_Mandenka individual (Mand-428)|F|H3|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+38275 45 0
+0 AJ390244|IGHG3*13|Homo sapiens_Mandenka individual (Mand-428)|F|H4|g,1282..1325|45 nt|1|+1|-1| | |45+0=45| | |
+38320 45 0
+0 AJ390244|IGHG3*13|Homo sapiens_Mandenka individual (Mand-428)|F|CH2|g,1445..1773|330 nt|1|+1|-1| | |330+0=330| | |
+38365 330 0
+0 AJ390254|IGHG3*14|Homo sapiens_Sel'Kup individual (Kp-25)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+38695 294 0
+0 AJ390254|IGHG3*14|Homo sapiens_Sel'Kup individual (Kp-25)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+38989 51 0
+0 AJ390254|IGHG3*14|Homo sapiens_Sel'Kup individual (Kp-25)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+39040 45 0
+0 AJ390254|IGHG3*14|Homo sapiens_Sel'Kup individual (Kp-25)|F|CH3-CHS|g,1872..2191|321 nt|1|+1| | | |321+0=321| | |
+39085 321 0
+0 AJ390254|IGHG3*14|Homo sapiens_Sel'Kup individual (Kp-25)|F|H3|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+39406 45 0
+0 AJ390254|IGHG3*14|Homo sapiens_Sel'Kup individual (Kp-25)|F|H4|g,1282..1325|45 nt|1|+1|-1| | |45+0=45| | |
+39451 45 0
+0 AJ390254|IGHG3*14|Homo sapiens_Sel'Kup individual (Kp-25)|F|CH2|g,1445..1773|330 nt|1|+1|-1| | |330+0=330| | |
+39496 330 0
+0 AJ390260|IGHG3*15|Homo sapiens_Sel'Kup individual (Kp-150)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+39826 294 0
+0 AJ390260|IGHG3*15|Homo sapiens_Sel'Kup individual (Kp-150)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+40120 51 0
+0 AJ390260|IGHG3*15|Homo sapiens_Sel'Kup individual (Kp-150)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+40171 45 0
+0 AJ390260|IGHG3*15|Homo sapiens_Sel'Kup individual (Kp-150)|F|CH3-CHS|g,1872..2191|321 nt|1|+1| | | |321+0=321| | |
+40216 321 0
+0 AJ390260|IGHG3*15|Homo sapiens_Sel'Kup individual (Kp-150)|F|H3|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+40537 45 0
+0 AJ390260|IGHG3*15|Homo sapiens_Sel'Kup individual (Kp-150)|F|H4|g,1282..1325|45 nt|1|+1|-1| | |45+0=45| | |
+40582 45 0
+0 AJ390260|IGHG3*15|Homo sapiens_Sel'Kup individual (Kp-150)|F|CH2|g,1445..1773|330 nt|1|+1|-1| | |330+0=330| | |
+40627 330 0
+0 AJ390262|IGHG3*16|Homo sapiens_Lebanese individual (LibF2)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+40957 294 0
+0 AJ390262|IGHG3*16|Homo sapiens_Lebanese individual (LibF2)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+41251 51 0
+0 AJ390262|IGHG3*16|Homo sapiens_Lebanese individual (LibF2)|F|H2|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+41302 45 0
+0 AJ390262|IGHG3*16|Homo sapiens_Lebanese individual (LibF2)|F|CH3-CHS|g,1872..2191|321 nt|1|+1| | | |321+0=321| | |
+41347 321 0
+0 AJ390262|IGHG3*16|Homo sapiens_Lebanese individual (LibF2)|F|H3|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+41668 45 0
+0 AJ390262|IGHG3*16|Homo sapiens_Lebanese individual (LibF2)|F|H4|g,1282..1325|45 nt|1|+1|-1| | |45+0=45| | |
+41713 45 0
+0 AJ390262|IGHG3*16|Homo sapiens_Lebanese individual (LibF2)|F|CH2|g,1445..1773|330 nt|1|+1|-1| | |330+0=330| | |
+41758 330 0
+0 AJ390272|IGHG3*17|Homo sapiens_Mandenka individual (Mand-231)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+42088 294 0
+0 AJ390272|IGHG3*17|Homo sapiens_Mandenka individual (Mand-231)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+42382 51 0
+0 AJ390272|IGHG3*17|Homo sapiens_Mandenka individual (Mand-231)|F|CH3-CHS|g,1684..2003|321 nt|1|+1| | | |321+0=321| | |
+42433 321 0
+0 AJ390272|IGHG3*17|Homo sapiens_Mandenka individual (Mand-231)|F|H3|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+42754 45 0
+0 AJ390272|IGHG3*17|Homo sapiens_Mandenka individual (Mand-231)|F|H4|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+42799 45 0
+0 AJ390272|IGHG3*17|Homo sapiens_Mandenka individual (Mand-231)|F|CH2|g,1257..1585|330 nt|1|+1|-1| | |330+0=330| | |
+42844 330 0
+0 AJ390276|IGHG3*18|Homo sapiens_Lebanese individual (Lib-C5)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+43174 294 0
+0 AJ390276|IGHG3*18|Homo sapiens_Lebanese individual (Lib-C5)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+43468 51 0
+0 AJ390276|IGHG3*18|Homo sapiens_Lebanese individual (Lib-C5)|F|CH3-CHS|g,1684..2003|321 nt|1|+1| | | |321+0=321| | |
+43519 321 0
+0 AJ390276|IGHG3*18|Homo sapiens_Lebanese individual (Lib-C5)|F|H3|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+43840 45 0
+0 AJ390276|IGHG3*18|Homo sapiens_Lebanese individual (Lib-C5)|F|H4|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+43885 45 0
+0 AJ390276|IGHG3*18|Homo sapiens_Lebanese individual (Lib-C5)|F|CH2|g,1257..1585|330 nt|1|+1|-1| | |330+0=330| | |
+43930 330 0
+0 AJ390279|IGHG3*19|Homo sapiens_Sel'Kup individual (Kp-60)|F|CH1|g,26..318|294 nt|1|+1|-1| | |294+0=294| | |
+44260 294 0
+0 AJ390279|IGHG3*19|Homo sapiens_Sel'Kup individual (Kp-60)|F|H1|g,712..761|51 nt|1|+1|-1| | |51+0=51| | |
+44554 51 0
+0 AJ390279|IGHG3*19|Homo sapiens_Sel'Kup individual (Kp-60)|F|CH3-CHS|g,1684..2003|321 nt|1|+1| | | |321+0=321| | |
+44605 321 0
+0 AJ390279|IGHG3*19|Homo sapiens_Sel'Kup individual (Kp-60)|F|H3|g,906..949|45 nt|1|+1|-1| | |45+0=45| | |
+44926 45 0
+0 AJ390279|IGHG3*19|Homo sapiens_Sel'Kup individual (Kp-60)|F|H4|g,1094..1137|45 nt|1|+1|-1| | |45+0=45| | |
+44971 45 0
+0 AJ390279|IGHG3*19|Homo sapiens_Sel'Kup individual (Kp-60)|F|CH2|g,1257..1585|330 nt|1|+1|-1| | |330+0=330| | |
+45016 330 0
+0 K01316|IGHG4*01|Homo sapiens|F|CH1|g,216..508|294 nt|1|+1|-1| | |294+0=294| | |
+45346 294 0
+0 K01316|IGHG4*01|Homo sapiens|F|H|g,900..934|36 nt|1|+1|-1| | |36+0=36| | |
+45640 36 0
+0 K01316|IGHG4*01|Homo sapiens|F|CH2|g,1054..1382|330 nt|1|+1|-1| | |330+0=330| | |
+45676 330 0
+0 K01316|IGHG4*01|Homo sapiens|F|CH3-CHS|g,1481..1800|321 nt|1|+1| | | |321+0=321| | |
+46006 321 0
+0 AJ001563|IGHG4*02|Homo sapiens|F|H|g,48..82|36 nt|1|+1|-1| | |36+0=36| | |
+46327 36 0
+0 AJ001563|IGHG4*02|Homo sapiens|F|CH2|g,202..530|330 nt|1|+1|-1| | |330+0=330| | |
+46363 330 0
+0 AJ001563|IGHG4*02|Homo sapiens|F|CH3-CHS|g,629..948|321 nt|1|+1| | | |321+0=321| | |
+46693 321 0
+0 AJ001564|IGHG4*03|Homo sapiens|F|CH2|g,2..330|330 nt|1|+1|-1| | |330+0=330| | |
+47014 330 0
+0 AJ001564|IGHG4*03|Homo sapiens|F|CH3-CHS|g,429..748|321 nt|1|+1| | | |321+0=321| | |
+47344 321 0
+0 AL928742|IGHG4*04|Homo sapiens|F|CH1|g,31637..31929|294 nt|1|+1|-1| | |294+0=294| | |
+47665 294 0
+0 AL928742|IGHG4*04|Homo sapiens|F|H|g,32323..32357|36 nt|1|+1|-1| | |36+0=36| | |
+47959 36 0
+0 AL928742|IGHG4*04|Homo sapiens|F|CH2|g,32477..32805|330 nt|1|+1|-1| | |330+0=330| | |
+47995 330 0
+0 AL928742|IGHG4*04|Homo sapiens|F|CH3-CHS|g,32904..33223|321 nt|1|+1| | | |321+0=321| | |
+48325 321 0
+0 AL928742|IGHG4*04|Homo sapiens|F|M1|g,34504..34634|132 nt|1|+1| | | |132+0=132| | |
+48646 132 0
+0 AL928742|IGHG4*04|Homo sapiens|F|M2|35707..35787|81 nt|1| | | | |81+0=81| | |
+48778 81 0
+0 X06766|IGHGP*01|Homo sapiens|ORF|CH1|g,195..487|294 nt|1|+1|-1| | |294+0=294| | |
+48859 294 0
+0 X06766|IGHGP*01|Homo sapiens|ORF|H|g,878..927|51 nt|1|+1|-1| | |51+0=51| | |
+49153 51 0
+0 X06766|IGHGP*01|Homo sapiens|ORF|CH2|a,1047..1375|330 nt|1|+1|-1| | |330+0=330| | |
+49204 330 0
+0 X06766|IGHGP*01|Homo sapiens|ORF|CH3-CHS|g,1474..1790|318 nt|1|+1| | | |318+0=318| | |
+49534 318 0
+0 X52849|IGHGP*01|Homo sapiens|ORF|M1|g,102..232|132 nt|1|+1| | | |132+0=132| | |
+49852 132 0
+0 X52848|IGHGP*01|Homo sapiens|ORF|M2|106..186|81 nt|1| | | | |81+0=81| | |
+49984 81 0
+0 AL928769|IGHGP*02|Homo sapiens|ORF|CH1|g,10682..10974|294 nt|1|+1|-1| | |294+0=294| | |
+50065 294 0
+0 AL928769|IGHGP*02|Homo sapiens|ORF|H|g,11365..11414|51 nt|1|+1|-1| | |51+0=51| | |
+50359 51 0
+0 AL928769|IGHGP*02|Homo sapiens|ORF|CH2|a,11534..11862|330 nt|1|+1|-1| | |330+0=330| | |
+50410 330 0
+0 AL928769|IGHGP*02|Homo sapiens|ORF|CH3-CHS|g,11961..12039|80 nt|1|+1| | | |80+0=80|partial in 3'| |
+50740 80 0
+0 X14940|IGHM*01|Homo sapiens|F|CH1|g,233..543|312 nt|1|+1|-1| | |312+0=312| | |
+50820 312 0
+0 X14940|IGHM*01|Homo sapiens|F|CH3|g,1212..1528|318 nt|1|+1|-1| | |318+0=318| | |
+51132 318 0
+0 X14940|IGHM*01|Homo sapiens|F|CH2|g,631..965|336 nt|1|+1|-1| | |336+0=336| | |
+51450 336 0
+0 X14940|IGHM*01|Homo sapiens|F|CH4-CHS|g,1708..2096|390 nt|1|+1| | | |390+0=390| | |
+51786 390 0
+0 X14939|IGHM*01|Homo sapiens|F|M1|g,490..605|117 nt|1|+1| | | |117+0=117| | |
+52176 117 0
+0 X14939|IGHM*01|Homo sapiens|F|M2|778..783|6 nt|1| | | | |6+0=6| | |
+52293 6 0
+0 K01307|IGHM*02|Homo sapiens|F|CH1|g,5..54|51 nt|1|+1| | | |51+0=51|partial in 3'| |
+52299 51 0
+0 K01309|IGHM*02|Homo sapiens|F|CH2|1..51|51 nt|1| |-1| | |51+0=51|partial in 5'| |
+52350 51 0
+0 K01308|IGHM*02|Homo sapiens|F|CH2|g,4..248|246 nt|1|+1| | | |246+0=246|partial in 3'| |
+52401 246 0
+0 V00561|IGHM*02|Homo sapiens|F|CH3|g,1..75|75 nt|1|+1|-1| | |75+0=75|partial in 5'| |
+52647 75 0
+0 K01309|IGHM*02|Homo sapiens|F|CH3|g,294..421|129 nt|3|+1| || |129+0=129|partial in 3'| |
+52722 129 0
+0 J00260|IGHM*02|Homo sapiens|F|CH4-CHS|1..342|342 nt|1| | | | |342+0=342|partial in 5'| |
+52851 342 0
+0 X57331|IGHM*03|Homo sapiens|F|CH1|g,145..455|312 nt|1|+1|-1| | |312+0=312| | |
+53193 312 0
+0 X57331|IGHM*03|Homo sapiens|F|CH2|g,547..881|336 nt|1|+1|-1| | |336+0=336| | |
+53505 336 0
+0 X57331|IGHM*03|Homo sapiens|F|CH3|g,1128..1444|318 nt|1|+1|-1| | |318+0=318| | |
+53841 318 0
+0 X57331|IGHM*03|Homo sapiens|F|CH4-CHS|g,1624..2015|393 nt|1|+1| | | |393+0=393| | |
+54159 393 0
+0 X57331|IGHM*03|Homo sapiens|F|M1|g,4097..4212|117 nt|1|+1| | | |117+0=117| | |
+54552 117 0
+0 X57331|IGHM*03|Homo sapiens|F|M2|4386..4391|6 nt|1| | | | |6+0=6| | |
+54669 6 0
+0 AC254827|IGHM*04|Homo sapiens|F|CH1|g,128947..129257|312 nt|1|+1|-1| | |312+0=312| |rev-compl|
+54675 312 0
+0 AC254827|IGHM*04|Homo sapiens|F|CH2|g,128521..128855|336 nt|1|+1|-1| | |336+0=336| |rev-compl|
+54987 336 0
+0 AC254827|IGHM*04|Homo sapiens|F|CH3|g,127958..128274|318 nt|1|+1|-1| | |318+0=318| |rev-compl|
+55323 318 0
+0 AC254827|IGHM*04|Homo sapiens|F|CH4-CHS|g,127387..127778|393 nt|1|+1| | | |393+0=393| |rev-compl|
+55641 393 0
+0 AC254827|IGHM*04|Homo sapiens|F|M1|g,125189..125304|117 nt|1|+1| | | |117+0=117| |rev-compl|
+56034 117 0
+0 AC254827|IGHM*04|Homo sapiens|F|M2|125010..125015|6 nt|1| | | | |6+0=6| |rev-compl|
+56151 6 0
+0 J00241|IGKC*01|Homo sapiens|F|C-REGION|c,334..653|321 nt|1|+1| | | |321+0=321| | |
+56157 321 0
+0 M11736|IGKC*02|Homo sapiens|F|C-REGION|c,1033..1352|321 nt|1|+1| | | |321+0=321| | |
+56478 321 0
+0 M11737|IGKC*03|Homo sapiens|F|C-REGION|c,1031..1350|321 nt|1|+1| | | |321+0=321| | |
+56799 321 0
+0 AF017732|IGKC*04|Homo sapiens|F|C-REGION|c,62461..62780|321 nt|1|+1| | | |321+0=321| | |
+57120 321 0
+0 AF113887|IGKC*05|Homo sapiens|(F)|C-REGION|388..708|321 nt|1| | || |321+0=321| | |
+57441 321 0
+0 J00252|IGLC1*01|Homo sapiens|ORF|C-REGION|1..312|312 nt|1| | | | |312+0=312|partial in 5'| |
+57762 312 0
+0 X51755|IGLC1*02|Homo sapiens|F|C-REGION|g,4008..4324|318 nt|1|+1| | | |318+0=318| | |
+58074 318 0
+0 J00253|IGLC2*01|Homo sapiens|F|C-REGION|g,30..346|318 nt|1|+1| | | |318+0=318| | |
+58392 318 0
+0 X06875|IGLC2*02|Homo sapiens|F|C-REGION|g,98..414|318 nt|1|+1| | | |318+0=318| | |
+58710 318 0
+0 AJ491317|IGLC2*03|Homo sapiens|F|C-REGION|1..106|106 nt|1| | | | |106+0=106|partial in 5'| |
+59028 106 0
+0 J00254|IGLC3*01|Homo sapiens|F|C-REGION|1..312|312 nt|1| | | | |312+0=312|partial in 5'| |
+59134 312 0
+0 K01326|IGLC3*02|Homo sapiens|F|C-REGION|g,203..519|318 nt|1|+1| | | |318+0=318| | |
+59446 318 0
+0 X06876|IGLC3*03|Homo sapiens|F|C-REGION|g,98..414|318 nt|1|+1| | | |318+0=318| | |
+59764 318 0
+0 D87017|IGLC3*04|Homo sapiens|F|C-REGION|g,3455..3771|318 nt|1|+1| | | |318+0=318| | |
+60082 318 0
+0 J03011|IGLC6*01|Homo sapiens|F|C-REGION|g,2..318|318 nt|1|+1| | | |318+0=318| | |
+60400 318 0
+0 X51755|IGLC7*01|Homo sapiens|F|C-REGION|g,31201..31517|318 nt|1|+1| | | |318+0=318| | |
+60718 318 0
+0 M61771|IGLC7*02|Homo sapiens|F|C-REGION|g,2..318|318 nt|1|+1| | | |318+0=318| | |
+61036 318 0
+0 KM455557|IGLC7*03|Homo sapiens|F|C-REGION|g,1..317|318 nt|1|+1| || |318+0=318| | |
+61354 318 0
+0 AP001025|IGLJ-C/OR18*01|Homo sapiens|ORF|J-REGION|130863..130899|37 nt|2| | || |37+0=37| | |
+61672 37 0
+0 AP001025|IGLJ-C/OR18*01|Homo sapiens|ORF|C-REGION|130900..131211|312 nt|2| | || |312+0=312| | |
+61709 312 0
+0 X02883|TRAC*01|Homo sapiens|F|EX1|n,273..544|273 nt|1|+1|-1| | |273+0=273| | |
+62021 273 1
+0 X02883|TRAC*01|Homo sapiens|F|EX2|g,2408..2451|45 nt|1|+1|-1| | |45+0=45| | |
+62294 45 0
+0 X02883|TRAC*01|Homo sapiens|F|EX3|g,3324..3430|108 nt|1|+1|-1| | |108+0=108| | |
+62339 108 0
+0 X02883|TRAC*01|Homo sapiens|F|EX4(untranslated)| |532 nt|1|+1| | | |532+0=532| | |
+62447 532 0
+0 M12887|TRBC1*01|Homo sapiens|F|EX1|g,213..598|387 nt|1|+1|-1| | |387+0=387| | |
+62979 387 0
+0 M12887|TRBC1*01|Homo sapiens|F|EX2|g,1041..1057|18 nt|1|+1|-1| | |18+0=18| | |
+63366 18 0
+0 M12887|TRBC1*01|Homo sapiens|F|EX3|g,1211..1317|108 nt|1|+1| | | |108+0=108| | |
+63384 108 0
+0 M12887|TRBC1*01|Homo sapiens|F|EX4|1640..1657|18 nt|1| | | | |18+0=18| | |
+63492 18 0
+0 L36092|TRBC1*02|Homo sapiens|F|EX1|g,645749..646134|387 nt|1|+1|-1| | |387+0=387| | |
+63510 387 0
+0 L36092|TRBC1*02|Homo sapiens|F|EX2|g,646577..646593|18 nt|1|+1|-1| | |18+0=18| | |
+63897 18 0
+0 L36092|TRBC1*02|Homo sapiens|F|EX3|g,646747..646853|108 nt|1|+1| | | |108+0=108| | |
+63915 108 0
+0 L36092|TRBC1*02|Homo sapiens|F|EX4|647176..647193|18 nt|1| | | | |18+0=18| | |
+64023 18 0
+0 M12888|TRBC2*01|Homo sapiens|F|EX1|g,154..539|387 nt|1|+1|-1| | |387+0=387| | |
+64041 387 0
+0 M12888|TRBC2*01|Homo sapiens|F|EX2|g,1057..1073|18 nt|1|+1|-1| | |18+0=18| | |
+64428 18 0
+0 M12888|TRBC2*01|Homo sapiens|F|EX3|g,1218..1324|108 nt|1|+1| | | |108+0=108| | |
+64446 108 0
+0 M12888|TRBC2*01|Homo sapiens|F|EX4|1616..1639|24 nt|1| | | | |24+0=24| | |
+64554 24 0
+0 L36092|TRBC2*02|Homo sapiens|F|EX1|g,655095..655480|387 nt|1|+1|-1| | |387+0=387| | |
+64578 387 0
+0 L36092|TRBC2*02|Homo sapiens|F|EX2|g,655998..656014|18 nt|1|+1|-1| | |18+0=18| | |
+64965 18 0
+0 L36092|TRBC2*02|Homo sapiens|F|EX3|g,656159..656265|108 nt|1|+1| | | |108+0=108| | |
+64983 108 0
+0 L36092|TRBC2*02|Homo sapiens|F|EX4|656557..656580|24 nt|1| | | | |24+0=24| | |
+65091 24 0
+0 M22148|TRDC*01|Homo sapiens|F|EX1|n,128..405|279 nt|1|+1|-1| | |279+0=279| | |
+65115 279 1
+0 M22149|TRDC*01|Homo sapiens|F|EX2|g,22..86|66 nt|1|+1|-1| | |66+0=66| | |
+65394 66 0
+0 M22150|TRDC*01|Homo sapiens|F|EX3|g,22..141|121 nt|1|+1| || |121+0=121| | |
+65460 121 0
+0 M22151|TRDC*01|Homo sapiens|F|EX4(untranslated)| |1043 nt|1|+1| | | |1043+0=1043| | |
+65581 1043 0
+0 M14996|TRGC1*01|Homo sapiens|F|EX1|g,41..369|330 nt|1|+1|-1| | |330+0=330| | |
+66624 330 0
+0 M14997|TRGC1*01|Homo sapiens|F|EX2|g,25..71|48 nt|1|+1|-1| | |48+0=48| | |
+66954 48 0
+0 M14998|TRGC1*01|Homo sapiens|F|EX3|g,174..313|141 nt|1|+1| | | |141+0=141| | |
+67002 141 0
+0 M14999|TRGC1*02|Homo sapiens|F|EX1|g,1..300|301 nt|1|+1| | | |301+0=301|partial in 3'| |
+67143 301 0
+0 BC072396|TRGC1*03|Homo sapiens|(F)|EX1|804..1133|330 nt|1| | | | |330+0=330| | |
+67444 330 0
+0 BC072396|TRGC1*03|Homo sapiens|(F)|EX2|1134..1181|48 nt|1| | | | |48+0=48| | |
+67774 48 0
+0 BC072396|TRGC1*03|Homo sapiens|(F)|EX3|1182..1322|141 nt|1| | | | |141+0=141| | |
+67822 141 0
+0 AF151103|TRGC1*04|Homo sapiens|(F)|EX1|61..390|330 nt|1| | | | |330+0=330| | |
+67963 330 0
+0 AF151103|TRGC1*04|Homo sapiens|(F)|EX2|391..438|48 nt|1| | | | |48+0=48| | |
+68293 48 0
+0 AF151103|TRGC1*04|Homo sapiens|(F)|EX3|439..579|141 nt|1| | | | |141+0=141| | |
+68341 141 0
+0 BC062761|TRGC1*05|Homo sapiens|(F)|EX1|56..385|330 nt|1| | | | |330+0=330| | |
+68482 330 0
+0 BC062761|TRGC1*05|Homo sapiens|(F)|EX2|386..433|48 nt|1| | | | |48+0=48| | |
+68812 48 0
+0 BC062761|TRGC1*05|Homo sapiens|(F)|EX3|434..574|141 nt|1| | | | |141+0=141| | |
+68860 141 0
+0 M15002|TRGC2*01|Homo sapiens|F|EX1|g,1..329|330 nt|1|+1|-1| | |330+0=330| | |
+69001 330 0
+0 M13231|TRGC2*01|Homo sapiens|F|EX2|788..835|48 nt|1| | || |48+0=48| | |
+69331 48 0
+0 M13231|TRGC2*01|Homo sapiens|F|EX2T|740..787|48 nt|1| | || |48+0=48| | |
+69379 48 0
+0 M13231|TRGC2*01|Homo sapiens|F|EX3|836..976|141 nt|1| | || |141+0=141| | |
+69427 141 0
+0 M15001|TRGC2*02|Homo sapiens|F|EX1|g,1..329|330 nt|1|+1|-1| | |330+0=330| | |
+69568 330 0
+0 M15005|TRGC2*02|Homo sapiens|F|EX2|g,6..52|48 nt|1|+1|-1| | |48+0=48| | |
+69898 48 0
+0 M15004|TRGC2*02|Homo sapiens|F|EX2R|g,6..52|48 nt|1|+1|-1| | |48+0=48| | |
+69946 48 0
+0 M15007|TRGC2*02|Homo sapiens|F|EX3|g,2..141|141 nt|1|+1| | | |141+0=141| | |
+69994 141 0
+0 M17324|TRGC2*03|Homo sapiens|F|EX1|g,1..329|330 nt|1|+1| || |330+0=330| | |
+70135 330 0
+0 M17324|TRGC2*03|Homo sapiens|F|EX2|378..425|48 nt|1| | || |48+0=48| | |
+70465 48 0
+0 M17324|TRGC2*03|Homo sapiens|F|EX2R|330..377|48 nt|1| | || |48+0=48| | |
+70513 48 0
+0 M17324|TRGC2*03|Homo sapiens|F|EX3|426..566|141 nt|1| | || |141+0=141| | |
+70561 141 0
+0 AF159056|TRGC2*04|Homo sapiens|F|EX1|g,124343..124671|330 nt|1|+1|-1| | |330+0=330| | |
+70702 330 0
+0 AF159056|TRGC2*04|Homo sapiens|F|EX2|g,131440..131486|48 nt|1|+1|-1| | |48+0=48| | |
+71032 48 0
+0 AF159056|TRGC2*04|Homo sapiens|F|EX2R|g,128685..128731|48 nt|1|+1|-1| | |48+0=48| | |
+71080 48 0
+0 AF159056|TRGC2*04|Homo sapiens|F|EX3|g,133741..133880|141 nt|1|+1| | | |141+0=141| | |
+71128 141 0
+0 M17323|TRGC2*05|Homo sapiens|F|EX1|g,1..329|330 nt|1|+1| || |330+0=330| | |
+71269 330 0
+0 M17323|TRGC2*05|Homo sapiens|F|EX2|426..473|48 nt|1| | | | |48+0=48| | |
+71599 48 0
+0 M17323|TRGC2*05|Homo sapiens|F|EX2R|378..425|48 nt|1| | | | |48+0=48| | |
+71647 48 0
+0 M25318|TRGC2*05|Homo sapiens|F|EX2T|g,7..53|48 nt|1|+1|-1| | |48+0=48| | |
+71695 48 0
+0 M17323|TRGC2*05|Homo sapiens|F|EX3|474..614|141 nt|1| | | | |141+0=141| | |
+71743 141 0
+0 Y00790|TRGC2*06|Homo sapiens|(F)|EX1|439..768|330 nt|1| | | | |330+0=330| | |
+71884 330 0
+0 Y00790|TRGC2*06|Homo sapiens|(F)|EX2|817..864|48 nt|1| | | | |48+0=48| | |
+72214 48 0
+0 Y00790|TRGC2*06|Homo sapiens|(F)|EX2R|769..816|48 nt|1| | | | |48+0=48| | |
+72262 48 0
+0 Y00790|TRGC2*06|Homo sapiens|(F)|EX3|865..1005|141 nt|1| | | | |141+0=141| | |
+72310 141 0
+0 M27331|TRGC2*07|Homo sapiens|(F)|EX1|1..330|330 nt|1| | | | |330+0=330| | |
+72451 330 0
+0 M27331|TRGC2*07|Homo sapiens|(F)|EX2|379..426|48 nt|1| | | | |48+0=48| | |
+72781 48 0
+0 M27331|TRGC2*07|Homo sapiens|(F)|EX2R|331..378|48 nt|1| | | | |48+0=48| | |
+72829 48 0
+0 M27331|TRGC2*07|Homo sapiens|(F)|EX3|427..567|141 nt|1| | || |141+0=141| | |
+72877 141 0
+0 M27332|TRGC2*08|Homo sapiens|(F)|EX1|1..330|330 nt|1| | | | |330+0=330| | |
+73018 330 0
+0 M27332|TRGC2*08|Homo sapiens|(F)|EX2|379..426|48 nt|1| | | | |48+0=48| | |
+73348 48 0
+0 M27332|TRGC2*08|Homo sapiens|(F)|EX2R|331..378|48 nt|1| | | | |48+0=48| | |
+73396 48 0
+0 M27332|TRGC2*08|Homo sapiens|(F)|EX3|427..564|138 nt|1| | | | |138+0=138| | |
+73444 138 0

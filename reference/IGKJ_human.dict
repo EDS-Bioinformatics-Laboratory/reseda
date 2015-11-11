@@ -1,0 +1,10 @@
+@HD	VN:1.4	SO:unsorted
+@SQ	SN:J00242|IGKJ1*01|Homo	LN:38	UR:file:/home/barbera/git/hla-pipeline/IGKJ_human.fasta	M5:3a572f233c60ca72e3b61e2629800c06
+@SQ	SN:J00242|IGKJ2*01|Homo	LN:39	UR:file:/home/barbera/git/hla-pipeline/IGKJ_human.fasta	M5:a7a03756a72862d79e5146b5245d874f
+@SQ	SN:Z70260|IGKJ2*02|Homo	LN:38	UR:file:/home/barbera/git/hla-pipeline/IGKJ_human.fasta	M5:4a750347b7e0cb8e6c82bcbf7912dc4e
+@SQ	SN:U95246|IGKJ2*03|Homo	LN:39	UR:file:/home/barbera/git/hla-pipeline/IGKJ_human.fasta	M5:7481775b4d9e5ef3da9df7d8a0e4a7bc
+@SQ	SN:Z46620|IGKJ2*04|Homo	LN:39	UR:file:/home/barbera/git/hla-pipeline/IGKJ_human.fasta	M5:956d0db87d6068bf90ab71ca6721905a
+@SQ	SN:J00242|IGKJ3*01|Homo	LN:38	UR:file:/home/barbera/git/hla-pipeline/IGKJ_human.fasta	M5:52b73bea8a47cdbca19b48f5db6935dc
+@SQ	SN:J00242|IGKJ4*01|Homo	LN:38	UR:file:/home/barbera/git/hla-pipeline/IGKJ_human.fasta	M5:31b59fd09821d27cded4da4ad0f41a1c
+@SQ	SN:AF103571|IGKJ4*02|Homo	LN:38	UR:file:/home/barbera/git/hla-pipeline/IGKJ_human.fasta	M5:d4286d35ba2dc218322c0b28c63245b5
+@SQ	SN:J00242|IGKJ5*01|Homo	LN:38	UR:file:/home/barbera/git/hla-pipeline/IGKJ_human.fasta	M5:7fb09cac5a78e9e1cbd3518b3405eea1

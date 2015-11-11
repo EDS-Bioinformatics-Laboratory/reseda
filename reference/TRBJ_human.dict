@@ -1,0 +1,17 @@
+@HD	VN:1.4	SO:unsorted
+@SQ	SN:K02545|TRBJ1-1*01|Homo	LN:48	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:625bd7f2668b0811d0a047abffdec96c
+@SQ	SN:K02545|TRBJ1-2*01|Homo	LN:48	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:6fcaba49e953a0941dd904be22434ef1
+@SQ	SN:M14158|TRBJ1-3*01|Homo	LN:50	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:a9b819abac5b704742b3e1f5c19b1889
+@SQ	SN:M14158|TRBJ1-4*01|Homo	LN:51	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:c96970e6f476766f9b9bc17fa07b9f8a
+@SQ	SN:M14158|TRBJ1-5*01|Homo	LN:50	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:39d5bd977dfd028ab6a1fbf7a2843ba4
+@SQ	SN:M14158|TRBJ1-6*01|Homo	LN:53	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:112e71cb46b095a54c1a491d081be1b9
+@SQ	SN:L36092|TRBJ1-6*02|Homo	LN:53	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:a49b4b41848f7306f48c417d3e3d047a
+@SQ	SN:X02987|TRBJ2-1*01|Homo	LN:50	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:18ff293f6f0ff15808c2dc8a306d9ad0
+@SQ	SN:X02987|TRBJ2-2*01|Homo	LN:51	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:f5d9c852edd7af64c67227a5337217dc
+@SQ	SN:X02987|TRBJ2-2P*01|Homo	LN:46	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:0a39adea8417173eb06a2b6f09f409cf
+@SQ	SN:X02987|TRBJ2-3*01|Homo	LN:49	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:d974a475606a25585b8ef9f29f283dd7
+@SQ	SN:X02987|TRBJ2-4*01|Homo	LN:50	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:03e7e1154da31c352d8edc51d503589a
+@SQ	SN:X02987|TRBJ2-5*01|Homo	LN:48	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:f5629a5a30e557c6c3eeb51455dfa6a1
+@SQ	SN:X02987|TRBJ2-6*01|Homo	LN:53	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:14e75686980836618ad6e003e228f661
+@SQ	SN:M14159|TRBJ2-7*01|Homo	LN:47	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:aeed8352725a6b38842a6cd32dd50026
+@SQ	SN:X02987|TRBJ2-7*02|Homo	LN:47	UR:file:/home/barbera/git/hla-pipeline/TRBJ_human.fasta	M5:3bb1ed65f5cea5e4e272f67ea82c3a06
