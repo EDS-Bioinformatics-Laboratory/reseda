@@ -6,6 +6,7 @@ ref=$1    # hla_nuc.fasta
 fastq=$2  # sequences.fastq
 
 #prefix=`basename ${fasta} .fasta`
+mydir=`dirname ${fastq}`
 prefix=`basename ${fastq} .fastq.gz`
 refprefix=`basename ${ref} .fasta`
 
@@ -17,7 +18,7 @@ refprefix=`basename ${ref} .fasta`
 #wait
 
 echo "### align sequences with bwasw ###"
-./bwa-0.7.12/bwa mem ${ref} ${prefix}.fastq.gz > ${prefix}-${refprefix}.sam
+./bwa-0.7.12/bwa mem ${ref} ${mydir}/${prefix}.fastq.gz > ${prefix}-${refprefix}.sam
 wait
 
 echo "### replace nucleotides that are identical with = ###"
@@ -51,7 +52,12 @@ samtools mpileup -f ${ref} ${prefix}-${refprefix}RG.bam > ${prefix}-${refprefix}
 wait
 rm -f ${prefix}-${refprefix}RG.bam ${prefix}-${refprefix}RG.bai
 
-echo "### call variants that are covered by 1 read ###"
-java -jar VarScan.v2.3.7.jar pileup2snp ${prefix}-${refprefix}RG.pileup --min-coverage 1 --min-reads2 1 > ${prefix}-${refprefix}RG.snp.csv
-wait
+if [[ -s ${prefix}-${refprefix}RG.pileup ]]; then
+    echo "### call variants that are covered by 1 read ###"
+    java -jar VarScan.v2.3.7.jar pileup2snp ${prefix}-${refprefix}RG.pileup --min-coverage 1 --min-reads2 1 > ${prefix}-${refprefix}RG.snp.csv
+    wait
+else
+    echo "Pilup file is empty. Skipped VarScan"
+fi
+
 rm -f ${prefix}-${refprefix}RG.pileup

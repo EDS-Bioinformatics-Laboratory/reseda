@@ -31,12 +31,12 @@ wait
 samples=`ls *.assembled.fastq.gz`
 
 # Split on MID (TO MODIFY)
-# python fastq-split-on-mid.py ${mids} ${indir} ${outdir}
-# wait
+python fastq-split-on-mid.py ${mids} split ${samples}
+wait
 
 ### Continue with the assembled, split per mid, fastq files ###
 
-# samples=`ls ${outdir}/*.fastq.gz`
+samples=`ls split/*.fastq.gz`
 
 # FastQC report
 ./run-fastqc.sh ${samples}
