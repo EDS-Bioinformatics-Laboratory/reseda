@@ -85,7 +85,7 @@ create_table("seq",colnames)
 import_data(seqFile, "\t", "seq", colnames)
 
 # Combine all tables into one big table: all_info
-query = "CREATE TABLE all_info AS SELECT * FROM mid LEFT OUTER JOIN cdr3 USING (acc) LEFT OUTER JOIN v USING (acc) LEFT OUTER JOIN j USING (acc) LEFT OUTER JOIN seq USING (acc);"
+query = "CREATE TABLE all_info AS SELECT * FROM mid JOIN cdr3 USING (acc) LEFT OUTER JOIN v USING (acc) LEFT OUTER JOIN j USING (acc) LEFT OUTER JOIN seq USING (acc);"
 print(query)
 cur.execute(query)
 

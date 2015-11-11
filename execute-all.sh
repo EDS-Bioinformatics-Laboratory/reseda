@@ -7,13 +7,17 @@
 # Create a file with all the fastq files
 # ls TESTDATA/* > SAMPLES
 
+# Then run ./execute-all.sh
+
 starttime=`date +%s`
 
 celltype="IGH_HUMAN"
 mids="MIDS-miseq.txt"
 refs="IGHV_human.fasta IGHJ_human.fasta"
-samples=`cat SAMPLES`  # get all arguments
+v="IGHV_human"
+j="IGHJ_human"
 
+samples=`cat SAMPLES`  # get all arguments
 r1_samples=`grep R1_001 SAMPLES`
 
 ### Analysis on raw fastq files ###
@@ -30,7 +34,7 @@ wait
 
 samples=`ls *.assembled.fastq.gz`
 
-# Split on MID (TO MODIFY)
+# Split on MID
 python fastq-split-on-mid.py ${mids} split ${samples}
 wait
 
@@ -70,19 +74,23 @@ bamfiles=`ls *.sam`
 
 ### Generate reports ###
 
+mkdir final
+
 # For each sample; do
+for sample in ${samples}; do
+    mydir=`dirname ${sample}`
+    prefix=`basename ${sample} .fastq.gz`
 
-# Combine MID, CDR3, V, J and sequence information
-# midFile="/mnt/immunogenomics/RUNS/run03-20150814-miseq/data/midsort/BCRh_S40_L001_R2_001-report.txt"
-# cdr3File="/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/paul/BCRh_S40_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv"
-# vFile="/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHV_human-easy-import.txt"
-# jFile="/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHJ_human-easy-import.txt"
-# seqFile="/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/paul/BCRh_S40_L001.assembled.fastq.gz-IGH_HUMAN.csv"
-# outFile="all_info.txt"
-# python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile}
-# wait
-
-# done
+    # Combine MID, CDR3, V, J and sequence information
+    midFile=`echo ${mydir}/${prefix}|perl -ne 's/-.+$/-report.txt/;print;'`
+    cdr3File=${sample}-${celltype}-CDR3.csv
+    vFile=${prefix}-${v}-easy-import.txt
+    jFile=${prefix}-${j}-easy-import.txt
+    seqFile=${sample}-${celltype}.csv
+    outFile="final/${prefix}-${celltype}-all_info.csv"
+    python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile}
+    wait
+done
 
 endtime=`date +%s`
 difftime=`expr ${endtime} - ${starttime}`
