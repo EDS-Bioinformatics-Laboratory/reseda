@@ -1,5 +1,6 @@
 import sys
 import regex
+import gzip
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.Data import IUPACData
@@ -23,13 +24,13 @@ coordSystem = 0
 
 ########### Main ###########
 
-motifs=["WRCY"]  # RGYW is reverse complement of WRCY
+#motifs=["WRCY"]  # RGYW is reverse complement of WRCY
 #motifs=["CGCCGCCAGCTCACC", "TTGCCCTCAACGACCACTTT", "CCTGCTTCTCCTCAGCTTCAG"]  # ACTB, GAPDH, HPRT1
-# motifs=readMotifsFromFile("immuno-primers.csv")
+motifs=readMotifsFromFile("immuno-primers.csv")
 
 # Check if an argument was given to this script
 if len(sys.argv) < 2:
-    sys.exit('Usage: %s sequences.fasta' % sys.argv[0])
+    sys.exit('Usage: %s sequences.fastq.gz' % sys.argv[0])
 
 # Add reverse complement of motifs to the list
 motifs_comrev=list()
@@ -46,11 +47,11 @@ for motif in motifs:
     myregex[motif] = motifToRegex(motif, 2)  # also adds in-exact matching pattern
 
 # Open fasta file and search for all motifs in each sequence
-for record in SeqIO.parse(open(fastaFile, "rU"), "fasta") :
+for record in SeqIO.parse(gzip.open(fastaFile, "r"), "fastq") :
     foundMatch = 0
-    sys.stderr.write('Reading sequence record... ')
+    # sys.stderr.write('Reading sequence record... ')
     sequence = str(record.seq).upper()
-    sys.stderr.write('done\n')
+    # sys.stderr.write('done\n')
     for motif, pat in myregex.iteritems():
         motifLength = len(motif)
         if motif in motifs_comrev:

@@ -4,14 +4,17 @@
 # mv reference/* .
 # mv hlaforest/scripts/* .
 
+# Create a file with all the fastq files
+# ls TESTDATA/* > SAMPLES
+
 starttime=`date +%s`
 
 celltype="IGH_HUMAN"
-mids=""
-refs="IGHV-human.fasta IGHJ-human.fasta"
-samples=$@  # get all arguments
+mids="MIDS-miseq.txt"
+refs="IGHV_human.fasta IGHJ_human.fasta"
+samples=`cat SAMPLES`  # get all arguments
 
-r1_samples=`echo ${samples} | grep R1_001`
+r1_samples=`grep R1_001 SAMPLES`
 
 ### Analysis on raw fastq files ###
 
@@ -28,19 +31,19 @@ wait
 samples=`ls *.assembled.fastq.gz`
 
 # Split on MID (TO MODIFY)
-python fastq-split-on-mid.py ${mids} ${indir} ${outdir}
-wait
+# python fastq-split-on-mid.py ${mids} ${indir} ${outdir}
+# wait
 
 ### Continue with the assembled, split per mid, fastq files ###
 
-samples=`ls ${outdir}/*.fastq.gz`
+# samples=`ls ${outdir}/*.fastq.gz`
 
 # FastQC report
 ./run-fastqc.sh ${samples}
 wait
 
 # Search for primers in the fastq files
-python motif-search-batch.py
+python motif-search-batch.py ${samples}
 wait
 
 # Extract the CDR3 sequence
@@ -55,15 +58,15 @@ wait
 
 ### Continue with the aligned sequences ###
 
-bamfiles=`ls *.bam`
+bamfiles=`ls *.sam`
 
 # Alignment quality report TO IMPLEMENT
 
 # HLAforest for HLA samples
-for bam in $bamfiles; do
-    ./hla-forest.sh ${ref} ${bam}
-    wait
-done
+# for bam in $bamfiles; do
+#     ./hla-forest.sh ${ref} ${bam}
+#     wait
+# done
 
 ### Generate reports ###
 

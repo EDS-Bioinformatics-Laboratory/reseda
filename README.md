@@ -8,6 +8,8 @@
 * Antoine van Kampen, a.h.vankampen@amc.uva.nl
 
 ## Included third party software
+* PEAR
+* FastQC
 * BWA
 * VarScan
 * Picard
