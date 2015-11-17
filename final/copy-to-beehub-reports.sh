@@ -2,10 +2,10 @@
 
 # Example URL: myurl="https://beehub.nl/amc-immunogenomics/RUNS/run246/data/"
 # Example URL: myurl="https://beehub.nl/amc-immunogenomics/RUNS/run246/results-tbcell/"
-myurl="https://beehub.nl/amc-immunogenomics/RUNS/runNN-2016MMDD-miseq/results-tbcell/final/"
+myurl="https://beehub.nl/amc-immunogenomics/RUNS/runNN-2016MMDD-miseq/results-tbcell/reports/"
 
 #myfiles="runmetrics* *.sff"
-myfiles="*-all_info.csv *-clones.csv"
+myfiles="*-productive.txt"
 filelist=`echo $myfiles | perl -ne "@c=split(/\s/); print join(',', @c);"`
 
 starttime=`date +%s`
