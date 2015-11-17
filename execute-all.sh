@@ -21,17 +21,28 @@ j="IGHJ_human"
 
 starttime=`date +%s`
 
+function test {
+    "$@"
+    local status=$?
+    if [ $status -ne 0 ]; then
+        echo "ERROR with $1" >&2
+        exit
+    fi
+    return $status
+}
+
 samples=`cat SAMPLES`  # get all arguments
 r1_samples=`grep R1_001 SAMPLES`
 
 ### Analysis on raw fastq files ###
 
 # FastQC
-./run-fastqc.sh ${samples}
+test ./run-fastqc.sh ${samples}
 wait
 
+
 # Pairwise assembly
-./batch-pear.sh ${r1_samples}
+test ./batch-pear.sh ${r1_samples}
 wait
 
 ### Continue with assembled fastq files ###
@@ -39,7 +50,7 @@ wait
 samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
-python fastq-split-on-mid.py ${mids} split ${samples}
+test python fastq-split-on-mid.py ${mids} split ${samples}
 wait
 
 ### Continue with the assembled, split per mid, fastq files ###
@@ -47,20 +58,20 @@ wait
 samples=`ls split/*.fastq.gz`
 
 # FastQC report
-./run-fastqc.sh ${samples}
+test ./run-fastqc.sh ${samples}
 wait
 
 # Search for primers in the fastq files
-python motif-search-batch.py ${samples}
+test python motif-search-batch.py ${samples}
 wait
 
 # Extract the CDR3 sequence
-python translate-and-extract-cdr3.py ${celltype} ${samples}
+test python translate-and-extract-cdr3.py ${celltype} ${samples}
 wait
 
 # Align sequences against IMGT and call SNPs
 for ref in $refs; do
-    ./batch-align.sh ${ref} ${samples}
+    test ./batch-align.sh ${ref} ${samples}
 done
 wait
 
@@ -94,7 +105,7 @@ for sample in ${samples}; do
     outFile="final/${prefix}-${celltype}-all_info.csv"
     cloneFile="final/${prefix}-${celltype}-clones.csv"
     totalFile="final/${prefix}-${celltype}-productive.txt"
-    python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${totalFile}
+    test python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${totalFile}
     wait
 done
 
