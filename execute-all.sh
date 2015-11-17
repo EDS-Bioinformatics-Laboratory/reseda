@@ -92,7 +92,9 @@ for sample in ${samples}; do
     jFile=${prefix}-${j}-easy-import.txt
     seqFile=${sample}-${celltype}.csv
     outFile="final/${prefix}-${celltype}-all_info.csv"
-    python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile}
+    cloneFile="final/${prefix}-${celltype}-clones.csv"
+    totalFile="final/${prefix}-${celltype}-productive.txt"
+    python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${totalFile}
     wait
 done
 
