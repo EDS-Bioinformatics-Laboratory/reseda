@@ -86,7 +86,7 @@ for sample in ${samples}; do
     prefix=`basename ${sample} .fastq.gz`
 
     # Combine MID, CDR3, V, J and sequence information
-    midFile=`echo ${mydir}/${prefix}|perl -ne 's/-.+$/-report.txt/;print;'`
+    midFile=`echo ${mydir}/${prefix}|perl -ne 's/(.+)-.+$/$1-report.txt/;print;'`
     cdr3File=${sample}-${celltype}-CDR3.csv
     vFile=${prefix}-${v}-easy-import.txt
     jFile=${prefix}-${j}-easy-import.txt
