@@ -5,7 +5,7 @@
 myurl="https://beehub.nl/amc-immunogenomics/RUNS/runNN-2016MMDD-miseq/results-tbcell/final/"
 
 #myfiles="runmetrics* *.sff"
-myfiles="*.csv"
+myfiles="*-all_info.csv *-clones.csv *-productive.txt"
 filelist=`echo $myfiles | perl -ne "@c=split(/\s/); print join(',', @c);"`
 
 starttime=`date +%s`
