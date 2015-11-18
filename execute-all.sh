@@ -20,12 +20,14 @@ j="IGHJ_human"
 #######################
 
 starttime=`date +%s`
+ip_address=`hostname -I`
 
 function test {
     "$@"
     local status=$?
     if [ $status -ne 0 ]; then
         echo "ERROR with $1" >&2
+        cat SAMPLES | mail -s "ERROR ${ip_address} ${celltype}" b.d.vanschaik@amc.uva.nl
         exit
     fi
     return $status
@@ -112,3 +114,6 @@ done
 endtime=`date +%s`
 difftime=`expr ${endtime} - ${starttime}`
 echo "FINISHED WITH EXECUTE-ALL IN $difftime seconds"
+
+# Send mail to Barbera to tell that the analysis is finished
+cat SAMPLES | mail -s "FINISHED ${ip_address} ${celltype} - ${difftime} seconds" b.d.vanschaik@amc.uva.nl
