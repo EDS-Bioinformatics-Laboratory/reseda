@@ -30,6 +30,7 @@
     * ?
 * Perl
 * Bash
+* Postfix (to send mail after the analysis or to indicate that something went wrong)
 
 ## How to run
 See execute-all.sh
