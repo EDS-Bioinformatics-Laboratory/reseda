@@ -13,8 +13,10 @@ mids="MIDS-miseq.txt"
 refs="IGHV_human.fasta IGHJ_human.fasta"
 v="IGHV_human"
 j="IGHJ_human"
-beehub_mount="/mnt/immunogenomics/RUNS/barbera-test"
-beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/barbera-test"
+
+# Mount the Beehub webdav server and configure the location
+beehub_mount="/mnt/immunogenomics/RUNS/runNN-2015MMDD-miseq"
+beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/runNN-2015MMDD-miseq"
 
 # Then run ./execute-all.sh
 
