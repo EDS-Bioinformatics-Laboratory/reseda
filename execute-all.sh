@@ -135,6 +135,7 @@ mkdir ${beehub_mount}/results-tbcell
 mkdir ${beehub_mount}/results-tbcell/raw
 mkdir ${beehub_mount}/results-tbcell/reports
 mkdir ${beehub_mount}/results-tbcell/final
+wait
 
 # Transfer data to Beehub
 test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
@@ -146,6 +147,8 @@ cd ../final
 test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
 test ./copy-to-beehub-final.sh ${beehub_web}/results-tbcell/final/
 cd ..
+
+wait
 
 endtime=`date +%s`
 difftime=`expr ${endtime} - ${starttime}`
