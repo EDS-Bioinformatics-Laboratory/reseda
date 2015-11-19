@@ -13,6 +13,8 @@ mids="MIDS-miseq.txt"
 refs="IGHV_human.fasta IGHJ_human.fasta"
 v="IGHV_human"
 j="IGHJ_human"
+beehub_mount="/mnt/immunogenomics/RUNS/barbera-test"
+beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/barbera-test"
 
 # Then run ./execute-all.sh
 
@@ -110,6 +112,23 @@ for sample in ${samples}; do
     test python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${totalFile}
     wait
 done
+
+# Make output directories
+mkdir ${beehub_mount}/results-tbcell
+mkdir ${beehub_mount}/results-tbcell/raw
+mkdir ${beehub_mount}/results-tbcell/reports
+mkdir ${beehub_mount}/results-tbcell/final
+
+# Transfer data to Beehub
+test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
+test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
+cd split
+test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
+test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
+cd ../final
+test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
+test ./copy-to-beehub-final.sh ${beehub_web}/results-tbcell/final/
+cd ..
 
 endtime=`date +%s`
 difftime=`expr ${endtime} - ${starttime}`

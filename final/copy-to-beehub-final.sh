@@ -2,7 +2,7 @@
 
 # Example URL: myurl="https://beehub.nl/amc-immunogenomics/RUNS/run246/data/"
 # Example URL: myurl="https://beehub.nl/amc-immunogenomics/RUNS/run246/results-tbcell/"
-myurl="https://beehub.nl/amc-immunogenomics/RUNS/runNN-2016MMDD-miseq/results-tbcell/final/"
+myurl=$1; shift
 
 #myfiles="runmetrics* *.sff"
 myfiles="*-all_info.csv *-clones.csv"
@@ -10,12 +10,12 @@ filelist=`echo $myfiles | perl -ne "@c=split(/\s/); print join(',', @c);"`
 
 starttime=`date +%s`
 
-echo "Calculating checksums... (you need to type the password for Beehub later, so please wait for approx 30 seconds) ..."
+echo "Calculating checksums..."
 shasum $myfiles > CHECKSUM.$starttime
 wait
 
 echo "Transferring files..."
-curl -T "{$filelist,CHECKSUM.$starttime}" -u bschaik $myurl
+curl -T "{$filelist,CHECKSUM.$starttime}" --netrc $myurl
 wait
 
 endtime=`date +%s`
