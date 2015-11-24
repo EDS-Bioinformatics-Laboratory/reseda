@@ -34,3 +34,9 @@
 
 ## How to run
 See execute-all.sh
+
+## Illumina data
+With basemount data can be tranferred from the Illumina website
+* http://blog.basespace.illumina.com/2015/07/23/basemount-a-linux-command-line-interface-for-basespace/
+* mkdir basespace
+* basemount basespace

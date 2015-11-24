@@ -1,7 +1,12 @@
 from __future__ import print_function
 import sys
 
-infile = "/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/S074-135_S12_L001.assembled-ACTGACTG-IGH_HUMAN-all_info.csv"
+if len(sys.argv) < 2:
+    print("Usage:", sys.argv[0], "file(s)")
+    sys.exit()
+
+#infile = "/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/S074-135_S12_L001.assembled-ACTGACTG-IGH_HUMAN-all_info.csv"
+infiles = sys.argv[1:]
 
 def analyzeCdr3Qual (infile):
     filepath = infile.split("/")
@@ -56,12 +61,18 @@ def analyzeCdr3Qual (infile):
     for key in sorted(avg_qual, reverse=True):
         print(key, avg_qual[key], file=fhAvg)
 
-    perc_discarded = 100.0 * discarded_reads / total_reads
-    print("CDR3 with min_qual below/equal to 15:", discarded_reads, "/", total_reads, "=", perc_discarded, "%")
+    try:
+        perc_discarded = 100.0 * discarded_reads / total_reads
+    except:
+        perc_discarded = 0
+
+    print("CDR3 with min_qual below or equal to 15:", discarded_reads, "/", total_reads, "=", perc_discarded, "%", outMin)
 
     fhMin.close()
     fhAvg.close()
 
 ############ Main #########
 
-analyzeCdr3Qual(infile)
+for infile in infiles:
+    analyzeCdr3Qual(infile)
+print("FINISHED")
