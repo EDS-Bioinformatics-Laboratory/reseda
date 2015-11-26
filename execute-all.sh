@@ -13,8 +13,10 @@ mids="MIDS-miseq.txt"
 refs="IGHV_human.fasta IGHJ_human.fasta"
 v="IGHV_human"
 j="IGHJ_human"
-beehub_mount="/mnt/immunogenomics/RUNS/barbera-test"
-beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/barbera-test"
+
+# Mount the Beehub webdav server and configure the location
+beehub_mount="/mnt/immunogenomics/RUNS/runNN-2015MMDD-miseq"
+beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/runNN-2015MMDD-miseq"
 
 # Then run ./execute-all.sh
 
@@ -23,17 +25,32 @@ beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/barbera-test"
 
 starttime=`date +%s`
 ip_address=`hostname -I`
+ips=($ip_address)
+ip=${ips[0]}
+
+thisdir=`pwd`
 
 function test {
     "$@"
     local status=$?
     if [ $status -ne 0 ]; then
         echo "ERROR with $1" >&2
-        cat SAMPLES | mail -s "ERROR ${ip_address} ${celltype}" b.d.vanschaik@amc.uva.nl
+        set_status ${ip} "ERROR" "Error with $1"
         exit
     fi
     return $status
 }
+
+function set_status {
+    local ip=$1
+    local stat=$2
+    local message=$3
+    cd ../progress
+    python set-status.py ip:"${ip}" status:"${stat}" message:"${message}"
+    cd $thisdir
+}
+
+set_status ${ip} "RUNNING" "Started ${celltype} analysis on ${starttime}"
 
 samples=`cat SAMPLES`  # get all arguments
 r1_samples=`grep R1_001 SAMPLES`
@@ -118,6 +135,7 @@ mkdir ${beehub_mount}/results-tbcell
 mkdir ${beehub_mount}/results-tbcell/raw
 mkdir ${beehub_mount}/results-tbcell/reports
 mkdir ${beehub_mount}/results-tbcell/final
+wait
 
 # Transfer data to Beehub
 test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
@@ -130,9 +148,11 @@ test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
 test ./copy-to-beehub-final.sh ${beehub_web}/results-tbcell/final/
 cd ..
 
+wait
+
 endtime=`date +%s`
 difftime=`expr ${endtime} - ${starttime}`
 echo "FINISHED WITH EXECUTE-ALL IN $difftime seconds"
 
-# Send mail to Barbera to tell that the analysis is finished
-cat SAMPLES | mail -s "FINISHED ${ip_address} ${celltype} - ${difftime} seconds" b.d.vanschaik@amc.uva.nl
+# Set status when analysis is finished
+set_status ${ip} "FINISHED" "${celltype} finished in ${difftime} seconds"
