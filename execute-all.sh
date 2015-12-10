@@ -61,8 +61,8 @@ r1_samples=`grep R1_001 SAMPLES`
 test ./run-fastqc.sh ${samples}
 wait
 
-
 # Pairwise assembly
+set_status ${ip} "RUNNING" "Pairwise assembly"
 test ./batch-pear.sh ${r1_samples}
 wait
 
@@ -71,6 +71,7 @@ wait
 samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
+set_status ${ip} "RUNNING" "Sorting sequences per MID"
 test python fastq-split-on-mid.py ${mids} split ${samples}
 wait
 
@@ -83,14 +84,17 @@ test ./run-fastqc.sh ${samples}
 wait
 
 # Search for primers in the fastq files
+set_status ${ip} "RUNNING" "Searching for primers"
 test python motif-search-batch.py ${samples}
 wait
 
 # Extract the CDR3 sequence
+set_status ${ip} "RUNNING" "Extracting CDR3's"
 test python translate-and-extract-cdr3.py ${celltype} ${samples}
 wait
 
 # Align sequences against IMGT and call SNPs
+set_status ${ip} "RUNNING" "Aligning sequences"
 for ref in $refs; do
     test ./batch-align.sh ${ref} ${samples}
 done
@@ -113,6 +117,7 @@ bamfiles=`ls *.sam`
 mkdir final
 
 # For each sample; do
+set_status ${ip} "RUNNING" "Combining results"
 for sample in ${samples}; do
     mydir=`dirname ${sample}`
     prefix=`basename ${sample} .fastq.gz`
@@ -140,6 +145,7 @@ mkdir ${beehub_mount}/results-tbcell/final
 wait
 
 # Transfer data to Beehub
+set_status ${ip} "RUNNING" "Transferring data to Beehub"
 test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
 test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
 cd split
