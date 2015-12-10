@@ -125,9 +125,10 @@ for sample in ${samples}; do
     seqFile=${sample}-${celltype}.csv
     outFile="final/${prefix}-${celltype}-all_info.csv"
     cloneFile="final/${prefix}-${celltype}-clones.csv"
-    cloneGroupedFile="final/${prefix}-${celltype}-clones-grouped.csv"
+    cloneSubsFile="final/${prefix}-${celltype}-clones-subs.csv"
+    cloneMainsFile="final/${prefix}-${celltype}-clones-mains.csv"
     totalFile="final/${prefix}-${celltype}-productive.txt"
-    test python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneGroupedFile} ${totalFile}
+    test python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 done
 
