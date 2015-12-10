@@ -8,15 +8,17 @@
 # ls TESTDATA/* > SAMPLES
 
 # Configure this:
-celltype="IGH_HUMAN"
+cell="IGH"
+celltype="${cell}_HUMAN"
 mids="MIDS-miseq.txt"
-refs="IGHV_human.fasta IGHJ_human.fasta"
-v="IGHV_human"
-j="IGHJ_human"
+refs="${cell}V_human.fasta ${cell}J_human.fasta"
+v="${cell}V_human"
+j="${cell}J_human"
 
 # Mount the Beehub webdav server and configure the location
-beehub_mount="/mnt/immunogenomics/RUNS/runNN-2015MMDD-miseq"
-beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/runNN-2015MMDD-miseq"
+run="runNN-2015MMDD-miseq"
+beehub_mount="/mnt/immunogenomics/RUNS/${run}"
+beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/${run}"
 
 # Then run ./execute-all.sh
 
