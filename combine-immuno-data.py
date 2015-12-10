@@ -188,7 +188,7 @@ fhOut.close()
 ############# Make clone reports and write them to a file ################
 
 # Create a clone report based on V, J and CDR3peptide
-query = "CREATE TABLE clones AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq FROM all_info WHERE V_sub!='None' AND J_sub!='None' GROUP BY V_sub, J_sub, cdr3pep"
+query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq FROM all_info WHERE V_gene!='None' AND J_gene!='None' GROUP BY V_gene, J_gene, cdr3pep"
 print(query)
 cur.execute(query)
 
