@@ -79,8 +79,8 @@ def clean_name (gene):
 
 ########### MAIN ###########
 
-con = sqlite3.connect(":memory:")
-#con = sqlite3.connect("test.db")
+# con = sqlite3.connect(":memory:")
+con = sqlite3.connect("test.db")
 cur = con.cursor()
 
 
@@ -189,65 +189,95 @@ fhOut.close()
 ############# Make clone reports and write them to a file ################
 
 # Create a clone report based on V, J and CDR3peptide
-query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq FROM all_info WHERE V_gene!='None' AND J_gene!='None' GROUP BY V_gene, J_gene, cdr3pep"
+query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_gene!='None' AND J_gene!='None' GROUP BY V_gene, J_gene, cdr3pep"
 print(query)
 cur.execute(query)
 
+result = cur.execute("SELECT SUM(freq) AS total_reads, SUM(uniq_umis) AS total_umis FROM clones")
+for row in result:
+    total_reads = int(row[0])
+    total_umis = int(row[1])
+
 # Write clones to a file
 result = cur.execute('SELECT * FROM clones ORDER BY freq DESC')
-print("\t".join([description[0] for description in result.description]), file=fhClones)
+print("\t".join([description[0] for description in result.description]) + "\tread_perc\tumi_perc", file=fhClones)
 for row in result:
     str_row = list()
     for i in range(len(row)):
         str_row.append(str(row[i]))
+    # Calculate percentage
+    read_perc = 100 * float(str_row[3]) / float(total_reads)  # column 3 is the frequency
+    str_row.append(str(read_perc))
+    umi_perc = 100 * float(str_row[4]) / float(total_umis)  # column 3 is the frequency
+    str_row.append(str(umi_perc))
     print("\t".join(str_row), file=fhClones)
 fhClones.close()
 
 # Create a clone report based on V_sub, J_sub and CDR3peptide
-query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq FROM all_info WHERE V_sub!='None' AND J_sub!='None' GROUP BY V_sub, J_sub, cdr3pep"
+query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_sub!='None' AND J_sub!='None' GROUP BY V_sub, J_sub, cdr3pep"
 print(query)
 cur.execute(query)
 
+result = cur.execute("SELECT SUM(freq) AS total_reads, SUM(uniq_umis) AS total_umis FROM clones_subs")
+for row in result:
+    total_reads = int(row[0])
+    total_umis = int(row[1])
+
 # Write clones to a file
 result = cur.execute('SELECT * FROM clones_subs ORDER BY freq DESC')
-print("\t".join([description[0] for description in result.description]), file=fhClonesSubs)
+print("\t".join([description[0] for description in result.description]) + "\tread_perc\tumi_perc", file=fhClonesSubs)
 for row in result:
     str_row = list()
     for i in range(len(row)):
         str_row.append(str(row[i]))
+    # Calculate percentage
+    read_perc = 100 * float(str_row[3]) / float(total_reads)  # column 3 is the frequency
+    str_row.append(str(read_perc))
+    umi_perc = 100 * float(str_row[4]) / float(total_umis)  # column 3 is the frequency
+    str_row.append(str(umi_perc))
     print("\t".join(str_row), file=fhClonesSubs)
 fhClonesSubs.close()
 
 # Create a clone report based on V_main, J_sub and CDR3peptide
-query = "CREATE TABLE clones_mains AS SELECT V_main, J_sub, cdr3pep, count(DISTINCT acc) AS freq FROM all_info WHERE V_main!='None' AND J_sub!='None' GROUP BY V_main, J_sub, cdr3pep"
+query = "CREATE TABLE clones_mains AS SELECT V_main, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_main!='None' AND J_sub!='None' GROUP BY V_main, J_sub, cdr3pep"
 print(query)
 cur.execute(query)
 
+result = cur.execute("SELECT SUM(freq) AS total_reads, SUM(uniq_umis) AS total_umis FROM clones_mains")
+for row in result:
+    total_reads = int(row[0])
+    total_umis = int(row[1])
+
 # Write clones to a file
 result = cur.execute('SELECT * FROM clones_mains ORDER BY freq DESC')
-print("\t".join([description[0] for description in result.description]), file=fhClonesMains)
+print("\t".join([description[0] for description in result.description]) + "\tread_perc\tumi_perc", file=fhClonesMains)
 for row in result:
     str_row = list()
     for i in range(len(row)):
         str_row.append(str(row[i]))
+    # Calculate percentage
+    read_perc = 100 * float(str_row[3]) / float(total_reads)  # column 3 is the frequency
+    str_row.append(str(read_perc))
+    umi_perc = 100 * float(str_row[4]) / float(total_umis)  # column 3 is the frequency
+    str_row.append(str(umi_perc))
     print("\t".join(str_row), file=fhClonesMains)
 fhClonesMains.close()
 
 ### Totals ###
 
-result = cur.execute('select count(*) from all_info')
+result = cur.execute('select count(*) from all_info_nrs')
 for row in result:
     print("Total rows in all_info:", row[0], file=fhTotal)
 
-result = cur.execute('select count(distinct acc) from all_info')
+result = cur.execute('select count(distinct acc) from all_info_nrs')
 for row in result:
-    print("Unique reads in all_info:", row[0], file=fhTotal)
+    print("Unique reads in all_info_nrs:", row[0], file=fhTotal)
 
-result = cur.execute("select count(*) from all_info where V_gene!='None' and J_gene!='None'")
+result = cur.execute("select count(*) from all_info_nrs where V_gene!='None' and J_gene!='None'")
 for row in result:
     print("Total rows with V and J in all_info:", row[0], file=fhTotal)
 
-result = cur.execute("select count(distinct acc) from all_info where V_gene!='None' and J_gene!='None'")
+result = cur.execute("select count(distinct acc) from all_info_nrs where V_gene!='None' and J_gene!='None'")
 for row in result:
     print("Unique reads with V and J in all_info:", row[0], file=fhTotal)
 
