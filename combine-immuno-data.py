@@ -64,18 +64,18 @@ def clean_name (gene):
     '''
     Description: cleans up unnessary info in the gene name that was returned by the aligner, also removes allele info
     In: V or J name (e.g. 'M99672|IGHV3-43*01|Homo')
-    Out: cleaned up gene name (e.g. 'IGHV3-43')
+    Out: cleaned up gene name, sub, and main (e.g. 'IGHV3-43*01', 'IGHV3-43', 'IGHV3')
     '''
     tmp = gene.split("|")
 
     if len(tmp) == 3:
         gene = tmp[1]   # remove accession at start and 'Homo' or 'Mouse' at the end
-        gene = gene.split("*")[0]   # allele info
+        gene_sub = gene.split("*")[0]   # remove allele info
+        gene_main = gene_sub.split("-")[0]  # remove sub info
+        return(gene, gene_sub, gene_main)
     else:
-        return(gene)
+        return(gene, gene, gene)
 
-
-    return(gene)
 
 ########### MAIN ###########
 
@@ -137,9 +137,10 @@ for row in result:
         str_row.append(str(row[i]))
 
     # Make changes to the V_gene name
-    V_sub = clean_name(str_row[i_v])
-    V_main = V_sub.split("-")[0]
-    J_sub = clean_name(str_row[i_j])
+    str_row[i_v], V_sub, V_main = clean_name(str_row[i_v])
+
+    # Make changes to the J_gene name
+    str_row[i_j], J_sub, J_main = clean_name(str_row[i_j])
 
     # Print the entry
     print("\t".join(str_row) + "\t" + V_sub + "\t" + J_sub + "\t" + V_main, file=fhOut)
