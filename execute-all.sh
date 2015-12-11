@@ -8,15 +8,17 @@
 # ls TESTDATA/* > SAMPLES
 
 # Configure this:
-celltype="IGH_HUMAN"
+cell="IGH"
+celltype="${cell}_HUMAN"
 mids="MIDS-miseq.txt"
-refs="IGHV_human.fasta IGHJ_human.fasta"
-v="IGHV_human"
-j="IGHJ_human"
+refs="${cell}V_human.fasta ${cell}J_human.fasta"
+v="${cell}V_human"
+j="${cell}J_human"
 
 # Mount the Beehub webdav server and configure the location
-beehub_mount="/mnt/immunogenomics/RUNS/runNN-2015MMDD-miseq"
-beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/runNN-2015MMDD-miseq"
+run="runNN-2015MMDD-miseq"
+beehub_mount="/mnt/immunogenomics/RUNS/${run}"
+beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/${run}"
 
 # Then run ./execute-all.sh
 
@@ -61,8 +63,8 @@ r1_samples=`grep R1_001 SAMPLES`
 test ./run-fastqc.sh ${samples}
 wait
 
-
 # Pairwise assembly
+set_status ${ip} "RUNNING" "Pairwise assembly"
 test ./batch-pear.sh ${r1_samples}
 wait
 
@@ -71,6 +73,7 @@ wait
 samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
+set_status ${ip} "RUNNING" "Sorting sequences per MID"
 test python fastq-split-on-mid.py ${mids} split ${samples}
 wait
 
@@ -83,14 +86,17 @@ test ./run-fastqc.sh ${samples}
 wait
 
 # Search for primers in the fastq files
+set_status ${ip} "RUNNING" "Searching for primers"
 test python motif-search-batch.py ${samples}
 wait
 
 # Extract the CDR3 sequence
+set_status ${ip} "RUNNING" "Extracting CDR3's"
 test python translate-and-extract-cdr3.py ${celltype} ${samples}
 wait
 
 # Align sequences against IMGT and call SNPs
+set_status ${ip} "RUNNING" "Aligning sequences"
 for ref in $refs; do
     test ./batch-align.sh ${ref} ${samples}
 done
@@ -113,6 +119,7 @@ bamfiles=`ls *.sam`
 mkdir final
 
 # For each sample; do
+set_status ${ip} "RUNNING" "Combining results"
 for sample in ${samples}; do
     mydir=`dirname ${sample}`
     prefix=`basename ${sample} .fastq.gz`
@@ -125,8 +132,10 @@ for sample in ${samples}; do
     seqFile=${sample}-${celltype}.csv
     outFile="final/${prefix}-${celltype}-all_info.csv"
     cloneFile="final/${prefix}-${celltype}-clones.csv"
+    cloneSubsFile="final/${prefix}-${celltype}-clones-subs.csv"
+    cloneMainsFile="final/${prefix}-${celltype}-clones-mains.csv"
     totalFile="final/${prefix}-${celltype}-productive.txt"
-    test python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${totalFile}
+    test python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 done
 
@@ -138,6 +147,7 @@ mkdir ${beehub_mount}/results-tbcell/final
 wait
 
 # Transfer data to Beehub
+set_status ${ip} "RUNNING" "Transferring data to Beehub"
 test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
 test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
 cd split

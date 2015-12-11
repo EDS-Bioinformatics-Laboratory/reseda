@@ -3,24 +3,28 @@ import sqlite3
 import sys
 
 if len(sys.argv) < 8:
-    sys.exit("Usage: combine-immuno-data.py midFile cdr3File vFile jFile seqFile outFile clonesFile totalFile")
+    sys.exit("Usage: combine-immuno-data.py midFile cdr3File vFile jFile seqFile outFile clonesFile clonesSubsFile clonesMainsFile totalFile")
 
 # Input files
-[midFile,cdr3File,vFile,jFile,seqFile,outFile,cloneFile,totalFile] = sys.argv[1:9]
+[midFile,cdr3File,vFile,jFile,seqFile,outFile,clonesFile,clonesSubsFile, clonesMainsFile,totalFile] = sys.argv[1:11]
 
 # # Input files - TEST
-# midFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/data/midsort/BCRh_S40_L001_R2_001-report.txt"
+# midFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-tbcell/reports/BCRh_S40_L001.assembled-report.txt"
 # cdr3File = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/paul/BCRh_S40_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv"
 # vFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHV_human-easy-import.txt"
 # jFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHJ_human-easy-import.txt"
 # seqFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/paul/BCRh_S40_L001.assembled.fastq.gz-IGH_HUMAN.csv"
 # outFile = "all_info.txt"
-# cloneFile = "clones.txt"
+# clonesFile = "clones.txt"
+# clonesSubsFile = "clones-subs.txt"
+# clonesMainsFile = "clones-mains.txt"
 # totalFile = "total.txt"
 
 # Output file
 fhOut = open(outFile, 'w')
-fhClones = open(cloneFile, 'w')
+fhClones = open(clonesFile, 'w')
+fhClonesSubs = open(clonesSubsFile, 'w')
+fhClonesMains = open(clonesMainsFile, 'w')
 fhTotal = open(totalFile, 'w')
 
 ######### Functions ########
@@ -56,12 +60,31 @@ def import_data (datafile, delim, table, colnames):
         cur.execute(query, row)
     con.commit()
 
+def clean_name (gene):
+    '''
+    Description: cleans up unnessary info in the gene name that was returned by the aligner, also removes allele info
+    In: V or J name (e.g. 'M99672|IGHV3-43*01|Homo')
+    Out: cleaned up gene name (e.g. 'IGHV3-43')
+    '''
+    tmp = gene.split("|")
 
-########### Main ###########
+    if len(tmp) == 3:
+        gene = tmp[1]   # remove accession at start and 'Homo' or 'Mouse' at the end
+        gene = gene.split("*")[0]   # allele info
+    else:
+        return(gene)
+
+
+    return(gene)
+
+########### MAIN ###########
 
 con = sqlite3.connect(":memory:")
-# con = sqlite3.connect("test.db")
+#con = sqlite3.connect("test.db")
 cur = con.cursor()
+
+
+########## Import all data ##########
 
 # MID
 colnames = ["acc","beforeMID","MID","afterMID"]
@@ -84,7 +107,7 @@ create_table("j",colnames)
 import_data(jFile, "\t", "j", colnames)
 
 # Sequences
-colnames = ["acc","readingframe","seq","pep","qual"]
+colnames = ["acc","readingframe_seq","seq","pep","qual"]
 create_table("seq",colnames)
 import_data(seqFile, "\t", "seq", colnames)
 
@@ -93,17 +116,79 @@ query = "CREATE TABLE all_info AS SELECT * FROM mid JOIN cdr3 USING (acc) LEFT O
 print(query)
 cur.execute(query)
 
-# Dump info from this table to a file
+############ Write result of queries to a file ############
+
+# Dump info from all_info table to a file
 result = cur.execute('SELECT * FROM all_info')
+header = "\t".join([description[0] for description in result.description])
+colnames = header.split()
+i_v = 0
+i_j = 0
+# Check which column contains the V_gene
+for i in range(len(colnames)):
+    if colnames[i] == "V_gene":
+        i_v = i
+    elif colnames[i] == "J_gene":
+        i_j = i
+# Print table to file
+for row in result:
+    str_row = list()
+    for i in range(len(row)):
+        str_row.append(str(row[i]))
+
+    # Make changes to the V_gene name
+    V_sub = clean_name(str_row[i_v])
+    V_main = V_sub.split("-")[0]
+    J_sub = clean_name(str_row[i_j])
+
+    # Print the entry
+    print("\t".join(str_row) + "\t" + V_sub + "\t" + J_sub + "\t" + V_main, file=fhOut)
+fhOut.close()
+
+# Import table all_info again and then create clone list
+colnames.append("V_sub")
+colnames.append("J_sub")
+colnames.append("V_main")
+query = "DELETE FROM all_info"
+print(query)
+cur.execute(query)
+query = "ALTER TABLE all_info ADD COLUMN V_sub"
+print(query)
+cur.execute(query)
+query = "ALTER TABLE all_info ADD COLUMN J_sub"
+print(query)
+cur.execute(query)
+query = "ALTER TABLE all_info ADD COLUMN V_main"
+print(query)
+cur.execute(query)
+import_data(outFile, "\t", "all_info", colnames)
+
+# Count number of different V and J genes assigned to one accession code
+query = "CREATE TABLE accs_v_j AS SELECT acc, COUNT(DISTINCT V_main) AS nr_v_mains, COUNT(DISTINCT V_sub) AS nr_v_subs, COUNT(DISTINCT V_gene) AS nr_v_alleles, COUNT(DISTINCT J_sub) AS nr_j_subs, COUNT(DISTINCT J_gene) AS nr_j_alleles FROM all_info GROUP BY acc"
+print(query)
+cur.execute(query)
+
+# Combine all_info with v and j counts per accession
+query = "CREATE TABLE all_info_nrs AS SELECT * FROM all_info JOIN accs_v_j USING (acc)"
+print(query)
+cur.execute(query)
+
+# Write final all_info table to a file
+fhOut = open(outFile, 'w')   # This will overwrite the original all_info file
+result = cur.execute('SELECT * FROM all_info_nrs ORDER BY acc')
 print("\t".join([description[0] for description in result.description]), file=fhOut)
 for row in result:
     str_row = list()
     for i in range(len(row)):
         str_row.append(str(row[i]))
     print("\t".join(str_row), file=fhOut)
+fhOut.close()
+
+
+############# Make clone reports and write them to a file ################
 
 # Create a clone report based on V, J and CDR3peptide
-query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq FROM all_info WHERE V_gene IS NOT NULL AND J_gene IS NOT NULL GROUP BY V_gene, J_gene, cdr3pep"
+query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq FROM all_info WHERE V_gene!='None' AND J_gene!='None' GROUP BY V_gene, J_gene, cdr3pep"
 print(query)
 cur.execute(query)
 
@@ -115,10 +200,69 @@ for row in result:
     for i in range(len(row)):
         str_row.append(str(row[i]))
     print("\t".join(str_row), file=fhClones)
+fhClones.close()
+
+# Create a clone report based on V_sub, J_sub and CDR3peptide
+query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq FROM all_info WHERE V_sub!='None' AND J_sub!='None' GROUP BY V_sub, J_sub, cdr3pep"
+print(query)
+cur.execute(query)
+
+# Write clones to a file
+result = cur.execute('SELECT * FROM clones_subs ORDER BY freq DESC')
+print("\t".join([description[0] for description in result.description]), file=fhClonesSubs)
+for row in result:
+    str_row = list()
+    for i in range(len(row)):
+        str_row.append(str(row[i]))
+    print("\t".join(str_row), file=fhClonesSubs)
+fhClonesSubs.close()
+
+# Create a clone report based on V_main, J_sub and CDR3peptide
+query = "CREATE TABLE clones_mains AS SELECT V_main, J_sub, cdr3pep, count(DISTINCT acc) AS freq FROM all_info WHERE V_main!='None' AND J_sub!='None' GROUP BY V_main, J_sub, cdr3pep"
+print(query)
+cur.execute(query)
+
+# Write clones to a file
+result = cur.execute('SELECT * FROM clones_mains ORDER BY freq DESC')
+print("\t".join([description[0] for description in result.description]), file=fhClonesMains)
+for row in result:
+    str_row = list()
+    for i in range(len(row)):
+        str_row.append(str(row[i]))
+    print("\t".join(str_row), file=fhClonesMains)
+fhClonesMains.close()
+
+### Totals ###
+
+result = cur.execute('select count(*) from all_info')
+for row in result:
+    print("Total rows in all_info:", row[0], file=fhTotal)
+
+result = cur.execute('select count(distinct acc) from all_info')
+for row in result:
+    print("Unique reads in all_info:", row[0], file=fhTotal)
+
+result = cur.execute("select count(*) from all_info where V_gene!='None' and J_gene!='None'")
+for row in result:
+    print("Total rows with V and J in all_info:", row[0], file=fhTotal)
+
+result = cur.execute("select count(distinct acc) from all_info where V_gene!='None' and J_gene!='None'")
+for row in result:
+    print("Unique reads with V and J in all_info:", row[0], file=fhTotal)
 
 result = cur.execute('SELECT SUM(freq) FROM clones')
 for row in result:
-    print("Productive reads:", row[0], file=fhTotal)
+    print("Total reads in clones table:", row[0], file=fhTotal)
+
+result = cur.execute('SELECT SUM(freq) FROM clones_subs')
+for row in result:
+    print("Total reads in clones_subs table:", row[0], file=fhTotal)
+
+result = cur.execute('SELECT SUM(freq) FROM clones_mains')
+for row in result:
+    print("Total reads in clones_mains table:", row[0], file=fhTotal)
+
+fhTotal.close()
 
 # Close the connection
 con.close()
