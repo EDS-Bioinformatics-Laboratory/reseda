@@ -79,8 +79,8 @@ def clean_name (gene):
 
 ########### MAIN ###########
 
-# con = sqlite3.connect(":memory:")
-con = sqlite3.connect("test.db")
+con = sqlite3.connect(":memory:")
+#con = sqlite3.connect("test.db")
 cur = con.cursor()
 
 
