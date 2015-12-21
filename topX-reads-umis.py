@@ -2,7 +2,7 @@ from __future__ import print_function
 import sys
 import sqlite3
 
-import matplotlib.pyplot as plt; plt.rcdefaults()
+# import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -75,18 +75,18 @@ def compareTop (n):
     return(perc_in_common)
 
 def makeBarChart (x,y):
-    y_pos = np.arange(len(x))
-     
-    plt.bar(y_pos, y, align='center', alpha=0.5)
-    plt.xticks(y_pos, x)
-    plt.xlabel('Top X clones')
-    plt.ylabel('Common clones in topX UMIs versus reads (%)')
-    plt.title(sampleName)
-     
+    x_pos = np.arange(len(x))
+    
+    fig, ax = plt.subplots()
+    ax.bar(x_pos, y, align='center', alpha=0.5)
+    plt.xticks(x_pos, x)
+    ax.set_xlabel('Top X clones')
+    ax.set_ylabel('Common clones in topX UMIs versus reads (%)')
+    ax.set_title(sampleName)
+    
     try:
-        plt.savefig(plotfile)
+        fig.savefig(plotfile)
         print("Wrote", plotfile, "to disk")
-        plt.close(plotfile)
     except:
         sys.exit("cannot write plotfile to disk")
 
