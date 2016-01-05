@@ -7,13 +7,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if len(sys.argv) < 2:
-    sys.exit("Usage: scatter_reads_umis.py clones-subs.csv")
+    sys.exit("Usage: scatter_reads_umis.py *-clones-subs.csv")
 
 datafiles = sys.argv[1:]
 
 def makeScatter (datafile):
     #plotfile = datafile.split("/")[-1] + ".pdf"
-    plotfile = datafile + ".pdf"
+    plotfile = datafile + ".png"
 
     try:
         data = np.loadtxt(datafile, delimiter='\t', usecols=(3,4), skiprows=1)

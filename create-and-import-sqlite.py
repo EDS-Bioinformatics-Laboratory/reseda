@@ -45,7 +45,7 @@ def import_data (datafile, delim, table, colnames):
 con = sqlite3.connect("test.db")
 cur = con.cursor()
 
-allInfoFile = "/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv"
+allInfoFile = "/mnt/immunogenomics/RUNS/run04-20151116-miseq/test-reads-vs-umis/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv"
 
 # Get header and close the file again
 try:
@@ -61,7 +61,7 @@ colnames = header.split()
 create_table("all_info",colnames)
 import_data(allInfoFile, "\t", "all_info", colnames)
 
-clonesFile = "/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-clones.csv"
+clonesFile = "/mnt/immunogenomics/RUNS/run04-20151116-miseq/test-reads-vs-umis/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-clones-subs.csv"
 
 # Get header and close the file again
 try:
