@@ -104,8 +104,8 @@ def getMotifs(cellType):
 
     if cellType.startswith("TR"):                       # perform an exact match for TRA and TRB
         combinedMotifs = ".+(" + "|".join(motifs) + ")"
-    else:                                               # allow max one mismatch for IGH, IGK, IGL
-        combinedMotifs = ".+(" + "|".join(motifs) + "){e<=1}"
+    else:                                               # also an exact match for IGH, IGK, IGL
+        combinedMotifs = ".+(" + "|".join(motifs) + ")"   #{e<=1} add this to allow one mismatch
     print(combinedMotifs)
 
     return(combinedMotifs)
