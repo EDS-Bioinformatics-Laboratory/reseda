@@ -139,6 +139,10 @@ for sample in ${samples}; do
     wait
 done
 
+# Count lines of all_info.csv files
+test wc -l final/*all_info.csv > wc-${ip}.txt
+wait
+
 # Make output directories
 mkdir ${beehub_mount}/results-tbcell
 mkdir ${beehub_mount}/results-tbcell/raw
