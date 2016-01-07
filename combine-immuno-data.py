@@ -195,6 +195,9 @@ cur.execute(query)
 
 result = cur.execute("SELECT SUM(freq) AS total_reads, SUM(uniq_umis) AS total_umis FROM clones")
 for row in result:
+    if row[0] == None or row[1] == None:
+        print("No entries in clones")
+        exit()
     total_reads = int(row[0])
     total_umis = int(row[1])
 
