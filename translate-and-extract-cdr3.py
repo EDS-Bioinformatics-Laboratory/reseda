@@ -79,17 +79,17 @@ def getJmotifs(cellType):
     if cellType == "IGH_HUMAN":
         return(["VTVS"])
     elif cellType == "IGH_MOUSE":
-        return(["VTVS", "LTVS"])
+        return(["VTVS", "LTVS"])   # This needs to be verified by Sabrina and/or Giulia
     elif cellType == "TRB_HUMAN":
         return(["FG.G"])
     elif cellType == "IGK_HUMAN":
         return(["FG.G"])
     elif cellType == "IGK_MOUSE":
-        return(["FG.G", "FSDG"])
+        return(["FG.G"])
     elif cellType == "IGL_HUMAN":
         return(["FG.G"])
     elif cellType == "IGL_MOUSE":
-        return(["FG.G", "FSSN"])
+        return(["FG.G"])
     elif cellType == "TRA_HUMAN":
         return(["FG.G", "FARG", "WGAG", "WGLG"])
     else:
