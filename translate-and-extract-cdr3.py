@@ -214,8 +214,8 @@ for inFile in sys.argv[2:]:
                     cdr3pep = cdr3pep[6:]
                     aa_pos[0] = aa_pos[0]+6
                 elif cellType.startswith("IG"): # IGL, IGK
-                    cdr3pep = cdr3pep[5:]
-                    aa_pos[0] = aa_pos[0]+5
+                    cdr3pep = cdr3pep[6:]
+                    aa_pos[0] = aa_pos[0]+6
                 else:                           # TRB, TRA
                     cdr3pep = cdr3pep[4:]
                     aa_pos[0] = aa_pos[0]+4
