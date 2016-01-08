@@ -27,6 +27,12 @@ def getVmotifs(cellType):
         refFile = "ref.table.BCRl.csv"
     elif cellType == "TRA_HUMAN":
         refFile = "ref.table.TCRa.csv"
+    elif cellType == "IGH_MOUSE":
+        refFile = "ref.table.mouse.heavy.csv"
+    elif cellType == "IGK_MOUSE":
+        refFile = "ref.table.mouse.BCRk.csv"
+    elif cellType == "IGL_MOUSE":
+        refFile = "ref.table.mouse.BCRl.csv"
     else:
         sys.exit("Cell type " + cellType + " is not implemented yet.\n" + usage)
 
@@ -72,12 +78,18 @@ def getJmotifs(cellType):
     '''
     if cellType == "IGH_HUMAN":
         return(["VTVS"])
+    elif cellType == "IGH_MOUSE":
+        return(["VTVS", "LTVS"])
     elif cellType == "TRB_HUMAN":
         return(["FG.G"])
     elif cellType == "IGK_HUMAN":
         return(["FG.G"])
+    elif cellType == "IGK_MOUSE":
+        return(["FG.G", "FSDG"])
     elif cellType == "IGL_HUMAN":
         return(["FG.G"])
+    elif cellType == "IGL_MOUSE":
+        return(["FG.G", "FSSN"])
     elif cellType == "TRA_HUMAN":
         return(["FG.G", "FARG", "WGAG", "WGLG"])
     else:
@@ -104,8 +116,8 @@ def getMotifs(cellType):
 
     if cellType.startswith("TR"):                       # perform an exact match for TRA and TRB
         combinedMotifs = ".+(" + "|".join(motifs) + ")"
-    else:                                               # allow max one mismatch for IGH, IGK, IGL
-        combinedMotifs = ".+(" + "|".join(motifs) + "){e<=1}"
+    else:                                               # exact match for IGH, IGK, IGL too
+        combinedMotifs = ".+(" + "|".join(motifs) + ")"  #{e<=1}
     print(combinedMotifs)
 
     return(combinedMotifs)
