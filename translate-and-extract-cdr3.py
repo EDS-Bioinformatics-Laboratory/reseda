@@ -59,11 +59,15 @@ def getVmotifs(cellType):
         line = line.rstrip()
         c = line.split(",")
         seq = c[idx]
-        if cellType.startswith("TR"):   # TRB, TRA
+        if cellType.startswith("TR"):   # TRB, TRA human
             motifs.append(seq[99:104])
-        elif cellType.startswith("IGH"): # IGH
+        elif cellType.startswith("IGH"): # IGH human
             motifs.append(seq[97:102])
-        else:                           # IGK, IGL
+        elif cellType == "IGL_HUMAN" or cellType == "IGK_HUMAN":
+            motifs.append(seq[98:103])
+        elif cellType == "IGL_MOUSE" or cellType == "IGK_MOUSE":
+            motifs.append(seq[97:102])
+        else:                           # Guess for new cell type
             motifs.append(seq[98:103])
 
     motifs = list(set(motifs))      # make list with motifs unique
