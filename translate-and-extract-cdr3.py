@@ -27,6 +27,12 @@ def getVmotifs(cellType):
         refFile = "ref.table.BCRl.csv"
     elif cellType == "TRA_HUMAN":
         refFile = "ref.table.TCRa.csv"
+    elif cellType == "IGH_MOUSE":
+        refFile = "ref.table.mouse.heavy.csv"
+    elif cellType == "IGK_MOUSE":
+        refFile = "ref.table.mouse.BCRk.csv"
+    elif cellType == "IGL_MOUSE":
+        refFile = "ref.table.mouse.BCRl.csv"
     else:
         sys.exit("Cell type " + cellType + " is not implemented yet.\n" + usage)
 
@@ -53,11 +59,15 @@ def getVmotifs(cellType):
         line = line.rstrip()
         c = line.split(",")
         seq = c[idx]
-        if cellType.startswith("TR"):   # TRB, TRA
+        if cellType.startswith("TR"):   # TRB, TRA human
             motifs.append(seq[99:104])
-        elif cellType.startswith("IGH"): # IGH
+        elif cellType.startswith("IGH"): # IGH human
             motifs.append(seq[97:102])
-        else:                           # IGK, IGL
+        elif cellType == "IGL_HUMAN" or cellType == "IGK_HUMAN":
+            motifs.append(seq[98:103])
+        elif cellType == "IGL_MOUSE" or cellType == "IGK_MOUSE":
+            motifs.append(seq[97:102])
+        else:                           # Guess for new cell type
             motifs.append(seq[98:103])
 
     motifs = list(set(motifs))      # make list with motifs unique
@@ -72,11 +82,17 @@ def getJmotifs(cellType):
     '''
     if cellType == "IGH_HUMAN":
         return(["VTVS"])
+    elif cellType == "IGH_MOUSE":
+        return(["VTVS", "LTVS"])   # This needs to be verified by Sabrina and/or Giulia
     elif cellType == "TRB_HUMAN":
         return(["FG.G"])
     elif cellType == "IGK_HUMAN":
         return(["FG.G"])
+    elif cellType == "IGK_MOUSE":
+        return(["FG.G"])
     elif cellType == "IGL_HUMAN":
+        return(["FG.G"])
+    elif cellType == "IGL_MOUSE":
         return(["FG.G"])
     elif cellType == "TRA_HUMAN":
         return(["FG.G", "FARG", "WGAG", "WGLG"])
@@ -106,7 +122,7 @@ def getMotifs(cellType):
         combinedMotifs = ".+(" + "|".join(motifs) + ")"
     else:                                               # also an exact match for IGH, IGK, IGL
         combinedMotifs = ".+(" + "|".join(motifs) + ")"   #{e<=1} add this to allow one mismatch
-    print(combinedMotifs)
+    # print(combinedMotifs)
 
     return(combinedMotifs)
 
@@ -202,8 +218,8 @@ for inFile in sys.argv[2:]:
                     cdr3pep = cdr3pep[6:]
                     aa_pos[0] = aa_pos[0]+6
                 elif cellType.startswith("IG"): # IGL, IGK
-                    cdr3pep = cdr3pep[5:]
-                    aa_pos[0] = aa_pos[0]+5
+                    cdr3pep = cdr3pep[6:]
+                    aa_pos[0] = aa_pos[0]+6
                 else:                           # TRB, TRA
                     cdr3pep = cdr3pep[4:]
                     aa_pos[0] = aa_pos[0]+4

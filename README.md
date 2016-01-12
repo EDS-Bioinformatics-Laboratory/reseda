@@ -4,6 +4,10 @@
 
 * Barbera van Schaik, b.d.vanschaik@amc.uva.nl
 * Paul Klarenbeek, p.l.klarenbeek@amc.uva.nl
+* Marieke Doorenspleet, m.e.doorenspleet@amc.uva.nl
+* Sabrina Pollastro, s.pollastro@amc.uva.nl
+* Guilia Balzaretti, g.balzaretti@amc.uva.nl
+* Rebecca Esveldt, r.e.esveldt@amc.uva.nl
 * Niek de Vries, n.devries@amc.uva.nl
 * Antoine van Kampen, a.h.vankampen@amc.uva.nl
 
@@ -29,8 +33,8 @@
     * editdistance
     * ?
 * Perl
+* Bioperl (for HLAforest)
 * Bash
-* Postfix (to send mail after the analysis or to indicate that something went wrong)
 
 ## How to run
 See execute-all.sh
