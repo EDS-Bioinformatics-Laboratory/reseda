@@ -9,14 +9,17 @@
 
 # Configure this:
 cell="IGH"
+organism="human"
 celltype="${cell}_HUMAN"
+run="runNN-2015MMDD-miseq"
+
+# Reference sequences
 mids="MIDS-miseq.txt"
-refs="${cell}V_human.fasta ${cell}J_human.fasta"
-v="${cell}V_human"
-j="${cell}J_human"
+refs="${cell}V_${organism}.fasta ${cell}J_${organism}.fasta"
+v="${cell}V_${organism}"
+j="${cell}J_${organism}"
 
 # Mount the Beehub webdav server and configure the location
-run="runNN-2015MMDD-miseq"
 beehub_mount="/mnt/immunogenomics/RUNS/${run}"
 beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/${run}"
 
@@ -36,8 +39,8 @@ function test {
     "$@"
     local status=$?
     if [ $status -ne 0 ]; then
-        echo "ERROR with $1" >&2
-        set_status ${ip} "ERROR" "Error with $1"
+        echo "ERROR ${celltype} with $1" >&2
+        set_status ${ip} "ERROR" "Error ${celltype} with $1"
         exit
     fi
     return $status
@@ -64,7 +67,7 @@ test ./run-fastqc.sh ${samples}
 wait
 
 # Pairwise assembly
-set_status ${ip} "RUNNING" "Pairwise assembly"
+set_status ${ip} "RUNNING" "${celltype} Pairwise assembly"
 test ./batch-pear.sh ${r1_samples}
 wait
 
@@ -73,7 +76,7 @@ wait
 samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
-set_status ${ip} "RUNNING" "Sorting sequences per MID"
+set_status ${ip} "RUNNING" "${celltype} Sorting sequences per MID"
 test python fastq-split-on-mid.py ${mids} split ${samples}
 wait
 
@@ -86,17 +89,17 @@ test ./run-fastqc.sh ${samples}
 wait
 
 # Search for primers in the fastq files
-set_status ${ip} "RUNNING" "Searching for primers"
+set_status ${ip} "RUNNING" "${celltype} Searching for primers"
 test python motif-search-batch.py ${samples}
 wait
 
 # Extract the CDR3 sequence
-set_status ${ip} "RUNNING" "Extracting CDR3's"
+set_status ${ip} "RUNNING" "${celltype} Extracting CDR3's"
 test python translate-and-extract-cdr3.py ${celltype} ${samples}
 wait
 
 # Align sequences against IMGT and call SNPs
-set_status ${ip} "RUNNING" "Aligning sequences"
+set_status ${ip} "RUNNING" "${celltype} Aligning sequences"
 for ref in $refs; do
     test ./batch-align.sh ${ref} ${samples}
 done
@@ -109,9 +112,11 @@ bamfiles=`ls *.sam`
 # Alignment quality report TO IMPLEMENT
 
 # HLAforest for HLA samples
-# for bam in $bamfiles; do
-#     ./hla-forest.sh ${ref} ${bam}
-#     wait
+# for ref in $refs; do
+#     for bam in $bamfiles; do
+#         ./hla-forest.sh ${ref} ${bam}
+#         wait
+#     done
 # done
 
 ### Generate reports ###
@@ -119,7 +124,7 @@ bamfiles=`ls *.sam`
 mkdir final
 
 # For each sample; do
-set_status ${ip} "RUNNING" "Combining results"
+set_status ${ip} "RUNNING" "${celltype} Combining results"
 for sample in ${samples}; do
     mydir=`dirname ${sample}`
     prefix=`basename ${sample} .fastq.gz`
@@ -138,6 +143,10 @@ for sample in ${samples}; do
     test python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 done
+
+# Count lines of all_info.csv files
+test wc -l final/*all_info.csv > wc-${ip}.txt
+wait
 
 # Make output directories
 mkdir ${beehub_mount}/results-tbcell
