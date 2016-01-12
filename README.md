@@ -33,6 +33,7 @@
     * editdistance
     * ?
 * Perl
+* Bioperl (for HLAforest)
 * Bash
 
 ## How to run
