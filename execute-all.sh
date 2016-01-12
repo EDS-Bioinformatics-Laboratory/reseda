@@ -107,11 +107,11 @@ wait
 
 ### Continue with the aligned sequences ###
 
-bamfiles=`ls *.sam`
+bamfiles=`ls *clean.sam`
 
 # Alignment quality report TO IMPLEMENT
 
-# HLAforest for HLA samples
+## HLAforest for HLA samples
 # for ref in $refs; do
 #     for bam in $bamfiles; do
 #         ./hla-forest.sh ${ref} ${bam}
@@ -153,12 +153,14 @@ mkdir ${beehub_mount}/results-tbcell
 mkdir ${beehub_mount}/results-tbcell/raw
 mkdir ${beehub_mount}/results-tbcell/reports
 mkdir ${beehub_mount}/results-tbcell/final
+mkdir ${beehub_mount}/results-tbcell/hla
 wait
 
 # Transfer data to Beehub
-set_status ${ip} "RUNNING" "Transferring data to Beehub"
+set_status ${ip} "RUNNING" "Transferring ${celltype} data to Beehub"
 test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
 test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
+test ./copy-to-beehub-hla.sh ${beehub_web}/results-tbcell/hla/
 cd split
 test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
 test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
