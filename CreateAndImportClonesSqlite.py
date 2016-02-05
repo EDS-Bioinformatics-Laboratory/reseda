@@ -65,31 +65,31 @@ def create_and_import (con, cur, table, datafile):
 
 ########### Main ###########
 
-# Assume that script was imported when no arguments are given
-if len(sys.argv) == 1:
-    pass
+# # Assume that script was imported when no arguments are given
+# if len(sys.argv) == 1:
+#     pass
 
-# Execute this when arguments are given to the script, else assume that the script is imported
-elif len(sys.argv) == 3:
-    #con = sqlite3.connect(":memory:")
-    con = sqlite3.connect("test.db")
-    cur = con.cursor()
+# # Execute this when arguments are given to the script, else assume that the script is imported
+# elif len(sys.argv) == 3:
+#     #con = sqlite3.connect(":memory:")
+#     con = sqlite3.connect("test.db")
+#     cur = con.cursor()
 
-    #allInfoFile = "/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv"
-    allInfoFile = sys.argv[1]
-    create_and_import(con, cur,"all_info", allInfoFile)
+#     #allInfoFile = "/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv"
+#     allInfoFile = sys.argv[1]
+#     create_and_import(con, cur,"all_info", allInfoFile)
 
-    #clonesFile = "/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-clones-subs.csv"
-    clonesFile = sys.argv[2]
-    create_and_import(con, cur, "clones", clonesFile)
+#     #clonesFile = "/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-clones-subs.csv"
+#     clonesFile = sys.argv[2]
+#     create_and_import(con, cur, "clones", clonesFile)
 
-    # Close the connection
-    con.close()
+#     # Close the connection
+#     con.close()
 
-    print("Finished")
+#     print("Finished")
 
-    exit()
+#     exit()
 
-# Error message when there are arguments, but not the right amount
-else:
-    sys.exit("Usage: create_and_import.py path-to/all_info.csv path-to/clones-subs.csv")
+# # Error message when there are arguments, but not the right amount
+# else:
+#     sys.exit("Usage: create_and_import.py path-to/all_info.csv path-to/clones-subs.csv")
