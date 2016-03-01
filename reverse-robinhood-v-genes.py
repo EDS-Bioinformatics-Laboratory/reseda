@@ -51,28 +51,29 @@ def getOffset (cutOff, frac_cum):
 
 # datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/S074-129_S129_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv"]
 # datafiles += ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB19_S52_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB21_S54_L001.assembled-ACGTACGT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/UNIFI68-9N-MID1-Exo_S162_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv"]
+
 datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv"]
+# datafiles = ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv"]
 
 fhOut = open("log-fix-multiple-V-assignments.txt", "w")
 print("datafile corrected_accessions total_accessions", file=fhOut)
 for datafile in datafiles:
-    # con = sqlite3.connect(":memory:")
-    con = sqlite3.connect("rr.db")
+    con = sqlite3.connect(":memory:")
+    # con = sqlite3.connect("rr.db")
     cur = con.cursor()
 
-    # importData(datafile)
+    importData(datafile)
     cdr3s = getCdr3WithMultipleVgenes()
 
     for cdr3 in cdr3s:
+        # get V's, nr of accessions with that V (frequency)
         (v_genes, freqs) = getFreqVgenes(cdr3)
+        # calculate fraction and cumulative fraction of frequency
         (frac, frac_cum) = fraction(freqs)
-        # print(cdr3, v_genes, freqs, frac, frac_cum)
+        # determine which V's to combine (if the first V occurs more than 70% take that one, if first two V's occur more than 70% combine these, etc)
         i = getOffset(0.7, frac_cum)
-        print(cdr3, v_genes[0:i+1],frac[0:i+1])
-
-
-    # determine which V gene occurs most
-    # assign V gene with highest occurrence if above XX% (70?)
-    #assign multiple V genes when it is difficult to assign (e.g. 50/50%)
+        new_v = v_genes[0:i+1]
+        new_v = "+".join(new_v)
+        print(cdr3, new_v, v_genes, freqs, frac)
 
     con.close()
