@@ -21,6 +21,7 @@ def fixMultipleAssignedVGenes (datafile):
 
     table = "all_info"
     basename = datafile.split("/")[-1]
+    allfile = basename + "-all_info-v-correction.txt"
     outfile = basename + "-clones-v-correction.txt"
     create_and_import(con, cur, table, datafile)
 
@@ -96,10 +97,10 @@ def fixMultipleAssignedVGenes (datafile):
                     assign_v = V_subs[i]
                     break
 
-            # print(cdr3pep, acc, cdr3peptides[cdr3pep]['V_sub'])
-            # print(V_subs)
-            # print(fractions_cumulatief)
-            # print("Assigned:", assign, assign_v)
+            print(cdr3pep, acc, cdr3peptides[cdr3pep]['V_sub'])
+            print(V_subs)
+            print(fractions_cumulatief)
+            print("Assigned:", assign, assign_v)
 
             # Update the all_info table, set the newly assigned V gene for the accession code
             query = "UPDATE all_info SET V_sub='" + assign_v + "' WHERE acc='" + acc + "'"
@@ -119,6 +120,15 @@ def fixMultipleAssignedVGenes (datafile):
     for row in result:
         total_reads = int(row[0])
         total_umis = int(row[1])
+
+    # Write all_info to a file
+    fhAllInfo = open(allfile, "w")
+    result = cur.execute('SELECT * FROM all_info')
+    print("\t".join([description[0] for description in result.description]), file=fhAllInfo)
+    for row in result:
+        str_row = [str(c) for c in row]
+        print("\t".join(str_row), file=fhAllInfo)
+    fhAllInfo.close()
 
     # Write clones to a file
     fhClonesSubs = open(outfile, "w")
@@ -144,8 +154,12 @@ def fixMultipleAssignedVGenes (datafile):
 
 ########## MAIN ###############
 
-datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/S074-129_S129_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv"]
+# datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/S074-129_S129_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv"]
+# datafiles += ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB19_S52_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB21_S54_L001.assembled-ACGTACGT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/UNIFI68-9N-MID1-Exo_S162_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv"]
 
+fhOut = open("log-fix-multiple-V-assignments.txt", "w")
+print("datafile corrected_accessions total_accessions", file=fhOut)
 for datafile in datafiles:
     (nr_of_corrected_accs, nr_of_unique_accs) = fixMultipleAssignedVGenes(datafile)
-    print("Corrected and total reads:", nr_of_corrected_accs, nr_of_unique_accs)
+    print(datafile, nr_of_corrected_accs, nr_of_unique_accs, file=fhOut)
+fhOut.close()
