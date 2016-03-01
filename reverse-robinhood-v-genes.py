@@ -49,15 +49,22 @@ def getOffset (cutOff, frac_cum):
 ####### MAIN ########
 
 
-# datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/S074-129_S129_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv"]
-# datafiles += ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB19_S52_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB21_S54_L001.assembled-ACGTACGT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/UNIFI68-9N-MID1-Exo_S162_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv"]
+datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/S074-129_S129_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv"]
+datafiles += ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB19_S52_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB21_S54_L001.assembled-ACGTACGT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/UNIFI68-9N-MID1-Exo_S162_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv"]
 
-datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv"]
+# datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv"]
 # datafiles = ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv"]
 
 fhOut = open("log-fix-multiple-V-assignments.txt", "w")
 print("datafile corrected_accessions total_accessions", file=fhOut)
 for datafile in datafiles:
+    outfile = datafile.split("/")[-1] + ".rr.csv"
+    try:
+        fhOut = open(outfile, "w")
+        print("cdr3\tnew_v\tv_genes\tfreqs\tfrac", file=fhOut)
+    except:
+        sys.exit("cannot write " + oufile + "to disk")
+
     con = sqlite3.connect(":memory:")
     # con = sqlite3.connect("rr.db")
     cur = con.cursor()
@@ -73,7 +80,12 @@ for datafile in datafiles:
         # determine which V's to combine (if the first V occurs more than 70% take that one, if first two V's occur more than 70% combine these, etc)
         i = getOffset(0.7, frac_cum)
         new_v = v_genes[0:i+1]
+        new_v.sort()
         new_v = "+".join(new_v)
-        print(cdr3, new_v, v_genes, freqs, frac)
+        v_genes = ",".join(v_genes)
+        freqs = ",".join([str(c) for c in freqs])
+        frac = ",".join([str(c) for c in frac])
+        print("\t".join([cdr3, new_v, v_genes, freqs, frac]), file=fhOut)
 
     con.close()
+    fhOut.close()
