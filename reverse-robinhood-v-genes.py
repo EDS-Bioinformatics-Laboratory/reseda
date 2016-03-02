@@ -59,11 +59,15 @@ fhOut = open("log-fix-multiple-V-assignments.txt", "w")
 print("datafile corrected_accessions total_accessions", file=fhOut)
 for datafile in datafiles:
     outfile = datafile.split("/")[-1] + ".rr.csv"
+    allfile = datafile.split("/")[-1] + ".rr.all_info.csv"
+    clonefile = datafile.split("/")[-1] + ".rr.clones_subs.csv"
     try:
         fhOut = open(outfile, "w")
         print("cdr3\tnew_v\tv_genes\tfreqs\tfrac", file=fhOut)
+        fhAllInfo = open(allfile, "w")
+        fhClonesSubs = open(clonefile, "w")
     except:
-        sys.exit("cannot write " + oufile + "to disk")
+        sys.exit("cannot write to disk")
 
     con = sqlite3.connect(":memory:")
     # con = sqlite3.connect("rr.db")
@@ -86,6 +90,48 @@ for datafile in datafiles:
         freqs = ",".join([str(c) for c in freqs])
         frac = ",".join([str(c) for c in frac])
         print("\t".join([cdr3, new_v, v_genes, freqs, frac]), file=fhOut)
+        # update all_info table
+        query = "update all_info set V_sub='" + new_v + "' where cdr3pep='" + cdr3 + "'"
+        print(query)
+        cur.execute(query)
+
+    # Write all_info to a file
+    fhAllInfo = open(allfile, "w")
+    result = cur.execute('SELECT * FROM all_info')
+    print("\t".join([description[0] for description in result.description]), file=fhAllInfo)
+    for row in result:
+        str_row = [str(c) for c in row]
+        print("\t".join(str_row), file=fhAllInfo)
+    fhAllInfo.close()
+
+    # Create a clone report based on V_sub, J_sub and CDR3peptide
+    query = "DROP TABLE IF EXISTS clones_subs"
+    print(query)
+    cur.execute(query)
+    query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info WHERE V_sub!='None' AND J_sub!='None' GROUP BY V_sub, J_sub, cdr3pep"
+    print(query)
+    cur.execute(query)
+
+    result = cur.execute("SELECT SUM(freq) AS total_reads, SUM(uniq_umis) AS total_umis FROM clones_subs")
+    for row in result:
+        total_reads = int(row[0])
+        total_umis = int(row[1])
+
+    # Write clones to a file
+    result = cur.execute('SELECT * FROM clones_subs ORDER BY freq DESC')
+    print("\t".join([description[0] for description in result.description]) + "\tread_perc\tumi_perc", file=fhClonesSubs)
+    for row in result:
+        str_row = list()
+        for i in range(len(row)):
+            str_row.append(str(row[i]))
+        # Calculate percentage
+        read_perc = 100 * float(str_row[3]) / float(total_reads)  # column 3 is the frequency
+        str_row.append(str(read_perc))
+        umi_perc = 100 * float(str_row[4]) / float(total_umis)  # column 3 is the frequency
+        str_row.append(str(umi_perc))
+        print("\t".join(str_row), file=fhClonesSubs)
 
     con.close()
     fhOut.close()
+    fhAllInfo.close()
+    fhClonesSubs.close()
