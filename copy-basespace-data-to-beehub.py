@@ -14,4 +14,4 @@ syscall = os.popen("ls " + sampledir + "/*/Files/Data/Intensities/BaseCalls/*.fa
 
 for line in syscall:
     line = line.rstrip()
-    print('curl -T "{', line, '}" --netrc', myurl)
+    print('curl -T "' + line + '" --netrc', myurl, "; wait")
