@@ -2,7 +2,7 @@ from __future__ import print_function
 import sys
 
 # Create this file with: wc -l *-all_info.csv > wc-run04.txt
-wcFile = "wc.txt"
+wcFile = sys.argv[1]   # "wc.txt"
 
 try:
     fh = open(wcFile, "r")

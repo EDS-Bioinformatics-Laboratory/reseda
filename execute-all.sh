@@ -142,10 +142,16 @@ for sample in ${samples}; do
     totalFile="final/${prefix}-${celltype}-productive.txt"
     test python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
+
+    # Correct V gene assignments
+    test python reverse-robinhood-v-genes.py ${outFile}
 done
 
 # Count lines of all_info.csv files
+set_status ${ip} "RUNNING" "${celltype} Correction on V genes"
 test wc -l final/*all_info.csv > wc-${ip}.txt
+wait
+test python select-correct-mids.py wc-${ip}.txt > mv-samples-with-correct-mid.sh
 wait
 
 # Make output directories
