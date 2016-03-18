@@ -116,8 +116,14 @@ for datafile in datafiles:
 
     result = cur.execute("SELECT SUM(freq) AS total_reads, SUM(uniq_umis) AS total_umis FROM clones_subs")
     for row in result:
-        total_reads = int(row[0])
-        total_umis = int(row[1])
+        try:
+            total_reads = int(row[0])
+        except:
+            total_reads = 0
+        try:
+            total_umis = int(row[1])
+        except:
+            total_umis = 0
 
     # Write clones to a file
     result = cur.execute('SELECT * FROM clones_subs ORDER BY freq DESC')
