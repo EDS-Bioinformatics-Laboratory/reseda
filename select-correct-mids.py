@@ -19,6 +19,9 @@ for line in fh:
     path = filepath.split("/")    # get directories and filename
 
     filename = path[-1]
+    if filename == "total":
+        continue
+
     elements = filename.split("-") # filename contains info about:
     celltype = elements[-2]
     mid = elements[-3]
