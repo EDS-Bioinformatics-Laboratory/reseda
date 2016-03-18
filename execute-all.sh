@@ -11,7 +11,7 @@
 cell="IGH"
 organism="human"
 celltype="${cell}_HUMAN"
-run="runNN-2015MMDD-miseq"
+run="runNN-2016MMDD-miseq"
 
 # Reference sequences
 mids="MIDS-miseq.txt"
@@ -145,10 +145,15 @@ for sample in ${samples}; do
 
     # Correct V gene assignments
     test python reverse-robinhood-v-genes.py ${outFile}
+    wait
 done
 
+# Move files to final
+mv *.rr.* final/
+wait
+
 # Count lines of all_info.csv files
-set_status ${ip} "RUNNING" "${celltype} Correction on V genes"
+set_status ${ip} "RUNNING" "${celltype} Select correct MIDs"
 test wc -l final/*all_info.csv > wc-${ip}.txt
 wait
 test python select-correct-mids.py wc-${ip}.txt > mv-samples-with-correct-mid.sh
