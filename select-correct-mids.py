@@ -2,7 +2,7 @@ from __future__ import print_function
 import sys
 
 # Create this file with: wc -l *-all_info.csv > wc-run04.txt
-wcFile = "wc.txt"
+wcFile = sys.argv[1]   # "wc.txt"
 
 try:
     fh = open(wcFile, "r")
@@ -19,6 +19,9 @@ for line in fh:
     path = filepath.split("/")    # get directories and filename
 
     filename = path[-1]
+    if filename == "total":
+        continue
+
     elements = filename.split("-") # filename contains info about:
     celltype = elements[-2]
     mid = elements[-3]
