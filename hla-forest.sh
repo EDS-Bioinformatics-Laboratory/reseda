@@ -23,8 +23,12 @@ mkdir FOREST
 java -jar picard-tools-1.126/picard.jar SortSam I=${prefix}.sam O=${prefix}.readsort.sam SO=queryname
 wait
 
+# Select sequences that are long enough
+perl -ne 'if (m/^\@/) {print;} else { @c=split(/\s+/); print if length($c[8]) > 250; }' ${prefix}.readsort.sam > ${prefix}.sizeselection.sam
+wait
+
 # in case of multiple hits, choose the first
-perl -ne 'if (m/^\@/) {print;} else { @c=split(/\s+/); print if $c[0] ne $previous; $previous=$c[0]; }' ${prefix}.readsort.sam > ${prefix}.filtered.sam
+perl -ne 'if (m/^\@/) {print;} else { @c=split(/\s+/); print if $c[0] ne $previous; $previous=$c[0]; }' ${prefix}.sizeselection.sam > ${prefix}.filtered.sam
 wait
 
 # Merge sam files
