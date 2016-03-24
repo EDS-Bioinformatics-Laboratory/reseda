@@ -24,7 +24,7 @@ java -jar picard-tools-1.126/picard.jar SortSam I=${prefix}.sam O=${prefix}.read
 wait
 
 # Select sequences that are long enough
-perl -ne 'if (m/^\@/) {print;} else { @c=split(/\s+/); print if length($c[8]) > 250; }' ${prefix}.readsort.sam > ${prefix}.sizeselection.sam
+perl -ne 'if (m/^\@/) {print;} else { @c=split(/\s+/); print if length($c[8]) > 299; }' ${prefix}.readsort.sam > ${prefix}.sizeselection.sam
 wait
 
 # in case of multiple hits, choose the first
