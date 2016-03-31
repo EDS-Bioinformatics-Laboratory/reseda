@@ -120,15 +120,17 @@ def parseReassign (totalreads, summary_mids, reassign):
 
     return(summary)
 
-def makeBarChart (plotfile,title,y_label, threshold,x,y,z,a,b):
+def makeBarChart (plotfile,title,y_label, threshold,x,v,w,y,z,a,b):
     x_pos = np.arange(len(x))
     
     fig, ax = plt.subplots(figsize=(60, 10)) 
     fig.subplots_adjust(bottom=0.3)
     p = list()
+    p.append(ax.bar(x_pos, v, align='center', color="gray"))
+    p.append(ax.bar(x_pos, w, align='center', color="yellow"))
     p.append(ax.bar(x_pos, y, align='center', color="red"))
     p.append(ax.bar(x_pos, z, align='center', color="blue"))
-    p.append(ax.bar(x_pos, a, align='center', color="yellow"))
+    p.append(ax.bar(x_pos, a, align='center', color="orange"))
     p.append(ax.bar(x_pos, b, align='center', color="green"))
     ax.plot((0,max(x_pos)),(threshold,threshold), '--', color="black")
 
@@ -136,8 +138,8 @@ def makeBarChart (plotfile,title,y_label, threshold,x,y,z,a,b):
     ax.set_xlabel('Samples')
     ax.set_ylabel(y_label)
     ax.set_title(title)
-    labels = ['With correct MID', 'CDR3 identified', 'VJ assigned', 'After V re-assignment']
-    plt.legend((p[0][0], p[1][0], p[2][0], p[3][0]), labels)
+    labels = ['Total','Assembled', 'With correct MID', 'CDR3 identified', 'VJ assigned', 'After V re-assignment']
+    plt.legend((p[0][0], p[1][0], p[2][0], p[3][0], p[4][0], p[5][0]), labels)
 
     
     try:
@@ -161,8 +163,11 @@ try:
 except:
     sys.exit("cannot write file report-all.csv")
 
-print("Sample TotalReads MID MidFreq MidPerc Cdr3Freq Cdr3Perc VJFreq VJPerc ReassignedFreq ReassignedPerc", file=fhOut)
+print("Sample TotalReads AssembledFreq AssembledPerc MID MidFreq MidPerc Cdr3Freq Cdr3Perc VJFreq VJPerc ReassignedFreq ReassignedPerc", file=fhOut)
 samples = list()
+totals = list()
+assembledfreqs = list()
+assembledpercs = list()
 midpercs = list()
 cdr3percs = list()
 prodpercs = list()
@@ -174,6 +179,7 @@ reassignfreqs = list()
 for sample in sorted(totalreads):
     # Print all numbers to file
     total = totalreads[sample]
+    (assembledfreq, assembledperc) = summary_pear[sample]
     (mid, midfreq, midperc) = summary_mids[sample]
     (cdr3freq, cdr3perc) = summary_cdr3.get(sample,(0,0))
     (prodfreq, prodperc) = summary_prod.get(sample,(0,0))
@@ -182,16 +188,19 @@ for sample in sorted(totalreads):
 
     # Store percentages in lists
     samples.append(sample)
+    assembledpercs.append(assembledperc)
     midpercs.append(midperc)
     cdr3percs.append(cdr3perc)
     prodpercs.append(prodperc)
     reassigns.append(reassignperc)
 
     # Store frequencies in lists
+    totals.append(total)
+    assembledfreqs.append(assembledfreq)
     midfreqs.append(midfreq)
     cdr3freqs.append(cdr3freq)
     prodfreqs.append(prodfreq)
     reassignfreqs.append(reassignfreq)
 
-makeBarChart("report-all-percentages.pdf", "Run06", "Reads (percentage)", 70, samples,midpercs,cdr3percs,prodpercs,reassigns)
-makeBarChart("report-all-frequencies.pdf", "Run06", "Reads (frequency)", 50000, samples,midfreqs,cdr3freqs,prodfreqs,reassignfreqs)
+makeBarChart("report-all-percentages.pdf", "Run06", "Reads (percentage)", 70, samples, len(samples)*[100],assembledpercs,midpercs,cdr3percs,prodpercs,reassigns)
+makeBarChart("report-all-frequencies.pdf", "Run06", "Reads (frequency)", 50000, samples, totals, assembledfreqs,midfreqs,cdr3freqs,prodfreqs,reassignfreqs)
