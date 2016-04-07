@@ -184,7 +184,7 @@ for sample in sorted(totalreads):
     (cdr3freq, cdr3perc) = summary_cdr3.get(sample,(0,0))
     (prodfreq, prodperc) = summary_prod.get(sample,(0,0))
     (reassignfreq, reassignperc) = summary_reassign.get(sample,(0,0))
-    print(sample, total, mid, midfreq, midperc, cdr3freq, cdr3perc, prodfreq, prodperc, reassignfreq, reassignperc, file=fhOut)
+    print(sample, total, assembledfreq, assembledperc, mid, midfreq, midperc, cdr3freq, cdr3perc, prodfreq, prodperc, reassignfreq, reassignperc, file=fhOut)
 
     # Store percentages in lists
     samples.append(sample)
