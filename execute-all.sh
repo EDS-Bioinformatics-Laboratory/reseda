@@ -161,7 +161,7 @@ cd ..
 test python reverse-robinhood-v-genes.py final/correct-mid/*-all_info.csv
 wait
 # Move files to final
-mv *.rr.* final/
+mv *.rr.* final/correct-mid
 wait
 
 # Make output directories
