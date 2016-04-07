@@ -155,6 +155,8 @@ mkdir final/correct-mid
 wait
 cd final
 test bash ../mv-samples-with-correct-mid.sh
+wait
+mv correct-mid/*-productive.txt .
 cd ..
 
 # Correct V gene assignments
