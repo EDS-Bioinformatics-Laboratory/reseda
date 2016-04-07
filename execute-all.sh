@@ -143,14 +143,7 @@ for sample in ${samples}; do
     test python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 
-    # Correct V gene assignments
-    test python reverse-robinhood-v-genes.py ${outFile}
-    wait
 done
-
-# Move files to final
-mv *.rr.* final/
-wait
 
 # Count lines of all_info.csv files
 set_status ${ip} "RUNNING" "${celltype} Select correct MIDs"
@@ -158,12 +151,25 @@ test wc -l final/*all_info.csv > wc-${ip}.txt
 wait
 test python select-correct-mids.py wc-${ip}.txt > mv-samples-with-correct-mid.sh
 wait
+mkdir final/correct-mid
+wait
+cd final
+test bash ../mv-samples-with-correct-mid.sh
+cd ..
+
+# Correct V gene assignments
+test python reverse-robinhood-v-genes.py final/correct-mid/*-all_info.csv
+wait
+# Move files to final
+mv *.rr.* final/
+wait
 
 # Make output directories
 mkdir ${beehub_mount}/results-tbcell
 mkdir ${beehub_mount}/results-tbcell/raw
 mkdir ${beehub_mount}/results-tbcell/reports
 mkdir ${beehub_mount}/results-tbcell/final
+mkdir ${beehub_mount}/results-tbcell/final/correct-mid
 mkdir ${beehub_mount}/results-tbcell/hla
 wait
 
@@ -178,7 +184,9 @@ test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
 cd ../final
 test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
 test ./copy-to-beehub-final.sh ${beehub_web}/results-tbcell/final/
-cd ..
+cd correct-mid
+test ./copy-to-beehub-final.sh ${beehub_web}/results-tbcell/final/correct-mid/
+cd ../..
 
 wait
 
