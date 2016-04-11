@@ -63,7 +63,7 @@ if test == 1:
 
     x = range(1,11)
     cdr3s = [20**a for a in x]
-    nr_vgenes = 42
+    nr_vgenes = 52
     y = same_as_you(cdr3s, nr_vgenes)
     z = taylor_approximation(cdr3s, nr_vgenes)
     print(x)
