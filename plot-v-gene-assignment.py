@@ -3,17 +3,18 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-myfile = "/home/narya/TMP/S074-299-BCRh_S22_L001.assembled-ACTGACTG-IGH_HUMAN-all_info.csv.rr.csv"
+# myfile = "/home/narya/TMP/S074-299-BCRh_S22_L001.assembled-ACTGACTG-IGH_HUMAN-all_info.csv.rr.csv"
 # myfile = "/home/narya/TMP/S074-235_S230_L001.assembled-CGTACGTA-TRB_HUMAN-all_info.csv.rr.csv"
 # myfile = "/home/narya/TMP/S074-002_S73_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv.rr.csv"
 # myfile = "/home/narya/TMP/S074-228_S223_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv.rr.csv"
+myfile = "/home/narya/TMP/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv.rr.csv"
 
 try:
     fh = open(myfile)
 except:
     sys.exit("cannot open file")
 
-top = 10
+top = 10  # show count for top X V genes, anything above that will be counted as "rest"
 
 def autolabel(rects, labels):
     # attach some text labels
@@ -31,6 +32,8 @@ for i in range(top):
     entries.append(list())
 cdr3s = list()
 freqs = list()
+vgenes_cooccurrence = dict()
+all_vgenes = list()
 
 n = 0
 first = list()    # store fractions of V gene that has highest occurrence
@@ -42,6 +45,16 @@ for line in fh:
     c = line.split()
     fracs = c[4].split(",")
     fracs = [float(f) for f in fracs]
+
+    # Which vgenes occur together
+    vgenes = c[2].split(",")
+    all_vgenes += vgenes
+    for a in range(len(vgenes)):
+        for b in range(len(vgenes)):
+            if vgenes[a] == vgenes[b]:
+                continue
+            vgenes_cooccurrence[(vgenes[a], vgenes[b])] = vgenes_cooccurrence.get((vgenes[a], vgenes[b]), 1) + 1
+
 
     # Calculate the cumulative fraction
     for i in range(1,len(fracs)):
@@ -96,3 +109,21 @@ plt.legend((p[0][0], p[1][0], p[2][0], p[3][0], p[4][0], p[5][0], p[6][0], p[7][
 autolabel(p[0], freqs)
 
 plt.savefig(myfile + ".stackedbars.svg")
+
+# # Make scatterplot of co-occurring V genes, size is nr of times they occur together
+# x = list()
+# y = list()
+# s = list()
+# vs = list(set(all_vgenes))
+# vs.sort()
+# for v_a, v_b in vgenes_cooccurrence:
+#     x.append(vs.index(v_a))
+#     y.append(vs.index(v_b))
+#     s.append(vgenes_cooccurrence[(v_a, v_b)])
+
+# fig, ax = plt.subplots(figsize=(20, 20)) 
+# # fig.subplots_adjust(bottom=0.3)
+# plt.scatter(x,y,s=s)
+# plt.xticks(range(len(vs)), vs, rotation=90)
+# plt.yticks(range(len(vs)), vs)
+# plt.savefig(myfile + ".co-occurrence.svg")
