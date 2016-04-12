@@ -2,6 +2,8 @@ from __future__ import print_function
 import sys
 import sqlite3
 from CreateAndImportClonesSqlite import *
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Input
 if len(sys.argv) < 2:
@@ -17,8 +19,31 @@ def importData (datafile):
     basename = datafile.split("/")[-1]
     create_and_import(con, cur, table, datafile)
 
-def getCdr3WithMultipleVgenes ():
+def plotNrVgenes (datafile):
+    basename = datafile.split("/")[-1]
+
     # query: get cdr3 and nr of different V genes
+    query = "select cdr3pep,count(distinct V_sub) from all_info group by cdr3pep order by count(distinct V_sub) desc"
+    result = cur.execute(query)
+    data = list()
+    for row in result:
+        data.append(int(row[1]))
+
+    # Start figure
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+
+    # Make histogram
+    hist, bins = np.histogram(data, bins=50)
+    width = 0.7 * (bins[1] - bins[0])
+    center = (bins[:-1] + bins[1:]) / 2
+    plt.xticks(np.arange(min(data)-2, max(data)+1, 1))
+    # ax.set_yscale('log')
+    plt.bar(center, hist, align='center', width=width)
+    plt.savefig(basename + ".rr.hist.svg")
+
+def getCdr3WithMultipleVgenes ():
+    # query: get cdr3 and nr of different V genes with a count > 1
     query = "select cdr3pep,count(distinct V_sub),count(distinct acc) from all_info group by cdr3pep having count(distinct V_sub)>1 order by count(distinct V_sub) desc"
     result = cur.execute(query)
     cdr3s = list()
@@ -76,6 +101,7 @@ for datafile in datafiles:
     cur = con.cursor()
 
     importData(datafile)
+    plotNrVgenes (datafile)
     cdr3s = getCdr3WithMultipleVgenes()
 
     for cdr3 in cdr3s:
