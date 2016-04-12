@@ -4,6 +4,12 @@ import matplotlib.pyplot as plt
 
 test = 1  # set to 0 to switch off
 
+def same_amino_acid_sequence (length):
+    p = list()
+    for l in length:
+        p.append((1.0/20)**l)
+    return(p)
+
 def two_same_birthday (x, n):
     '''
     Description: calculates probability of two people having the same birthday
@@ -63,21 +69,24 @@ if test == 1:
 
     x = range(1,11)
     cdr3s = [20**a for a in x]
-    nr_vgenes = 52
+    nr_vgenes = 65                  # TCRb: 52, BCRh: 65
     y = same_as_you(cdr3s, nr_vgenes)
     z = taylor_approximation(cdr3s, nr_vgenes)
+    w = same_amino_acid_sequence(x)
     print(x)
     print(y)
     print(z)
+    print(w)
 
     fig, ax = plt.subplots()
     # ax.set_xscale('log')
     # ax.set_yscale('log')
     p1 = ax.plot(x, y, color="blue", linestyle="solid", marker="o")
     p2 = ax.plot(x, z, color="red", linestyle="dashed", marker="o")
+    p3 = ax.plot(x, w, color="green", linestyle="dashdot", marker="o")
     ax.set_xlabel("Number of inserted amino acids in CDR3")
     ax.set_ylabel("Probability")
     ax.set_title("Probability of two V genes having the same CDR3")
     plt.xticks(x)
-    plt.legend(["Same V gene given a CDR3","Same V gene for any CDR3"])
+    plt.legend(["Same V gene given a CDR3","taylor_approximation","(1/20)^L"])
     plt.show()
