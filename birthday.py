@@ -4,6 +4,12 @@ import matplotlib.pyplot as plt
 
 test = 1  # set to 0 to switch off
 
+def antoine (length):
+    p = list()
+    for l in length:
+        p.append(1.0/(400**l))
+    return(p)
+
 def same_amino_acid_sequence (length):
     p = list()
     for l in length:
@@ -73,10 +79,12 @@ if test == 1:
     y = same_as_you(cdr3s, nr_vgenes)
     z = taylor_approximation(cdr3s, nr_vgenes)
     w = same_amino_acid_sequence(x)
+    v = antoine(x)
     print(x)
     print(y)
     print(z)
     print(w)
+    print(v)
 
     fig, ax = plt.subplots()
     # ax.set_xscale('log')
@@ -84,9 +92,10 @@ if test == 1:
     p1 = ax.plot(x, y, color="blue", linestyle="solid", marker="o")
     p2 = ax.plot(x, z, color="red", linestyle="dashed", marker="o")
     p3 = ax.plot(x, w, color="green", linestyle="dashdot", marker="o")
+    p4 = ax.plot(x, v, color="purple", linestyle="dotted", marker="o")
     ax.set_xlabel("Number of inserted amino acids in CDR3")
     ax.set_ylabel("Probability")
     ax.set_title("Probability of two V genes having the same CDR3")
     plt.xticks(x)
-    plt.legend(["Same V gene given a CDR3","taylor_approximation","(1/20)^L"])
+    plt.legend(["Same V gene given a CDR3","taylor_approximation","(1/20)^L","1.0/(400^l)"])
     plt.show()
