@@ -18,7 +18,12 @@ d4<-read.table("/home/barbera/TMP/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN
 d4$sample<-"S74-after"
 
 # Concatenate everything
-d<-rbind(d1,d2,d3,d4)
+top=10000  # Only plot the first X clones
+d<-rbind(d1[1:top,],d2[1:top,],d3[1:top,],d4[1:top,])
+d$color="black"
+d$color[which(d$V_sub=="TRBV12-3")]="red"
+d$color[which(d$V_sub=="TRBV12-4")]="red"
+d$color[which(d$V_sub=="TRBV12-3+TRBV12-4")]="green"
 attach(d)
 
 # Enlarge margins: mar=c(bottom, left, top, right)
@@ -27,9 +32,9 @@ attach(d)
 #par(mar=c(8,4,4,2), xpd=TRUE)
 
 # Make the beeswarm plot
-beeswarm(read_perc ~ sample, data=d,
+beeswarm(freq ~ sample, data=d,
          log = TRUE, pch = 16,
-#         pwcol=color,
+         pwcol=color,
          main = 'Clones before and after V gene re-assignment', method="swarm", corral="wrap", corralWidth=0.7, # was 0.9
          las=2)
 # Add legend
