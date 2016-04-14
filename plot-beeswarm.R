@@ -17,19 +17,24 @@ d3$sample<-"S74-before"
 d4<-read.table("/home/barbera/TMP/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv.rr.clones_subs.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
 d4$sample<-"S74-after"
 
+# Remove 90% of entries with read frequency == 1
+removeSomeSingletons<-function(data) {
+  inx_1<-which(data$freq == 1)
+  s_inx<-sample(inx_1, 0.1*length(inx_1))
+  inx_higher<-which(data$freq > 1)
+  keep<-sort(c(inx_higher,s_inx))
+  data<-data[keep,]
+  return(data)
+}
+d3<-removeSomeSingletons(d3)
+d4<-removeSomeSingletons(d4)
+
 # Concatenate everything
 d<-rbind(d3,d4)  # bind everything
 d$color="black"
 d$color[which(d$V_sub=="TRBV12-3")]="red"
 d$color[which(d$V_sub=="TRBV12-4")]="red"
 d$color[which(d$V_sub=="TRBV12-3+TRBV12-4")]="green"
-
-# Remove 90% of entries with read frequency == 1
-inx_1<-which(d$freq == 1)
-s_inx<-sample(inx, 0.1*length(inx))
-inx_higher<-which(d$freq > 1)
-keep<-sort(c(inx_higher,s_inx))
-d<-d[keep,]
 
 # Enlarge margins: mar=c(bottom, left, top, right)
 # Allow to draw outside the plot region: xpd=TRUE
@@ -38,7 +43,7 @@ d<-d[keep,]
 
 # Make the beeswarm plot
 attach(d)
-beeswarm(freq ~ sample, data=d,
+beeswarm(read_perc ~ sample, data=d,
          log = TRUE, pch = 16,
          pwcol=color,
          main = 'Clones before and after V gene re-assignment', method="swarm", corral="wrap", corralWidth=0.7, # was 0.9
