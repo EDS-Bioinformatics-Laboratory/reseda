@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 # myfile = "/home/barbera/TMP/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv.rr.csv"  # voor paper
 myfile = "/home/barbera/TMP/S074-241-BCRh_S17_L001.assembled-CAGTCAGT-IGH_HUMAN-all_info.csv.rr.csv"  # voor paper
 
+# myfile = sys.argv[1]
+
 try:
     fh = open(myfile)
 except:
