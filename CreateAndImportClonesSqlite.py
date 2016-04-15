@@ -33,6 +33,7 @@ def import_data (con, cur, datafile, delim, table, colnames):
     header = fh.readline()  # skip first line
     for row in fh:
         row = row.rstrip()
+        row = row.replace('"', '')
         row = row.split(delim)
         query = "INSERT INTO " + table + " ("
         query = query + ", ".join(colnames)
@@ -48,6 +49,7 @@ def create_and_import (con, cur, table, datafile):
     Description: create a new table and import the data
     In: str tablename, str filename
     '''
+    delim = ","
 
     # Get header and close the file again
     try:
@@ -55,13 +57,22 @@ def create_and_import (con, cur, table, datafile):
     except:
         sys.exit("cannot open file")
     header = fh.readline()
+    header = header.rstrip()
     header = header.replace(":1", "2")
+    header = header.replace(".", "_")
+    header = header.replace('"',"")
     fh.close()
 
     # Create table and fill table with data
-    colnames = header.split()
+    colnames = header.split(delim)
+    if colnames[0] == "":
+        colnames[0] = "someId"
+    if "group" in colnames:
+        colnames[colnames.index("group")] = "grp"
+    # colnames = ["blah"] + colnames   # only for AA_reads!!! Need to disable this line
+    print(colnames)
     create_table(cur, table,colnames)
-    import_data(con, cur, datafile, "\t", table, colnames)
+    import_data(con, cur, datafile, delim, table, colnames)
 
 ########### Main ###########
 
