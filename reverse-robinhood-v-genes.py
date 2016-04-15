@@ -19,11 +19,11 @@ def importData (datafile):
     basename = datafile.split("/")[-1]
     create_and_import(con, cur, table, datafile)
 
-def plotNrVgenes (datafile):
+def plotNrGenes (datafile, geneCol):
     basename = datafile.split("/")[-1]
 
-    # query: get cdr3 and nr of different V genes
-    query = "select cdr3pep,count(distinct V_sub) from all_info group by cdr3pep order by count(distinct V_sub) desc"
+    # query: get cdr3 and nr of different V or J genes
+    query = "select cdr3pep,count(distinct "+geneCol+") from all_info group by cdr3pep order by count(distinct "+geneCol+") desc"
     result = cur.execute(query)
     data = list()
     for row in result:
@@ -42,27 +42,27 @@ def plotNrVgenes (datafile):
     plt.bar(center, hist, align='center', width=width)
     plt.savefig(basename + ".rr.hist.svg")
 
-def getCdr3WithMultipleVgenes ():
-    # query: get cdr3 and nr of different V genes with a count > 1
-    query = "select cdr3pep,count(distinct V_sub),count(distinct acc) from all_info group by cdr3pep having count(distinct V_sub)>1 order by count(distinct V_sub) desc"
+def getCDR3WithMultipleGenes (geneCol):
+    # query: get cdr3 and nr of different V or J genes with a count > 1
+    query = "select cdr3pep,count(distinct "+geneCol+"),count(distinct acc) from all_info group by cdr3pep having count(distinct "+geneCol+")>1 order by count(distinct "+geneCol+") desc"
     result = cur.execute(query)
     cdr3s = list()
     for row in result:
         cdr3s.append(str(row[0]))
     return(cdr3s)
 
-def getFreqVgenes (cdr3):
+def getFreqGenes (cdr3, geneCol):
 
-    # get the V genes
-    query = "select V_sub,count(distinct acc) from all_info where cdr3pep='" + cdr3 + "' group by cdr3pep,V_sub order by count(distinct acc) desc"
+    # get the V or J genes
+    query = "select "+geneCol+",count(distinct acc) from all_info where cdr3pep='" + cdr3 + "' group by cdr3pep,"+geneCol+" order by count(distinct acc) desc"
     result = cur.execute(query)
-    v_gene = list()
+    gene = list()
     freq = list()
     for row in result:
-        v_gene.append(str(row[0]))
+        gene.append(str(row[0]))
         freq.append(int(row[1]))
 
-    return(v_gene,freq)
+    return(gene,freq)
 
 def fraction (freqs):
     total = float(sum(freqs))
@@ -82,7 +82,9 @@ def getOffset (cutOff, frac_cum):
 # datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv"]
 # datafiles = ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv"]
 
-fhOut = open("log-fix-multiple-V-assignments.txt", "w")
+geneCol = "V_sub"
+
+fhOut = open("log-fix-multiple-"+geneCol+"-assignments.txt", "w")
 print("datafile corrected_accessions total_accessions", file=fhOut)
 for datafile in datafiles:
     outfile = datafile.split("/")[-1] + ".rr.csv"
@@ -90,7 +92,7 @@ for datafile in datafiles:
     clonefile = datafile.split("/")[-1] + ".rr.clones_subs.csv"
     try:
         fhOut = open(outfile, "w")
-        print("cdr3\tnew_v\tv_genes\tfreqs\tfrac", file=fhOut)
+        print("cdr3\tnew\tgenes\tfreqs\tfrac", file=fhOut)
         fhAllInfo = open(allfile, "w")
         fhClonesSubs = open(clonefile, "w")
     except:
@@ -101,25 +103,25 @@ for datafile in datafiles:
     cur = con.cursor()
 
     importData(datafile)
-    plotNrVgenes (datafile)
-    cdr3s = getCdr3WithMultipleVgenes()
+    plotNrGenes (datafile, geneCol)
+    cdr3s = getCDR3WithMultipleGenes(geneCol)
 
     for cdr3 in cdr3s:
         # get V's, nr of accessions with that V (frequency)
-        (v_genes, freqs) = getFreqVgenes(cdr3)
+        (genes, freqs) = getFreqGenes(cdr3,geneCol)
         # calculate fraction and cumulative fraction of frequency
         (frac, frac_cum) = fraction(freqs)
         # determine which V's to combine (if the first V occurs more than 70% take that one, if first two V's occur more than 70% combine these, etc)
         i = getOffset(cutOff, frac_cum)
-        new_v = v_genes[0:i+1]
-        new_v.sort()
-        new_v = "+".join(new_v)
-        v_genes = ",".join(v_genes)
+        new = genes[0:i+1]
+        new.sort()
+        new = "+".join(new)
+        genes = ",".join(genes)
         freqs = ",".join([str(c) for c in freqs])
         frac = ",".join([str(c) for c in frac])
-        print("\t".join([cdr3, new_v, v_genes, freqs, frac]), file=fhOut)
+        print("\t".join([cdr3, new, genes, freqs, frac]), file=fhOut)
         # update all_info table
-        query = "update all_info set V_sub='" + new_v + "' where cdr3pep='" + cdr3 + "'"
+        query = "update all_info set "+geneCol+"='" + new + "' where cdr3pep='" + cdr3 + "'"
         print(query)
         cur.execute(query)
 

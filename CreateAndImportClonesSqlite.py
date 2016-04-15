@@ -49,13 +49,13 @@ def create_and_import (con, cur, table, datafile):
     Description: create a new table and import the data
     In: str tablename, str filename
     '''
-    delim = ","
+    delim = "\t"
 
     # Get header and close the file again
     try:
         fh = open(datafile, "rb")
     except:
-        sys.exit("cannot open file")
+        sys.exit("cannot open file"+datafile)
     header = fh.readline()
     header = header.rstrip()
     header = header.replace(":1", "2")
