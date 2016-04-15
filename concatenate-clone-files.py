@@ -23,7 +23,7 @@ def parseSampleName (myfile):
     path = myfile.split("/")[-1]
     sample, rest = path.split("_L001.assembled-")
     mid = rest.split("-")[0]
-    return(sample)
+    return(sample,mid)
 
 def printContent (myfile, fhOut):
     '''
@@ -34,11 +34,11 @@ def printContent (myfile, fhOut):
     except:
         sys.exit("cannot open file "+myfile)
 
-    sample = parseSampleName(myfile)
+    sample,mid = parseSampleName(myfile)
 
     header = fh.readline() # skip header
     for line in fh:
-        line = [sample] + line.strip().split()
+        line = [sample,mid] + line.strip().split()
         print("\t".join(line), file=fhOut)
 
     fh.close()
@@ -52,7 +52,7 @@ except:
     sys.exit("cannot open file "+myfiles[0])
 
 header = fh.readline()
-header = ["Sample"] + header.strip().split()
+header = ["Sample","MID"] + header.strip().split()
 print("\t".join(header), file=fhOut)
 fh.close()
 
