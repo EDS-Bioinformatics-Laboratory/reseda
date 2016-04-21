@@ -166,6 +166,11 @@ wait
 mv *.rr.* final/correct-mid
 wait
 
+# Concatenate clones files
+test python concatenate-clone-files.py final/correct-mid/*.rr.clones_subs.csv
+wait
+
+
 # Make output directories
 mkdir ${beehub_mount}/results-tbcell
 mkdir ${beehub_mount}/results-tbcell/raw
@@ -177,6 +182,7 @@ wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${celltype} data to Beehub"
+test curl -T run-clones_subs.csv --netrc ${beehub_web}/results-tbcell/
 test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
 test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
 test ./copy-to-beehub-hla.sh ${beehub_web}/results-tbcell/hla/
