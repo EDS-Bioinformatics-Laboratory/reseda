@@ -57,12 +57,16 @@ def makeScatter (datafile, sampleX, sampleY):
 
     fig, ax = plt.subplots()
     ax.scatter(x, y)
-    ax.set_xscale('log')
-    ax.set_yscale('log')
 
-    max_xy = max(x+y)
+    max_xy = max(x+y) + 1
     ax.plot((0,max_xy),(threshold,threshold), '--', color="red")
     ax.plot((threshold,threshold),(0,max_xy), '--', color="red")
+
+    # plt.xlim([-1,max_xy])
+    # plt.ylim([-1,max_xy])
+
+    # ax.set_xscale('log')
+    # ax.set_yscale('log')
 
     ax.set_xlabel(sampleX, fontsize=20)
     ax.set_ylabel(sampleY, fontsize=20)
@@ -70,11 +74,11 @@ def makeScatter (datafile, sampleX, sampleY):
 
     ax.grid(True)
 
-    plt.show()
-    # try:
-    #     plt.savefig(plotfile)
-    #     print("Wrote", plotfile, "to disk")
-    # except:
-    #     sys.exit("cannot write plotfile to disk")
+    # plt.show()
+    try:
+        plt.savefig(plotfile)
+        print("Wrote", plotfile, "to disk")
+    except:
+        sys.exit("cannot write plotfile to disk")
 
-makeScatter("/home/barbera/TMP/run06-clones_subs.csv", "S074-061_S104", "S074-062_S105")
+makeScatter("/home/barbera/TMP/run06-clones_subs.csv", "S074-166_S173", "S074-188_S185")
