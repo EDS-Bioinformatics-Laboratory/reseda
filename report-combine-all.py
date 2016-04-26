@@ -203,4 +203,4 @@ for sample in sorted(totalreads):
     reassignfreqs.append(reassignfreq)
 
 makeBarChart("report-all-percentages.pdf", "Run06", "Reads (percentage)", 70, samples, len(samples)*[100],assembledpercs,midpercs,cdr3percs,prodpercs,reassigns)
-makeBarChart("report-all-frequencies.pdf", "Run06", "Reads (frequency)", 50000, samples, totals, assembledfreqs,midfreqs,cdr3freqs,prodfreqs,reassignfreqs)
+makeBarChart("report-all-frequencies.pdf", "Run06", "Reads (frequency)", 0, samples, totals, assembledfreqs,midfreqs,cdr3freqs,prodfreqs,reassignfreqs)
