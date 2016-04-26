@@ -12,7 +12,17 @@ data$grp[which(data$read_perc<=0.3)] <- "0.2-0.3"
 data$grp[which(data$read_perc<=0.2)] <- "0.1-0.2"
 data$grp[which(data$read_perc<=0.1)] <- "0-0.1"
 
-pivot<-ddply(data, .(grp), summarize, freq=length(grp))
-total<-sum(pivot$freq)
-pivot$perc<-100* pivot$freq / total
-barplot(pivot$freq, names=pivot$grp, log="y", las=2, xlab="clonal size", ylab="frequency")
+pivot<-ddply(data, .(Sample,grp), summarize, freq=length(grp))
+pivot<-pivot[order(pivot$grp,pivot$Sample),]
+barplot(pivot$freq, names=pivot$grp, beside=TRUE, log="y", las=2, xlab="clonal size", ylab="frequency")
+
+
+avg_pivot<-ddply(pivot, .(grp), summarize, avg=mean(freq), sd=sd(freq), n=length(grp))
+avg_pivot$se <- avg_pivot$sd / sqrt(avg_pivot$n)
+
+barCenters<-barplot(avg_pivot$avg, names=avg_pivot$grp, beside=TRUE, log="y", las=2, xlab="clonal size", ylab="frequency")
+
+# Add error bars. See: http://datascienceplus.com/building-barplots-with-error-bars/
+arrows(barCenters, avg_pivot$avg - avg_pivot$se * 2, barCenters,
+       avg_pivot$avg + avg_pivot$se * 2, lwd = 1.5, angle = 90,
+       code = 3, length = 0.05)
