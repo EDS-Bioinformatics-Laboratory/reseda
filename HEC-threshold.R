@@ -26,3 +26,7 @@ barCenters<-barplot(avg_pivot$avg, names=avg_pivot$grp, beside=TRUE, log="y", la
 arrows(barCenters, avg_pivot$avg - avg_pivot$se * 2, barCenters,
        avg_pivot$avg + avg_pivot$se * 2, lwd = 1.5, angle = 90,
        code = 3, length = 0.05)
+
+# Output table as latex
+library(xtable)
+xtable(avg_pivot)
