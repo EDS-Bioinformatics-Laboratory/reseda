@@ -33,6 +33,10 @@ def getVmotifs(cellType):
         refFile = "ref.table.mouse.BCRk.csv"
     elif cellType == "IGL_MOUSE":
         refFile = "ref.table.mouse.BCRl.csv"
+    elif cellType == "TRB_MOUSE":    # Not tested on Miseq yet
+        refFile = "ref.table.mouse.TCRb.csv"
+    elif cellType == "TRA_MOUSE":    # Not tested yet and probably needs to be changed
+        refFile = "ref.table.mouse.TCRa.csv"
     else:
         sys.exit("Cell type " + cellType + " is not implemented yet.\n" + usage)
 
@@ -86,6 +90,8 @@ def getJmotifs(cellType):
         return(["VTVS", "LTVS"])   # This needs to be verified by Sabrina and/or Giulia
     elif cellType == "TRB_HUMAN":
         return(["FG.G"])
+    elif cellType == "TRB_MOUSE":
+        return(["FG.G"])
     elif cellType == "IGK_HUMAN":
         return(["FG.G"])
     elif cellType == "IGK_MOUSE":
@@ -95,6 +101,8 @@ def getJmotifs(cellType):
     elif cellType == "IGL_MOUSE":
         return(["FG.G"])
     elif cellType == "TRA_HUMAN":
+        return(["FG.G", "FARG", "WGAG", "WGLG"])
+    elif cellType == "TRA_MOUSE":
         return(["FG.G", "FARG", "WGAG", "WGLG"])
     else:
         sys.exit("Cell type " + cellType + " is not implemented yet.\n" + usage)
@@ -107,6 +115,9 @@ def getMotifs(cellType):
     '''
     motifsV = getVmotifs(cellType)
     motifsJ = getJmotifs(cellType)
+
+    # print("V:", ",".join(motifsV))
+    # print("J:", ",".join(motifsJ))
 
     motifs = list()
     for v in motifsV:
@@ -135,6 +146,8 @@ cellType = sys.argv[1]
 
 # Get all the motifs to search for V .* J
 motif = getMotifs(cellType)
+
+# exit()
 
 # Transform motif to regular expressions
 p = regex.compile(motif, regex.BESTMATCH)
