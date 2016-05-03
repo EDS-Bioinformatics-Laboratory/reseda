@@ -7,7 +7,7 @@ import numpy as np
 
 # Input
 if len(sys.argv) < 2:
-    sys.exit("Usage: reverse-robinhood-v-genes.py all_info.csv file(s)")
+    sys.exit("Usage: re-assign-v-genes.py all_info.csv file(s)")
 datafiles = sys.argv[1:]
 
 cutOff = 0.7

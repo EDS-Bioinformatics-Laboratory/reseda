@@ -160,7 +160,7 @@ mv correct-mid/*-productive.txt .
 cd ..
 
 # Correct V gene assignments
-test python reverse-robinhood-v-genes.py final/correct-mid/*-all_info.csv
+test python re-assign-v-genes.py final/correct-mid/*-all_info.csv
 wait
 # Move files to final
 mv *.rr.* final/correct-mid
