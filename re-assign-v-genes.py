@@ -29,6 +29,9 @@ def plotNrGenes (datafile, geneCol):
     for row in result:
         data.append(int(row[1]))
 
+    if len(data) == 0:
+        return
+
     # Start figure
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
