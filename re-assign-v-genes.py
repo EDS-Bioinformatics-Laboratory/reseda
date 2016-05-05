@@ -106,7 +106,7 @@ for datafile in datafiles:
     cur = con.cursor()
 
     importData(datafile)
-    plotNrGenes (datafile, geneCol)
+    #plotNrGenes (datafile, geneCol)
     cdr3s = getCDR3WithMultipleGenes(geneCol)
 
     for cdr3 in cdr3s:

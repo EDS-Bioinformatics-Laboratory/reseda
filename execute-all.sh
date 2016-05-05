@@ -160,6 +160,7 @@ mv correct-mid/*-productive.txt .
 cd ..
 
 # Correct V gene assignments
+set_status ${ip} "RUNNING" "${celltype} Re-assign V genes"
 test python re-assign-v-genes.py final/correct-mid/*-all_info.csv
 wait
 # Move files to final
@@ -169,7 +170,8 @@ wait
 # Concatenate clones files
 test python concatenate-clone-files.py final/correct-mid/*.rr.clones_subs.csv
 wait
-
+mv run-clones_subs.csv run-clones_subs-${ip}.csv
+wait
 
 # Make output directories
 mkdir ${beehub_mount}/results-tbcell
@@ -182,7 +184,7 @@ wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${celltype} data to Beehub"
-test curl -T run-clones_subs.csv --netrc ${beehub_web}/results-tbcell/
+test curl -T run-clones_subs-${ip}.csv --netrc ${beehub_web}/results-tbcell/
 test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
 test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
 test ./copy-to-beehub-hla.sh ${beehub_web}/results-tbcell/hla/
