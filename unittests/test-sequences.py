@@ -1,7 +1,7 @@
 import unittest
 from sequences import complement
 
-class SequencesTestCase(unittest.TestCase):
+class SequencesComplementTestCase(unittest.TestCase):
     '''Tests for complement method in sequences.py'''
 
     def test_complement_convert_c_to_g(self):
