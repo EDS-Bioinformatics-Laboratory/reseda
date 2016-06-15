@@ -95,7 +95,7 @@ wait
 
 # Extract the CDR3 sequence
 set_status ${ip} "RUNNING" "${celltype} Extracting CDR3's"
-test python translate-and-extract-cdr3.py ${celltype} ${samples}
+test python TranslateAndExtractCdr3.py ${celltype} ${samples}
 wait
 
 # Align sequences against IMGT and call SNPs
