@@ -19,6 +19,6 @@ def test_getMotifs_error_negative_mismatch():
     '''Defining a negative number for mismatch should result in an error'''
     assert_raises(TypeError, getMotifs, "IGH_HUMAN", -1)
 
-def test_getMotifs_check_error_string():
+def test_getMotifs_check_error_wrong_type():
     '''Defining any other type than 0 or a positive integer should result in an error'''
     assert_raises(TypeError, getMotifs, "IGH_HUMAN", "a")
