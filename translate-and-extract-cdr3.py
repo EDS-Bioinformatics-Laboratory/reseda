@@ -230,7 +230,7 @@ for inFile in sys.argv[2:]:
                 if "C" in cdr3pep:
                     c_pos = cdr3pep.find("C")
                     cdr3pep = cdr3pep[c_pos:]
-                    aa_pos[0] = c_pos
+                    aa_pos[0] = aa_pos[0] + c_pos
                 else:
                     # Remove the first 6, 5 or 4 aminoacids of the CDR3
                     if cellType.startswith("IGH"):  # IGH
