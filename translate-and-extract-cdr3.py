@@ -226,16 +226,22 @@ for inFile in sys.argv[2:]:
                 cdr3pep = m.group(1)
                 aa_pos = list(m.span(1))
 
-                # Remove the first 6, 5 or 4 aminoacids of the CDR3
-                if cellType.startswith("IGH"):  # IGH
-                    cdr3pep = cdr3pep[6:]
-                    aa_pos[0] = aa_pos[0]+6
-                elif cellType.startswith("IG"): # IGL, IGK
-                    cdr3pep = cdr3pep[6:]
-                    aa_pos[0] = aa_pos[0]+6
-                else:                           # TRB, TRA
-                    cdr3pep = cdr3pep[4:]
-                    aa_pos[0] = aa_pos[0]+4
+                # First check if there is a Cys in the peptide, in that case report CDR3 from there
+                if "C" in cdr3pep:
+                    c_pos = cdr3pep.find("C")
+                    cdr3pep = cdr3pep[c_pos:]
+                    aa_pos[0] = c_pos
+                else:
+                    # Remove the first 6, 5 or 4 aminoacids of the CDR3
+                    if cellType.startswith("IGH"):  # IGH
+                        cdr3pep = cdr3pep[6:]
+                        aa_pos[0] = aa_pos[0]+6
+                    elif cellType.startswith("IG"): # IGL, IGK
+                        cdr3pep = cdr3pep[6:]
+                        aa_pos[0] = aa_pos[0]+6
+                    else:                           # TRB, TRA
+                        cdr3pep = cdr3pep[4:]
+                        aa_pos[0] = aa_pos[0]+4
 
                 # Remove the last 2 aminoacids of the CDR3
                 cdr3pep = cdr3pep[:-2]
