@@ -18,6 +18,7 @@ for myfile in sys.argv[1:]:
     c_freq = -1
     if "freq" in header:
         c_freq = header.index("freq")
+        print("Freq is in header")
 
     aa = dict()
     total = 0
