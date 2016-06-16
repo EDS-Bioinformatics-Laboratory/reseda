@@ -97,5 +97,5 @@ if test == 1:
     ax.set_ylabel("Probability")
     ax.set_title("Probability of two V genes having the same CDR3")
     plt.xticks(x)
-    plt.legend(["Same V gene given a CDR3","taylor_approximation","(1/20)^L","1.0/(400^l)"])
+    plt.legend(["Birthday problem (same birthday as you)","Taylor approximation (two people with same birthday)","(1/20)^L","1.0/(400^L)"])
     plt.show()

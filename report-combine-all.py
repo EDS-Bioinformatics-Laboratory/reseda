@@ -125,22 +125,24 @@ def makeBarChart (plotfile,title,y_label, threshold,x,v,w,y,z,a,b):
     
     fig, ax = plt.subplots(figsize=(60, 10)) 
     fig.subplots_adjust(bottom=0.3)
+    cmap = plt.cm.get_cmap('YlGn')
+    ncolors = 5
+    colors = [cmap(i*(256/ncolors)) for i in range(ncolors)]
+
     p = list()
-    p.append(ax.bar(x_pos, v, align='center', color="gray"))
-    p.append(ax.bar(x_pos, w, align='center', color="yellow"))
-    p.append(ax.bar(x_pos, y, align='center', color="red"))
-    p.append(ax.bar(x_pos, z, align='center', color="blue"))
-    p.append(ax.bar(x_pos, a, align='center', color="orange"))
-    p.append(ax.bar(x_pos, b, align='center', color="green"))
+    p.append(ax.bar(x_pos, v, align='center', color=colors[0], label='Total'))
+    p.append(ax.bar(x_pos, w, align='center', color=colors[1], label='Assembled (PEAR)'))
+    p.append(ax.bar(x_pos, y, align='center', color=colors[2], label='With correct MID'))
+    p.append(ax.bar(x_pos, z, align='center', color=colors[3], label='CDR3 identified'))
+    # p.append(ax.bar(x_pos, a, align='center', color=colors[4], label='VJ assigned'))
+    p.append(ax.bar(x_pos, b, align='center', color=colors[4], label='VJ assigned'))
     ax.plot((0,max(x_pos)),(threshold,threshold), '--', color="black")
 
     plt.xticks(x_pos, x, rotation=90)
     ax.set_xlabel('Samples')
     ax.set_ylabel(y_label)
     ax.set_title(title)
-    labels = ['Total','Assembled', 'With correct MID', 'CDR3 identified', 'VJ assigned', 'After V re-assignment']
-    plt.legend((p[0][0], p[1][0], p[2][0], p[3][0], p[4][0], p[5][0]), labels)
-
+    plt.legend()
     
     try:
         fig.savefig(plotfile)
