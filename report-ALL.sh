@@ -1,8 +1,8 @@
 #!/bin/bash
 
-run="run07-20160401-miseq"
+run="run06-20160306-miseq"
 
-files="/mnt/immunogenomics/RUNS/${run}/results-tbcell/reports/*.log"
+files="/mnt/immunogenomics/RUNS/${run}/results-tbcell-1mm/reports/*.log"
 grep '^Assembled reads \.' $files > report-PEAR.txt
 cat report-PEAR.txt
 

@@ -18,11 +18,13 @@ def getLength (datafile, colname, DELIMITER):
     header = fh.readline().strip()
     header = header.split(DELIMITER)
     c_get = header.index(colname)
+    c_sample = header.index("Sample")
 
     for line in fh:
         line = line.strip()
         c = line.split(DELIMITER)
         length = len(c[c_get])
+        # if "BCRh" not in c[c_sample]:   # only take the BCRh or TCRb samples
         data.append(length)
 
     return(data)
@@ -49,15 +51,18 @@ if __name__ == '__main__':
     ax = fig.add_subplot(1,1,1)
     ax.set_yscale('log')
 
-    hist, bins = np.histogram(d1, bins=50)
-    width = 0.7 * (bins[1] - bins[0])
-    center = (bins[:-1] + bins[1:]) / 2
-    plt.bar(center, hist, align='center', width=width, color="black", label="All clones")
+    plt.hist(d1, bins=100, color="black", label="All clones")
+    plt.hist(d2, bins=100, color="yellow", label="Clones with re-assigned V")
 
-    hist, bins = np.histogram(d2, bins=50)
-    width = 0.7 * (bins[1] - bins[0])
-    center = (bins[:-1] + bins[1:]) / 2
-    plt.bar(center, hist, align='center', width=width, color="yellow", label="Clones with re-assigned V")
+    # hist, bins = np.histogram(d1)   #, bins=100)
+    # width = 0.7 #* (bins[1] - bins[0])
+    # center = (bins[:-1] + bins[1:]) / 2
+    # plt.bar(center, hist, align='center', width=width, color="black", label="All clones")
+
+    # hist, bins = np.histogram(d2)    #, bins=100)
+    # width = 0.7 #* (bins[1] - bins[0])
+    # center = (bins[:-1] + bins[1:]) / 2
+    # plt.bar(center, hist, align='center', width=width, color="yellow", label="Clones with re-assigned V")
 
     plt.title("CDR3 length distribution")
     plt.xlabel("CDR3 peptide length")

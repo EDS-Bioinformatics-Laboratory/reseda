@@ -15,6 +15,9 @@ for myfile in sys.argv[1:]:
     header = fh.readline()
     header = header.strip().split()
     c_cdr3 = header.index("cdr3pep")
+    c_freq = -1
+    if "freq" in header:
+        c_freq = header.index("freq")
 
     aa = dict()
     total = 0
@@ -22,8 +25,12 @@ for myfile in sys.argv[1:]:
         line = line.strip()
         c = line.split()
         cdr3 = c[c_cdr3][0]
-        aa[cdr3] = aa.get(cdr3, 0) + 1
-        total += 1
+        if c_freq > -1:
+            total += int(c[c_freq])
+            aa[cdr3] = aa.get(cdr3, 0) + int(c[c_freq])
+        else:
+            total += 1
+            aa[cdr3] = aa.get(cdr3, 0) + 1
         if cdr3[0] != "C":
             print(line, file=fhOut)
 
@@ -32,4 +39,4 @@ for myfile in sys.argv[1:]:
 
     for letter in sorted(aa, key=aa.get, reverse=True):
         perc = round(100.0 * aa[letter] / total, 2)
-        print(letter, aa[letter], perc)
+        print(myfile, letter, aa[letter], perc)
