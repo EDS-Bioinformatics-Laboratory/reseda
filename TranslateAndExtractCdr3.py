@@ -140,6 +140,46 @@ def getMotifs(cellType, mismatches):
 
     return(combinedMotifs)
 
+def extractCDR3 (cellType, peptide, p):
+    '''
+    Description: extract the CDR3 from a peptide sequence
+    In: peptide sequence (string), regular expression (regex.compile object) V+J, regular expression for just the V (regex.compile object)
+    Out: CDR3 sequence (string), aa_pos: list with start (int) and end (int) positions in the peptide sequence
+    '''
+
+    cdr3pep = None
+    aa_pos = list()
+
+    m = p.search(str(peptide))
+
+    if m != None:   # a match is found
+        # Extract CDR3 peptide sequence
+        cdr3pep = m.group(1)
+        aa_pos = list(m.span(1))
+
+        # First check if there is a Cys in the peptide, in that case report CDR3 from there
+        if "C" in cdr3pep:
+            c_pos = cdr3pep.find("C")
+            cdr3pep = cdr3pep[c_pos:]
+            aa_pos[0] = aa_pos[0] + c_pos
+        else:
+            # Remove the first 6, 5 or 4 aminoacids of the CDR3
+            if cellType.startswith("IGH"):  # IGH
+                cdr3pep = cdr3pep[6:]
+                aa_pos[0] = aa_pos[0]+6
+            elif cellType.startswith("IG"): # IGL, IGK
+                cdr3pep = cdr3pep[6:]
+                aa_pos[0] = aa_pos[0]+6
+            else:                           # TRB, TRA
+                cdr3pep = cdr3pep[4:]
+                aa_pos[0] = aa_pos[0]+4
+
+        # Remove the last 2 aminoacids of the CDR3
+        cdr3pep = cdr3pep[:-2]
+        aa_pos[1] = aa_pos[1] - 2
+
+    return(cdr3pep, aa_pos)
+
 ############# Main ###############
 
 if __name__ == "__main__":
@@ -158,9 +198,6 @@ if __name__ == "__main__":
 
     # Transform motif to regular expressions
     p = regex.compile(motif, regex.BESTMATCH)
-
-    # Get V motifs (this is used to check if more than one motif is present)
-    p_v = regex.compile("(" + "|".join(getVmotifs(cellType)) + "){e<=0}", regex.BESTMATCH)
 
     # Check for an extra motif
     #p_extra = regex.compile("A[^P][ST]")
@@ -225,39 +262,9 @@ if __name__ == "__main__":
             # Find motif (V, J and everything in between)
             # TO DO: sometimes multiple patterns can match which results in a much longer CDR3. Needs a fix
             for i in range(len(translations)):
-                # m = p.search(str(translations[i]))
-                m = p.search(str(translations[i]))
-                if m != None:   # print to file if there was a match
-
-                    # Extract CDR3 peptide sequence
-                    cdr3pep = m.group(1)
-                    aa_pos = list(m.span(1))
-
-                    # First check if there is a Cys in the peptide, in that case report CDR3 from there
-                    if "C" in cdr3pep:
-                        c_pos = cdr3pep.find("C")
-                        cdr3pep = cdr3pep[c_pos:]
-                        aa_pos[0] = aa_pos[0] + c_pos
-                    else:
-                        # Remove the first 6, 5 or 4 aminoacids of the CDR3
-                        if cellType.startswith("IGH"):  # IGH
-                            cdr3pep = cdr3pep[6:]
-                            aa_pos[0] = aa_pos[0]+6
-                        elif cellType.startswith("IG"): # IGL, IGK
-                            cdr3pep = cdr3pep[6:]
-                            aa_pos[0] = aa_pos[0]+6
-                        else:                           # TRB, TRA
-                            cdr3pep = cdr3pep[4:]
-                            aa_pos[0] = aa_pos[0]+4
-
-                    # Remove the last 2 aminoacids of the CDR3
-                    cdr3pep = cdr3pep[:-2]
-                    aa_pos[1] = aa_pos[1] - 2
-
-                    # Check if there is an extra V motif, do this only with exact match of the V motif
-                    if p_v.search(cdr3pep) != None:
-                        print("WARNING: Extra V motif in", record.id, cdr3pep)
-
+                (cdr3pep, aa_pos) = extractCDR3 (cellType, str(translations[i]), p)
+                
+                if cdr3pep != None:
                     # Extract CDR3 nucleotide sequence
                     nt_start = aa_pos[0] * 3
                     nt_end = aa_pos[1] * 3
