@@ -259,12 +259,17 @@ if __name__ == "__main__":
             # Translate sequence to protein
             translations = nucToPeptide(str(record.seq))
 
+            # Was a CDR3 found?
+            cdr3_found = False
+
             # Find motif (V, J and everything in between)
             # TO DO: sometimes multiple patterns can match which results in a much longer CDR3. Needs a fix
             for i in range(len(translations)):
                 (cdr3pep, aa_pos) = extractCDR3 (cellType, str(translations[i]), p)
                 
                 if cdr3pep != None:
+                    cdr3_found = True
+
                     # Extract CDR3 nucleotide sequence
                     nt_start = aa_pos[0] * 3
                     nt_end = aa_pos[1] * 3
@@ -310,8 +315,9 @@ if __name__ == "__main__":
 
                         count_stuff["4. Reads with CDR3"] = count_stuff.get("4. Reads with CDR3",0) + 1
                         break
-                else:
-                    print("\t".join([record.id, str(i), str(record.seq), str(translations[i])]), file=fhNoCdr3)
+
+            if cdr3_found == False:
+                print("\t".join([record.id, str(i), str(record.seq), str(translations)]), file=fhNoCdr3)
 
         # Make report
         print("Motifs:", motif, file=fhRep)
