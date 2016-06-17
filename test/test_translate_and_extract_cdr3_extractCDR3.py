@@ -3,13 +3,29 @@ from nose.tools import assert_raises
 from TranslateAndExtractCdr3 import extractCDR3
 import regex
 
-'''Tests for extractCDR3 in TranslateAndExtractCdr3.py'''
+''' Tests for extractCDR3 in TranslateAndExtractCdr3.py '''
+
+'''
+CDR3 found / not found
+CDR3's with and without Cys
+Exact matching and in-exact matching
+In-exact matching should find exact match
+Multiple matches: two exact matches (take most downstream one), exact match+inexact match and in-exact match+exact match (take best match)
+Different cell types (not tested yet)
+'''
 
 cellType = "IGH_HUMAN"
 motif_exact = ".+(DTATH.+?VTVS)"
 motif_inexact = ".+(DTATH.+?VTVS){e<=1}"
 p_exact = regex.compile(motif_exact, regex.BESTMATCH)
 p_inexact = regex.compile(motif_inexact, regex.BESTMATCH)
+
+def test_no_match_results_in_none():
+    ''' TranslateAndExtractCdr3.extractCDR3: No CDR3 found should result in cdr3pep None. Case: one mismatch too many'''
+    peptide = "xxxxxxxxxxxxxATHabCdefgVTVSyyyyyyyyy"
+    (cdr3pep, aa_pos) = extractCDR3(cellType, peptide, p_inexact)
+    assert cdr3pep == None
+    assert aa_pos == []
 
 def test_succesful_cdr3_extraction_exact_match():
     ''' TranslateAndExtractCdr3.extractCDR3: CDR3 recognized with exact match and a Cys '''
@@ -45,13 +61,6 @@ def test_succesful_cdr3_extraction_inexact_match_with_exact_patter():
     (cdr3pep, aa_pos) = extractCDR3(cellType, peptide, p_inexact)
     assert cdr3pep == "CdefgVT"
     assert aa_pos == [20,27]
-
-def test_no_match_results_in_none():
-    ''' TranslateAndExtractCdr3.extractCDR3: No CDR3 found should result in cdr3pep None. Case: one mismatch too many'''
-    peptide = "xxxxxxxxxxxxxATHabCdefgVTVSyyyyyyyyy"
-    (cdr3pep, aa_pos) = extractCDR3(cellType, peptide, p_inexact)
-    assert cdr3pep == None
-    assert aa_pos == []
 
 def test_multiple_motifs_found_exact_without_cys():
     ''' TranslateAndExtractCdr3.extractCDR3: When multiple motifs are found, the last one should be the start of the CDR3 '''
