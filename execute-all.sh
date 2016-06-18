@@ -46,6 +46,7 @@ function test {
     return $status
 }
 
+# Job monitoring. To use this you need https://bitbucket.org/barbera/progress
 function set_status {
     local ip=$1
     local stat=$2
