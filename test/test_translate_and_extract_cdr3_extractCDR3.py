@@ -12,13 +12,16 @@ Exact matching and in-exact matching
 In-exact matching should find exact match
 Multiple matches: two exact matches (take most downstream one), exact match+inexact match and in-exact match+exact match (take best match)
 Different cell types (not tested yet)
+Search with multiple motifs (not tested yet)
 '''
 
 cellType = "IGH_HUMAN"
 motif_exact = ".+(DTATH.+?VTVS)"
 motif_inexact = ".+(DTATH.+?VTVS){e<=1}"
+motif_full_inexact = ".+(DTATH.+?VTVS|GTAVY.+?VTVS|DMTVY.+?VTVS|GTVVY.+?VTVS|GTAAY.+?VTVS|DMAVY.+?VTVS|DVAVY.+?VTVS|DAAMY.+?VTVS|DTATY.+?VTVS|DMTMH.+?VTVS|DTVVY.+?VTVS|DTALY.+?VTVS|DSAVY.+?VTVS|DTAVY.+?VTVS|DMAMY.+?VTVS|DTAMY.+?VTVS){e<=1}"
 p_exact = regex.compile(motif_exact, regex.BESTMATCH)
 p_inexact = regex.compile(motif_inexact, regex.BESTMATCH)
+p_full_inexact = regex.compile(motif_full_inexact, regex.BESTMATCH)
 
 def test_no_match_results_in_none():
     ''' TranslateAndExtractCdr3.extractCDR3: No CDR3 found should result in cdr3pep None. Case: one mismatch too many'''
