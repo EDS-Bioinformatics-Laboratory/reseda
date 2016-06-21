@@ -24,7 +24,7 @@ def getLength (datafile, colname, DELIMITER):
         line = line.strip()
         c = line.split(DELIMITER)
         length = len(c[c_get])
-        # if "BCRh" not in c[c_sample]:   # only take the BCRh or TCRb samples
+        # if "BCRh" in c[c_sample]:   # only take the BCRh or TCRb samples
         data.append(length)
 
     return(data)
@@ -51,8 +51,10 @@ if __name__ == '__main__':
     ax = fig.add_subplot(1,1,1)
     ax.set_yscale('log')
 
-    plt.hist(d1, bins=100, color="black", label="All clones")
-    plt.hist(d2, bins=100, color="yellow", label="Clones with re-assigned V")
+    binBoundaries = np.linspace(0,100,101)
+
+    plt.hist(d1, bins=binBoundaries, color="black", label="All clones")
+    plt.hist(d2, bins=binBoundaries, color="yellow", label="Clones with re-assigned V", hatch="\\")
 
     # hist, bins = np.histogram(d1)   #, bins=100)
     # width = 0.7 #* (bins[1] - bins[0])
