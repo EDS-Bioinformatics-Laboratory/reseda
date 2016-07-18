@@ -8,7 +8,7 @@ if len(sys.argv) < 8:
 # Input files
 [midFile,cdr3File,vFile,jFile,seqFile,outFile,clonesFile,clonesSubsFile, clonesMainsFile,totalFile] = sys.argv[1:11]
 
-# # Input files - TEST
+# Input files - TEST
 # midFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-tbcell/reports/BCRh_S40_L001.assembled-report.txt"
 # cdr3File = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/paul/BCRh_S40_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv"
 # vFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHV_human-easy-import.txt"
@@ -80,7 +80,7 @@ def clean_name (gene):
 ########### MAIN ###########
 
 con = sqlite3.connect(":memory:")
-#con = sqlite3.connect("test.db")
+# con = sqlite3.connect("test.db")
 cur = con.cursor()
 
 
@@ -189,7 +189,7 @@ fhOut.close()
 ############# Make clone reports and write them to a file ################
 
 # Create a clone report based on V, J and CDR3peptide
-query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_gene!='None' AND J_gene!='None' GROUP BY V_gene, J_gene, cdr3pep"
+query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_gene!='None' AND J_gene!='None' and cast(cdr3_qual_min as int)>=30 GROUP BY V_gene, J_gene, cdr3pep"
 print(query)
 cur.execute(query)
 
@@ -217,7 +217,7 @@ for row in result:
 fhClones.close()
 
 # Create a clone report based on V_sub, J_sub and CDR3peptide
-query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_sub!='None' AND J_sub!='None' GROUP BY V_sub, J_sub, cdr3pep"
+query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 GROUP BY V_sub, J_sub, cdr3pep"
 print(query)
 cur.execute(query)
 
@@ -242,7 +242,7 @@ for row in result:
 fhClonesSubs.close()
 
 # Create a clone report based on V_main, J_sub and CDR3peptide
-query = "CREATE TABLE clones_mains AS SELECT V_main, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_main!='None' AND J_sub!='None' GROUP BY V_main, J_sub, cdr3pep"
+query = "CREATE TABLE clones_mains AS SELECT V_main, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_main!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 GROUP BY V_main, J_sub, cdr3pep"
 print(query)
 cur.execute(query)
 
