@@ -1,6 +1,7 @@
 from __future__ import print_function
 import sys
 import os
+import shutil
 import subprocess
 import json
 
@@ -72,21 +73,31 @@ def cleanUp ():
     In: -
     Out: -
     '''
-    cmd = ["rm", "-f", "*L001*"]
-    print(cmd)
-    rc = subprocess.call(cmd)
 
-    cmd = ["rm", "-rf", "split/*L001*"]
-    print(cmd)
-    rc = subprocess.call(cmd)
+    myfiles = os.listdir(".")
+    for myfile in myfiles:
+        if "L001" in myfile:
+            os.remove(myfile)
 
-    cmd = ["rm", "-f", "final/*L001*"]
-    print(cmd)
-    rc = subprocess.call(cmd)
+    myfiles = os.listdir("./split")
+    for myfile in myfiles:
+        if "L001" in myfile:
+            shutil.rmtree("split/" + myfile, ignore_errors=True)
 
-    cmd = ["rm", "-f", "final/correct-mid/*L001*"]
-    print(cmd)
-    rc = subprocess.call(cmd)
+    myfiles = os.listdir("./split")
+    for myfile in myfiles:
+        if "L001" in myfile:
+            os.remove("split/" + myfile)
+
+    myfiles = os.listdir("./final")
+    for myfile in myfiles:
+        if "L001" in myfile:
+            os.remove("final/" + myfile)
+
+    myfiles = os.listdir("./final/correct-mid")
+    for myfile in myfiles:
+        if "L001" in myfile:
+            os.remove("final/correct-mid/" + myfile)
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
@@ -107,3 +118,5 @@ if __name__ == '__main__':
 
         # clean up result files before the next job
         cleanUp()
+
+    cleanUp()
