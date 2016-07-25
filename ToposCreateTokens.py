@@ -2,6 +2,11 @@ from __future__ import print_function
 import sys
 import json
 
+# Usage: python ToposCreateTokens.py runNN-YYYYMMDD-miseq MIDS-miseq.txt SAMPLE-files
+
+# Create pool: topos newPool
+# Upload tokens: uploadFileAsToken [POOLNAME] [FILENAME]                                  #
+#            or: uploadFilesInDirAsTokens [POOLNAME] [DIRNAME] 
 # Token pool is here: https://topos.grid.sara.nl/4.1/pools/POOLNAME/
 
 def getSamples (myfile):
