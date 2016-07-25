@@ -7,14 +7,21 @@
 # Create a file with all the fastq files:
 # ls TESTDATA/* > SAMPLES
 
-# Configure this:
-cell="IGH"
-organism="human"
-celltype="${cell}_HUMAN"
-run="runNN-2016MMDD-miseq"
+# Get settings from commandline arguments
+run=$1
+mids=$2
+organism=$3
+cell=$4
+celltype=$5
+
+# Or configure settings here:
+# run="runNN-00-08-20160722-human-BCRh"
+# mids="MIDS-miseq.txt"
+# organism="human"
+# cell="IGH"
+# celltype="${cell}_HUMAN"
 
 # Reference sequences
-mids="MIDS-miseq.txt"
 refs="${cell}V_${organism}.fasta ${cell}J_${organism}.fasta"
 v="${cell}V_${organism}"
 j="${cell}J_${organism}"
@@ -175,6 +182,7 @@ mv run-clones_subs.csv run-clones_subs-${ip}.csv
 wait
 
 # Make output directories
+mkdir ${beehub_mount}
 mkdir ${beehub_mount}/results-tbcell
 mkdir ${beehub_mount}/results-tbcell/raw
 mkdir ${beehub_mount}/results-tbcell/reports
