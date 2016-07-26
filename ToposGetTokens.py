@@ -4,6 +4,7 @@ import os
 import shutil
 import subprocess
 import json
+from Topos import *
 
 def getJob (poolname):
     '''
@@ -33,17 +34,6 @@ def getJob (poolname):
     syscall.close()
 
     return(token, js)
-
-def deleteToken (poolname, token):
-    '''
-    Description: delete token from pool
-    In: poolname (str), token (str)
-    Out: -
-    '''
-    cmd = ["topos", "deleteToken", poolname, token]
-    rc = subprocess.call(cmd)
-    if rc != 0:
-        print("WARNING: couldn't delete token from pool:", poolname, token)
 
 def runJob (token, js):
     '''
