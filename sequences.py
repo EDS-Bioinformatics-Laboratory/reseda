@@ -49,7 +49,7 @@ def comrev(s):
     """
     Return reverse complement
     """
-    return complement(s[::-1])
+    return complement(s[::-1].upper())
 
 
 def readMotifsFromFile (motifFile):
