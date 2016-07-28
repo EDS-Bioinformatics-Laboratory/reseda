@@ -63,7 +63,7 @@ function set_status {
     cd $thisdir
 }
 
-set_status ${ip} "RUNNING" "Started ${celltype} analysis on ${starttime}"
+set_status ${ip} "RUNNING" "Started ${mids} ${celltype} analysis on ${starttime}"
 
 samples=`cat SAMPLES`  # get all arguments
 r1_samples=`grep R1_001 SAMPLES`
