@@ -48,7 +48,7 @@ function test {
     if [ $status -ne 0 ]; then
         echo "ERROR ${celltype} with $1" >&2
         set_status ${ip} "ERROR" "Error ${celltype} with $1"
-        exit
+        exit 1
     fi
     return $status
 }
