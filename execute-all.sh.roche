@@ -169,13 +169,9 @@ mkdir final/correct-mid
 wait
 cd final
 # test bash ../mv-samples-with-correct-mid.sh
-mkdir tmp
-test mv *.sh tmp
-test mv * correct-mid/
+test mv *.csv correct-mid/
 wait
-mv correct-mid/*-productive.txt .
 mv correct-mid/*nomatch* .
-mv tmp/*.sh .
 cd ..
 
 # Correct V gene assignments
