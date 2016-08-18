@@ -296,6 +296,7 @@ if __name__ == "__main__":
                         cdr3_qual_min = 0
                         cdr3_qual_max = 0
                         cdr3_qual_avg = 0
+                        cdr3_quality_scores = "-"
 
                     # Convert the quality scores to a string
                     quality_scores = str(quality_scores)
