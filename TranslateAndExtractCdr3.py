@@ -288,9 +288,14 @@ if __name__ == "__main__":
                     cdr3_quality_scores = tmp_qual[nt_start:nt_end]
 
                     # Basic stats CDR3 quality
-                    cdr3_qual_min = min(cdr3_quality_scores)
-                    cdr3_qual_max = max(cdr3_quality_scores)
-                    cdr3_qual_avg = round(sum(cdr3_quality_scores)/float(len(cdr3_quality_scores)), 1)
+                    if len(cdr3_quality_scores) > 0:
+                        cdr3_qual_min = min(cdr3_quality_scores)
+                        cdr3_qual_max = max(cdr3_quality_scores)
+                        cdr3_qual_avg = round(sum(cdr3_quality_scores)/float(len(cdr3_quality_scores)), 1)
+                    else:
+                        cdr3_qual_min = 0
+                        cdr3_qual_max = 0
+                        cdr3_qual_avg = 0
 
                     # Convert the quality scores to a string
                     quality_scores = str(quality_scores)
