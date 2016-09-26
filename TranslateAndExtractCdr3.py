@@ -199,8 +199,8 @@ if __name__ == "__main__":
     # Transform motif to regular expressions
     p = regex.compile(motif, regex.BESTMATCH)
 
-    # Check for an extra motif
-    #p_extra = regex.compile("A[^P][ST]")
+    # Check for an extra motif Asn-X-Ser/Thr (X is not Proline)
+    p_extra = regex.compile("N[^P][ST]")
 
     # Pattern for stop codon and untranslated codons
     p_stop = regex.compile("\*")
@@ -209,7 +209,7 @@ if __name__ == "__main__":
     # Open fastq file(s) and search for patterns
     for inFile in sys.argv[2:]:
         outFile = inFile + "-" + cellType + "-CDR3.csv"
-        # extraFile = inFile + "-" + cellType + "-extra.txt"
+        extraFile = inFile + "-" + cellType + "-extra.txt"
         rawFile = inFile + "-" + cellType + ".csv"
         repFile = inFile + "-" + cellType + "-report.txt"
         stopFile = inFile + "-" + cellType + "-discarded-stop-codon.txt"
@@ -243,11 +243,10 @@ if __name__ == "__main__":
             fhNoCdr3 = open(nocdr3File, "w")
         except:
             sys.exit("cannot write to file: " + nocdr3File)
-
-        # try:
-        #     fhExtra = open(extraFile, "w")
-        # except:
-        #     sys.exit("cannot write to file:" + extraFile)
+        try:
+            fhExtra = open(extraFile, "w")
+        except:
+            sys.exit("cannot write to file:" + extraFile)
 
         # Container to count stuff
         count_stuff = dict()
@@ -315,9 +314,9 @@ if __name__ == "__main__":
                         print("\t".join([record.id, str(i), str(cdr3pep), str(cdr3nuc), str(cdr3_qual_min), str(cdr3_qual_max), str(cdr3_qual_avg), cdr3_quality_scores]), file=fhOut)
                         print("\t".join([record.id, str(i), str(record.seq), str(translations[i]), quality_scores]), file=fhRaw)
 
-                        # # Search for motif in the protein translation
-                        # for m_extra in p_extra.finditer(str(translations[i])):
-                        #     print(record.id, str(i), m_extra.group(0), m_extra.span(), file=fhExtra)
+                        # Search for motif in the protein translation
+                        for m_extra in p_extra.finditer(str(translations[i])):
+                            print(record.id, str(i), m_extra.group(0), m_extra.span(), file=fhExtra)
 
                         count_stuff["4. Reads with CDR3"] = count_stuff.get("4. Reads with CDR3",0) + 1
                         break
@@ -340,4 +339,4 @@ if __name__ == "__main__":
         fhStop.close()
         fhUncalled.close()
         fhNoCdr3.close()
-        # fhExtra.close()
+        fhExtra.close()

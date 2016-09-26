@@ -7,14 +7,14 @@ def executeCmd (cmd):
     In: command (str)
     Out: - an exception will be raised when command was not successful
     '''
-    print("CMD:", cmd)
-    cmd = cmd.split()
-    rc = subprocess.call(cmd)
-    if rc != 0:
-        print("something went wrong with: " + " ".join(cmd))
+    print(cmd)
+    # cmd = cmd.split()
+    # rc = subprocess.call(cmd)
+    # if rc != 0:
+    #     print("something went wrong with: " + " ".join(cmd))
 
 if __name__ == '__main__':
-    mydir = "/mnt/immunogenomics/RUNS/runNN-00-08-20160727-miseq/final/correct-mid/"
+    mydir = "/mnt/immunogenomics/RUNS/runNN-00-08-20160727-miseq/results-tbcell/final/correct-mid/"
     celltypes = ["IGH_HUMAN","IGH_MOUSE","IGK_HUMAN","IGK_MOUSE","IGL_HUMAN","IGL_MOUSE","TRA_HUMAN","TRA_MOUSE","TRB_HUMAN","TRB_MOUSE"]
 
     for celltype in celltypes:

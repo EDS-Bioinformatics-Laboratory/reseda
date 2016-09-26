@@ -1,6 +1,6 @@
 #!/bin/bash
 
-run="runNN-201ymmdd-miseq"
+run="runNN-00-08-20160727-miseq"
 
 files="/mnt/immunogenomics/RUNS/${run}/results-tbcell/reports/*.log"
 grep '^Assembled reads \.' $files > report-PEAR.txt
