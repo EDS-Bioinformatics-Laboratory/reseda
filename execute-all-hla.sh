@@ -7,14 +7,21 @@
 # Create a file with all the fastq files:
 # ls TESTDATA/* > SAMPLES
 
+# Get settings from commandline arguments
+run=$1
+mids=$2
+organism=$3
+cell=$4
+celltype=$5
+
 # Configure this:
-cell="HLA"
-organism="human"
-celltype="${cell}_HUMAN"
-run="run08-20160708-miseq"
+# cell="HLA"
+# organism="human"
+# celltype="${cell}_HUMAN"
+# run="run09-20160919-miseq"
 
 # Reference sequences
-mids="MIDS-miseq.txt"
+#mids="MIDS-miseq.txt"
 #refs="${cell}V_${organism}.fasta ${cell}J_${organism}.fasta"
 refs="hla_nuc_nospace.fasta"
 v="${cell}V_${organism}"
