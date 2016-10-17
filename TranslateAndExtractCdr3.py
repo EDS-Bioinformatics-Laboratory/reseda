@@ -109,7 +109,7 @@ def getMotifs(cellType, mismatches):
     '''
     Description: retrieve V and J motifs and concatenate them
     In: string cellType, int mismatches (usually 0 or 1)
-    Out: list motifs
+    Out: string combinedMotifs (a regular expression)
     '''
 
     if mismatches == 0 and type(mismatches) == type(10):
@@ -137,6 +137,21 @@ def getMotifs(cellType, mismatches):
 
     combinedMotifs = ".+(" + "|".join(motifs) + ")" + mismatches
     # print(combinedMotifs)
+
+    return(combinedMotifs)
+
+def getImgtMotifs(cellType):
+    '''
+    Description: Return regular expression for Cys-Phe/Trp motif or Cys-Val
+    In: string cellType
+    Out: motif
+    '''
+
+    # Depending on cellType CDR3 ends with F, W or V
+    if cellType == "":
+        combinedMotifs = ".+(C.+?F)"
+    else:
+        combinedMotifs = ".+(C.+?W)"
 
     return(combinedMotifs)
 
