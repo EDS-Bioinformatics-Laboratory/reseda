@@ -149,6 +149,7 @@ def getImgtMotifs():
 
     # Depending on cellType CDR3 ends with F, W or V
     combinedMotifs = ".+(C.+?[FWV]..)"
+    # combinedMotifs = ".+(C.+[FWV]..)"
 
     return(combinedMotifs)
 
@@ -205,7 +206,6 @@ if __name__ == "__main__":
 
     # Get all the motifs to search for V .* J, define mismatches (usually 0 or 1)
     motif = getMotifs(cellType, 0)
-    # motif = getImgtMotifs()
 
     # Transform motif to regular expressions
     p = regex.compile(motif, regex.BESTMATCH)
