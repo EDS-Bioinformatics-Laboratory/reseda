@@ -140,7 +140,7 @@ def getMotifs(cellType, mismatches):
 
     return(combinedMotifs)
 
-def getImgtMotifs(cellType):
+def getImgtMotifs():
     '''
     Description: Return regular expression for Cys-Phe/Trp motif or Cys-Val
     In: string cellType
@@ -148,10 +148,7 @@ def getImgtMotifs(cellType):
     '''
 
     # Depending on cellType CDR3 ends with F, W or V
-    if cellType == "":
-        combinedMotifs = ".+(C.+?F)"
-    else:
-        combinedMotifs = ".+(C.+?W)"
+    combinedMotifs = ".+(C.+?[FWV]..)"
 
     return(combinedMotifs)
 
@@ -208,8 +205,7 @@ if __name__ == "__main__":
 
     # Get all the motifs to search for V .* J, define mismatches (usually 0 or 1)
     motif = getMotifs(cellType, 0)
-
-    # exit()
+    # motif = getImgtMotifs()
 
     # Transform motif to regular expressions
     p = regex.compile(motif, regex.BESTMATCH)
