@@ -85,7 +85,7 @@ samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
 set_status ${ip} "RUNNING" "${celltype} Sorting sequences per MID"
-test python fastq-split-on-mid.py ${mids} split ${samples}
+test python FastqSplitOnMid.py ${mids} split ${samples}
 wait
 
 ### Continue with the assembled, split per mid, fastq files ###

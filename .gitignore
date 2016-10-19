@@ -1,0 +1,4 @@
+*.pyc
+*CHECKSUM*
+*lifescope.hg19*
+wc-*.txt
