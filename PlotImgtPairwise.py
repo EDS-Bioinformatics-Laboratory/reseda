@@ -31,7 +31,7 @@ def reformatData(d):
     for i in range(len(names)):
         x.append(i)
         y.append(i)
-        s.append(200)
+        s.append(30)   # 200 for v genes, 30 for j genes
 
     # Define colors
     cmap = plt.cm.get_cmap('cool')
@@ -121,10 +121,28 @@ def heatMap (f, C, names):
     plt.savefig(image)
     return(image)
 
+def showTopSimilarGenes (d):
+    '''
+    Description: sort gene pairs on similarity, print the top similar genes (skip alleles of same gene)
+    In: d[(a,b)]
+    Out: print geneA geneB edit-distance
+    '''
+    i = 0
+    for a, b in sorted(d, key=d.get):
+        a_sub, alleleA = a.split("*")
+        b_sub, alleleB = b.split("*")
+        if a_sub == b_sub:  # Skip same gene groups
+            continue
+
+        print(a,b,d[(a,b)])
+        i += 1
+        if i >= 25:
+            break
+
 if __name__ == '__main__':
     # mydir = "/home/barbera/Data/tbcell/RepSeq2016/IMGT-pairwise/"
     mydir = "/home/narya/Werk/RepSeq2016/"
-    myfile = mydir + "TRBV_human.distances.txt"
+    myfile = mydir + "TRBJ_human.distances.txt"
 
     try:
         fh = open(myfile)
@@ -141,15 +159,20 @@ if __name__ == '__main__':
         a_sub, alleleA = a.split("*")
         b_sub, alleleB = b.split("*")
         if a_sub == b_sub:  # Skip same gene groups
-            size = 200
+            size = 30   # 200 for V genes, 30 for J genes
 
         d[(a,b)] = int(size)
         d[(b,a)] = int(size)
 
     fh.close()
 
+    # Print most similar genes
+    showTopSimilarGenes(d)
+
+    # Prepare data for making figures
     (x, y, s, usecolors, names) = reformatData(d)
     C = asArray(x,y,s,names)
 
+    # Make heatmap
     # print("Wrote", bubblePlot(myfile, x, y, s, usecolors, names), "to disk")
     print("Wrote", heatMap(myfile, C, names), "to disk")
