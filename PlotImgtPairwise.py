@@ -27,6 +27,12 @@ def reformatData(d):
         y.append(names.index(b))
         s.append(d[(a, b)])
 
+    # Set diagonal to a high value
+    for i in range(len(names)):
+        x.append(i)
+        y.append(i)
+        s.append(200)
+
     # Define colors
     cmap = plt.cm.get_cmap('cool')
     ncolors = max(s) + 1
@@ -75,7 +81,7 @@ def heatMap (f, C, names):
     # Make figure
     fig, ax = plt.subplots(figsize=(20, 20)) 
     # plt.pcolor(X, Y, C, cmap='cool')
-    plt.pcolor(C, cmap='cool')
+    plt.pcolor(C, cmap='hot')
 
     # turn off the frame
     ax.set_frame_on(False)
@@ -107,6 +113,9 @@ def heatMap (f, C, names):
         t.tick1On = False 
         t.tick2On = False  
 
+    # Add legend
+    plt.colorbar()
+
     # Write to file
     image = f + ".heatmap.svg"
     plt.savefig(image)
@@ -127,12 +136,12 @@ if __name__ == '__main__':
     header = fh.readline()
     for line in fh:
         line = line.strip()
-        (a, b, nope, size) = line.split()
+        (a, b, size, nope) = line.split()
 
-        # a_sub, alleleA = a.split("*")
-        # b_sub, alleleB = b.split("*")
-        # if a_sub == b_sub:  # Skip same gene groups
-        #     continue
+        a_sub, alleleA = a.split("*")
+        b_sub, alleleB = b.split("*")
+        if a_sub == b_sub:  # Skip same gene groups
+            size = 200
 
         d[(a,b)] = int(size)
         d[(b,a)] = int(size)
