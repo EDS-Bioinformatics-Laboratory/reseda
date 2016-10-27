@@ -22,6 +22,19 @@ def readGenome ():
 
     return genome
 
+def readFasta (f):
+    '''
+    Description: Read fasta file and put sequences in a dictionary
+    In: f (filename)
+    Out: sequences[acc] = sequence
+    '''
+    sequences = dict()
+    for record in SeqIO.parse(open(f), "fasta"):
+        sequences[record.id] = str(record.seq).upper()
+
+    return(sequences)
+
+
 def motifToRegex (motif, mismatches):
     """
     Converts IUPAC motif to a regular expression (copied from nt_search method in BioPython)
