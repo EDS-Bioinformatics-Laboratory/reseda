@@ -1,5 +1,6 @@
 from __future__ import print_function
 import sys
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -121,7 +122,7 @@ def heatMap (f, C, names):
     plt.savefig(image)
     return(image)
 
-def showTopSimilarGenes (d):
+def showTopSimilarGenes (d, fhOut):
     '''
     Description: sort gene pairs on similarity, print the top similar genes (skip alleles of same gene)
     In: d[(a,b)]
@@ -134,20 +135,22 @@ def showTopSimilarGenes (d):
         if a_sub == b_sub:  # Skip same gene groups
             continue
 
-        print(a,b,d[(a,b)])
+        print(a,b,d[(a,b)], file=fhOut)
         i += 1
         if i >= 25:
             break
 
-if __name__ == '__main__':
-    # mydir = "/home/barbera/Data/tbcell/RepSeq2016/IMGT-pairwise/"
-    mydir = "/home/narya/Werk/RepSeq2016/"
-    myfile = mydir + "TRBJ_human.distances.txt"
+def compareImgtGenes (myfile):
+    '''
+    Description: show top similar genes and make a heatmap of all genes
+    In: f (filename ending on .distances.txt)
+    Out: -, two files are written to disk
+    '''
 
     try:
         fh = open(myfile)
     except:
-        sys.exit("cannot open file: " + myfile)
+        sys.exit("cannot open distance file: " + myfile)
 
     d = dict()
 
@@ -167,7 +170,11 @@ if __name__ == '__main__':
     fh.close()
 
     # Print most similar genes
-    showTopSimilarGenes(d)
+    topFile = myfile + ".top-similar.txt"
+    fhOut = open(topFile, "w")
+    showTopSimilarGenes(d, fhOut)
+    print("Wrote", topFile, "to disk")
+    fhOut.close()
 
     # Prepare data for making figures
     (x, y, s, usecolors, names) = reformatData(d)
@@ -176,3 +183,11 @@ if __name__ == '__main__':
     # Make heatmap
     # print("Wrote", bubblePlot(myfile, x, y, s, usecolors, names), "to disk")
     print("Wrote", heatMap(myfile, C, names), "to disk")
+
+if __name__ == '__main__':
+    mydir = "/home/barbera/Data/tbcell/RepSeq2016/IMGT-pairwise/"
+    # mydir = "/home/narya/Werk/RepSeq2016/"
+
+    for myfile in os.listdir(mydir):
+        if myfile.endswith(".distances.txt"):
+            compareImgtGenes(mydir+myfile)
