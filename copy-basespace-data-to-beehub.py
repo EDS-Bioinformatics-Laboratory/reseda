@@ -16,7 +16,7 @@ myurl = "https://beehub.nl/amc-immunogenomics/RUNS/run10-20161031-miseq/data/"
 #     print('curl -T "' + line + '" --netrc', myurl, "; wait")
 
 rootdir = "/data/home/bioinfo/basespace/Projects/"
-mydirs = ["Paired RA", "VDJmouse (2)", "CEA-CEF", "DNA-RNA", "PsA-SpA"]
+mydirs = ["Paired\ RA", "VDJmouse\ \(2\)", "CEA-CEF", "DNA-RNA", "PsA-SpA"]
 for mydir in mydirs:
     syscall = os.popen("ls " + rootdir+mydir+"/Samples/*/Files/*.fastq.gz")
 

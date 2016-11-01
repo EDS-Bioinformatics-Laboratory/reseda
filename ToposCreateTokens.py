@@ -64,9 +64,9 @@ def guessCellAndOrganism (myfile):
         cell = "TRB"
     elif "TCRa" in myfile:
         cell = "TRA"
-    elif "IGL" in myfile:
+    elif "IGL" in myfile or "BCRl" in myfile:
         cell = "IGL"
-    elif "IGK" in myfile:
+    elif "IGK" in myfile or "BCRk" in myfile:
         cell = "IGK"
     elif "HLA" in myfile:
         cell = "HLA"
