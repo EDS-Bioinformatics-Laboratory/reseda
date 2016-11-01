@@ -41,7 +41,7 @@ if __name__ == '__main__':
         sampleFile = "SAMPLES-"+run+"-"+js["Samples"][inx]["Species"]+"-"+js["Samples"][inx]["Chain"]
         if sampleFile not in fhs:
             fhs[sampleFile] = open(sampleFile, "w")
-        print(f, file=fhs[sampleFile])
+        print(mountdir+f, file=fhs[sampleFile])
 
     for sampleFile in fhs:
         fhs[sampleFile].close()
