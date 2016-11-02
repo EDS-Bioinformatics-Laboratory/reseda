@@ -82,7 +82,7 @@ def clean_name (gene):
 con = sqlite3.connect(":memory:")
 # con = sqlite3.connect("test.db")
 cur = con.cursor()
-
+cur.execute("PRAGMA temp_store_directory='.'")
 
 ########## Import all data ##########
 
