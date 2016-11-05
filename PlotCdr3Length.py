@@ -24,8 +24,8 @@ def getLength (datafile, colname, DELIMITER):
         line = line.strip()
         c = line.split(DELIMITER)
         length = len(c[c_get])
-        # if "BCRh" in c[c_sample]:   # only take the BCRh or TCRb samples
-        data.append(length)
+        if "BCRh" not in c[c_sample]:   # only take the BCRh or TCRb samples
+            data.append(length)
 
     return(data)
 
@@ -39,6 +39,15 @@ if __name__ == '__main__':
 
     d1 = getLength(all_clones, "cdr3pep", "\t")
     d2 = getLength(reassigned_clones, "cdr3", "\t")
+
+    fhAll = open("cdr3-length-all.txt", "w")
+    fhReassigned = open("cdr3-length-reassigned.txt", "w")
+    for d in d1:
+        print(d, file=fhAll)
+    for d in d2:
+        print(d, file=fhReassigned)
+    fhAll.close()
+    fhReassigned.close()
 
     # plt.hist(d1)
     # plt.hist(d2)
