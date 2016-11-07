@@ -1,6 +1,6 @@
 #!/bin/bash
 
-run="runNN-00-08-20160727-miseq"
+run="run10-20161031-miseq"
 
 files="/mnt/immunogenomics/RUNS/${run}/results-tbcell/reports/*.log"
 grep '^Assembled reads \.' $files > report-PEAR.txt
@@ -10,7 +10,7 @@ files="/mnt/immunogenomics/RUNS/${run}/results-tbcell/reports/*-midcount.txt"
 more $files > report-MIDs.txt
 cat report-MIDs.txt
 
-files="/mnt/immunogenomics/RUNS/${run}/results-tbcell/reports/*HUMAN-report.txt"
+files="/mnt/immunogenomics/RUNS/${run}/results-tbcell/reports/*HUMAN-report.txt /mnt/immunogenomics/RUNS/${run}/results-tbcell/reports/*MOUSE-report.txt"
 grep '^4' $files > report-CDR3.txt
 cat report-CDR3.txt
 

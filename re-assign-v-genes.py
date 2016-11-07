@@ -19,10 +19,10 @@ def importData (datafile):
     basename = datafile.split("/")[-1]
     create_and_import(con, cur, table, datafile)
 
-    # Remove all entries where the min_base_qual is below 30 or genes are not found
-    query = "DELETE FROM all_info WHERE V_gene='None' OR J_gene='None' OR CAST(cdr3_qual_min as int)<30"
-    print(query)
-    cur.execute(query)
+    # # Remove all entries where the min_base_qual is below 30 or genes are not found
+    # query = "DELETE FROM all_info WHERE V_gene='None' OR J_gene='None' OR CAST(cdr3_qual_min as int)<30"
+    # print(query)
+    # cur.execute(query)
 
 def plotNrGenes (datafile, geneCol):
     basename = datafile.split("/")[-1]
