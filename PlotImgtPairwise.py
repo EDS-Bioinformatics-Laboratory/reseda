@@ -4,10 +4,10 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-def reformatData(d):
+def reformatData(d, highest):
     '''
     Description: Reformat data for use in a figure
-    In: d[(a,b)]
+    In: d[(a,b)], highest (int, 300 for V genes, 30 for J genes)
     Out: x, y, s
     '''
 
@@ -32,7 +32,7 @@ def reformatData(d):
     for i in range(len(names)):
         x.append(i)
         y.append(i)
-        s.append(30)   # 200 for v genes, 30 for j genes
+        s.append(highest)   # 200 for v genes, 30 for j genes
 
     # Define colors
     cmap = plt.cm.get_cmap('cool')
@@ -154,6 +154,16 @@ def compareImgtGenes (myfile):
 
     d = dict()
 
+    # Check if it is V or J
+    white = myfile.split("/")[-1][3]
+    print("Gene:", white)
+    if white == "V":
+        highest = 200
+    elif white == "J":
+        highest = 30
+    else:
+        highest = 0
+
     header = fh.readline()
     for line in fh:
         line = line.strip()
@@ -162,7 +172,7 @@ def compareImgtGenes (myfile):
         a_sub, alleleA = a.split("*")
         b_sub, alleleB = b.split("*")
         if a_sub == b_sub:  # Skip same gene groups
-            size = 30   # 200 for V genes, 30 for J genes
+            size = highest   # 200 for V genes, 30 for J genes
 
         d[(a,b)] = int(size)
         d[(b,a)] = int(size)
@@ -177,7 +187,7 @@ def compareImgtGenes (myfile):
     fhOut.close()
 
     # Prepare data for making figures
-    (x, y, s, usecolors, names) = reformatData(d)
+    (x, y, s, usecolors, names) = reformatData(d, highest)
     C = asArray(x,y,s,names)
 
     # Make heatmap
