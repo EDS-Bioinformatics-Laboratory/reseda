@@ -61,11 +61,11 @@ if __name__ == '__main__':
 
     samplesheet = sys.argv[1]
 
-    client = pymongo.MongoClient()
-    db = client.immuno
+    # client = pymongo.MongoClient()
+    # db = client.immuno
 
     js = parseMiseqSheet(samplesheet)
     print(json.dumps(js, indent=4))
 
-    result = db.samples.insert_one(js)
-    print("Data stored:", result.inserted_id)
+    # result = db.samples.insert_one(js)
+    # print("Data stored:", result.inserted_id)
