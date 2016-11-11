@@ -8,13 +8,13 @@ library('beeswarm')
 #attach(d)
 
 # VOOR PIPELINE PAPER: clone figuren voor en na V re-assignment
-d1<-read.table("/home/barbera/TMP/S074-002_S73_L001.assembled-ACGTACGT-TRB_HUMAN-clones-subs.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
+d1<-read.table("/home/narya/TMP/beeswarm-S73-S74/S074-002_S73_L001.assembled-ACGTACGT-TRB_HUMAN-clones-subs.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
 d1$sample<-"S73-before"
-d2<-read.table("/home/barbera/TMP/S074-002_S73_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv.rr.clones_subs.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
+d2<-read.table("/home/narya/TMP/beeswarm-S73-S74/S074-002_S73_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv.rr.clones_subs.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
 d2$sample<-"S73-after"
-d3<-read.table("/home/barbera/TMP/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-clones-subs.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
+d3<-read.table("/home/narya/TMP/beeswarm-S73-S74/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-clones-subs.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
 d3$sample<-"S74-before"
-d4<-read.table("/home/barbera/TMP/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv.rr.clones_subs.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
+d4<-read.table("/home/narya/TMP/beeswarm-S73-S74/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv.rr.clones_subs.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
 d4$sample<-"S74-after"
 
 # Remove 90% of entries with read frequency == 1
@@ -32,9 +32,13 @@ d4<-removeSomeSingletons(d4)
 # Concatenate everything
 d<-rbind(d3,d4)  # bind everything
 d$color="black"
+d$dot="black"
 d$color[which(d$V_sub=="TRBV12-3")]="red"
 d$color[which(d$V_sub=="TRBV12-4")]="red"
 d$color[which(d$V_sub=="TRBV12-3+TRBV12-4")]="green"
+d$dot[which(d$V_sub=="TRBV12-3")]="yellow"
+d$dot[which(d$V_sub=="TRBV12-4")]="yellow"
+d$dot[which(d$V_sub=="TRBV12-3+TRBV12-4")]="yellow"
 
 # Enlarge margins: mar=c(bottom, left, top, right)
 # Allow to draw outside the plot region: xpd=TRUE
@@ -43,11 +47,15 @@ d$color[which(d$V_sub=="TRBV12-3+TRBV12-4")]="green"
 
 # Make the beeswarm plot
 attach(d)
-beeswarm(read_perc ~ sample, data=d,
-         log = TRUE, pch = 16,
-         pwcol=color,
+beeswarm(freq ~ sample, data=d,
+         log = TRUE,
+         pch = 21,
+         col="black",
+         pwbg=dot,
          main = 'Clones before and after V gene re-assignment', method="swarm", corral="wrap", corralWidth=0.7, # was 0.9
          las=2)
+
+#        pwcol=color,
 
 # Add legend
 #coord<-locator(1)
