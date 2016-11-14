@@ -64,6 +64,8 @@ function set_status {
     cd $thisdir
 }
 
+test ./log-versions.sh
+
 set_status ${ip} "RUNNING" "Started ${mids} ${celltype} analysis on ${starttime}"
 
 samples=`cat SAMPLES`  # get all arguments
