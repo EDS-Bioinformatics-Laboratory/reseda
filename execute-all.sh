@@ -27,6 +27,7 @@ v="${cell}V_${organism}"
 j="${cell}J_${organism}"
 
 # Mount the Beehub webdav server and configure the location
+resultsdir = "results-tbcell-nov2016"
 beehub_mount="/mnt/immunogenomics/RUNS/${run}"
 beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/${run}"
 
@@ -183,28 +184,28 @@ wait
 
 # Make output directories
 mkdir ${beehub_mount}
-mkdir ${beehub_mount}/results-tbcell
-mkdir ${beehub_mount}/results-tbcell/raw
-mkdir ${beehub_mount}/results-tbcell/reports
-mkdir ${beehub_mount}/results-tbcell/final
-mkdir ${beehub_mount}/results-tbcell/final/correct-mid
-mkdir ${beehub_mount}/results-tbcell/hla
+mkdir ${beehub_mount}/${resultsdir}
+mkdir ${beehub_mount}/${resultsdir}/raw
+mkdir ${beehub_mount}/${resultsdir}/reports
+mkdir ${beehub_mount}/${resultsdir}/final
+mkdir ${beehub_mount}/${resultsdir}/final/correct-mid
+mkdir ${beehub_mount}/${resultsdir}/hla
 wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${celltype} data to Beehub"
-test curl -T run-clones_subs-${ip}.csv --netrc ${beehub_web}/results-tbcell/
-test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
-test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
-test ./copy-to-beehub-hla.sh ${beehub_web}/results-tbcell/hla/
+test curl -T run-clones_subs-${ip}.csv --netrc ${beehub_web}/${resultsdir}/
+test ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
+test ./copy-to-beehub-raw.sh ${beehub_web}/${resultsdir}/raw/
+test ./copy-to-beehub-hla.sh ${beehub_web}/${resultsdir}/hla/
 cd split
-test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
-test ./copy-to-beehub-raw.sh ${beehub_web}/results-tbcell/raw/
+test ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
+test ./copy-to-beehub-raw.sh ${beehub_web}/${resultsdir}/raw/
 cd ../final
-test ./copy-to-beehub-reports.sh ${beehub_web}/results-tbcell/reports/
-test ./copy-to-beehub-final.sh ${beehub_web}/results-tbcell/final/
+test ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
+test ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/
 cd correct-mid
-test ./copy-to-beehub-final.sh ${beehub_web}/results-tbcell/final/correct-mid/
+test ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/correct-mid/
 cd ../..
 
 wait
