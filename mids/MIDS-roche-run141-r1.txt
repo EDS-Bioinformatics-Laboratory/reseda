@@ -1,0 +1,7 @@
+Name	Regex
+LN64	^(.{0,10})(ACTAGGGCTC)(.{5})
+LN37	^(.{0,10})(ACTGAGCTCA)(.{5})
+LN85	^(.{0,10})(CGTCTGCTCA)(.{5})
+LN78	^(.{0,10})(CTGACGCTCA)(.{5})
+LN83	^(.{0,10})(TCGGAGCTCA)(.{5})
+LN82	^(.{0,10})(TGACTGCTCA)(.{5})

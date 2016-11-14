@@ -1,0 +1,3 @@
+Name	Regex
+LN88	^(.{0,10})(ACAACTGCTC)(.{5})
+LN87	^(.{0,10})(TGCGACGCTC)(.{5})

@@ -1,0 +1,2 @@
+Name	Regex
+G4053	^(.{0,10})(ACTGACTCCT)(.{5})

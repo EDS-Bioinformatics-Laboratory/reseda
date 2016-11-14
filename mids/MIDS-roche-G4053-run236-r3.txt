@@ -1,0 +1,5 @@
+Name	Regex
+G4053A	^(.{0,10})(AGCTCAGAGGC)(.{5})
+G4053D	^(.{0,10})(AGCTCATGTCT)(.{5})
+G4053G	^(.{0,10})(AGCTCAGGGGA)(.{5})
+G4053M	^(.{0,10})(AGCTCACAGGA)(.{5})
