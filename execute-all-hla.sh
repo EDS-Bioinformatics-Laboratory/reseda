@@ -15,23 +15,20 @@ cell=$4
 celltype=$5
 
 # Configure this:
+# run="run09-20160919-miseq"
+# mids="MIDS-miseq.txt"
 # cell="HLA"
 # organism="human"
 # celltype="${cell}_HUMAN"
-# run="run09-20160919-miseq"
 
 # Reference sequences
-#mids="MIDS-miseq.txt"
-#refs="${cell}V_${organism}.fasta ${cell}J_${organism}.fasta"
 refs="hla_nuc_nospace.fasta"
-v="${cell}V_${organism}"
-j="${cell}J_${organism}"
 
 # Mount the Beehub webdav server and configure the location
 beehub_mount="/mnt/immunogenomics/RUNS/${run}"
 beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/${run}"
 
-# Then run ./execute-all.sh
+# Then run ./execute-all-hla.sh
 
 
 #######################
@@ -100,11 +97,6 @@ wait
 set_status ${ip} "RUNNING" "${celltype} Searching for primers"
 test python motif-search-batch.py ${samples}
 wait
-
-# Extract the CDR3 sequence
-#set_status ${ip} "RUNNING" "${celltype} Extracting CDR3's"
-#test python translate-and-extract-cdr3.py ${celltype} ${samples}
-#wait
 
 # Align sequences against IMGT and call SNPs
 set_status ${ip} "RUNNING" "${celltype} Aligning sequences"

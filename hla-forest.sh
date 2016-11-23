@@ -23,8 +23,9 @@ mkdir FOREST
 java -jar picard-tools-1.126/picard.jar SortSam I=${prefix}.sam O=${prefix}.readsort.sam SO=queryname
 wait
 
-# Select sequences that are long enough
-perl -ne 'if (m/^\@/) {print;} else { @c=split(/\s+/); print if length($c[9]) > 299; }' ${prefix}.readsort.sam > ${prefix}.sizeselection.sam
+# Select sequences that are long enough: REPLACE THIS WITH SelectSequencesOnSize.py min_length samIn samOut
+#perl -ne 'if (m/^\@/) {print;} else { @c=split(/\s+/); print if length($c[9]) > 299; }' ${prefix}.readsort.sam > ${prefix}.sizeselection.sam
+python SelectSequencesOnSize.py 300 ${prefix}.readsort.sam ${prefix}.sizeselection.sam
 wait
 
 # in case of multiple hits, choose the first
