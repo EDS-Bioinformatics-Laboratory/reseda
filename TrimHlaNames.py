@@ -1,6 +1,20 @@
 from __future__ import print_function
 import sys
 
+def trimHlaName (oldname):
+    '''
+    Description: trim HLA name to 6 digits
+    In: str oldname
+    Out: str newname
+    '''
+    name, alleles = oldname.split("*")
+    name = name.split("_")[-1]
+
+    alleles = alleles.split("_")[0]
+    alleles = alleles.split(":")
+    newname = name + "*" + ":".join(alleles[:3])
+    return(newname)
+
 def trimNames (infile):
     '''
     Description: trim the HLA names to 6 digits
@@ -21,13 +35,7 @@ def trimNames (infile):
         (freq, hlaname) = line.split()
         freq = int(freq)
 
-        name, alleles = hlaname.split("*")
-        name = name.split("_")[-1]
-
-        alleles = alleles.split("_")[0]
-        alleles = alleles.split(":")
-        hlaname_new = name + "*" + ":".join(alleles[:3])
-
+        hlaname_new = trimHlaName(hlaname)
         newnames[hlaname_new] = newnames.get(hlaname_new, 0) + freq
 
     for hlaname in sorted(newnames, key=newnames.get, reverse=True):
