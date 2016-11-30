@@ -35,6 +35,7 @@ def trimNames (infile):
 
     fhIn.close()
     fhOut.close()
+    return(outfile)
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
@@ -42,3 +43,4 @@ if __name__ == '__main__':
 
     for infile in sys.argv[1:]:
         outfile = trimNames(infile)
+        print("Wrote", outfile, "to disk")
