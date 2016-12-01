@@ -9,7 +9,7 @@ def getLookupTable (f):
     '''
    
     print("=== Reading XML file ===")
-    tree = ETree.ElementTree(file=hla_ambig_file)
+    tree = ETree.ElementTree(file=f)
     print("=== done ===")
 
     lookupTable = dict()
@@ -21,10 +21,11 @@ def getLookupTable (f):
         for child in node.getchildren():
             ambig_allele = child.attrib['name']
             lookupTable[ambig_allele] = main_allele
-            print(ambig_allele, main_allele)
+            # print(ambig_allele, main_allele)
 
     return(lookupTable)
 
 if __name__ == '__main__':
-    hla_ambig_file = "/home/barbera/git/IMGTHLA/xml/test_hla_ambigs.xml"
+    # hla_ambig_file = "/home/barbera/git/IMGTHLA/xml/test_hla_ambigs.xml"
+    hla_ambig_file = "/home/barbera/git/IMGTHLA/xml/hla_ambigs.xml"
     lookupTable = getLookupTable(hla_ambig_file)

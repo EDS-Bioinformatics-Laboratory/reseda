@@ -1,5 +1,6 @@
 from __future__ import print_function
 import sys
+from AmbiguousHlaAlleles import getLookupTable
 
 def parseHlaName (oldname):
     '''
@@ -27,7 +28,7 @@ def trimHlaName (oldname):
 
     return(newname)
 
-def trimNames (infile):
+def trimNames (infile, lookupTable):
     '''
     Description: trim the HLA names to 6 digits
     In: infile (filename)
@@ -47,7 +48,14 @@ def trimNames (infile):
         (freq, hlaname) = line.split()
         freq = int(freq)
 
+        # Parse relevant bits from the hlaname
         hlaname_new = parseHlaName(hlaname)
+
+        # Lookup the main name of the gene in case it is an ambiguous name
+        # If it is not ambiguous use the original name
+        hlaname_new = lookupTable.get(hlaname_new, hlaname_new)
+
+        # Trim the HLA name to 6 digits and sum the frequency
         hlaname_new = trimHlaName(hlaname_new)
         newnames[hlaname_new] = newnames.get(hlaname_new, 0) + freq
 
@@ -62,6 +70,8 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         sys.exit("Usage: " + sys.argv[0] + " *.hla.count.txt")
 
+    lookupTable = getLookupTable("/home/barbera/git/IMGTHLA/xml/hla_ambigs.xml")
+
     for infile in sys.argv[1:]:
-        outfile = trimNames(infile)
+        outfile = trimNames(infile, lookupTable)
         print("Wrote", outfile, "to disk")
