@@ -27,7 +27,7 @@ v="${cell}V_${organism}"
 j="${cell}J_${organism}"
 
 # Mount the Beehub webdav server and configure the location
-resultsdir="results-tbcell-nov2016"
+resultsdir="results-tbcell"
 beehub_mount="/mnt/immunogenomics/RUNS/${run}"
 beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/${run}"
 
