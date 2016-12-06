@@ -17,6 +17,8 @@ refprefix=`basename ${ref} .fasta`
 #gzip -f ${prefix}.fastq
 #wait
 
+# tmp directory
+
 echo "### align sequences with bwasw ###"
 ./bwa-0.7.12/bwa mem ${ref} ${mydir}/${prefix}.fastq.gz > ${prefix}-${refprefix}.sam
 wait
@@ -27,21 +29,21 @@ wait
 rm -f ${prefix}-${refprefix}.sam # REMOVE TMP FILE
 
 echo "### fix CIGAR string KEEP THIS FILE ###"
-java -jar picard-tools-1.126/picard.jar CleanSam I=${prefix}-${refprefix}-e.sam O=${prefix}-${refprefix}-e-clean.sam
+java -Djava.io.tmpdir=./tmp -jar picard-tools-1.126/picard.jar CleanSam I=${prefix}-${refprefix}-e.sam O=${prefix}-${refprefix}-e-clean.sam
 wait
 rm -f ${prefix}-${refprefix}-e.sam
 
 echo "### convert sam to bam ###"
-java -jar ./picard-tools-1.126/picard.jar SamFormatConverter I=${prefix}-${refprefix}-e-clean.sam O=${prefix}-${refprefix}.bam
+java -Djava.io.tmpdir=./tmp -jar ./picard-tools-1.126/picard.jar SamFormatConverter I=${prefix}-${refprefix}-e-clean.sam O=${prefix}-${refprefix}.bam
 wait
 
 echo "### add read groups ###"
-java -jar ./picard-tools-1.126/picard.jar AddOrReplaceReadGroups I=${prefix}-${refprefix}.bam O=${prefix}-${refprefix}RG.bam ID=a LB=a PL=454 PU=MID SM=a SO=coordinate
+java -Djava.io.tmpdir=./tmp -jar ./picard-tools-1.126/picard.jar AddOrReplaceReadGroups I=${prefix}-${refprefix}.bam O=${prefix}-${refprefix}RG.bam ID=a LB=a PL=454 PU=MID SM=a SO=coordinate
 wait
 rm -f ${prefix}-${refprefix}.bam
 
 echo "### index bam file ###"
-java -jar ./picard-tools-1.126/picard.jar BuildBamIndex I=${prefix}-${refprefix}RG.bam
+java -Djava.io.tmpdir=./tmp -jar ./picard-tools-1.126/picard.jar BuildBamIndex I=${prefix}-${refprefix}RG.bam
 wait
 
 echo "### Create SAM output that is easy to import in R ###"
@@ -54,7 +56,7 @@ rm -f ${prefix}-${refprefix}RG.bam ${prefix}-${refprefix}RG.bai
 
 if [[ -s ${prefix}-${refprefix}RG.pileup ]]; then
     echo "### call variants that are covered by 1 read ###"
-    java -jar VarScan.v2.3.7.jar pileup2snp ${prefix}-${refprefix}RG.pileup --min-coverage 1 --min-reads2 1 > ${prefix}-${refprefix}RG.snp.csv
+    java -Djava.io.tmpdir=./tmp -jar VarScan.v2.3.7.jar pileup2snp ${prefix}-${refprefix}RG.pileup --min-coverage 1 --min-reads2 1 > ${prefix}-${refprefix}RG.snp.csv
     wait
 else
     echo "Pilup file is empty. Skipped VarScan"
