@@ -18,6 +18,7 @@ refprefix=`basename ${ref} .fasta`
 #wait
 
 # tmp directory
+mkdir tmp
 
 echo "### align sequences with bwasw ###"
 ./bwa-0.7.12/bwa mem ${ref} ${mydir}/${prefix}.fastq.gz > ${prefix}-${refprefix}.sam
