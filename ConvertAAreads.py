@@ -16,16 +16,18 @@ def csvToFastq (myfile):
     fhOut = gzip.open(outfile, "w")
     with open(myfile) as csvfile:
         fh = csv.reader(csvfile)
+        header = fh.next()
         for c in fh:
-            acc = c[1]
-            seq = c[2] + c[3]
-            regionmidrun = c[5].split(",")
-            run = regionmidrun[-1]
-            if run == "142":
-                # print(run, acc, seq)
-                record = SeqRecord(Seq(seq), id=acc, name=acc)
-                record.letter_annotations["phred_quality"] = [40] * len(seq)
-                SeqIO.write(record, fhOut, "fastq")
+            acc = c[header.index("accession")]
+            seq = c[header.index("mid1")] + c[header.index("seq")]
+            sample = c[header.index("pt")] + "_" + c[header.index("group")].replace(" ","")
+            # regionmidrun = c[4].split(",")
+            # run = regionmidrun[-1]
+            # if run == "142":
+            # print(run, acc, seq)
+            record = SeqRecord(Seq(seq), id=acc, name=acc, description=sample)
+            record.letter_annotations["phred_quality"] = [40] * len(seq)
+            SeqIO.write(record, fhOut, "fastq")
     csvfile.close()
     fhOut.close()
 
