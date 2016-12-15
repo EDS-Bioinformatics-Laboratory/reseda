@@ -37,6 +37,11 @@ wait
 
 # Count alignment hits
 perl -ne 'next if m/^@/; @c=split(/\t/); print $c[2],"\n";' ${prefix}.filtered.sam|sort|uniq -c|sort -nr > ${prefix}.filtered.hla.count.txt
+wait
+
+# Resolve ambiguous HLA names and trim the names
+python TrimHlaNames.py ${prefix}.filtered.hla.count.txt
+wait
 
 # run hlaforest
 source config.sh
