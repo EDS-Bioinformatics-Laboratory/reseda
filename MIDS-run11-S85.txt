@@ -1,0 +1,2 @@
+Name	Regex
+MID07	^(.{4,10})(CAGTCAGT)(.{5})
