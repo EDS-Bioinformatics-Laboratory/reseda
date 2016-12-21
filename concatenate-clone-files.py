@@ -38,7 +38,7 @@ def printContent (myfile, fhOut):
 
     header = fh.readline() # skip header
     for line in fh:
-        line = [sample,mid] + line.strip().split()
+        line = [sample,mid] + line.strip().split("\t")
         print("\t".join(line), file=fhOut)
 
     fh.close()
@@ -52,7 +52,7 @@ except:
     sys.exit("cannot open file "+myfiles[0])
 
 header = fh.readline()
-header = ["Sample","MID"] + header.strip().split()
+header = ["Sample","MID"] + header.strip().split("\t")
 print("\t".join(header), file=fhOut)
 fh.close()
 
