@@ -1,17 +1,6 @@
 from __future__ import print_function
 import sys
 
-if len(sys.argv) < 2:
-    sys.exit("Usage: concatenate-clone-files.py *clones_subs.csv")
-
-myfiles = sys.argv[1:]
-
-# Open file for writing
-try:
-    fhOut = open("run-clones_subs.csv", "w")
-except:
-    sys.exit("cannot write to file")
-
 ########### FUNCTIONS ##########
 
 def parseSampleName (myfile):
@@ -45,21 +34,34 @@ def printContent (myfile, fhOut):
 
 ############ MAIN ############
 
-# Read header of the first file and write to disk
-try:
-    fh = open(myfiles[0])
-except:
-    sys.exit("cannot open file "+myfiles[0])
+if __name__ == '__main__':
 
-header = fh.readline()
-header = ["Sample","MID"] + header.strip().split("\t")
-print("\t".join(header), file=fhOut)
-fh.close()
+    if len(sys.argv) < 2:
+        sys.exit("Usage: concatenate-clone-files.py *clones_subs.csv")
 
-# Read content of all files and write to fhOut
-for myfile in myfiles:
-    printContent(myfile, fhOut)
+    myfiles = sys.argv[1:]
 
-fhOut.close()
+    # Open file for writing
+    try:
+        fhOut = open("run-clones_subs.csv", "w")
+    except:
+        sys.exit("cannot write to file")
 
-print("DONE")
+    # Read header of the first file and write to disk
+    try:
+        fh = open(myfiles[0])
+    except:
+        sys.exit("cannot open file "+myfiles[0])
+
+    header = fh.readline()
+    header = ["Sample","MID"] + header.strip().split("\t")
+    print("\t".join(header), file=fhOut)
+    fh.close()
+
+    # Read content of all files and write to fhOut
+    for myfile in myfiles:
+        printContent(myfile, fhOut)
+
+    fhOut.close()
+
+    print("DONE")

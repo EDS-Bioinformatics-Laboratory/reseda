@@ -18,11 +18,11 @@ if __name__ == '__main__':
     celltypes = ["IGH_HUMAN","IGH_MOUSE","IGK_HUMAN","IGK_MOUSE","IGL_HUMAN","IGL_MOUSE","TRA_HUMAN","TRA_MOUSE","TRB_HUMAN","TRB_MOUSE"]
 
     for celltype in celltypes:
-        cmd = "python concatenate-clone-files.py " + mydir + "*" + celltype + "-clones-subs.csv"
+        cmd = "python ConcatenateCloneFiles.py " + mydir + "*" + celltype + "-clones-subs.csv"
         executeCmd(cmd)
         cmd = "mv run-clones_subs.csv run-clones_subs-" + celltype + ".csv"
         executeCmd(cmd)
-        cmd = "python concatenate-clone-files.py " + mydir + "*" + celltype + "*.rr.clones_subs.csv"
+        cmd = "python ConcatenateCloneFiles.py " + mydir + "*" + celltype + "*.rr.clones_subs.csv"
         executeCmd(cmd)
         cmd = "mv run-clones_subs.csv run-clones_subs-" + celltype + "-after-reassignment.csv"
         executeCmd(cmd)
