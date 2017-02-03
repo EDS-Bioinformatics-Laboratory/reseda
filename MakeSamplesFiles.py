@@ -7,7 +7,7 @@ if __name__ == '__main__':
     jsonFile = "20161216_Rheuma_MiSeqRUN011.json"
     mountdir = "/mnt/immunogenomics/RUNS/run11-20161219-miseq/data/"
 
-    # Read json with parsed sample sheet info (made with MongoMetaData.py)
+    # Read json with parsed sample sheet info (made with MetaData.py)
     try:
         fh = open(jsonFile)
     except:
