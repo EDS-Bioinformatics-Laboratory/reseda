@@ -2,7 +2,7 @@ from __future__ import print_function
 import sys
 import csv
 import json
-import pymongo
+#import pymongo
 
 def parseMiseqSheet (f):
     '''
