@@ -1,7 +1,7 @@
 #!/bin/bash
 
-run="run10-20161031-miseq"
-resultsdir="results-tbcell-nov2016"
+run="run12-20170127-miseq"
+resultsdir="results-tbcell"
 
 files="/mnt/immunogenomics/RUNS/${run}/${resultsdir}/reports/*.log"
 grep '^Assembled reads \.' $files > report-PEAR.txt
@@ -19,10 +19,10 @@ files="/mnt/immunogenomics/RUNS/${run}/${resultsdir}/reports/*-productive.txt"
 grep 'Unique reads with V and J in all_info' $files > report-PRODUCTIVE.txt
 cat report-PRODUCTIVE.txt
 
-python report-after-v-reassignment.py /mnt/immunogenomics/RUNS/${run}/${resultsdir}/final/correct-mid/*.rr.clones_subs.csv
+python2 report-after-v-reassignment.py /mnt/immunogenomics/RUNS/${run}/${resultsdir}/final/correct-mid/*.rr.clones_subs.csv
 cat report-AFTER-V-REASSIGNMENT.txt
 
-python report-combine-all.py
+python2 report-combine-all.py
 wait
 
 echo "FINISHED"

@@ -1,13 +1,14 @@
 from __future__ import print_function
 import xml.etree.ElementTree as ETree
 
-def getLookupTable (f):
+
+def getLookupTable(f):
     '''
-    Description: Read XML file with ambiguous HLA names and store in a dictionary
+    Description: Read XML file with ambig HLA names and store in dictionary
     In: f (filename)
     Out: lookupTable[ambig_allele] = main_allele (dict)
     '''
-   
+
     print("=== Reading XML file ===")
     tree = ETree.ElementTree(file=f)
     print("=== done ===")
@@ -24,6 +25,7 @@ def getLookupTable (f):
             # print(ambig_allele, main_allele)
 
     return(lookupTable)
+
 
 if __name__ == '__main__':
     # hla_ambig_file = "/home/barbera/git/IMGTHLA/xml/test_hla_ambigs.xml"

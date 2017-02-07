@@ -4,19 +4,22 @@ import matplotlib.pyplot as plt
 
 test = 1  # set to 0 to switch off
 
-def antoine (length):
+
+def antoine(length):
     p = list()
     for l in length:
         p.append(1.0/(400**l))
     return(p)
 
-def same_amino_acid_sequence (length):
+
+def same_amino_acid_sequence(length):
     p = list()
     for l in length:
         p.append((1.0/20)**l)
     return(p)
 
-def two_same_birthday (x, n):
+
+def two_same_birthday(x, n):
     '''
     Description: calculates probability of two people having the same birthday
     In: x is list of values (for example nr of days in a year), n = nr of people
@@ -29,6 +32,7 @@ def two_same_birthday (x, n):
         m = float(m)
         p.append(1 - (math.factorial(m) / (m**n * math.factorial(m-n))))
     return(p)
+
 
 def taylor_approximation(x, n):
     '''
@@ -43,7 +47,8 @@ def taylor_approximation(x, n):
         p.append(1-math.exp((-1*n**2)/(2*m)))
     return(p)
 
-def same_as_you (x, n):
+
+def same_as_you(x, n):
     '''
     Description: calculates probability of someone having same birthday, given a certain date
     In: x is list of values (for example nr of days in a year), n = nr of people
@@ -56,10 +61,12 @@ def same_as_you (x, n):
         p.append(1.0 - ((m-1)/m)**n)
     return(p)
 
-def autolabel(x,y):
+
+def autolabel(x, y):
     # attach some text labels
     for i in range(len(x)):
-        ax.text(x[i], y[i],'%d' % y[i],ha='center', va='bottom')
+        ax.text(x[i], y[i], '%d' % y[i], ha='center', va='bottom')
+
 
 if test == 1:
 
@@ -73,7 +80,7 @@ if test == 1:
     # x = kids
     # y = p
 
-    x = range(1,11)
+    x = range(1, 11)
     cdr3s = [20**a for a in x]
     nr_vgenes = 52                  # TCRb: 52, BCRh: 65
     y = same_as_you(cdr3s, nr_vgenes)
@@ -97,5 +104,5 @@ if test == 1:
     ax.set_ylabel("Probability")
     ax.set_title("Probability of two V genes having the same CDR3")
     plt.xticks(x)
-    plt.legend(["Birthday problem (same birthday as you)","Taylor approximation (two people with same birthday)","(1/20)^L","1.0/(400^L)"])
+    plt.legend(["Birthday problem (same birthday as you)", "Taylor approximation (two people with same birthday)", "(1/20)^L", "1.0/(400^L)"])
     plt.show()
