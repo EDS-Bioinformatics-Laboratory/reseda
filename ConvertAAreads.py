@@ -6,7 +6,8 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
-def csvToFastq (myfile):
+
+def csvToFastq(myfile):
     '''
     Description: read AA.reads file and convert it to fastq
     In: csvfile (str)
@@ -20,7 +21,7 @@ def csvToFastq (myfile):
         for c in fh:
             acc = c[header.index("accession")]
             seq = c[header.index("mid1")] + c[header.index("seq")]
-            sample = c[header.index("pt")] + "_" + c[header.index("group")].replace(" ","")
+            sample = c[header.index("pt")] + "_" + c[header.index("group")].replace(" ", "")
             # regionmidrun = c[4].split(",")
             # run = regionmidrun[-1]
             # if run == "142":
@@ -30,6 +31,7 @@ def csvToFastq (myfile):
             SeqIO.write(record, fhOut, "fastq")
     csvfile.close()
     fhOut.close()
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:

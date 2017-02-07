@@ -29,7 +29,7 @@ if __name__ == '__main__':
                 kept += 1
                 print(line, file=fhOut)
 
-    print(kept, total, 100.0*kept/total, file=fhRep)
+    print(kept, total, 100.0 * kept / total, file=fhRep)
 
     fhIn.close()
     fhOut.close()

@@ -15,7 +15,7 @@ n_samples = 0
 for line in fh:
     line = line.strip()
     c = line.split()
-    c[2] = c[2].replace("%","")
+    c[2] = c[2].replace("%", "")
 
     if c[0] == "C":
         n_samples += 1

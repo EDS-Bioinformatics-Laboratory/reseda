@@ -3,6 +3,7 @@ import sys
 import os.path
 from AmbiguousHlaAlleles import getLookupTable
 
+
 def readParsedEBI(f):
     '''
     Description: Read file and put in a dictionary
@@ -22,7 +23,8 @@ def readParsedEBI(f):
     fh.close()
     return(lookupTable)
 
-def parseHlaName (oldname):
+
+def parseHlaName(oldname):
     '''
     Description: get relevant part of HLA name
     In: str oldname
@@ -36,7 +38,8 @@ def parseHlaName (oldname):
     newname = name + "*" + ":".join(alleles)
     return(newname)
 
-def trimHlaName (oldname):
+
+def trimHlaName(oldname):
     '''
     Description: trim HLA name to 6 digits
     In: str oldname
@@ -48,7 +51,8 @@ def trimHlaName (oldname):
 
     return(newname)
 
-def trimNames (infile, lookupTable):
+
+def trimNames(infile, lookupTable):
     '''
     Description: trim the HLA names to 6 digits
     In: infile (filename)
@@ -91,6 +95,7 @@ def trimNames (infile, lookupTable):
     fhIn.close()
     fhOut.close()
     return(outfile)
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:

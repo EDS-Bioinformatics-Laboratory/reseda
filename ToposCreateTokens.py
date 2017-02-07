@@ -6,10 +6,11 @@ import json
 
 # Create pool: topos newPool
 # Upload tokens: uploadFileAsToken [POOLNAME] [FILENAME]                                  #
-#            or: uploadFilesInDirAsTokens [POOLNAME] [DIRNAME] 
+#            or: uploadFilesInDirAsTokens [POOLNAME] [DIRNAME]
 # Token pool is here: https://topos.grid.sara.nl/4.1/pools/POOLNAME/
 
-def getSamples (myfile):
+
+def getSamples(myfile):
     '''
     Description: read sample names and return a list of all the file names
     In: SAMPLE-file
@@ -28,7 +29,8 @@ def getSamples (myfile):
     fh.close()
     return(samples)
 
-def writeJson (f, js):
+
+def writeJson(f, js):
     '''
     Description: write json code to a file
     In: f (filename str), js (json dict)
@@ -44,7 +46,8 @@ def writeJson (f, js):
     fhOut.close()
     print("Wrote", f, "to disk")
 
-def guessCellAndOrganism (myfile):
+
+def guessCellAndOrganism(myfile):
     '''
     Description: the file name usually contains the celltype and organism, guess which one it is
     In: filename (str)
@@ -73,6 +76,7 @@ def guessCellAndOrganism (myfile):
 
     celltype = cell + "_" + organism.upper()
     return(cell, organism, celltype)
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 4:

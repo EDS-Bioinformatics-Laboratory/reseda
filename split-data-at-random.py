@@ -17,13 +17,13 @@ for i in range(10):
         sys.exit("cannot open file")
 
     try:
-        fhOut = open("clones"+str(i)+".csv", "w")
+        fhOut = open("clones" + str(i) + ".csv", "w")
     except:
         sys.exit("cannot open file")
 
     header = fh.readline()
     for line in fh:
-        line = line.replace('"','')
+        line = line.replace('"', '')
         line = line.rstrip()
         c = line.split(",")
         # v = c[0]
@@ -38,7 +38,7 @@ for i in range(10):
 
         # divide frequency over nr_samples
         for knikker in range(freq):
-            dice = random.randint(0,nr_samples-1)
+            dice = random.randint(0, nr_samples - 1)
             new_freq[dice] += 1
 
         print(",".join(c + [str(c) for c in new_freq]), file=fhOut)

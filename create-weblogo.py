@@ -2,12 +2,13 @@ from __future__ import print_function
 import sys
 import os
 
-if len(sys.argv)<2:
+if len(sys.argv) < 2:
     sys.exit("Usage: create-weblogo.py all_info.csv (one or more files)")
 
 myfiles = sys.argv[1:]
 
-def getCDR3 (datafile):
+
+def getCDR3(datafile):
     try:
         fh = open(datafile)
     except:
@@ -26,8 +27,9 @@ def getCDR3 (datafile):
         cdr3s[cdr3_len].append(cdr3)
 
     return(cdr3s)
-        
-def createSequenceLogo (outdir, cdr3_len, cdr3_list):
+
+
+def createSequenceLogo(outdir, cdr3_len, cdr3_list):
     inFASTA = outdir + "/seqlogo-cdr3-" + str(cdr3_len) + ".fasta"
     outPDF = outdir + "/seqlogo-cdr3-" + str(cdr3_len) + ".pdf"
 
@@ -43,7 +45,6 @@ def createSequenceLogo (outdir, cdr3_len, cdr3_list):
     print(mycmd)
     os.system(mycmd)
 
-################# MAIN ##############
 
 for datafile in myfiles:
     outdir = "seqlogo-" + datafile.split("/")[-1]
@@ -56,5 +57,5 @@ for datafile in myfiles:
     for cdr3_len in sorted(cdr3s):
         # if n > 5:
         #     break
-        createSequenceLogo(outdir, cdr3_len, cdr3s[cdr3_len]) # make sequence logo of CDR3
+        createSequenceLogo(outdir, cdr3_len, cdr3s[cdr3_len])  # make sequence logo of CDR3
         n += 1

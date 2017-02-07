@@ -5,7 +5,6 @@ import regex
 from Bio import SeqIO
 from sequences import *
 
-########### Functions ############
 
 def getVmotifs(cellType):
     '''
@@ -63,7 +62,7 @@ def getVmotifs(cellType):
         seq = c[idx]
         if cellType.startswith("TR"):   # TRB, TRA human
             motifs.append(seq[99:104])
-        elif cellType.startswith("IGH"): # IGH human
+        elif cellType.startswith("IGH"):  # IGH human
             motifs.append(seq[97:102])
         elif cellType == "IGL_HUMAN" or cellType == "IGK_HUMAN":
             motifs.append(seq[98:103])
@@ -75,6 +74,7 @@ def getVmotifs(cellType):
     motifs = list(set(motifs))      # make list with motifs unique
 
     return(motifs)
+
 
 def getJmotifs(cellType):
     '''
@@ -105,6 +105,7 @@ def getJmotifs(cellType):
     else:
         sys.exit("Cell type " + cellType + " is not implemented yet.\n" + usage)
 
+
 def getMotifs(cellType, mismatches):
     '''
     Description: retrieve V and J motifs and concatenate them
@@ -132,13 +133,14 @@ def getMotifs(cellType, mismatches):
             if v == "" or j == "":  # skip empty values
                 continue
 
-            #v = v[:-1] + "(" + v[-1]    # put a "(" between second last and last character
+            # v = v[:-1] + "(" + v[-1]    # put a "(" between second last and last character
             motifs.append(v + ".+?" + j)
 
     combinedMotifs = ".+(" + "|".join(motifs) + ")" + mismatches
     # print(combinedMotifs)
 
     return(combinedMotifs)
+
 
 def getImgtMotifs():
     '''
@@ -153,7 +155,8 @@ def getImgtMotifs():
 
     return(combinedMotifs)
 
-def extractCDR3 (cellType, peptide, p):
+
+def extractCDR3(cellType, peptide, p):
     '''
     Description: extract the CDR3 from a peptide sequence
     In: peptide sequence (string), regular expression (regex.compile object) V+J, regular expression for just the V (regex.compile object)
@@ -165,7 +168,7 @@ def extractCDR3 (cellType, peptide, p):
 
     m = p.search(str(peptide))
 
-    if m != None:   # a match is found
+    if m is not None:   # a match is found
         # Extract CDR3 peptide sequence
         cdr3pep = m.group(1)
         aa_pos = list(m.span(1))
@@ -179,13 +182,13 @@ def extractCDR3 (cellType, peptide, p):
             # Remove the first 6, 5 or 4 aminoacids of the CDR3
             if cellType.startswith("IGH"):  # IGH
                 cdr3pep = cdr3pep[6:]
-                aa_pos[0] = aa_pos[0]+6
-            elif cellType.startswith("IG"): # IGL, IGK
+                aa_pos[0] = aa_pos[0] + 6
+            elif cellType.startswith("IG"):  # IGL, IGK
                 cdr3pep = cdr3pep[6:]
-                aa_pos[0] = aa_pos[0]+6
+                aa_pos[0] = aa_pos[0] + 6
             else:                           # TRB, TRA
                 cdr3pep = cdr3pep[4:]
-                aa_pos[0] = aa_pos[0]+4
+                aa_pos[0] = aa_pos[0] + 4
 
         # Remove the last 2 aminoacids of the CDR3
         cdr3pep = cdr3pep[:-2]
@@ -193,7 +196,6 @@ def extractCDR3 (cellType, peptide, p):
 
     return(cdr3pep, aa_pos)
 
-############# Main ###############
 
 if __name__ == "__main__":
 
@@ -262,9 +264,9 @@ if __name__ == "__main__":
         # Container to count stuff
         count_stuff = dict()
 
-        for record in SeqIO.parse(fhIn, "fastq") :
+        for record in SeqIO.parse(fhIn, "fastq"):
 
-            count_stuff["1. Total reads"] = count_stuff.get("1. Total reads",0) + 1
+            count_stuff["1. Total reads"] = count_stuff.get("1. Total reads", 0) + 1
 
             # Translate sequence to protein
             translations = nucToPeptide(str(record.seq))
@@ -275,9 +277,9 @@ if __name__ == "__main__":
             # Find motif (V, J and everything in between)
             # TO DO: sometimes multiple patterns can match which results in a much longer CDR3. Needs a fix
             for i in range(len(translations)):
-                (cdr3pep, aa_pos) = extractCDR3 (cellType, str(translations[i]), p)
-                
-                if cdr3pep != None:
+                (cdr3pep, aa_pos) = extractCDR3(cellType, str(translations[i]), p)
+
+                if cdr3pep is not None:
                     cdr3_found = True
 
                     # Extract CDR3 nucleotide sequence
@@ -286,22 +288,22 @@ if __name__ == "__main__":
                     if i < 3:                   # retrieve nucleotide reading frame +
                         tmp_seq = record.seq[i:]
                     else:                       # retrieve nucleotide reading frame of reverse complement
-                        tmp_seq = comrev(record.seq)[i-3:]
+                        tmp_seq = comrev(record.seq)[i - 3:]
                     cdr3nuc = tmp_seq[nt_start:nt_end]
 
                     # Convert fastq quality scores to phred scores
                     quality_scores = record.letter_annotations["phred_quality"]
-                    if i<3:
+                    if i < 3:
                         tmp_qual = quality_scores[i:]
                     else:
-                        tmp_qual = list(reversed(quality_scores))[i-3:]
+                        tmp_qual = list(reversed(quality_scores))[i - 3:]
                     cdr3_quality_scores = tmp_qual[nt_start:nt_end]
 
                     # Basic stats CDR3 quality
                     if len(cdr3_quality_scores) > 0:
                         cdr3_qual_min = min(cdr3_quality_scores)
                         cdr3_qual_max = max(cdr3_quality_scores)
-                        cdr3_qual_avg = round(sum(cdr3_quality_scores)/float(len(cdr3_quality_scores)), 1)
+                        cdr3_qual_avg = round(sum(cdr3_quality_scores) / float(len(cdr3_quality_scores)), 1)
                     else:
                         cdr3_qual_min = 0
                         cdr3_qual_max = 0
@@ -310,16 +312,16 @@ if __name__ == "__main__":
 
                     # Convert the quality scores to a string
                     quality_scores = str(quality_scores)
-                    quality_scores = quality_scores.replace(",","").replace("[","").replace("]","")
+                    quality_scores = quality_scores.replace(",", "").replace("[", "").replace("]", "")
                     cdr3_quality_scores = str(cdr3_quality_scores)
-                    cdr3_quality_scores = cdr3_quality_scores.replace(",","").replace("[","").replace("]","")
+                    cdr3_quality_scores = cdr3_quality_scores.replace(",", "").replace("[", "").replace("]", "")
 
                     # Check for stop codons and untranslated codons
-                    if p_stop.search(cdr3pep) != None:    # stop codon in cdr3peptide
-                        count_stuff["2. Discarded reads stop codon in CDR3"] = count_stuff.get("2. Discarded reads stop codon in CDR3",0) + 1
+                    if p_stop.search(cdr3pep) is not None:    # stop codon in cdr3peptide
+                        count_stuff["2. Discarded reads stop codon in CDR3"] = count_stuff.get("2. Discarded reads stop codon in CDR3", 0) + 1
                         print("\t".join([record.id, str(i), str(record.seq), str(translations[i]), quality_scores]), file=fhStop)
-                    elif p_x.search(cdr3pep) != None:     # check for uncalled bases
-                        count_stuff["3. Discarded reads uncalled bases in CDR3"] = count_stuff.get("3. Discarded reads uncalled bases in CDR3",0) + 1
+                    elif p_x.search(cdr3pep) is not None:     # check for uncalled bases
+                        count_stuff["3. Discarded reads uncalled bases in CDR3"] = count_stuff.get("3. Discarded reads uncalled bases in CDR3", 0) + 1
                         print("\t".join([record.id, str(i), str(record.seq), str(translations[i]), quality_scores]), file=fhUncalled)
                     else:                                 # Correct CDR3 peptide found without uncalled bases or stop codons
                         print("\t".join([record.id, str(i), str(cdr3pep), str(cdr3nuc), str(cdr3_qual_min), str(cdr3_qual_max), str(cdr3_qual_avg), cdr3_quality_scores]), file=fhOut)
@@ -329,10 +331,10 @@ if __name__ == "__main__":
                         for m_extra in p_extra.finditer(str(translations[i])):
                             print(record.id, str(i), m_extra.group(0), m_extra.span(), file=fhExtra)
 
-                        count_stuff["4. Reads with CDR3"] = count_stuff.get("4. Reads with CDR3",0) + 1
+                        count_stuff["4. Reads with CDR3"] = count_stuff.get("4. Reads with CDR3", 0) + 1
                         break
 
-            if cdr3_found == False:
+            if cdr3_found is False:
                 print("\t".join([record.id, str(i), str(record.seq), str(translations)]), file=fhNoCdr3)
 
         # Make report

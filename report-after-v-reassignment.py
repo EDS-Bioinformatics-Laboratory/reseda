@@ -6,13 +6,14 @@ if len(sys.argv) < 2:
     sys.exit("Usage: report-after-v-reassignment.py /path/to/*.rr.clones_subs.csv")
 datafiles = sys.argv[1:]
 
-def countReads (datafile):
+
+def countReads(datafile):
     try:
         fh = open(datafile)
     except:
         sys.exit("cannot open file " + datafile)
 
-    header = fh.readline()
+    fh.readline()
     totalreads = 0
     for line in fh:
         line = line.strip()
@@ -23,6 +24,7 @@ def countReads (datafile):
     fh.close()
 
     return(totalreads)
+
 
 try:
     fhOut = open("report-AFTER-V-REASSIGNMENT.txt", "w")

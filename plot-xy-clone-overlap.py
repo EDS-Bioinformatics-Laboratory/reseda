@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 #     sys.exit("Usage: plot-xy-clone-overlap.py runXX-clones.csv")
 
 
-def readSamples (datafile, sampleX, sampleY):
+def readSamples(datafile, sampleX, sampleY):
 
     try:
         fh = open(datafile)
@@ -19,7 +19,7 @@ def readSamples (datafile, sampleX, sampleY):
     c_v = header.index("V_sub")
     c_j = header.index("J_sub")
     c_cdr3 = header.index("cdr3pep")
-    c_freq = header.index("freq")
+    # c_freq = header.index("freq")
     c_perc = header.index("read_perc")
 
     data = dict()
@@ -46,9 +46,10 @@ def readSamples (datafile, sampleX, sampleY):
         y.append(data[clones].get(sampleY, 0))
 
     fh.close()
-    return(x,y)
+    return(x, y)
 
-def makeScatter (datafile, sampleX, sampleY):
+
+def makeScatter(datafile, sampleX, sampleY):
     plotfile = datafile.split("/")[-1] + "-" + sampleX + "-" + sampleY + ".pdf"
     # plotfile = datafile + "-" + sampleX + "-" + sampleY + ".pdf"
 
@@ -58,9 +59,9 @@ def makeScatter (datafile, sampleX, sampleY):
     fig, ax = plt.subplots()
     ax.scatter(x, y)
 
-    max_xy = max(x+y) + 1
-    ax.plot((0,max_xy),(threshold,threshold), '--', color="red")
-    ax.plot((threshold,threshold),(0,max_xy), '--', color="red")
+    max_xy = max(x + y) + 1
+    ax.plot((0, max_xy), (threshold, threshold), '--', color="red")
+    ax.plot((threshold, threshold), (0, max_xy), '--', color="red")
 
     # plt.xlim([-1,max_xy])
     # plt.ylim([-1,max_xy])
@@ -80,5 +81,6 @@ def makeScatter (datafile, sampleX, sampleY):
         print("Wrote", plotfile, "to disk")
     except:
         sys.exit("cannot write plotfile to disk")
+
 
 makeScatter("/home/barbera/TMP/run06-clones_subs.csv", "S074-166_S173", "S074-188_S185")

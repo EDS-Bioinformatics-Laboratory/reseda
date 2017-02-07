@@ -6,16 +6,15 @@ import regex
 from sequences import *
 from Bio import SeqIO
 
-### Functions ###
 
-def sortMIDS (motifs, fastqFile, outdir):
+def sortMIDS(motifs, fastqFile, outdir):
     '''
     In: motifs (list), fastqFile (file path), outdir (directory path without slash at the end)
     Out: output files are generated in the directory specified in "outdir"
     '''
 
     prefixFastq = os.path.basename(fastqFile)
-    prefixFastq = prefixFastq.replace(".fastq.gz","")
+    prefixFastq = prefixFastq.replace(".fastq.gz", "")
 
     print("Processing", prefixFastq)
 
@@ -32,7 +31,7 @@ def sortMIDS (motifs, fastqFile, outdir):
     fh["midcount"] = open(outdir + "/" + prefixFastq + "-midcount.txt", "w")
     # i=0
     midCount = dict()
-    for record in SeqIO.parse(fhIn, "fastq") :
+    for record in SeqIO.parse(fhIn, "fastq"):
         # if i>=10:
         #     break
 
@@ -43,7 +42,7 @@ def sortMIDS (motifs, fastqFile, outdir):
             # Search for the motif in normal orientation
             m = regex.search(motif, sequence)
             if not m:
-            # Search for the motif in reverse complement if it was not found
+                # Search for the motif in reverse complement if it was not found
                 m = regex.search(motif, comrev(sequence))
                 if not m:
                     next
@@ -51,10 +50,10 @@ def sortMIDS (motifs, fastqFile, outdir):
                     keepMatch = m
             else:
                 keepMatch = m
-        
+
         # Write entry to the file with this particular MID
         # If there is no MID in the sequence write it to the file "nomatch"
-        
+
         if keepMatch == 0:
             print(record.id, "nomatch", "nomatch", "nomatch", file=fh["report"])
             SeqIO.write(record, fh["nomatch"], "fastq")
@@ -75,14 +74,13 @@ def sortMIDS (motifs, fastqFile, outdir):
         # i = i + 1
 
     # Write mid counts to file
-    for mid,freq in midCount.items():
+    for mid, freq in midCount.items():
         print(mid, freq, file=fh["midcount"])
 
     # Close all files
     for mykey in fh:
         fh[mykey].close()
 
-### Main ###
 
 if __name__ == '__main__':
 

@@ -19,7 +19,7 @@ rootdir = "/data/home/bioinfo/basespace/Projects/"
 # mydirs = ["Paired\ RA", "VDJmouse\ \(2\)", "CEA-CEF", "DNA-RNA", "PsA-SpA"]
 mydirs = ["VDJmouse\ \(4\)", "Dermatomyositis", "CordBlood\ \(2\)", "CD40L-enrich", "CEA\ \(3\)", "AB-RBF", "AB-RTX", "AB-ETA"]
 for mydir in mydirs:
-    syscall = os.popen("ls " + rootdir+mydir+"/Samples/*/Files/*.fastq.gz")
+    syscall = os.popen("ls " + rootdir + mydir + "/Samples/*/Files/*.fastq.gz")
 
     for line in syscall:
         line = line.rstrip()

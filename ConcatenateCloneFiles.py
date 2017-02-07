@@ -1,9 +1,8 @@
 from __future__ import print_function
 import sys
 
-########### FUNCTIONS ##########
 
-def parseSampleName (myfile):
+def parseSampleName(myfile):
     '''
     Description: extract the sample name from the file name
     In: file name (str)
@@ -12,27 +11,27 @@ def parseSampleName (myfile):
     path = myfile.split("/")[-1]
     sample, rest = path.split("_L001.assembled-")
     mid = rest.split("-")[0]
-    return(sample,mid)
+    return(sample, mid)
 
-def printContent (myfile, fhOut):
+
+def printContent(myfile, fhOut):
     '''
     Description: open file, skip header and print to file
     '''
     try:
         fh = open(myfile)
     except:
-        sys.exit("cannot open file "+myfile)
+        sys.exit("cannot open file " + myfile)
 
-    sample,mid = parseSampleName(myfile)
+    sample, mid = parseSampleName(myfile)
 
-    header = fh.readline() # skip header
+    fh.readline()  # skip header
     for line in fh:
-        line = [sample,mid] + line.strip().split("\t")
+        line = [sample, mid] + line.strip().split("\t")
         print("\t".join(line), file=fhOut)
 
     fh.close()
 
-############ MAIN ############
 
 if __name__ == '__main__':
 
@@ -51,10 +50,10 @@ if __name__ == '__main__':
     try:
         fh = open(myfiles[0])
     except:
-        sys.exit("cannot open file "+myfiles[0])
+        sys.exit("cannot open file " + myfiles[0])
 
     header = fh.readline()
-    header = ["Sample","MID"] + header.strip().split("\t")
+    header = ["Sample", "MID"] + header.strip().split("\t")
     print("\t".join(header), file=fhOut)
     fh.close()
 

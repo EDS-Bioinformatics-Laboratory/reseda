@@ -2,9 +2,10 @@ from __future__ import print_function
 import sys
 import csv
 import json
-#import pymongo
+# import pymongo
 
-def parseMiseqSheet (f):
+
+def parseMiseqSheet(f):
     '''
     Description: Read sample sheet and put it in json format
     In: filename
@@ -53,6 +54,7 @@ def parseMiseqSheet (f):
 
     csvfile.close()
     return(js)
+
 
 if __name__ == '__main__':
 

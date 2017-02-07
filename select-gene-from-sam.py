@@ -4,9 +4,10 @@ import sys
 if len(sys.argv) < 3:
     sys.exit("Usage: select-gene-from-sam.py genename samfile(s)")
 
-def selectGene (gene, sam):
+
+def selectGene(gene, sam):
     fh = open(sam, "r")
-    outfile = sam+"-"+gene+".sam"
+    outfile = sam + "-" + gene + ".sam"
     fhOut = open(outfile, "w")
     for line in fh:
         line = line.rstrip()
@@ -18,7 +19,6 @@ def selectGene (gene, sam):
     fhOut.close()
     print("wrote", outfile, "to disk")
 
-########### MAIN ############
 
 gene = sys.argv[1]
 

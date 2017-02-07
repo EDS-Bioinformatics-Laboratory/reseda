@@ -4,6 +4,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def reformatData(d, highest):
     '''
     Description: Reformat data for use in a figure
@@ -13,7 +14,7 @@ def reformatData(d, highest):
 
     # Get the unique names for x and y axis
     names = list()
-    for a,b in d:
+    for a, b in d:
         names.append(a)
         names.append(b)
     names = list(set(names))
@@ -37,12 +38,13 @@ def reformatData(d, highest):
     # Define colors
     cmap = plt.cm.get_cmap('cool')
     ncolors = max(s) + 1
-    colors = [cmap(i*(256/ncolors)) for i in range(ncolors)]
-    usecolors = [ colors[size] for size in s ]
+    colors = [cmap(i * (256 / ncolors)) for i in range(ncolors)]
+    usecolors = [colors[size] for size in s]
 
     return(x, y, s, usecolors, names)
 
-def asArray (x, y, s, names):
+
+def asArray(x, y, s, names):
     '''
     Description: Data in numpy array format
     In: x, y, s
@@ -56,7 +58,8 @@ def asArray (x, y, s, names):
 
     return(C)
 
-def bubblePlot (f, x, y, s, usecolors, names):
+
+def bubblePlot(f, x, y, s, usecolors, names):
     '''
     Description: Make bubble plot
     In: f (filename), x, y, s, names
@@ -64,15 +67,16 @@ def bubblePlot (f, x, y, s, usecolors, names):
     '''
 
     # Make figure
-    fig, ax = plt.subplots(figsize=(20, 20)) 
-    plt.scatter(x,y,s=s,c=usecolors)
+    fig, ax = plt.subplots(figsize=(20, 20))
+    plt.scatter(x, y, s=s, c=usecolors)
     plt.xticks(range(len(names)), names, rotation=90)
     plt.yticks(range(len(names)), names)
     image = f + ".bubble.svg"
     plt.savefig(image)
     return(image)
 
-def heatMap (f, C, names):
+
+def heatMap(f, C, names):
     '''
     Description: make heatmap
     In: f (filename), d[(a,b)] = value
@@ -80,7 +84,7 @@ def heatMap (f, C, names):
     Code adapted from: https://nbviewer.jupyter.org/gist/joelotz/5427209
     '''
     # Make figure
-    fig, ax = plt.subplots(figsize=(20, 20)) 
+    fig, ax = plt.subplots(figsize=(20, 20))
     # plt.pcolor(X, Y, C, cmap='cool')
     plt.pcolor(C, cmap='hot')
 
@@ -88,18 +92,18 @@ def heatMap (f, C, names):
     ax.set_frame_on(False)
 
     # put the major ticks at the middle of each cell
-    ax.set_yticks(np.arange(C.shape[0])+0.5, minor=False)
-    ax.set_xticks(np.arange(C.shape[1])+0.5, minor=False)
+    ax.set_yticks(np.arange(C.shape[0]) + 0.5, minor=False)
+    ax.set_xticks(np.arange(C.shape[1]) + 0.5, minor=False)
 
     # want a more natural, table-like display
     # ax.invert_yaxis()
     # ax.xaxis.tick_top()
 
     # Set labels
-    ax.set_xticklabels(names, minor=False) 
+    ax.set_xticklabels(names, minor=False)
     ax.set_yticklabels(names, minor=False)
 
-    # rotate the 
+    # rotate the
     plt.xticks(rotation=90)
 
     ax.grid(False)
@@ -107,12 +111,12 @@ def heatMap (f, C, names):
     # Turn off all the ticks
     ax = plt.gca()
 
-    for t in ax.xaxis.get_major_ticks(): 
-        t.tick1On = False 
-        t.tick2On = False 
-    for t in ax.yaxis.get_major_ticks(): 
-        t.tick1On = False 
-        t.tick2On = False  
+    for t in ax.xaxis.get_major_ticks():
+        t.tick1On = False
+        t.tick2On = False
+    for t in ax.yaxis.get_major_ticks():
+        t.tick1On = False
+        t.tick2On = False
 
     # Add legend
     plt.colorbar()
@@ -122,7 +126,8 @@ def heatMap (f, C, names):
     plt.savefig(image)
     return(image)
 
-def showTopSimilarGenes (d, fhOut):
+
+def showTopSimilarGenes(d, fhOut):
     '''
     Description: sort gene pairs on similarity, print the top similar genes (skip alleles of same gene)
     In: d[(a,b)]
@@ -135,12 +140,13 @@ def showTopSimilarGenes (d, fhOut):
         if a_sub == b_sub:  # Skip same gene groups
             continue
 
-        print(a,b,d[(a,b)], file=fhOut)
+        print(a, b, d[(a, b)], file=fhOut)
         i += 1
         if i >= 25:
             break
 
-def compareImgtGenes (myfile):
+
+def compareImgtGenes(myfile):
     '''
     Description: show top similar genes and make a heatmap of all genes
     In: f (filename ending on .distances.txt)
@@ -164,7 +170,7 @@ def compareImgtGenes (myfile):
     else:
         highest = 0
 
-    header = fh.readline()
+    fh.readline()
     for line in fh:
         line = line.strip()
         (a, b, size, nope) = line.split()
@@ -174,8 +180,8 @@ def compareImgtGenes (myfile):
         if a_sub == b_sub:  # Skip same gene groups
             size = highest   # 200 for V genes, 30 for J genes
 
-        d[(a,b)] = int(size)
-        d[(b,a)] = int(size)
+        d[(a, b)] = int(size)
+        d[(b, a)] = int(size)
 
     fh.close()
 
@@ -188,11 +194,12 @@ def compareImgtGenes (myfile):
 
     # Prepare data for making figures
     (x, y, s, usecolors, names) = reformatData(d, highest)
-    C = asArray(x,y,s,names)
+    C = asArray(x, y, s, names)
 
     # Make heatmap
     # print("Wrote", bubblePlot(myfile, x, y, s, usecolors, names), "to disk")
     print("Wrote", heatMap(myfile, C, names), "to disk")
+
 
 if __name__ == '__main__':
     mydir = "/home/barbera/Data/tbcell/RepSeq2016/IMGT-pairwise/"
@@ -200,4 +207,4 @@ if __name__ == '__main__':
 
     for myfile in os.listdir(mydir):
         if myfile.endswith(".distances.txt"):
-            compareImgtGenes(mydir+myfile)
+            compareImgtGenes(mydir + myfile)

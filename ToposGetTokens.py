@@ -6,7 +6,8 @@ import subprocess
 import json
 from Topos import *
 
-def getJob (poolname):
+
+def getJob(poolname):
     '''
     Description: retrieve next job from topos
     In: poolname
@@ -35,7 +36,8 @@ def getJob (poolname):
 
     return(token, js)
 
-def runJob (token, js):
+
+def runJob(token, js):
     '''
     Description: Prepare and run job
     In: token (str), js (json)
@@ -57,7 +59,8 @@ def runJob (token, js):
     rc = subprocess.call(cmd)
     return(rc)
 
-def cleanUp ():
+
+def cleanUp():
     '''
     Description: Clean up input and result files
     In: -
@@ -89,6 +92,7 @@ def cleanUp ():
         if "L001" in myfile:
             os.remove("final/correct-mid/" + myfile)
 
+
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         sys.exit("Usage: " + sys.argv[0] + " POOLNAME")
@@ -97,7 +101,7 @@ if __name__ == '__main__':
 
     # Prepare and run jobs. Script dies when there are no jobs left.
     while True:
-        token,js = getJob(poolname)
+        token, js = getJob(poolname)
         rc = runJob(token, js)
 
         # delete token from pool if run was successful

@@ -16,7 +16,7 @@ for line in fh:
     data.append(int(nr_v_genes))
 
 fig = plt.figure()
-ax = fig.add_subplot(1,1,1)
+ax = fig.add_subplot(1, 1, 1)
 # ax.set_yscale('log')
 
 hist, bins = np.histogram(data, bins=50)

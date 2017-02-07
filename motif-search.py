@@ -2,8 +2,8 @@ import sys
 import regex
 import gzip
 from Bio import SeqIO
-from Bio.Seq import Seq
-from Bio.Data import IUPACData
+# from Bio.Seq import Seq
+# from Bio.Data import IUPACData
 import editdistance
 from sequences import *
 
@@ -13,27 +13,20 @@ from sequences import *
 
 # Reads a fasta file and searches for (a set of) motifs
 
-########## Config ##########
-
 # BED format is 0-based
 # GATK variant list might be 1-based
 coordSystem = 0
 
-
-######## Functions #########
-
-########### Main ###########
-
-#motifs=["WRCY"]  # RGYW is reverse complement of WRCY
-#motifs=["CGCCGCCAGCTCACC", "TTGCCCTCAACGACCACTTT", "CCTGCTTCTCCTCAGCTTCAG"]  # ACTB, GAPDH, HPRT1
-motifs=readMotifsFromFile("immuno-primers.csv")
+# motifs=["WRCY"]  # RGYW is reverse complement of WRCY
+# motifs=["CGCCGCCAGCTCACC", "TTGCCCTCAACGACCACTTT", "CCTGCTTCTCCTCAGCTTCAG"]  # ACTB, GAPDH, HPRT1
+motifs = readMotifsFromFile("immuno-primers.csv")
 
 # Check if an argument was given to this script
 if len(sys.argv) < 2:
     sys.exit('Usage: %s sequences.fastq.gz' % sys.argv[0])
 
 # Add reverse complement of motifs to the list
-motifs_comrev=list()
+motifs_comrev = list()
 for motif in motifs:
     motifs_comrev.append(comrev(motif))
 motifs = motifs + motifs_comrev
@@ -47,7 +40,7 @@ for motif in motifs:
     myregex[motif] = motifToRegex(motif, 2)  # also adds in-exact matching pattern
 
 # Open fasta file and search for all motifs in each sequence
-for record in SeqIO.parse(gzip.open(fastaFile, "r"), "fastq") :
+for record in SeqIO.parse(gzip.open(fastaFile, "r"), "fastq"):
     foundMatch = 0
     # sys.stderr.write('Reading sequence record... ')
     sequence = str(record.seq).upper()
@@ -72,10 +65,10 @@ for record in SeqIO.parse(gzip.open(fastaFile, "r"), "fastq") :
             pos += int(m.start(0))
 
             # Output BED entries: chr start end name score strand
-            distance = editdistance.eval(motif, sequence[pos:pos+motifLength])
+            distance = editdistance.eval(motif, sequence[pos:pos + motifLength])
             # print record.id, pos+coordSystem, pos+motifLength+coordSystem, motif, sequence[pos:pos+motifLength], distance, strand, sequence[pos:]  # just space delimited
-            print record.id, pos+coordSystem, pos+motifLength+coordSystem, sequence[pos:pos+motifLength], 1000, strand   # BED entry
+            print(record.id, pos + coordSystem, pos + motifLength + coordSystem, sequence[pos:pos + motifLength], 1000, strand)   # BED entry
             foundMatch = 1
             break                       # only record the best hit with this motif
     if foundMatch == 0:
-        print record.id, "no-match"
+        print(record.id, "no-match")

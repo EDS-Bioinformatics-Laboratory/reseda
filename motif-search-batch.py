@@ -1,8 +1,9 @@
+from __future__ import print_function
 import sys
 import subprocess
-import re
+# import re
 
-if len(sys.argv)<2:
+if len(sys.argv) < 2:
     sys.exit("Usage: motif-search-batch.py fastq-file(s)")
 
 fileList = sys.argv[1:]
@@ -22,13 +23,13 @@ for myfile in fileList:
 
     cmd = "python motif-search.py " + myfile
     # cmd = "python search-motif-in-genomic-region.py " + myfile
-    print cmd
+    print(cmd)
     process = subprocess.Popen(cmd, shell=True, stdout=myout, stderr=None, bufsize=1)
     process.wait()
-    
+
     # Count hits
     cmd = "cut -d' ' -f 4 " + myfile + ".primers.txt|sort|uniq -c|sort -nr"
     mycount = open(myfile + ".primers.count.txt", 'w')
-    print cmd
+    print(cmd)
     process = subprocess.Popen(cmd, shell=True, stdout=mycount, stderr=None, bufsize=1)
     process.wait()

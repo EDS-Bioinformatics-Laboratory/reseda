@@ -8,14 +8,14 @@ test = 1  # set to 0 to switch off
 def antoine(length):
     p = list()
     for l in length:
-        p.append(1.0/(400**l))
+        p.append(1.0 / (400**l))
     return(p)
 
 
 def same_amino_acid_sequence(length):
     p = list()
     for l in length:
-        p.append((1.0/20)**l)
+        p.append((1.0 / 20)**l)
     return(p)
 
 
@@ -30,7 +30,7 @@ def two_same_birthday(x, n):
     p = list()
     for m in x:
         m = float(m)
-        p.append(1 - (math.factorial(m) / (m**n * math.factorial(m-n))))
+        p.append(1 - (math.factorial(m) / (m**n * math.factorial(m - n))))
     return(p)
 
 
@@ -44,7 +44,7 @@ def taylor_approximation(x, n):
     p = list()
     for m in x:
         m = float(m)
-        p.append(1-math.exp((-1*n**2)/(2*m)))
+        p.append(1 - math.exp((-1 * n**2) / (2 * m)))
     return(p)
 
 
@@ -58,7 +58,7 @@ def same_as_you(x, n):
     p = list()
     for m in x:
         m = float(m)
-        p.append(1.0 - ((m-1)/m)**n)
+        p.append(1.0 - ((m - 1) / m)**n)
     return(p)
 
 

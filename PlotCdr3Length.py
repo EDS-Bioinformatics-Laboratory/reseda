@@ -3,7 +3,8 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 
-def readData (datafile, colname, DELIMITER):
+
+def readData(datafile, colname, DELIMITER):
     '''
     Description: read samplename and cdr3 from file and store in dictionary
     In: filename, column with cdr3, field delimiter
@@ -24,12 +25,13 @@ def readData (datafile, colname, DELIMITER):
         line = line.strip()
         c = line.split(DELIMITER)
         if "BCRh" in c[c_sample]:   # only take the BCRh or TCRb samples (BCRh in or not in c[c_sample])
-            data[(c[c_sample],c[c_get])] = data.get((c[c_sample],c[c_get]), 0) + 1
+            data[(c[c_sample], c[c_get])] = data.get((c[c_sample], c[c_get]), 0) + 1
             # if data[(c[c_sample],c[c_get])] > 1: # check if we have seen this combination before. If so, print a WARNING
             #     print("WARNING:", datafile, c[c_sample], c[c_get], "is not unique!")
 
     fh.close()
     return(data)
+
 
 def removeReassignedClones(d1, d2):
     '''
@@ -38,11 +40,11 @@ def removeReassignedClones(d1, d2):
     Out: d1[sample,cdr3]
     '''
     count_discarded = 0
-    d2_new = dict() # keep only those cdr3's that were not filtered out due to low quality CDR3
-    for (sample,cdr3) in d2:
-        if (sample,cdr3) in d1:
-            del d1[(sample,cdr3)] # delete sample and cdr3 from the clones_subs dictionary
-            d2_new[(sample,cdr3)] = d2[(sample,cdr3)] # keep in reassigned dictionary
+    d2_new = dict()  # keep only those cdr3's that were not filtered out due to low quality CDR3
+    for (sample, cdr3) in d2:
+        if (sample, cdr3) in d1:
+            del d1[(sample, cdr3)]  # delete sample and cdr3 from the clones_subs dictionary
+            d2_new[(sample, cdr3)] = d2[(sample, cdr3)]  # keep in reassigned dictionary
         else:
             print("WARNING:", sample, cdr3, "not in clones_sub")
             count_discarded += 1
@@ -50,7 +52,8 @@ def removeReassignedClones(d1, d2):
 
     return(d1, d2_new)
 
-def getLength (d):
+
+def getLength(d):
     '''
     Description: check length of cdr3
     In: d[(sample,cdr3)]
@@ -59,11 +62,12 @@ def getLength (d):
 
     data = list()
 
-    for (sample,cdr3) in d:
+    for (sample, cdr3) in d:
         length = len(cdr3)
         data.append(length)
 
     return(data)
+
 
 if __name__ == '__main__':
 
@@ -96,10 +100,10 @@ if __name__ == '__main__':
     fhReassigned.close()
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     ax.set_yscale('log')
 
-    binBoundaries = np.linspace(0,100,101)
+    binBoundaries = np.linspace(0, 100, 101)
 
     plt.hist(d1, bins=binBoundaries, color="black", label="All clones")
     plt.hist(d2, bins=binBoundaries, color="yellow", label="Clones with re-assigned V", hatch="\\")

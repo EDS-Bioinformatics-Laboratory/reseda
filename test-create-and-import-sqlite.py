@@ -2,10 +2,12 @@ from __future__ import print_function
 import sqlite3
 from CreateAndImportClonesSqlite import *
 
-def importData (tablename, datafile):
+
+def importData(tablename, datafile):
     # load all_info into database
 
     create_and_import(con, cur, tablename, datafile)
+
 
 con = sqlite3.connect(":memory:")
 # con = sqlite3.connect("run03.db")

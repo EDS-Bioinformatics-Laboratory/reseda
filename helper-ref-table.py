@@ -13,12 +13,12 @@ for myfile in sys.argv[1:]:
     except:
         sys.exit("cannot open file " + myfile)
     try:
-        fhOut = open(myfile+".csv", "w")
+        fhOut = open(myfile + ".csv", "w")
     except:
-        sys.exit("cannot create file " + myfile+".csv")
+        sys.exit("cannot create file " + myfile + ".csv")
 
     print("V.gene,func,seq", file=fhOut)
-    for record in SeqIO.parse(fhIn, "fasta") :
+    for record in SeqIO.parse(fhIn, "fasta"):
         c = record.description.split("|")
-        (name,allele) = c[1].split("*")
-        print(",".join([name,c[3],str(record.seq)]), file=fhOut)
+        (name, allele) = c[1].split("*")
+        print(",".join([name, c[3], str(record.seq)]), file=fhOut)

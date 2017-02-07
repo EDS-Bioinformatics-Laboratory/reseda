@@ -7,10 +7,10 @@ if len(sys.argv) < 2:
 for myfile in sys.argv[1:]:
     try:
         fh = open(myfile)
-        fhOut = open(myfile+"-cdr3-not-C.txt", "w")
+        fhOut = open(myfile + "-cdr3-not-C.txt", "w")
 
     except:
-        sys.exit("cannot open file "+myfile)
+        sys.exit("cannot open file " + myfile)
 
     header = fh.readline()
     header = header.strip().split()

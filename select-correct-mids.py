@@ -14,7 +14,7 @@ except:
 d = dict()
 for line in fh:
     line = line.strip()  # remove whitespaces before and after line
-    (wc, filepath) = line.split() # get wordcount and filepath
+    (wc, filepath) = line.split()  # get wordcount and filepath
     wc = int(wc)
     path = filepath.split("/")    # get directories and filename
 
@@ -22,17 +22,17 @@ for line in fh:
     if filename == "total":
         continue
 
-    elements = filename.split("-") # filename contains info about:
+    elements = filename.split("-")  # filename contains info about:
     celltype = elements[-2]
     mid = elements[-3]
     sample = "-".join(elements[:-3])
 
     if mid != "nomatch":
-        d[(sample,celltype)] = d.get((sample,celltype), dict()) # create new dict if not exist
-        d[(sample,celltype)][mid] = wc
+        d[(sample, celltype)] = d.get((sample, celltype), dict())  # create new dict if not exist
+        d[(sample, celltype)][mid] = wc
 
-for (sample,celltype) in sorted(d):
+for (sample, celltype) in sorted(d):
     d_tmp = d[(sample, celltype)]
     topmid = sorted(d_tmp, key=d_tmp.get, reverse=True)[0]
-    #print("Highest MID:", sample, celltype, topmid, d[(sample,celltype)][topmid])
-    print("mv", sample+"-"+topmid+"*", "correct-mid/")
+    # print("Highest MID:", sample, celltype, topmid, d[(sample,celltype)][topmid])
+    print("mv", sample + "-" + topmid + "*", "correct-mid/")

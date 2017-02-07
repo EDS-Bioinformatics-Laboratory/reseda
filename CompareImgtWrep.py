@@ -1,6 +1,7 @@
 from __future__ import print_function
 import sys
 
+
 def reformatGeneName(gene):
     '''
     Description: reformat gene name
@@ -22,7 +23,8 @@ def reformatGeneName(gene):
 
     return(newgene)
 
-def parseFile (f, acc, v, j, cdr3, func, frame):
+
+def parseFile(f, acc, v, j, cdr3, func, frame):
     '''
     Description: open file en extract info about acc, v, j and cdr3
     In: f (filename) and the indices for the acc,v,j,cdr3 columns
@@ -41,7 +43,7 @@ def parseFile (f, acc, v, j, cdr3, func, frame):
     except:
         sys.exit("cannot create file " + newfile)
 
-    header = fh.readline()
+    fh.readline()
     for line in fh:
         line = line.strip()
         c = line.split("\t")
@@ -65,25 +67,28 @@ def parseFile (f, acc, v, j, cdr3, func, frame):
 
     return(newfile)
 
-def parseImgt (f):
+
+def parseImgt(f):
     '''
     Description: parse file and store the relevant columns
     In: filename
     Out: new file
     '''
-    (acc,v,j,cdr3,func,frame) = (1,3,9,20,2,21)  # column indices
+    (acc, v, j, cdr3, func, frame) = (1, 3, 9, 20, 2, 21)  # column indices
     newfile = parseFile(f, acc, v, j, cdr3, func, frame)
     return(newfile)
 
-def parseWrep (f):
+
+def parseWrep(f):
     '''
     Description: parse file and store the relevant columns
     In: filename
     Out: new file
     '''
-    (acc,v,j,cdr3) = (0,19,20,5)   # column indices
+    (acc, v, j, cdr3) = (0, 19, 20, 5)   # column indices
     newfile = parseFile(f, acc, v, j, cdr3, -1, -1)
     return(newfile)
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:

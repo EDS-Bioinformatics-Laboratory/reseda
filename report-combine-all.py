@@ -9,7 +9,8 @@ cdr3 = "report-CDR3.txt"
 prod = "report-PRODUCTIVE.txt"
 reassign = "report-AFTER-V-REASSIGNMENT.txt"
 
-def parsePear (pear):
+
+def parsePear(pear):
     try:
         fh = open(pear)
     except:
@@ -21,9 +22,9 @@ def parsePear (pear):
         line = line.strip()
         c = line.split()
         path = c[0].split("/")[-1]
-        sample,rest = path.split("_L001")
-        total = int(c[-2].replace(",",""))
-        assembled = int(c[-4].replace(",",""))
+        sample, rest = path.split("_L001")
+        total = int(c[-2].replace(",", ""))
+        assembled = int(c[-4].replace(",", ""))
         percentage = 100.0 * assembled / total
 
         # print(sample, assembled, total, round(percentage, 2))
@@ -31,7 +32,8 @@ def parsePear (pear):
         summary[sample] = (assembled, round(percentage, 2))
     return(totalreads, summary)
 
-def parseMids (totalreads, mids):
+
+def parseMids(totalreads, mids):
     try:
         fh = open(mids)
     except:
@@ -43,7 +45,7 @@ def parseMids (totalreads, mids):
         line = line.strip()
         if line.startswith(":"):   # skip these lines
             continue
-        elif line.startswith("/mnt"): # parse sample name
+        elif line.startswith("/mnt"):  # parse sample name
             line = line.split("/")[-1]
             sample, rest = line.split("_L001")
             midcount[sample] = dict()
@@ -54,13 +56,14 @@ def parseMids (totalreads, mids):
 
     for sample in midcount:
         for mid in sorted(midcount[sample], key=midcount[sample].get, reverse=True):
-            percentage = round(100.0 * midcount[sample][mid] / totalreads[sample],2)
+            percentage = round(100.0 * midcount[sample][mid] / totalreads[sample], 2)
             summary[sample] = (mid, midcount[sample][mid], percentage)
             break
 
     return(summary)
 
-def parseCdr3 (totalreads, summary_mids, cdr3):
+
+def parseCdr3(totalreads, summary_mids, cdr3):
     try:
         fh = open(cdr3)
     except:
@@ -80,7 +83,8 @@ def parseCdr3 (totalreads, summary_mids, cdr3):
 
     return(summary)
 
-def parseProductive (totalreads, summary_mids, prod):
+
+def parseProductive(totalreads, summary_mids, prod):
     try:
         fh = open(prod)
     except:
@@ -100,7 +104,8 @@ def parseProductive (totalreads, summary_mids, prod):
 
     return(summary)
 
-def parseReassign (totalreads, summary_mids, reassign):
+
+def parseReassign(totalreads, summary_mids, reassign):
     try:
         fh = open(reassign)
     except:
@@ -120,14 +125,15 @@ def parseReassign (totalreads, summary_mids, reassign):
 
     return(summary)
 
-def makeBarChart (plotfile,title,y_label, threshold,x,v,w,y,z,a,b):
+
+def makeBarChart(plotfile, title, y_label, threshold, x, v, w, y, z, a, b):
     x_pos = np.arange(len(x))
-    
-    fig, ax = plt.subplots(figsize=(60, 10)) 
+
+    fig, ax = plt.subplots(figsize=(60, 10))
     fig.subplots_adjust(bottom=0.3)
     cmap = plt.cm.get_cmap('YlGn')
     ncolors = 5
-    colors = [cmap(i*(256/ncolors)) for i in range(ncolors)]
+    colors = [cmap(i * (256 / ncolors)) for i in range(ncolors)]
 
     p = list()
     p.append(ax.bar(x_pos, v, align='center', color=colors[0], label='Total'))
@@ -136,21 +142,20 @@ def makeBarChart (plotfile,title,y_label, threshold,x,v,w,y,z,a,b):
     p.append(ax.bar(x_pos, z, align='center', color=colors[3], label='CDR3 identified'))
     # p.append(ax.bar(x_pos, a, align='center', color=colors[4], label='VJ assigned'))
     p.append(ax.bar(x_pos, b, align='center', color=colors[4], label='VJ assigned'))
-    ax.plot((0,max(x_pos)),(threshold,threshold), '--', color="black")
+    ax.plot((0, max(x_pos)), (threshold, threshold), '--', color="black")
 
     plt.xticks(x_pos, x, rotation=90)
     ax.set_xlabel('Samples')
     ax.set_ylabel(y_label)
     ax.set_title(title)
     plt.legend()
-    
+
     try:
         fig.savefig(plotfile)
         print("Wrote", plotfile, "to disk")
     except:
         sys.exit("cannot write plotfile to disk")
 
-############# MAIN ################
 
 # Parse log files
 (totalreads, summary_pear) = parsePear(pear)
@@ -183,9 +188,9 @@ for sample in sorted(totalreads):
     total = totalreads[sample]
     (assembledfreq, assembledperc) = summary_pear[sample]
     (mid, midfreq, midperc) = summary_mids[sample]
-    (cdr3freq, cdr3perc) = summary_cdr3.get(sample,(0,0))
-    (prodfreq, prodperc) = summary_prod.get(sample,(0,0))
-    (reassignfreq, reassignperc) = summary_reassign.get(sample,(0,0))
+    (cdr3freq, cdr3perc) = summary_cdr3.get(sample, (0, 0))
+    (prodfreq, prodperc) = summary_prod.get(sample, (0, 0))
+    (reassignfreq, reassignperc) = summary_reassign.get(sample, (0, 0))
     print(sample, total, assembledfreq, assembledperc, mid, midfreq, midperc, cdr3freq, cdr3perc, prodfreq, prodperc, reassignfreq, reassignperc, file=fhOut)
 
     # Store percentages in lists
@@ -204,5 +209,5 @@ for sample in sorted(totalreads):
     prodfreqs.append(prodfreq)
     reassignfreqs.append(reassignfreq)
 
-makeBarChart("report-all-percentages.pdf", "Run overview", "Reads (percentage)", 70, samples, len(samples)*[100],assembledpercs,midpercs,cdr3percs,prodpercs,reassigns)
-makeBarChart("report-all-frequencies.pdf", "Run overview", "Reads (frequency)", 0, samples, totals, assembledfreqs,midfreqs,cdr3freqs,prodfreqs,reassignfreqs)
+makeBarChart("report-all-percentages.pdf", "Run overview", "Reads (percentage)", 70, samples, len(samples) * [100], assembledpercs, midpercs, cdr3percs, prodpercs, reassigns)
+makeBarChart("report-all-frequencies.pdf", "Run overview", "Reads (frequency)", 0, samples, totals, assembledfreqs, midfreqs, cdr3freqs, prodfreqs, reassignfreqs)

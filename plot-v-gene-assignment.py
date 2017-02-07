@@ -20,14 +20,16 @@ except:
 
 top = 10  # show count for top X V genes, anything above that will be counted as "rest"
 
+
 def autolabel(rects, labels):
     # attach some text labels
     i = 0
     for rect in rects:
         height = rect.get_height()
         # ax.text(rect.get_x() + rect.get_width()/2., 1.05*height, '%d' % int(height), ha='center', va='bottom')
-        ax.text(rect.get_x() + rect.get_width()/2., 1.05*height, '%d' % labels[i], ha='center', va='bottom', rotation=90)
+        ax.text(rect.get_x() + rect.get_width() / 2., 1.05 * height, '%d' % labels[i], ha='center', va='bottom', rotation=90)
         i += 1
+
 
 # Read fractions and put it in list of list
 header = fh.readline()
@@ -57,14 +59,13 @@ for line in fh:
                 continue
             vgenes_cooccurrence[(vgenes[a], vgenes[b])] = vgenes_cooccurrence.get((vgenes[a], vgenes[b]), 1) + 1
 
-
     if n < 50:
         # Calculate the cumulative fraction
-        for i in range(1,len(fracs)):
-            fracs[i] = fracs[i-1] + fracs[i]
+        for i in range(1, len(fracs)):
+            fracs[i] = fracs[i - 1] + fracs[i]
 
         if len(fracs) < top:
-            fracs = fracs + (top-len(fracs)) * [1]
+            fracs = fracs + (top - len(fracs)) * [1]
 
         # Store highest occurrence V-gene
         first.append(fracs[0])
@@ -89,7 +90,7 @@ for line in fh:
 fh.close()
 
 # Make the stacked barplot
-fig, ax = plt.subplots(figsize=(20, 10)) 
+fig, ax = plt.subplots(figsize=(20, 10))
 fig.subplots_adjust(bottom=0.3)
 
 N = len(cdr3s)
@@ -97,7 +98,7 @@ print("N = ", N)
 ind = np.arange(N)    # the x locations for the groups
 width = 0.35       # the width of the bars: can also be len(x) sequence
 
-colors = ['gray','black','lightblue','brown','orange','purple','yellow','blue','red','green']
+colors = ['gray', 'black', 'lightblue', 'brown', 'orange', 'purple', 'yellow', 'blue', 'red', 'green']
 p = list()
 for i in range(top):
     data = entries[i]
@@ -105,7 +106,7 @@ for i in range(top):
 
 plt.ylabel('Fraction')
 plt.title('V gene assignment')
-plt.xticks(ind + width/2., cdr3s, rotation=90)
+plt.xticks(ind + width / 2., cdr3s, rotation=90)
 plt.yticks(np.arange(0, 1.1, 0.1))
 labels = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Nineth', 'Rest']
 labels.reverse()
@@ -125,9 +126,9 @@ for v_a, v_b in vgenes_cooccurrence:
     y.append(vs.index(v_b))
     s.append(vgenes_cooccurrence[(v_a, v_b)])
 
-fig, ax = plt.subplots(figsize=(20, 20)) 
+fig, ax = plt.subplots(figsize=(20, 20))
 # fig.subplots_adjust(bottom=0.3)
-plt.scatter(x,y,s=s)
+plt.scatter(x, y, s=s)
 plt.xticks(range(len(vs)), vs, rotation=90)
 plt.yticks(range(len(vs)), vs)
 plt.savefig(myfile + ".co-occurrence.svg")

@@ -8,7 +8,8 @@ try:
 except:
     sys.exit("cannot open files")
 
-def readFile (fh):
+
+def readFile(fh):
     readsList = dict()
     readsList["BCRh"] = list()
     readsList["TCRb"] = list()
@@ -30,6 +31,7 @@ def readFile (fh):
 
     for celltype in ["BCRh", "TCRb"]:
         print(celltype, sum(readsList[celltype]), np.mean(percList[celltype]))
+
 
 readFile(fh0mm)
 readFile(fh1mm)

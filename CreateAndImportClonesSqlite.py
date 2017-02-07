@@ -1,11 +1,9 @@
 from __future__ import print_function
-import sqlite3
+# import sqlite3
 import sys
 
 
-######### Functions ########
-
-def create_table (cur, name, colnames):
+def create_table(cur, name, colnames):
     '''
     Description: create a table in the database
     In: name (table name), colnames (list with column names)
@@ -23,14 +21,15 @@ def create_table (cur, name, colnames):
     cur.execute(query)
     return(query)
 
-def import_data (con, cur, datafile, delim, table, colnames):
+
+def import_data(con, cur, datafile, delim, table, colnames):
     '''
     Description: Reads a csv file and inserts the content in a table
     In: datafile (path), delim (e.g. ',' or ' '), table (name of the table in database)
     Out: query (string)
     '''
     fh = open(datafile, 'r')
-    header = fh.readline()  # skip first line
+    fh.readline()  # skip first line
     for row in fh:
         row = row.rstrip()
         row = row.replace('"', '')
@@ -44,7 +43,8 @@ def import_data (con, cur, datafile, delim, table, colnames):
     con.commit()
     fh.close()
 
-def create_and_import (con, cur, table, datafile):
+
+def create_and_import(con, cur, table, datafile):
     '''
     Description: create a new table and import the data
     In: str tablename, str filename
@@ -55,12 +55,12 @@ def create_and_import (con, cur, table, datafile):
     try:
         fh = open(datafile, "rb")
     except:
-        sys.exit("cannot open file"+datafile)
+        sys.exit("cannot open file" + datafile)
     header = fh.readline()
     header = header.rstrip()
     header = header.replace(":1", "2")
     header = header.replace(".", "_")
-    header = header.replace('"',"")
+    header = header.replace('"', "")
     fh.close()
 
     # Create table and fill table with data
@@ -71,10 +71,10 @@ def create_and_import (con, cur, table, datafile):
         colnames[colnames.index("group")] = "grp"
     # colnames = ["blah"] + colnames   # only for AA_reads!!! Need to disable this line
     print(colnames)
-    create_table(cur, table,colnames)
+    create_table(cur, table, colnames)
     import_data(con, cur, datafile, delim, table, colnames)
 
-########### Main ###########
+# ************ Main **************
 
 # # Assume that script was imported when no arguments are given
 # if len(sys.argv) == 1:

@@ -6,7 +6,8 @@ import random
 # if len(sys.argv)<2:
 #     sys.exit("Usage: plot-clones.py *.subclones.csv")
 
-def remove90PercentSingletons (freqs, percs, colors):
+
+def remove90PercentSingletons(freqs, percs, colors):
     '''
     Description: remove 90% of the entries with read count 1
     '''
@@ -15,7 +16,7 @@ def remove90PercentSingletons (freqs, percs, colors):
     for i in range(len(freqs)):
         if freqs[i] == 1:
             indices.append(i)
-    indices = random.sample(indices, int(0.1*len(indices)))
+    indices = random.sample(indices, int(0.1 * len(indices)))
     indices.sort()
 
     # Populate new lists
@@ -30,7 +31,8 @@ def remove90PercentSingletons (freqs, percs, colors):
 
     return(newfreqs, newpercs, newcolors)
 
-def readData (fileName):
+
+def readData(fileName):
     try:
         fh = open(fileName)
     except:
@@ -63,12 +65,11 @@ def readData (fileName):
 
     return(freqs, percs, colors)
 
-########## MAIN #########
 
 imageFile = "beeswarm-before-after-v-reassignment.pdf"
 samples = ["S74 before", "S74 after"]
 # myfiles = sys.argv[1:]
-myfiles = ["/home/barbera/TMP/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-clones-subs.csv","/home/barbera/TMP/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv.rr.clones_subs.csv"]
+myfiles = ["/home/barbera/TMP/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-clones-subs.csv", "/home/barbera/TMP/S074-004_S74_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv.rr.clones_subs.csv"]
 
 allfreqs = list()
 allpercs = list()
@@ -87,4 +88,4 @@ for myfile in myfiles:
     allpercs.append(percs)
     allcolors.append(colors)
 
-bbeeswarm(samples,allpercs,allcolors,imageFile)
+bbeeswarm(samples, allpercs, allcolors, imageFile)

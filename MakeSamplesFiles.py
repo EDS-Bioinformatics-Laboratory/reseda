@@ -22,7 +22,7 @@ if __name__ == '__main__':
     for i in range(len(js["Samples"])):
         sample_name = js["Samples"][i]["Sample_Name"]
         if sample_name in index_samples:               # Check if the sample name is unique
-            print("WARNING: multiple samples with same name in "+ run + " " + sample_name)
+            print("WARNING: multiple samples with same name in " + run + " " + sample_name)
         index_samples[sample_name] = i
 
     # Read directory with file paths to the fastq files
@@ -38,14 +38,14 @@ if __name__ == '__main__':
         js["Samples"][inx]["Sample_Nr"] = sample_nr
 
         # Print info to SAMPLES file
-        sampleFile = "SAMPLES-"+run+"-"+js["Samples"][inx]["Species"]+"-"+js["Samples"][inx]["Chain"]
+        sampleFile = "SAMPLES-" + run + "-" + js["Samples"][inx]["Species"] + "-" + js["Samples"][inx]["Chain"]
         if sampleFile not in fhs:
             fhs[sampleFile] = open(sampleFile, "w")
-        print(mountdir+f, file=fhs[sampleFile])
+        print(mountdir + f, file=fhs[sampleFile])
 
     for sampleFile in fhs:
         fhs[sampleFile].close()
-        
+
     # Write new json file
     jsonNew = jsonFile.replace(".json", "-new.json")
     fhJson = open(jsonNew, "w")

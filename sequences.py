@@ -1,28 +1,31 @@
-testmode = 0    # is the script in testmode? 0=no 1=yes
-
+from __future__ import print_function
 import sys
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.Data import IUPACData
 from Bio.Alphabet import generic_dna
 
+testmode = 0    # is the script in testmode? 0=no 1=yes
+
 # Required: directory "hg19" with fasta files per chromosome (from UCSC)
 
-def readGenome ():
+
+def readGenome():
     """
     Read all chromosomes and put sequence into dictionary "genome"
     """
     genome = dict()
-    chromosomes = range(1,23) + ["X", "Y", "M"]
-    #chromosomes = [1, 3]
+    chromosomes = range(1, 23) + ["X", "Y", "M"]
+    # chromosomes = [1, 3]
     for chrom in chromosomes:
         fastaFile = "hg19/chr" + str(chrom) + ".fa"
-        for record in SeqIO.parse(open(fastaFile, "rU"), "fasta") :
+        for record in SeqIO.parse(open(fastaFile, "rU"), "fasta"):
             genome[record.id] = str(record.seq).upper()
 
     return genome
 
-def readFasta (f):
+
+def readFasta(f):
     '''
     Description: Read fasta file and put sequences in a dictionary
     In: f (filename)
@@ -35,7 +38,7 @@ def readFasta (f):
     return(sequences)
 
 
-def motifToRegex (motif, mismatches):
+def motifToRegex(motif, mismatches):
     """
     Converts IUPAC motif to a regular expression (copied from nt_search method in BioPython)
     """
@@ -49,14 +52,16 @@ def motifToRegex (motif, mismatches):
     pattern = "(" + pattern + "){e<=" + str(mismatches) + "}"  # allow for mismatches
     return pattern
 
-def complement(s): 
+
+def complement(s):
     """
     Return the complement nucleotides
     """
-    basecomplement = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A', 'W': 'W', 'S': 'S', 'M': 'K', 'K': 'M', 'R': 'Y', 'Y':'R', 'B': 'V', 'D': 'H', 'H': 'D', 'V': 'B', 'N': 'N'} 
-    letters = list(s) 
-    letters = [basecomplement[base] for base in letters] 
+    basecomplement = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A', 'W': 'W', 'S': 'S', 'M': 'K', 'K': 'M', 'R': 'Y', 'Y': 'R', 'B': 'V', 'D': 'H', 'H': 'D', 'V': 'B', 'N': 'N'}
+    letters = list(s)
+    letters = [basecomplement[base] for base in letters]
     return ''.join(letters)
+
 
 def comrev(s):
     """
@@ -65,17 +70,17 @@ def comrev(s):
     return complement(s[::-1].upper())
 
 
-def readMotifsFromFile (motifFile):
+def readMotifsFromFile(motifFile):
     """
     Read a tab-delimited files with motifs to search for. Return a list with motifs
     """
     try:
         fh = open(motifFile)
     except:
-        sys.exit("cannot open file", fileList)
+        sys.exit("cannot open file", motifFile)
 
     motifs = list()
-    line = fh.readline() # skip header
+    line = fh.readline()  # skip header
     for line in fh:
         line = line.rstrip()
         c = line.split("\t")
@@ -83,7 +88,7 @@ def readMotifsFromFile (motifFile):
     return motifs
 
 
-def nucToPeptide (seq):
+def nucToPeptide(seq):
     '''
     Description: translates a nucleotide sequence in all 6 reading frames
     In: string sequence
@@ -111,8 +116,6 @@ def nucToPeptide (seq):
     return(translations)
 
 
-############### Tests ##############
-if testmode==1:
+if testmode == 1:
     genome = readGenome()
-    print genome["chr1"][0:50]
-    
+    print(genome["chr1"][0:50])

@@ -5,10 +5,11 @@ if len(sys.argv) < 2:
     print("Usage:", sys.argv[0], "file(s)")
     sys.exit()
 
-#infile = "/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/S074-135_S12_L001.assembled-ACTGACTG-IGH_HUMAN-all_info.csv"
+# infile = "/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/S074-135_S12_L001.assembled-ACTGACTG-IGH_HUMAN-all_info.csv"
 infiles = sys.argv[1:]
 
-def analyzeCdr3Qual (infile):
+
+def analyzeCdr3Qual(infile):
     filepath = infile.split("/")
     filename = filepath[-1]
     outMin = filename + ".min_qual.csv"
@@ -71,8 +72,8 @@ def analyzeCdr3Qual (infile):
     fhMin.close()
     fhAvg.close()
 
-############ Main #########
 
-for infile in infiles:
-    analyzeCdr3Qual(infile)
-print("FINISHED")
+if __name__ == '__main__':
+    for infile in infiles:
+        analyzeCdr3Qual(infile)
+    print("FINISHED")

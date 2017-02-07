@@ -4,13 +4,8 @@ import sqlite3
 import random
 from CreateAndImportClonesSqlite import *
 
-if len(sys.argv) < 2:
-    sys.exit("Usage: fix-multiple-V-assignments.py all_info.csv file(s)")
 
-# Input
-datafiles = sys.argv[1:]
-
-def fixMultipleAssignedVGenes (datafile):
+def fixMultipleAssignedVGenes(datafile):
     # count entries
     nr_of_corrected_accs = 0
     nr_of_unique_accs = 0
@@ -55,7 +50,6 @@ def fixMultipleAssignedVGenes (datafile):
         cdr3peptides[cdr3pep]['acc'] = cdr3peptides[cdr3pep].get('acc', list()) + [acc]
         cdr3peptides[cdr3pep]['V_sub'] = cdr3peptides[cdr3pep].get('V_sub', list()) + [V_sub]
 
-
     # Get clone frequency for every cdr3pep where the accessions got one unique V assigned
     for cdr3pep in cdr3peptides:
         query = "select cdr3pep,V_sub,count(distinct acc) from all_info where cast(nr_v_subs as integer)=1 and cdr3pep='" + cdr3pep + "' group by cdr3pep,V_sub order by count(distinct acc) desc"
@@ -81,11 +75,10 @@ def fixMultipleAssignedVGenes (datafile):
                 V_subs.append(row[1])
                 freqs.append(int(row[2]))
 
-
         # Calculate the fraction of clone frequency and the cumulative fraction
         total = float(sum(freqs))
-        fractions = [fr/total for fr in freqs]
-        fractions_cumulatief = [sum(fractions[:i+1]) for i in range(len(fractions))]
+        fractions = [fr / total for fr in freqs]
+        fractions_cumulatief = [sum(fractions[:i + 1]) for i in range(len(fractions))]
         if fractions_cumulatief[-1] != 1.0:
             fractions_cumulatief[-1] = 1.0
 
@@ -152,14 +145,19 @@ def fixMultipleAssignedVGenes (datafile):
     return(nr_of_corrected_accs, nr_of_unique_accs)
 
 
-########## MAIN ###############
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        sys.exit("Usage: fix-multiple-V-assignments.py all_info.csv file(s)")
 
-# datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/S074-129_S129_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv"]
-# datafiles += ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB19_S52_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB21_S54_L001.assembled-ACGTACGT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/UNIFI68-9N-MID1-Exo_S162_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv"]
+    # Input
+    datafiles = sys.argv[1:]
 
-fhOut = open("log-fix-multiple-V-assignments.txt", "w")
-print("datafile corrected_accessions total_accessions", file=fhOut)
-for datafile in datafiles:
-    (nr_of_corrected_accs, nr_of_unique_accs) = fixMultipleAssignedVGenes(datafile)
-    print(datafile, nr_of_corrected_accs, nr_of_unique_accs, file=fhOut)
-fhOut.close()
+    # datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/S074-129_S129_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv"]
+    # datafiles += ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB19_S52_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB21_S54_L001.assembled-ACGTACGT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/UNIFI68-9N-MID1-Exo_S162_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv"]
+
+    fhOut = open("log-fix-multiple-V-assignments.txt", "w")
+    print("datafile corrected_accessions total_accessions", file=fhOut)
+    for datafile in datafiles:
+        (nr_of_corrected_accs, nr_of_unique_accs) = fixMultipleAssignedVGenes(datafile)
+        print(datafile, nr_of_corrected_accs, nr_of_unique_accs, file=fhOut)
+    fhOut.close()

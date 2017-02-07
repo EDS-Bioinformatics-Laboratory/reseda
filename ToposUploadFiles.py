@@ -3,7 +3,7 @@ import sys
 from Topos import *
 
 if __name__ == '__main__':
-    if len(sys.argv)<3:
+    if len(sys.argv) < 3:
         sys.exit("Usage: " + sys.argv[0] + " poolname files-to-upload")
 
     poolname = sys.argv[1]
