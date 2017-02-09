@@ -5,7 +5,17 @@
 ### requires clones file
 ### IT IS CRITICAL THAT CLONES$ID2 HAS PT [space] SAMPLE
 
+# input
+clones.file = "/home/barbera/Data/tbcell/lineage-trees/20161201-SP-RAII-rituximab/2016-12-01-RA2_BCRh_PB_Tree-clones.csv"
+
+# Read clones file and add the ID2 column: PT [space] SAMPLE
+clones = read.csv(clones.file, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+project = "RAII"
+
+clones$ID2 = paste(clones$pt,clones$sample)
 clones$ID2=as.factor(clones$ID2)
+
+clones$VJCDR3 = paste(paste(clones$V.gene, clones$J.gene, sep = "-"), clones$cdr3pep, sep = "-")
 
 ########## make name
 name=paste(Sys.Date(),project,'overlap.plots','pdf',sep='.')
@@ -93,6 +103,7 @@ for (ii in 1:4){
 # close pdf
 dev.off()
 
+quit()
 
 #### script for contamination table
 
