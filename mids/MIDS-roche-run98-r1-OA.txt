@@ -1,0 +1,7 @@
+Name	Regex
+OA1-PB	^(.{0,10})(CCTGAGC)(.{5})
+OA2-PB	^(.{0,10})(TTGAGTC)(.{5})
+OA1-ST	^(.{0,10})(CTTGACTC)(.{5})
+OA2-ST	^(.{0,10})(ACACTGAC)(.{5})
+PsA1-ST	^(.{0,10})(TCGGACAC)(.{5})
+PsA2-ST	^(.{0,10})(CGTCTAC)(.{5})
