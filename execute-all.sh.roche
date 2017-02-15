@@ -80,10 +80,10 @@ r1_samples=`grep R1_001 SAMPLES`
 # wait
 
 ### Retrieve fastq files ###
-for sample in $samples; do
-    test cp -v ${sample} .
-done
-wait
+# for sample in $samples; do
+#     test cp -v ${sample} .
+# done
+# wait
 
 ### Continue with assembled fastq files ###
 
@@ -91,7 +91,7 @@ samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
 set_status ${ip} "RUNNING" "${celltype} Sorting sequences per MID"
-test python fastq-split-on-mid.py ${mids} split ${samples}
+test python FastqSplitOnMid.py ${mids} split ${samples}
 wait
 
 ### Continue with the assembled, split per mid, fastq files ###
@@ -183,7 +183,7 @@ mv *.rr.* final/correct-mid
 wait
 
 # Concatenate clones files
-test python concatenate-clone-files.py final/correct-mid/*.rr.clones_subs.csv
+test python ConcatenateCloneFiles.py final/correct-mid/*.rr.clones_subs.csv
 wait
 mv run-clones_subs.csv run-clones_subs-${ip}.csv
 wait
