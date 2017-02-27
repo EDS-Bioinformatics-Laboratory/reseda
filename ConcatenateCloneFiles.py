@@ -66,16 +66,18 @@ if __name__ == '__main__':
 
     runinfo = sys.argv[1]
     project_name = sys.argv[2]
-    myfiles = sys.argv[3:]
+    chain_specie = sys.argv[3]
+    myfiles = sys.argv[4:]
 
     print("Project:", project_name)
+    print("Chain Specie:", chain_specie)
 
     # Open file for writing
     try:
         if ".rr." in myfiles[0]:
-            fhOut = open("run-clones_subs-" + project_name + "-after-reassignment.csv", "w")
+            fhOut = open("run-clones_subs-" + project_name + "-" + chain_specie + "-after-reassignment.csv", "w")
         else:
-            fhOut = open("run-clones_subs-" + project_name + ".csv", "w")
+            fhOut = open("run-clones_subs-" + project_name + "-" + chain_specie + ".csv", "w")
     except:
         sys.exit("cannot write to file")
 

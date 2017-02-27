@@ -4,7 +4,7 @@ import os
 import json
 
 if __name__ == '__main__':
-    jsonFile = "20170127_Rheuma_MiSeqRUN012.json"
+    jsonFile = "20170127_Rheuma_MiSeqRUN012-v2.json"
     mountdir = "/mnt/immunogenomics/RUNS/run12-20170127-miseq/data/"
 
     # Read json with parsed sample sheet info (made with MetaData.py)
