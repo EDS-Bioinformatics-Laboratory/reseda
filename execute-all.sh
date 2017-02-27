@@ -178,12 +178,6 @@ wait
 mv *.rr.* final/correct-mid
 wait
 
-# Concatenate clones files
-test python ConcatenateCloneFiles.py final/correct-mid/*.rr.clones_subs.csv
-wait
-mv run-clones_subs.csv run-clones_subs-${ip}.csv
-wait
-
 # Make output directories
 mkdir ${beehub_mount}
 mkdir ${beehub_mount}/${resultsdir}

@@ -1,5 +1,7 @@
 from __future__ import print_function
 # import subprocess
+import json
+import sys
 
 
 def executeCmd(cmd):
@@ -17,18 +19,25 @@ def executeCmd(cmd):
 
 if __name__ == '__main__':
     mydir = "/mnt/immunogenomics/RUNS/run12-20170127-miseq/results-tbcell/final/correct-mid/"
-    celltypes = ["IGH_HUMAN", "IGH_MOUSE", "IGK_HUMAN", "IGK_MOUSE", "IGL_HUMAN", "IGL_MOUSE", "TRA_HUMAN", "TRA_MOUSE", "TRB_HUMAN", "TRB_MOUSE"]
+    runinfo = "/home/barbera/git/tbcell-miseq-pipeline/20170127_Rheuma_MiSeqRUN012.json"
 
-    for celltype in celltypes:
-        cmd = "python ConcatenateCloneFiles.py " + mydir + "*" + celltype + "-clones-subs.csv"
+    # Read json file
+    try:
+        fhJs = open(runinfo, "r")
+    except:
+        sys.exit("cannot open file")
+    text = fhJs.read()
+    js = json.loads(text)
+    fhJs.close()
+
+    # Make list of all the projects
+    projects = list()
+    for sample in js["Samples"]:
+        projects.append(sample["Sample_Project"])
+    projects = list(set(projects))  # make list unique
+
+    for project in projects:
+        cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + mydir + "*-clones-subs.csv"
         executeCmd(cmd)
-        cmd = "wait"
-        executeCmd(cmd)
-        cmd = "mv run-clones_subs.csv run-clones_subs-" + celltype + ".csv"
-        executeCmd(cmd)
-        cmd = "python ConcatenateCloneFiles.py " + mydir + "*" + celltype + "*.rr.clones_subs.csv"
-        executeCmd(cmd)
-        cmd = "wait"
-        executeCmd(cmd)
-        cmd = "mv run-clones_subs.csv run-clones_subs-" + celltype + "-after-reassignment.csv"
+        cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + mydir + "*.rr.clones_subs.csv"
         executeCmd(cmd)

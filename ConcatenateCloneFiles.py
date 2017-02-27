@@ -1,5 +1,7 @@
 from __future__ import print_function
 import sys
+import json
+import re
 
 
 def parseSampleName(myfile):
@@ -33,16 +35,45 @@ def printContent(myfile, fhOut):
     fh.close()
 
 
+def getSamplesOfProject(project_name, runinfo):
+    '''
+    Description: Go through the run information and get the samples of project
+    In: project_name (str), runinfo (path to runXX.json)
+    Out: samples (list of sample names)
+    '''
+
+    # Read json file
+    try:
+        fhJs = open(runinfo, "r")
+    except:
+        sys.exit("cannot open file")
+    text = fhJs.read()
+    js = json.loads(text)
+    fhJs.close()
+
+    samples = list()
+    for sample in js["Samples"]:
+        if sample["Sample_Project"] == project_name:
+            samples.append(sample["Sample_Name"])
+
+    return(samples)
+
+
 if __name__ == '__main__':
 
     if len(sys.argv) < 2:
-        sys.exit("Usage: concatenate-clone-files.py *clones_subs.csv")
+        sys.exit("Usage: concatenate-clone-files.py run-info.json project-name *clones_subs.csv")
 
-    myfiles = sys.argv[1:]
+    runinfo = sys.argv[1]
+    project_name = sys.argv[2]
+    myfiles = sys.argv[3:]
 
     # Open file for writing
     try:
-        fhOut = open("run-clones_subs.csv", "w")
+        if ".rr." in myfiles[0]:
+            fhOut = open("run-clones_subs-" + project_name + "-after-reassignment.csv", "w")
+        else:
+            fhOut = open("run-clones_subs-" + project_name + ".csv", "w")
     except:
         sys.exit("cannot write to file")
 
@@ -57,9 +88,17 @@ if __name__ == '__main__':
     print("\t".join(header), file=fhOut)
     fh.close()
 
-    # Read content of all files and write to fhOut
+    # Determine which samples to include
+    samples_of_project = getSamplesOfProject(project_name, runinfo)
+
+    # Read content of all files and write to fhOut if sample belongs to project
+    p = re.compile("_S\d+$")   # Ends with _S33
     for myfile in myfiles:
-        printContent(myfile, fhOut)
+        path = myfile.split("/")[-1]
+        sample_name, rest = path.split("_L001.assembled-")
+        sample_name = p.sub("", sample_name)
+        if sample_name in samples_of_project:
+            printContent(myfile, fhOut)
 
     fhOut.close()
 
