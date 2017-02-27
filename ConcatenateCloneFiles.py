@@ -68,6 +68,8 @@ if __name__ == '__main__':
     project_name = sys.argv[2]
     myfiles = sys.argv[3:]
 
+    print("Project:", project_name)
+
     # Open file for writing
     try:
         if ".rr." in myfiles[0]:
