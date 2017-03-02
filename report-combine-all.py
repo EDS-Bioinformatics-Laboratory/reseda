@@ -56,7 +56,7 @@ def parseMids(totalreads, mids):
 
     for sample in midcount:
         for mid in sorted(midcount[sample], key=midcount[sample].get, reverse=True):
-            percentage = round(100.0 * midcount[sample][mid] / totalreads[sample], 2)
+            percentage = round(100.0 * midcount[sample][mid] / totalreads.get(sample, -1), 2)
             summary[sample] = (mid, midcount[sample][mid], percentage)
             break
 
@@ -78,7 +78,7 @@ def parseCdr3(totalreads, summary_mids, cdr3):
         mid = rest.split(".")[0]
         freq = int(c[-2])
         if mid in summary_mids[sample]:
-            percentage = round(100.0 * freq / totalreads[sample], 2)
+            percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 
     return(summary)
@@ -99,7 +99,7 @@ def parseProductive(totalreads, summary_mids, prod):
         mid = rest.split("-")[0]
         freq = int(c[-1])
         if mid in summary_mids[sample]:
-            percentage = round(100.0 * freq / totalreads[sample], 2)
+            percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 
     return(summary)
@@ -120,7 +120,7 @@ def parseReassign(totalreads, summary_mids, reassign):
         mid = rest.split("-")[0]
         freq = int(c[-1])
         if mid in summary_mids[sample]:
-            percentage = round(100.0 * freq / totalreads[sample], 2)
+            percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 
     return(summary)
@@ -157,57 +157,59 @@ def makeBarChart(plotfile, title, y_label, threshold, x, v, w, y, z, a, b):
         sys.exit("cannot write plotfile to disk")
 
 
-# Parse log files
-(totalreads, summary_pear) = parsePear(pear)
-summary_mids = parseMids(totalreads, mids)
-summary_cdr3 = parseCdr3(totalreads, summary_mids, cdr3)
-summary_prod = parseProductive(totalreads, summary_mids, prod)
-summary_reassign = parseReassign(totalreads, summary_mids, reassign)
+if __name__ == '__main__':
 
-# Create one big table with all summary statistics
-try:
-    fhOut = open("report-all.csv", "w")
-except:
-    sys.exit("cannot write file report-all.csv")
+    # Parse log files
+    (totalreads, summary_pear) = parsePear(pear)
+    summary_mids = parseMids(totalreads, mids)
+    summary_cdr3 = parseCdr3(totalreads, summary_mids, cdr3)
+    summary_prod = parseProductive(totalreads, summary_mids, prod)
+    summary_reassign = parseReassign(totalreads, summary_mids, reassign)
 
-print("Sample TotalReads AssembledFreq AssembledPerc MID MidFreq MidPerc Cdr3Freq Cdr3Perc VJFreq VJPerc ReassignedFreq ReassignedPerc", file=fhOut)
-samples = list()
-totals = list()
-assembledfreqs = list()
-assembledpercs = list()
-midpercs = list()
-cdr3percs = list()
-prodpercs = list()
-reassigns = list()
-midfreqs = list()
-cdr3freqs = list()
-prodfreqs = list()
-reassignfreqs = list()
-for sample in sorted(totalreads):
-    # Print all numbers to file
-    total = totalreads[sample]
-    (assembledfreq, assembledperc) = summary_pear[sample]
-    (mid, midfreq, midperc) = summary_mids[sample]
-    (cdr3freq, cdr3perc) = summary_cdr3.get(sample, (0, 0))
-    (prodfreq, prodperc) = summary_prod.get(sample, (0, 0))
-    (reassignfreq, reassignperc) = summary_reassign.get(sample, (0, 0))
-    print(sample, total, assembledfreq, assembledperc, mid, midfreq, midperc, cdr3freq, cdr3perc, prodfreq, prodperc, reassignfreq, reassignperc, file=fhOut)
+    # Create one big table with all summary statistics
+    try:
+        fhOut = open("report-all.csv", "w")
+    except:
+        sys.exit("cannot write file report-all.csv")
 
-    # Store percentages in lists
-    samples.append(sample)
-    assembledpercs.append(assembledperc)
-    midpercs.append(midperc)
-    cdr3percs.append(cdr3perc)
-    prodpercs.append(prodperc)
-    reassigns.append(reassignperc)
+    print("Sample TotalReads AssembledFreq AssembledPerc MID MidFreq MidPerc Cdr3Freq Cdr3Perc VJFreq VJPerc ReassignedFreq ReassignedPerc", file=fhOut)
+    samples = list()
+    totals = list()
+    assembledfreqs = list()
+    assembledpercs = list()
+    midpercs = list()
+    cdr3percs = list()
+    prodpercs = list()
+    reassigns = list()
+    midfreqs = list()
+    cdr3freqs = list()
+    prodfreqs = list()
+    reassignfreqs = list()
+    for sample in sorted(totalreads):
+        # Print all numbers to file
+        total = totalreads[sample]
+        (assembledfreq, assembledperc) = summary_pear[sample]
+        (mid, midfreq, midperc) = summary_mids[sample]
+        (cdr3freq, cdr3perc) = summary_cdr3.get(sample, (0, 0))
+        (prodfreq, prodperc) = summary_prod.get(sample, (0, 0))
+        (reassignfreq, reassignperc) = summary_reassign.get(sample, (0, 0))
+        print(sample, total, assembledfreq, assembledperc, mid, midfreq, midperc, cdr3freq, cdr3perc, prodfreq, prodperc, reassignfreq, reassignperc, file=fhOut)
 
-    # Store frequencies in lists
-    totals.append(total)
-    assembledfreqs.append(assembledfreq)
-    midfreqs.append(midfreq)
-    cdr3freqs.append(cdr3freq)
-    prodfreqs.append(prodfreq)
-    reassignfreqs.append(reassignfreq)
+        # Store percentages in lists
+        samples.append(sample)
+        assembledpercs.append(assembledperc)
+        midpercs.append(midperc)
+        cdr3percs.append(cdr3perc)
+        prodpercs.append(prodperc)
+        reassigns.append(reassignperc)
 
-makeBarChart("report-all-percentages.pdf", "Run overview", "Reads (percentage)", 70, samples, len(samples) * [100], assembledpercs, midpercs, cdr3percs, prodpercs, reassigns)
-makeBarChart("report-all-frequencies.pdf", "Run overview", "Reads (frequency)", 0, samples, totals, assembledfreqs, midfreqs, cdr3freqs, prodfreqs, reassignfreqs)
+        # Store frequencies in lists
+        totals.append(total)
+        assembledfreqs.append(assembledfreq)
+        midfreqs.append(midfreq)
+        cdr3freqs.append(cdr3freq)
+        prodfreqs.append(prodfreq)
+        reassignfreqs.append(reassignfreq)
+
+    makeBarChart("report-all-percentages.pdf", "Run overview", "Reads (percentage)", 70, samples, len(samples) * [100], assembledpercs, midpercs, cdr3percs, prodpercs, reassigns)
+    makeBarChart("report-all-frequencies.pdf", "Run overview", "Reads (frequency)", 0, samples, totals, assembledfreqs, midfreqs, cdr3freqs, prodfreqs, reassignfreqs)
