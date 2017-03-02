@@ -1,5 +1,6 @@
 from __future__ import print_function
 import sys
+import json
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -158,6 +159,26 @@ def makeBarChart(plotfile, title, y_label, threshold, x, v, w, y, z, a, b):
 
 
 if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print("Usage:", sys.argv[0], "2017etcetc-new.json (json file with run and sample information)")
+        exit()
+
+    jsonFile = sys.argv[1]  # "20170224_Rheuma_MiSeqRUN013.json"
+
+    # Read json with parsed sample sheet info (made with MetaData.py)
+    try:
+        fh = open(jsonFile)
+    except:
+        sys.exit("cannot open file: " + jsonFile)
+    text = fh.read()
+    js = json.loads(text)
+    fh.close()
+
+    # Get all expected sample names
+    expected_samples = list()
+    for sample in js["Samples"]:
+        expected_samples.append(sample["Sample_Name"] + "_" + sample.get("Sample_Nr", ""))
+    expected_samples.sort()
 
     # Parse log files
     (totalreads, summary_pear) = parsePear(pear)
@@ -185,11 +206,11 @@ if __name__ == '__main__':
     cdr3freqs = list()
     prodfreqs = list()
     reassignfreqs = list()
-    for sample in sorted(totalreads):
+    for sample in expected_samples:
         # Print all numbers to file
-        total = totalreads[sample]
-        (assembledfreq, assembledperc) = summary_pear[sample]
-        (mid, midfreq, midperc) = summary_mids[sample]
+        total = totalreads.get(sample, -1)
+        (assembledfreq, assembledperc) = summary_pear.get(sample, (0, 0))
+        (mid, midfreq, midperc) = summary_mids.get(sample, ("ABC", 0, 0))
         (cdr3freq, cdr3perc) = summary_cdr3.get(sample, (0, 0))
         (prodfreq, prodperc) = summary_prod.get(sample, (0, 0))
         (reassignfreq, reassignperc) = summary_reassign.get(sample, (0, 0))
