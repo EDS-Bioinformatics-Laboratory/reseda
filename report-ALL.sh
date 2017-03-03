@@ -1,6 +1,7 @@
 #!/bin/bash
 
-run="run12-20170127-miseq"
+run="run13-20170224-miseq"
+runinfo="20170224_Rheuma_MiSeqRUN013-new-v2.json"
 resultsdir="results-tbcell"
 
 files="/mnt/immunogenomics/RUNS/${run}/${resultsdir}/reports/*.log"
@@ -22,7 +23,7 @@ cat report-PRODUCTIVE.txt
 python2 report-after-v-reassignment.py /mnt/immunogenomics/RUNS/${run}/${resultsdir}/final/correct-mid/*.rr.clones_subs.csv
 cat report-AFTER-V-REASSIGNMENT.txt
 
-python2 report-combine-all.py
+python2 report-combine-all.py ${runinfo}
 wait
 
 echo "FINISHED"

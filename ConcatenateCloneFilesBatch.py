@@ -33,7 +33,7 @@ def lookupChain(chain):
 
 if __name__ == '__main__':
     mydir = "/mnt/immunogenomics/RUNS/run13-20170224-miseq/results-tbcell/final/correct-mid/"
-    runinfo = "20170224_Rheuma_MiSeqRUN013-new.json"
+    runinfo = "20170224_Rheuma_MiSeqRUN013-new-v2.json"
 
     # Read json file
     try:
