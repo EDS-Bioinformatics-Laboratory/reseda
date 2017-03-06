@@ -24,18 +24,29 @@
 ### Output: <date>.<projectname>.overlap.plots.pdf
 
 # Input file
-clones.file = "/home/barbera/Data/tbcell/lineage-trees/20161201-SP-RAII-rituximab/2016-12-01-RA2_BCRh_PB_Tree-clones.csv"
+clones.file1 = "/mnt/immunogenomics/RUNS/run13-20170224-miseq/results-tbcell/run-clones_subs-VDJmouse-IGK_MOUSE.csv"
+clones.file2 = "/mnt/immunogenomics/RUNS/run13-20170224-miseq/results-tbcell/run-clones_subs-VDJmouse-TRB_MOUSE.csv"
+clones.file3 = "/mnt/immunogenomics/RUNS/run13-20170224-miseq/results-tbcell/run-clones_subs-C1IgG4-IGH_HUMAN.csv"
+clones.file4 = "/mnt/immunogenomics/RUNS/run13-20170224-miseq/results-tbcell/run-clones_subs-Paired-IGH_HUMAN.csv"
 
 # Read clones file
-clones = read.csv(clones.file, header=TRUE, sep="\t", stringsAsFactors=FALSE)
-project = "RAII"
+clones1 = read.csv(clones.file1, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+clones2 = read.csv(clones.file2, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+clones3 = read.csv(clones.file3, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+clones4 = read.csv(clones.file4, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+
+clones = rbind(clones1, clones2, clones3, clones4)
+project = "run13-ALL"
 
 # Add the ID2 column: PT [space] SAMPLE
-clones$ID2 = paste(clones$pt,clones$group)
+#clones$ID2 = paste(clones$pt,clones$group)
+clones$ID2 = clones$Sample
 clones$ID2=as.factor(clones$ID2)
 
+
 # Add VJCDR3 column if it is not already present: V-J-CDR3
-clones$VJCDR3 = paste(clones$V.gene, clones$J.gene, clones$cdr3pep, sep = "-")
+#clones$VJCDR3 = paste(clones$V.gene, clones$J.gene, clones$cdr3pep, sep = "-")
+clones$VJCDR3 = paste(clones$V_sub, clones$J_sub, clones$cdr3pep, sep = "-")
 
 
 ########## MAIN ############
