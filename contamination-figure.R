@@ -28,19 +28,24 @@ clones.file1 = "/mnt/immunogenomics/RUNS/run13-20170224-miseq/results-tbcell/run
 clones.file2 = "/mnt/immunogenomics/RUNS/run13-20170224-miseq/results-tbcell/run-clones_subs-VDJmouse-TRB_MOUSE.csv"
 clones.file3 = "/mnt/immunogenomics/RUNS/run13-20170224-miseq/results-tbcell/run-clones_subs-C1IgG4-IGH_HUMAN.csv"
 clones.file4 = "/mnt/immunogenomics/RUNS/run13-20170224-miseq/results-tbcell/run-clones_subs-Paired-IGH_HUMAN.csv"
+pt.file = "Run013-pt-table.csv"
 
 # Read clones file
 clones1 = read.csv(clones.file1, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 clones2 = read.csv(clones.file2, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 clones3 = read.csv(clones.file3, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 clones4 = read.csv(clones.file4, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+pt.table = read.csv(pt.file, header=TRUE, sep=",", stringsAsFactors=FALSE)
 
-clones = rbind(clones1, clones2, clones3, clones4)
-project = "run13-ALL"
+clones = rbind(clones3, clones4)
+#clones = clones1
+clones$SampleName=gsub("_S[0-9]+","",clones$Sample)
+clones = merge(clones,pt.table, by.x="SampleName", by.y="ID", all.x = TRUE)
+project = "run13-IGH_HUMAN"
 
 # Add the ID2 column: PT [space] SAMPLE
-#clones$ID2 = paste(clones$pt,clones$group)
-clones$ID2 = clones$Sample
+clones$ID2 = paste(clones$pt,clones$SampleName)
+#clones$ID2 = clones$Sample
 clones$ID2=as.factor(clones$ID2)
 
 

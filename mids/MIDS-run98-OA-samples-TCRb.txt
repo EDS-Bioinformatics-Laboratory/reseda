@@ -1,0 +1,9 @@
+Name	Regex
+MID07	^(.{0,10})(TCGGAGCTCA)(.{5})
+MID08	^(.{0,10})(ATAACGCTCA)(.{5})
+MID09	^(.{0,10})(CGTCTGCTCA)(.{5})
+MID10	^(.{0,10})(AGTCAGCTCA)(.{5})
+MID11	^(.{0,10})(CCGAGGCTCA)(.{5})
+MID12	^(.{0,10})(TTAGTGCTCA)(.{5})
+MID13	^(.{0,10})(ACAGGGCTCA)(.{5})
+MID14	^(.{0,10})(CTTAGGCTCA)(.{5})
