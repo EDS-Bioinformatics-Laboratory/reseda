@@ -57,10 +57,16 @@ def convertFastaToFastq(f):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        sys.exit("Usage: " + sys.argv[0] + " sequence-file(s) Supported formats: sff and fasta")
+    if len(sys.argv) < 3:
+        sys.exit("Usage: " + sys.argv[0] + " sff|fasta sequence-file(s) Supported formats: sff and fasta")
 
-    myfiles = sys.argv[1:]
+    input_type = sys.argv[1]
+    myfiles = sys.argv[2:]
     for f in myfiles:
-        fastqFile = convertFastaToFastq(f)
+        if input_type == "fasta":
+            fastqFile = convertFastaToFastq(f)
+        elif input_type == "sff":
+            fastqFile = convertSffToFastq(f)
+        else:
+            sys.exit("Unknown input type: " + input_type)
         print("Converted:", f, ">", fastqFile)
