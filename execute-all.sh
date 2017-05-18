@@ -88,7 +88,7 @@ samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
 set_status ${ip} "RUNNING" "${celltype} Sorting sequences per MID"
-test python FastqSplitOnMid.py ${mids} split ${samples}
+test python2 FastqSplitOnMid.py ${mids} split ${samples}
 wait
 
 ### Continue with the assembled, split per mid, fastq files ###
@@ -101,12 +101,12 @@ wait
 
 # Search for primers in the fastq files
 set_status ${ip} "RUNNING" "${celltype} Searching for primers"
-test python motif-search-batch.py ${samples}
+test python2 motif-search-batch.py ${samples}
 wait
 
 # Extract the CDR3 sequence
 set_status ${ip} "RUNNING" "${celltype} Extracting CDR3's"
-test python TranslateAndExtractCdr3.py ${celltype} ${samples}
+test python2 TranslateAndExtractCdr3.py -c ${celltype} ${samples}
 wait
 
 # Align sequences against IMGT and call SNPs
@@ -151,7 +151,7 @@ for sample in ${samples}; do
     cloneSubsFile="final/${prefix}-${celltype}-clones-subs.csv"
     cloneMainsFile="final/${prefix}-${celltype}-clones-mains.csv"
     totalFile="final/${prefix}-${celltype}-productive.txt"
-    test python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
+    test python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 
 done
@@ -160,7 +160,7 @@ done
 set_status ${ip} "RUNNING" "${celltype} Select correct MIDs"
 test wc -l final/*all_info.csv > wc-${ip}.txt
 wait
-test python select-correct-mids.py wc-${ip}.txt > mv-samples-with-correct-mid.sh
+test python2 select-correct-mids.py wc-${ip}.txt > mv-samples-with-correct-mid.sh
 wait
 mkdir final/correct-mid
 wait
@@ -172,7 +172,7 @@ cd ..
 
 # Correct V gene assignments
 set_status ${ip} "RUNNING" "${celltype} Re-assign V genes"
-test python re-assign-v-genes.py final/correct-mid/*-all_info.csv
+test python2 re-assign-v-genes.py final/correct-mid/*-all_info.csv
 wait
 # Move files to final
 mv *.rr.* final/correct-mid

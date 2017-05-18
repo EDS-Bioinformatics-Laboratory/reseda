@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import print_function
 import sys
+import argparse
 import gzip
 import regex
 from Bio import SeqIO
@@ -217,15 +218,16 @@ def extractCDR3(cellType, peptide, p):
 
 if __name__ == "__main__":
 
-    usage = "Usage: " + sys.argv[0] + " (IGH|TRB|IGK|IGL|TRA)_HUMAN fastq-file(s)"
+    parser = argparse.ArgumentParser(description='Translates nucleotide to protein and extracts CDR3')
+    parser.add_argument('-c', '--celltype', default='IGH_HUMAN', type=str, help='Cell type: (IGH|TRB|IGK|IGL|TRA)_HUMAN (default: %(default)s)')
+    parser.add_argument('-m', '--mismatches', default=0, type=int, help='Allowed nr of mismatches in motif search (default: %(default)s)')
+    parser.add_argument("fastq_files", type=str, nargs='+', help='Path(s) to fastq file(s)')
+    args = parser.parse_args()
 
-    if len(sys.argv) < 3:
-        sys.exit(usage)
-
-    cellType = sys.argv[1]
+    cellType = args.celltype
 
     # Get all the motifs to search for V .* J, define mismatches (usually 0 or 1)
-    motif = getMotifs(cellType, 0)
+    motif = getMotifs(cellType, args.mismatches)
 
     # Transform motif to regular expressions
     p = regex.compile(motif, regex.BESTMATCH)
@@ -238,7 +240,7 @@ if __name__ == "__main__":
     p_x = regex.compile("X")
 
     # Open fastq file(s) and search for patterns
-    for inFile in sys.argv[2:]:
+    for inFile in args.fastq_files:
         outFile = inFile + "-" + cellType + "-CDR3.csv"
         extraFile = inFile + "-" + cellType + "-extra.txt"
         rawFile = inFile + "-" + cellType + ".csv"
