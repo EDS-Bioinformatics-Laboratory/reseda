@@ -56,9 +56,35 @@ def convertFastaToFastq(f):
     return(fastqFile)
 
 
+def convertTabToFastq(f):
+    '''
+    Description: convert sequences from tab to fasta format
+    In: file.txt (str)
+    Out: file.fastq.gz (str)
+    '''
+    fastqFile = os.path.basename(f)
+    fastqFile = fastqFile.replace(".txt", ".fastq.gz")
+
+    try:
+        fhIn = open(f)
+        fhOut = gzip.open(fastqFile, "w")
+    except:
+        print("Could not open or write file:", f, fastqFile)
+        exit()
+
+    for record in SeqIO.parse(fhIn, "tab"):
+        record.letter_annotations["phred_quality"] = [40] * len(str(record.seq))
+        SeqIO.write(record, fhOut, "fastq")
+
+    fhIn.close()
+    fhOut.close()
+
+    return(fastqFile)
+
+
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        sys.exit("Usage: " + sys.argv[0] + " sff|fasta sequence-file(s) Supported formats: sff and fasta")
+        sys.exit("Usage: " + sys.argv[0] + " sff|fasta|tab sequence-file(s) Supported formats: sff, fasta, tab")
 
     input_type = sys.argv[1]
     myfiles = sys.argv[2:]
@@ -67,6 +93,10 @@ if __name__ == '__main__':
             fastqFile = convertFastaToFastq(f)
         elif input_type == "sff":
             fastqFile = convertSffToFastq(f)
+        elif input_type == "tab":
+            id_col = 0
+            seq_col = 1
+            fastqFile = convertTabToFastq(f)
         else:
             sys.exit("Unknown input type: " + input_type)
         print("Converted:", f, ">", fastqFile)
