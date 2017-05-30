@@ -2,9 +2,31 @@ from __future__ import print_function
 import sys
 
 
+def fixCoordinates(coord):
+    '''
+    Description: merge coordinates that are next to each other
+    In: list of tuples
+    Out: list of tuples
+    '''
+    newcoord = list()
+    (prev_start, prev_end) = coord[0]
+    for (start, end) in coord[1:]:
+        if start == prev_end:
+            # merge with previous
+            prev_end = end
+        else:
+            # store coordinates in new list
+            newcoord.append((prev_start, prev_end))
+            (prev_start, prev_end) = (start, end)
+    newcoord.append((prev_start, prev_end))
+
+    return(newcoord)
+
+
 def parseCigar(cigarstring):
     '''
     Description: split cigarstring and store in list of tuples [(number, letter)] and convert it to coordinates in sequence
+    To do: handle cases with indels
     '''
     c = list()
     coord = list()
@@ -20,13 +42,20 @@ def parseCigar(cigarstring):
             c.append((number, character))
 
             # convert to coordinates if part of the alignment
+            if character == "H" or character == "D":   # do not use hard clipped numbers or deletions
+                number = ""
+                continue
+
             end = start + number
-            if character == "M":
+            if character == "M" or character == "I":
                 coord.append((start, end))
             start = end
 
             # reset number
             number = ""
+
+    # Merge coordinates if they are next to each other
+    coord = fixCoordinates(coord)
 
     return(coord)
 
@@ -39,8 +68,10 @@ def parseSam(f):
     '''
     try:
         fh = open(f)
+        outfile = f + '.mut.txt'
+        fhOut = open(outfile, "w")
     except:
-        sys.exit("cannot open file: " + f)
+        sys.exit("cannot open or write file: " + f)
 
     for line in fh:
         # Skip header
@@ -50,11 +81,26 @@ def parseSam(f):
         # Read alignment
         line = line.rstrip()
         line = line.split()
-        cigar = parseCigar(line[5])
+        try:
+            cigar = parseCigar(line[5])
+        except:
+            continue
+        acc = line[0]
         seq = line[9]
-        print(line[5], cigar, seq)
+        if len(cigar) > 1:
+            print("WARNING: multiple parts aligned:", acc, line[5], cigar, "\n", seq, "\n-----------------------------------------------------------------------")
         for (start, end) in cigar:
-            print("  " + seq[start:end])
+            subseq = seq[start:end]
+            countEqual = subseq.count("=")
+            countMut = len(subseq) - countEqual
+            try:
+                percMut = 100 * countMut / len(subseq)
+            except:
+                print("WARNING: aligned part has zero length:", acc, line[5], seq)
+                exit()
+            print(acc, line[5], start, end, countMut, percMut, len(subseq), subseq, file=fhOut)
+
+    print("Wrote", outfile, "to disk")
 
 
 if __name__ == '__main__':
