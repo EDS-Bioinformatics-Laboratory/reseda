@@ -24,22 +24,23 @@
 ### Output: <date>.<projectname>.overlap.plots.pdf
 
 # Input file
-clones.file1 = "/mnt/immunogenomics/RUNS/run14-20170307-miseq/results-tbcell/run-clones_subs-AB-RBF-IGH_HUMAN.csv"
-clones.file2 = "/mnt/immunogenomics/RUNS/run14-20170307-miseq/results-tbcell/run-clones_subs-AB-RBF-TRB_HUMAN.csv"
-clones.file3 = "/mnt/immunogenomics/RUNS/run14-20170307-miseq/results-tbcell/run-clones_subs-CEA-CEF-TRB_HUMAN.csv"
-pt.file = "/mnt/immunogenomics/MID-overview/20170307_RUN014_pt_table-tab.csv"
+clones.file1 = "/mnt/immunogenomics/RUNS/runXXX-20170522-MVG/results-tbcell/run-clones_subs-Marit-IGH_HUMAN.csv"
+clones.file2 = "/mnt/immunogenomics/RUNS/runXXX-20170522-MVG/results-tbcell/run-clones_subs-Marit-IGK_HUMAN.csv"
+clones.file3 = "/mnt/immunogenomics/RUNS/runXXX-20170522-MVG/results-tbcell/run-clones_subs-Marit-IGL_HUMAN.csv"
+pt.file = "/mnt/immunogenomics/MID-overview/20170522-runXXX-marit.csv"
 
 # Read clones file
 clones1 = read.csv(clones.file1, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 clones2 = read.csv(clones.file2, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 clones3 = read.csv(clones.file3, header=TRUE, sep="\t", stringsAsFactors=FALSE)
-pt.table = read.csv(pt.file, header=TRUE, sep=",", stringsAsFactors=FALSE)
+pt.table = read.csv(pt.file, header=TRUE, sep=",", skip=20, stringsAsFactors=FALSE)
+pt.table$pt = pt.table$Sample_Name
 
 #clones = clones1
-clones = rbind(clones2, clones3)
+clones = rbind(clones1,clones2, clones3)
 clones$SampleName=gsub("_S[0-9]+","",clones$Sample)
 clones = merge(clones,pt.table, by.x="SampleName", by.y="Sample_Name", all.x = TRUE)
-project = "run14-TRB_HUMAN"
+project = "Marit"
 
 # Add the ID2 column: PT [space] SAMPLE
 clones$ID2 = paste(clones$pt,clones$SampleName)
