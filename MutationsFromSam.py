@@ -72,7 +72,7 @@ def parseSam(f):
     except:
         sys.exit("cannot open or write file: " + f)
 
-    print("acc cigar start.pos end.pos mut.count mut.perc align.length align.seq", file=fhOut)
+    print("acc cigar start.pos end.pos mut.count mut.frac align.length align.seq", file=fhOut)
 
     for line in fh:
         # Skip header
@@ -95,7 +95,7 @@ def parseSam(f):
             countEqual = subseq.count("=")
             countMut = len(subseq) - countEqual
             try:
-                percMut = 100 * countMut / len(subseq)
+                percMut = countMut / len(subseq)
             except:
                 print("WARNING: aligned part has zero length:", acc, line[5], seq)
                 exit()

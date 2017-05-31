@@ -299,6 +299,10 @@ if __name__ == "__main__":
             for i in range(len(translations)):
                 (cdr3pep, aa_pos) = extractCDR3(cellType, str(translations[i]), p)
 
+                # Search for motif in the protein translation
+                for m_extra in p_extra.finditer(str(translations[i])):
+                    print(record.id, str(i), m_extra.group(0), m_extra.span(), file=fhExtra)
+
                 if cdr3pep is not None:
                     cdr3_found = True
 
@@ -346,10 +350,6 @@ if __name__ == "__main__":
                     else:                                 # Correct CDR3 peptide found without uncalled bases or stop codons
                         print("\t".join([record.id, str(i), str(cdr3pep), str(cdr3nuc), str(cdr3_qual_min), str(cdr3_qual_max), str(cdr3_qual_avg), cdr3_quality_scores]), file=fhOut)
                         print("\t".join([record.id, str(i), str(record.seq), str(translations[i]), quality_scores]), file=fhRaw)
-
-                        # Search for motif in the protein translation
-                        for m_extra in p_extra.finditer(str(translations[i])):
-                            print(record.id, str(i), m_extra.group(0), m_extra.span(), file=fhExtra)
 
                         count_stuff["4. Reads with CDR3"] = count_stuff.get("4. Reads with CDR3", 0) + 1
                         break
