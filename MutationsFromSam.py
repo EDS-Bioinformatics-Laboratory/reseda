@@ -26,7 +26,6 @@ def fixCoordinates(coord):
 def parseCigar(cigarstring):
     '''
     Description: split cigarstring and store in list of tuples [(number, letter)] and convert it to coordinates in sequence
-    To do: handle cases with indels
     '''
     c = list()
     coord = list()
@@ -64,7 +63,7 @@ def parseSam(f):
     '''
     Description: gets number of mutations in the aligned part of the query sequence
     In: name of sam file
-    Out: -
+    Out: name of file with mutations
     '''
     try:
         fh = open(f)
@@ -72,6 +71,8 @@ def parseSam(f):
         fhOut = open(outfile, "w")
     except:
         sys.exit("cannot open or write file: " + f)
+
+    print("acc cigar start.pos end.pos mut.count mut.perc align.length align.seq", file=fhOut)
 
     for line in fh:
         # Skip header
@@ -101,6 +102,7 @@ def parseSam(f):
             print(acc, line[5], start, end, countMut, percMut, len(subseq), subseq, file=fhOut)
 
     print("Wrote", outfile, "to disk")
+    return(outfile)
 
 
 if __name__ == '__main__':
