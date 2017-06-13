@@ -18,7 +18,7 @@ plotMutations<-function(directory, V.file, J.file){
   hist(d.J$mut.frac, breaks=20, col = "green", main=paste("Mutations/Length in J, n =",length(d.J[,1])))
   mtext(sample, side=3, outer=TRUE, line=-3)
   dev.off()
-  cat("Wrote", paste(sample, "-mutations.pdf", sep=""), "to disk")
+  cat("Wrote", paste(sample, "-mutations.pdf", sep=""), "to disk\n")
   
   return(list(d.V, d.J, sample))
 }
@@ -33,10 +33,11 @@ main<-function(directory, V.file, J.file, CDR3.file){
   d.CDR3 = read.csv(CDR3.file, header=T, sep="\t", stringsAsFactors = F)
   d.CDR3$VJCDR3 = paste(d.CDR3$V_sub, d.CDR3$J_sub, d.CDR3$cdr3pep, sep = "-")
   d.combined = merge(merge(d.CDR3, d.V, by="acc"), d.J, by="acc")
-
+  write.csv(d.combined, file=paste(sample, "-mutations-per-accession.csv", sep=""))
+  cat("Wrote", paste(sample,"-mutations-per-accession.csv",sep=""), "to disk\n")
+  
   # Summarize mutations per VJCDR3 clone
   clones = ddply(d.combined, .(VJCDR3), summarise, freq=length(acc), total.mut.count.V=sum(mut.count.x), avg.mut.frac.V=mean(mut.frac.x), total.mut.count.J=sum(mut.count.y), avg.mut.frac.J=mean(mut.frac.y))
-  #clones = clones[which(clones$freq>1),]            # REMOVE CLONES WITH FREQUENCY==1
   clones = clones[order(clones$freq, decreasing=T),]
   write.csv(clones,file=paste(sample,"-mutations-per-clone.csv",sep=""))
   cat("Wrote", paste(sample,"-mutations-per-clone.csv",sep=""), "to disk\n")
