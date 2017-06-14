@@ -1,4 +1,4 @@
-# WREP - Workflow for REPertoire sequencing
+# RESEDA - REpertoire SEquencing Data Analysis
 
 Data analysis workflow for T- and B-cell receptor repertoire sequencing.
 The workflow identifies clones and their frequency from next generation sequencing of repertoires and includes steps for quality control and bias correction.
@@ -47,6 +47,8 @@ Tip: divide the samples over multiple (virtual) machines and run everything in p
 
 The input files (in fastq format) can be specified by putting the paths in the file SAMPLES. At the top of execute-all.sh you see which other parameters have to be set.
 
+Example: ./execute-all.sh output-dir-on-webdav-server MIDS-miseq.txt human IGH IGH_HUMAN
+
 ## How to run - Using the job monitoring and submission tool
 
 ### Preparation ###
@@ -78,7 +80,7 @@ Barbera D. C. van Schaik, Paul L. Klarenbeek, Marieke E. Doorenspleet, Sabrina P
 
 ## License
 ```
-WREP - Workflow for REPertoire data analysis
+RESEDA - REpertoire SEquencing Data Analysis
 Copyright (C) 2016 Barbera DC van Schaik
 
 This program is free software: you can redistribute it and/or modify
