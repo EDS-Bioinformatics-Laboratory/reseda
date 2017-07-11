@@ -34,7 +34,7 @@ def parseCigar(cigarstring):
     end = 0
     for character in cigarstring:
         try:
-            x = int(character)
+            int(character)
             number += character
         except:
             number = int(number)
@@ -63,7 +63,7 @@ def parseSam(f):
     '''
     Description: gets number of mutations in the aligned part of the query sequence
     In: name of sam file
-    Out: name of file with mutations
+    Out: name of file with mutations (same directory, with extension .mut.txt)
     '''
     try:
         fh = open(f)
@@ -94,11 +94,12 @@ def parseSam(f):
             subseq = seq[start:end]
             countEqual = subseq.count("=")
             countMut = len(subseq) - countEqual
+            percMut = None
             try:
                 percMut = countMut / len(subseq)
             except:
                 print("WARNING: aligned part has zero length:", acc, line[5], seq)
-                exit()
+                # exit()
             print(acc, line[5], start, end, countMut, percMut, len(subseq), subseq, file=fhOut)
 
     print("Wrote", outfile, "to disk")

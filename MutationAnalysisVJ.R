@@ -44,7 +44,14 @@ main<-function(directory, V.file, J.file, CDR3.file){
   return(clones)
 }
 
-# Read data
+# Read data hotel-acpa
+directory = "/home/barbera/git/hotel-acpa/RESEDA/results-tbcell/"
+V.file= "ACPA_ALL_full_nt_seq_L001.assembled-nomatch-IGHV_human-e-clean.sam.mut.txt"
+J.file= "ACPA_ALL_full_nt_seq_L001.assembled-nomatch-IGHJ_human-e-clean.sam.mut.txt"
+CDR3.file = paste(directory, "ACPA_ALL_full_nt_seq_L001.assembled-nomatch-IGH_HUMAN-all_info.csv.rr.all_info.csv", sep="/")
+clones=main(directory, V.file, J.file, CDR3.file)
+
+# Read data Sabrina
 directory = "/mnt/immunogenomics/RUNS/run07-20160401-miseq/results-tbcell/raw/"
 V.file = "SP-Bsort06_S157_L001.assembled-ACGTACGT-IGHV_human-e-clean.sam.mut.txt" # Naive
 J.file = "SP-Bsort06_S157_L001.assembled-ACGTACGT-IGHJ_human-e-clean.sam.mut.txt"

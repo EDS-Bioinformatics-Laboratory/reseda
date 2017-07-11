@@ -43,7 +43,7 @@ ip=${ips[0]}
 
 thisdir=`pwd`
 
-function test {
+function runcmd {
     "$@"
     local status=$?
     if [ $status -ne 0 ]; then
@@ -64,7 +64,7 @@ function set_status {
     cd $thisdir
 }
 
-test ./log-versions.sh
+runcmd ./log-versions.sh
 
 set_status ${ip} "RUNNING" "Started ${mids} ${celltype} analysis on ${starttime}"
 
@@ -74,12 +74,12 @@ r1_samples=`grep R1_001 SAMPLES`
 ### Analysis on raw fastq files ###
 
 # FastQC
-test ./run-fastqc.sh ${samples}
+runcmd ./run-fastqc.sh ${samples}
 wait
 
 # Pairwise assembly
 set_status ${ip} "RUNNING" "${celltype} Pairwise assembly"
-test ./batch-pear.sh ${r1_samples}
+runcmd ./batch-pear.sh ${r1_samples}
 wait
 
 ### Continue with assembled fastq files ###
@@ -88,7 +88,7 @@ samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
 set_status ${ip} "RUNNING" "${celltype} Sorting sequences per MID"
-test python2 FastqSplitOnMid.py ${mids} split ${samples}
+runcmd python2 FastqSplitOnMid.py ${mids} split ${samples}
 wait
 
 ### Continue with the assembled, split per mid, fastq files ###
@@ -96,24 +96,28 @@ wait
 samples=`ls split/*.fastq.gz`
 
 # FastQC report
-test ./run-fastqc.sh ${samples}
+runcmd ./run-fastqc.sh ${samples}
 wait
 
-# Search for primers in the fastq files
-set_status ${ip} "RUNNING" "${celltype} Searching for primers"
-test python2 motif-search-batch.py ${samples}
-wait
+# # Search for primers in the fastq files
+# set_status ${ip} "RUNNING" "${celltype} Searching for primers"
+# runcmd python2 motif-search-batch.py ${samples}
+# wait
 
 # Extract the CDR3 sequence
 set_status ${ip} "RUNNING" "${celltype} Extracting CDR3's"
-test python2 TranslateAndExtractCdr3.py -c ${celltype} ${samples}
+runcmd python2 TranslateAndExtractCdr3.py -c ${celltype} ${samples}
 wait
 
 # Align sequences against IMGT and call SNPs
 set_status ${ip} "RUNNING" "${celltype} Aligning sequences"
 for ref in $refs; do
-    test ./batch-align.sh ${ref} ${samples}
+    runcmd ./batch-align.sh ${ref} ${samples}
 done
+wait
+
+set_status ${ip} "RUNNING" "Determine SNPs from the SAM files" # creates file: ${prefix}-${refprefix}-e-clean.sam.mut.txt
+runcmd python MutationsFromSam.py *-e-clean.sam
 wait
 
 ### Continue with the aligned sequences ###
@@ -151,28 +155,28 @@ for sample in ${samples}; do
     cloneSubsFile="final/${prefix}-${celltype}-clones-subs.csv"
     cloneMainsFile="final/${prefix}-${celltype}-clones-mains.csv"
     totalFile="final/${prefix}-${celltype}-productive.txt"
-    test python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
+    runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 
 done
 
 # Count lines of all_info.csv files
 set_status ${ip} "RUNNING" "${celltype} Select correct MIDs"
-test wc -l final/*all_info.csv > wc-${ip}.txt
+runcmd wc -l final/*all_info.csv > wc-${ip}.txt
 wait
-test python2 select-correct-mids.py wc-${ip}.txt > mv-samples-with-correct-mid.sh
+runcmd python2 select-correct-mids.py wc-${ip}.txt > mv-samples-with-correct-mid.sh
 wait
 mkdir final/correct-mid
 wait
 cd final
-test bash ../mv-samples-with-correct-mid.sh
+runcmd bash ../mv-samples-with-correct-mid.sh
 wait
 mv correct-mid/*-productive.txt .
 cd ..
 
 # Correct V gene assignments
 set_status ${ip} "RUNNING" "${celltype} Re-assign V genes"
-test python2 re-assign-v-genes.py final/correct-mid/*-all_info.csv
+runcmd python2 re-assign-v-genes.py final/correct-mid/*-all_info.csv
 wait
 # Move files to final
 mv *.rr.* final/correct-mid
@@ -190,18 +194,18 @@ wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${celltype} data to Beehub"
-#test curl -T run-clones_subs-${ip}.csv --netrc ${beehub_web}/${resultsdir}/
-test ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
-test ./copy-to-beehub-raw.sh ${beehub_web}/${resultsdir}/raw/
-test ./copy-to-beehub-hla.sh ${beehub_web}/${resultsdir}/hla/
+#runcmd curl -T run-clones_subs-${ip}.csv --netrc ${beehub_web}/${resultsdir}/
+runcmd ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
+runcmd ./copy-to-beehub-raw.sh ${beehub_web}/${resultsdir}/raw/
+runcmd ./copy-to-beehub-hla.sh ${beehub_web}/${resultsdir}/hla/
 cd split
-test ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
-test ./copy-to-beehub-raw.sh ${beehub_web}/${resultsdir}/raw/
+runcmd ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
+runcmd ./copy-to-beehub-raw.sh ${beehub_web}/${resultsdir}/raw/
 cd ../final
-test ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
-test ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/
+runcmd ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
+runcmd ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/
 cd correct-mid
-test ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/correct-mid/
+runcmd ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/correct-mid/
 cd ../..
 
 wait
