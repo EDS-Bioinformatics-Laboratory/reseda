@@ -68,8 +68,15 @@ runcmd ./log-versions.sh
 
 set_status ${ip} "RUNNING" "Started ${mids} ${celltype} analysis on ${starttime}"
 
-samples=`cat SAMPLES`  # get all arguments
-r1_samples=`grep R1_001 SAMPLES`
+# Remote files:
+runcmd ./copy-from-beehub.sh
+wait
+# # Local files:
+# cp SAMPLES LOCAL_SAMPLES
+# wait
+
+samples=`cat LOCAL_SAMPLES`  # get all arguments
+r1_samples=`grep R1_001 LOCAL_SAMPLES`
 
 ### Analysis on raw fastq files ###
 
