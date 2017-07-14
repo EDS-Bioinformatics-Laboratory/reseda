@@ -53,7 +53,7 @@ Example: ./execute-all.sh output-dir-on-webdav-server MIDS-miseq.txt human IGH I
 
 ### Preparation ###
 * Mount basespace. Instructions are in basespace.txt
-* Specify the basespace directories in copy-basespace-data-to-beehub.py and run: python copy-basespace-data-to-beehub.py > basespace-copy-data.py
+* Specify the basespace directories in copy-basespace-data-to-beehub.py and run: python copy-basespace-data-to-beehub.py > basespace-copy-data.sh
 * Verify if all data has been copied with VerifyBasespaceCopy.py
 * Convert the MiSeq sample sheet with MetaData.py (creates a json file)
 * Mount the beehub webdav server
