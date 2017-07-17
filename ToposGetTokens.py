@@ -70,7 +70,10 @@ def cleanUp():
     myfiles = os.listdir(".")
     for myfile in myfiles:
         if "L001" in myfile:
-            os.remove(myfile)
+            if os.path.isfile(myfile):
+                os.remove(myfile)
+            else:
+                shutil.rmtree(myfile, ignore_errors=True)
 
     myfiles = os.listdir("./split")
     for myfile in myfiles:
