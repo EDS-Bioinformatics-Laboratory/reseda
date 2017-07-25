@@ -22,11 +22,11 @@ if(length(args)==0){
 
 library(plyr)
 
-# indir="/mnt/beehub/hotel-acpa/hotel/results-tbcell/raw"
-# outdir="/home/narya/Werk/hotel-acpa"
-# V.file="ACPA_ALL_full_nt_seq_L001.assembled-nomatch-IGHV_human-e-clean.sam.mut.txt"
-# J.file="ACPA_ALL_full_nt_seq_L001.assembled-nomatch-IGHJ_human-e-clean.sam.mut.txt"
-# CDR3.file="/mnt/beehub/hotel-acpa/hotel/results-tbcell/final/correct-mid/ACPA_ALL_full_nt_seq_L001.assembled-nomatch-IGH_HUMAN-all_info.csv"
+indir="/mnt/beehub/hotel-acpa/hotel/results-tbcell/raw"
+outdir="/home/barbera/git/hotel-acpa"
+V.file="ACPA_ALL_full_nt_seq_L001.assembled-nomatch-IGHV_human-e-clean.sam.mut.txt"
+J.file="ACPA_ALL_full_nt_seq_L001.assembled-nomatch-IGHJ_human-e-clean.sam.mut.txt"
+CDR3.file="/mnt/beehub/hotel-acpa/hotel/results-tbcell/final/correct-mid/ACPA_ALL_full_nt_seq_L001.assembled-nomatch-IGH_HUMAN-all_info.csv"
 
 plotMutations<-function(indir, outdir, V.file, J.file){
   sample = gsub("(^.+)_L001.*", "\\1", V.file)

@@ -4,8 +4,8 @@ import os
 import json
 
 if __name__ == '__main__':
-    jsonFile = "20170522-runXXX-marit.json"
-    mountdir = "/mnt/immunogenomics/RUNS/runXXX-20170522-MVG/data/"
+    jsonFile = "20170711_MiSeqRUN014_Datasheet_correctedV.json"
+    mountdir = "/mnt/immunogenomics/RUNS/run14-20170307-miseq/data/"
 
     # Read json with parsed sample sheet info (made with MetaData.py)
     try:
@@ -28,11 +28,17 @@ if __name__ == '__main__':
     # Read directory with file paths to the fastq files
     fhs = dict()
     for f in os.listdir(mountdir):
+        if "fastq.gz" not in f:
+            continue
         sample_name_nr = f.split("_L001")
         c = sample_name_nr[0].split("_")
         sample_nr = c.pop(-1)   # last part is the sample number
         sample_name = "_".join(c)  # rest is sample name
-        inx = index_samples[sample_name]   # gives an error when sample is not in sample sheet
+        try:
+            inx = index_samples[sample_name]   # gives an error when sample is not in sample sheet
+        except:
+            print("ERROR:", sample_name, "is not in sample sheet")
+            continue
 
         # Add the sample number to the json object
         js["Samples"][inx]["Sample_Nr"] = sample_nr

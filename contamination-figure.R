@@ -24,23 +24,30 @@
 ### Output: <date>.<projectname>.overlap.plots.pdf
 
 # Input file
-clones.file1 = "/mnt/immunogenomics/RUNS/runXXX-20170522-MVG/results-tbcell/run-clones_subs-Marit-IGH_HUMAN.csv"
-clones.file2 = "/mnt/immunogenomics/RUNS/runXXX-20170522-MVG/results-tbcell/run-clones_subs-Marit-IGK_HUMAN.csv"
-clones.file3 = "/mnt/immunogenomics/RUNS/runXXX-20170522-MVG/results-tbcell/run-clones_subs-Marit-IGL_HUMAN.csv"
-pt.file = "/mnt/immunogenomics/MID-overview/20170522-runXXX-marit.csv"
+#clones.file1="run-clones_subs-ABI-MS-IGH_HUMAN.csv"
+#clones.file2="run-clones_subs-ABI-RTX-IGH_HUMAN.csv"
+#clones.file3="run-clones_subs-Cordblood-IGH_HUMAN.csv"
+clones.file1="run-clones_subs-ABI-MS-TRB_HUMAN.csv"
+clones.file2="run-clones_subs-ABI-RTX-TRB_HUMAN.csv"
+clones.file3="run-clones_subs-CEA-Ada-TRB_HUMAN.csv"
+clones.file4="run-clones_subs-CEA-CEF-TRB_HUMAN.csv"
+clones.file5="run-clones_subs-Inserm-TRB_HUMAN.csv"
+pt.file = "20170709_RUN015_pt.table.csv"
 
 # Read clones file
 clones1 = read.csv(clones.file1, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 clones2 = read.csv(clones.file2, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 clones3 = read.csv(clones.file3, header=TRUE, sep="\t", stringsAsFactors=FALSE)
-pt.table = read.csv(pt.file, header=TRUE, sep=",", skip=20, stringsAsFactors=FALSE)
-pt.table$pt = pt.table$Sample_Name
+clones4 = read.csv(clones.file4, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+clones5 = read.csv(clones.file5, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+pt.table = read.csv(pt.file, header=TRUE, sep=";", stringsAsFactors=FALSE)
+pt.table$pt = pt.table$Patient
 
 #clones = clones1
-clones = rbind(clones1,clones2, clones3)
+clones = rbind(clones1,clones2, clones3, clones4, clones5)
 clones$SampleName=gsub("_S[0-9]+","",clones$Sample)
-clones = merge(clones,pt.table, by.x="SampleName", by.y="Sample_Name", all.x = TRUE)
-project = "Marit"
+clones = merge(clones,pt.table, by.x="SampleName", by.y="Sample.name", all.x = TRUE)
+project = "run15-TRB"
 
 # Add the ID2 column: PT [space] SAMPLE
 clones$ID2 = paste(clones$pt,clones$SampleName)

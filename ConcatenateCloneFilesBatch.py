@@ -32,8 +32,8 @@ def lookupChain(chain):
 
 
 if __name__ == '__main__':
-    mydir = "/mnt/immunogenomics/RUNS/run14-20170307-miseq/results-tbcell/final/correct-mid/"
-    runinfo = "20170307_RUN014_pt_table-new.json"
+    mydir = "/mnt/immunogenomics/RUNS/run15-20170711-miseq/results-tbcell/final/correct-mid/"
+    runinfo = "20170709_RUN015_Datasheet_finalV-new.json"
 
     # Read json file
     try:
