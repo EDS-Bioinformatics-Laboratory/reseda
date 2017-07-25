@@ -22,6 +22,7 @@ mkdir tmp
 
 echo "### align sequences with bwasw ###"
 ./bwa-0.7.12/bwa mem ${ref} ${mydir}/${prefix}.fastq.gz > ${prefix}-${refprefix}.sam
+# ./bwa-0.7.12/bwa mem -B 1 -T 20 ${ref} ${mydir}/${prefix}.fastq.gz > ${prefix}-${refprefix}.sam  # keep alignments with lower score
 wait
 
 echo "### replace nucleotides that are identical with = ###"
