@@ -13,6 +13,7 @@ mids=$2
 organism=$3
 cell=$4
 celltype=$5
+protocol=$6
 
 # Or configure settings here:
 # run="runNN-00-08-20160722-human-BCRh"
@@ -20,6 +21,7 @@ celltype=$5
 # organism="human"
 # cell="IGH"
 # celltype="${cell}_HUMAN"
+# protocol="paired"          # "paired" or "single" end (default: paired)
 
 # Reference sequences
 refs="${cell}V_${organism}.fasta ${cell}J_${organism}.fasta"
@@ -42,6 +44,11 @@ ips=($ip_address)
 ip=${ips[0]}
 
 thisdir=`pwd`
+
+# Paired-end sequences are the default
+if [ ${protocol} -ne "single" ]; then
+    protocol="paired"
+fi
 
 function runcmd {
     "$@"
@@ -79,19 +86,20 @@ samples=`cat LOCAL_SAMPLES`  # get all arguments
 r1_samples=`grep R1_001 LOCAL_SAMPLES`
 
 ### Analysis on raw fastq files ###
+if [[ ${protocol} -eq "paired" ]]; then
+    # FastQC
+    runcmd ./run-fastqc.sh ${samples}
+    wait
 
-# FastQC
-runcmd ./run-fastqc.sh ${samples}
-wait
+    # Pairwise assembly
+    set_status ${ip} "RUNNING" "${celltype} Pairwise assembly"
+    runcmd ./batch-pear.sh ${r1_samples}
+    wait
 
-# Pairwise assembly
-set_status ${ip} "RUNNING" "${celltype} Pairwise assembly"
-runcmd ./batch-pear.sh ${r1_samples}
-wait
+    samples=`ls *.assembled.fastq.gz`
+fi
 
 ### Continue with assembled fastq files ###
-
-samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
 set_status ${ip} "RUNNING" "${celltype} Sorting sequences per MID"
