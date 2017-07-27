@@ -53,7 +53,7 @@ Example: ./execute-all.sh output-dir-on-webdav-server MIDS-miseq.txt human IGH I
 
 ### Preparation ###
 * Mount basespace. Instructions are in basespace.txt
-* Specify the basespace directories in copy-basespace-data-to-beehub.py and run: python copy-basespace-data-to-beehub.py > basespace-copy-data.py
+* Specify the basespace directories in copy-basespace-data-to-beehub.py and run: python copy-basespace-data-to-beehub.py > basespace-copy-data.sh
 * Verify if all data has been copied with VerifyBasespaceCopy.py
 * Convert the MiSeq sample sheet with MetaData.py (creates a json file)
 * Mount the beehub webdav server
@@ -73,6 +73,12 @@ Example: ./execute-all.sh output-dir-on-webdav-server MIDS-miseq.txt human IGH I
 * In the jobs the data is automatically transferred to the beehub webdav server
 * Specify the mounted directory and sample.json file in ConcatenateCloneFilesBatch.py and run it to concatenate the clone files per project+organism+cell_type
 * Specify the mounted directory in report-ALL.sh and run it to generate reports about the sequence run
+* Check for contamination with contamination-figure.R
+    * Specify the files that were created by ConcatenateCloneFilesBatch.py
+    * Specify the pt.table.csv that you got from the immunogenomics group
+    * Check by hand if the column names in the pt.table are correct
+    * Run the script
+    * Usually I make reports for all samples per project+cell_type and one report for all the samples in a run
 
 ## How to cite
 
