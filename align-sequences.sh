@@ -4,6 +4,7 @@ ref=$1    # hla_nuc.fasta
 #fasta=$2  # sequences.fna
 #qual=$3   # sequences.qual
 fastq=$2  # sequences.fastq
+bwa_param=$3  # optional, e.g.: "-T 20 -B 0"   (don't forget the quotes)
 
 #prefix=`basename ${fasta} .fasta`
 mydir=`dirname ${fastq}`
@@ -21,7 +22,7 @@ refprefix=`basename ${ref} .fasta`
 mkdir tmp
 
 echo "### align sequences with bwasw ###"
-./bwa-0.7.12/bwa mem ${ref} ${mydir}/${prefix}.fastq.gz > ${prefix}-${refprefix}.sam
+./bwa-0.7.12/bwa mem ${ref} ${mydir}/${prefix}.fastq.gz ${bwa_param} > ${prefix}-${refprefix}.sam
 # ./bwa-0.7.12/bwa mem -B 1 -T 20 ${ref} ${mydir}/${prefix}.fastq.gz > ${prefix}-${refprefix}.sam  # keep alignments with lower score
 wait
 
