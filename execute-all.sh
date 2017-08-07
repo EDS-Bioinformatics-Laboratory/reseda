@@ -197,6 +197,16 @@ wait
 mv *.rr.* final/correct-mid
 wait
 
+# Do mutation analysis if reference is IGH_HUMAN
+if [[ ${celltype} -eq "IGH_HUMAN" ]]; then
+    set_status ${ip} "RUNNING" "${celltype} Mutation analysis"
+    samples=`ls final/correct-mid/*-IGH_HUMAN-all_info.csv.rr.all_info.csv`
+    for sample in ${samples}; do
+        prefix=`basename ${sample} -IGH_HUMAN-all_info.csv.rr.all_info.csv`
+        runcmd Rscript MutationAnalysisVJ.R indir=\'.\' outdir=\'final/correct-mid\' V.file=\'${prefix}-IGHV_human-e-clean.sam.mut.txt\' J.file=\'${prefix}-IGHJ_human-e-clean.sam.mut.txt\' CDR3.file=\'final/correct-mid/${prefix}-IGH_HUMAN-all_info.csv.rr.all_info.csv\'
+    done
+fi
+
 # Make output directories
 mkdir ${beehub_mount}
 mkdir ${beehub_mount}/${resultsdir}
