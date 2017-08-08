@@ -29,7 +29,7 @@ library(plyr)
 plotMutations<-function(indir, outdir, V.file, J.file){
   sample = gsub("(^.+)_L001.*", "\\1", V.file)
   fileparts = strsplit(V.file, "-")
-  mid = fileparts[[1]][2]
+  mid = fileparts[[1]][length(fileparts[[1]])-3]
   sample = paste(sample, mid, sep="-")
   d.V = read.csv(paste(indir,V.file,sep="/"), header=T, sep=" ", stringsAsFactors = F)
   d.J = read.csv(paste(indir,J.file,sep="/"), header=T, sep=" ", stringsAsFactors = F)
