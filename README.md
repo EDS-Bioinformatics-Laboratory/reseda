@@ -49,7 +49,7 @@ The input files (in fastq format) can be specified by putting the paths in the f
 
 Example: ./execute-all.sh output-dir-on-webdav-server MIDS-miseq.txt human IGH IGH_HUMAN
 
-## How to run - Using the job monitoring and submission tool
+## How to run - Using Topos for sending jobs and a job monitor tool
 
 ### Preparation ###
 * Mount basespace. Instructions are in basespace.txt

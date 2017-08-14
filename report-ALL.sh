@@ -1,7 +1,7 @@
 #!/bin/bash
 
-run="run15-20170711-miseq"
-runinfo="20170709_RUN015_Datasheet_finalV-new.json"
+run="run16-20170808-miseq"
+runinfo="20170804_RUN16_Datasheet-new.json"
 resultsdir="results-tbcell"
 
 files="/mnt/immunogenomics/RUNS/${run}/${resultsdir}/reports/*.log"
