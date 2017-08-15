@@ -58,6 +58,7 @@ Example: ./execute-all.sh output-dir-on-webdav-server MIDS-miseq.txt human IGH I
 * Convert the MiSeq sample sheet with MetaData.py (creates a json file)
 * Mount the beehub webdav server
 * Add extra information to the json file with MakeSamplesFiles.py (this will also make the SAMPLE-* files)
+* Sort the SAMPLE-* files
 * Make manageable jobs by splitting the SAMPLE-* files, e.g.: split -l 20 SAMPLES-run13-human-BCRh SAMPLES-run13-human-BCRh-
 * Check manually if the nr of lines in the SAMPLE-* files (the total divided by 2) is equal to the nr of samples in the sample sheet
 * Create Topos jobs with ToposCreateTokens.py
