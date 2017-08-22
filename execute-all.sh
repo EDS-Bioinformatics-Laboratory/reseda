@@ -211,6 +211,7 @@ fi
 mkdir ${beehub_mount}
 mkdir ${beehub_mount}/${resultsdir}
 mkdir ${beehub_mount}/${resultsdir}/raw
+mkdir ${beehub_mount}/${resultsdir}/raw/correct-mid
 mkdir ${beehub_mount}/${resultsdir}/reports
 mkdir ${beehub_mount}/${resultsdir}/final
 mkdir ${beehub_mount}/${resultsdir}/final/correct-mid
@@ -231,6 +232,7 @@ runcmd ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
 runcmd ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/
 cd correct-mid
 runcmd ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/correct-mid/
+runcmd ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/raw/correct-mid/
 cd ../..
 
 wait
