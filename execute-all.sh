@@ -231,7 +231,7 @@ runcmd ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
 runcmd ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/
 cd correct-mid
 runcmd ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/correct-mid/
-runcmd ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/raw/correct-mid/
+runcmd ./copy-to-beehub-raw.sh ${beehub_web}/${resultsdir}/raw/correct-mid/
 cd ../..
 
 wait
