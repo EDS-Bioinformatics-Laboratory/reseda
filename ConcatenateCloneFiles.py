@@ -75,9 +75,9 @@ if __name__ == '__main__':
     # Open file for writing
     try:
         if ".rr." in myfiles[0]:
-            fhOut = open("run-clones_subs-" + project_name + "-" + chain_specie + "-after-reassignment.csv", "w")
+            fhOut = open("cdr3-clones-" + project_name + "-" + chain_specie + "-after-reassignment.csv", "w")
         else:
-            fhOut = open("run-clones_subs-" + project_name + "-" + chain_specie + ".csv", "w")
+            fhOut = open("cdr3-clones-" + project_name + "-" + chain_specie + ".csv", "w")
     except:
         sys.exit("cannot write to file")
 
