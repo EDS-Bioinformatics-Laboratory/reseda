@@ -32,8 +32,8 @@ def lookupChain(chain):
 
 
 if __name__ == '__main__':
-    mydir = "/mnt/immunogenomics/RUNS/run16-20170808-miseq/results-tbcell/final/correct-mid/"
-    runinfo = "20170804_RUN16_Datasheet-new.json"
+    mydir = "/mnt/immunogenomics/RUNS/run17-20170821-miseq/results-tbcell/final/correct-mid/"
+    runinfo = "20170821-RUN17-datasheet-new.json"
 
     # Read json file
     try:
@@ -55,7 +55,5 @@ if __name__ == '__main__':
     for project, chains_species in projects.items():
         chains_species = list(set(chains_species))
         for chain_specie in chains_species:
-            # cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + mydir + "*" + chain_specie + "*-clones-subs.csv"
-            # executeCmd(cmd)
             cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv"
             executeCmd(cmd)
