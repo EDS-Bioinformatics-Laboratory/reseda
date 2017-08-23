@@ -21,7 +21,7 @@
 ### Input: clones.csv file
 ### Requirements: clones$ID2 should contain:  PT [space] SAMPLE (patient sample-of-patient)
 ###               clones$VJCDR3 contains the clone name, e.g.: V-J-CDR3
-### Output: <date>.<projectname>.overlap.plots.pdf
+### Output: <date>.<projectname>.contamination.plots.pdf
 
 # Input file
 #clones.file1="run-clones_subs-ABI-MS-IGH_HUMAN.csv"
@@ -64,7 +64,7 @@ clones$VJCDR3 = clones$cdr3pep
 ########## MAIN ############
 
 ########## make name
-name=paste(Sys.Date(),project,'overlap.plots','pdf',sep='.')
+name=paste(Sys.Date(),project,'contamination.plots','pdf',sep='.')
 
 ########## start pdf
 pdf(name)

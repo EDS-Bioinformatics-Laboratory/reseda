@@ -4,7 +4,7 @@
 # Example URL: myurl="https://beehub.nl/amc-immunogenomics/RUNS/run246/results-tbcell/"
 myurl=$1; shift
 
-myfiles="*.rr.* *mutations*"
+myfiles="*-all_info.csv *-clones-subs.csv"
 filelist=`echo $myfiles | perl -ne "@c=split(/\s/); print join(',', @c);"`
 
 starttime=`date +%s`

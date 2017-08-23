@@ -55,7 +55,5 @@ if __name__ == '__main__':
     for project, chains_species in projects.items():
         chains_species = list(set(chains_species))
         for chain_specie in chains_species:
-            #cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + mydir + "*" + chain_specie + "*-clones-subs.csv"
-            #executeCmd(cmd)
             cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv"
             executeCmd(cmd)

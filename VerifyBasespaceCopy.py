@@ -2,7 +2,7 @@ from __future__ import print_function
 import os
 
 if __name__ == '__main__':
-    mnt_dir = "/mnt/immunogenomics/RUNS/run16-20170808-miseq/data"
+    mnt_dir = "/mnt/immunogenomics/RUNS/run17-20170821-miseq/data"
     files = os.listdir(mnt_dir)
 
     check = dict()

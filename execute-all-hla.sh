@@ -134,7 +134,6 @@ wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${celltype} data to Beehub"
-test curl -T run-clones_subs-${ip}.csv --netrc ${beehub_web}/${resultsdir}/
 test ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
 test ./copy-to-beehub-raw.sh ${beehub_web}/${resultsdir}/raw/
 test ./copy-to-beehub-hla.sh ${beehub_web}/${resultsdir}/hla/
