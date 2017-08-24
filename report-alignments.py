@@ -20,7 +20,8 @@ def countAlignments(sam):
         if line.startswith("@"):  # skip sam header
             continue
         line = line.split("\t")
-        accs[line[0]] = accs.get(line[0], 0) + 1
+        if line[1] == "16":       # check if alignment flag is 16 (SEQ being reverse complemented)
+            accs[line[0]] = accs.get(line[0], 0) + 1
 
     count = len(accs)
     return(count)
