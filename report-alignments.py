@@ -20,7 +20,7 @@ def countAlignments(sam):
         if line.startswith("@"):  # skip sam header
             continue
         line = line.split("\t")
-        if line[1] == "16":       # check if alignment flag is 16 (SEQ being reverse complemented)
+        if line[1] != "4":       # check if alignment flag is NOT 4 (unmapped)
             accs[line[0]] = accs.get(line[0], 0) + 1
 
     count = len(accs)
