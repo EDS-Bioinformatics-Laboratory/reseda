@@ -41,8 +41,16 @@ plotMutations<-function(indir, outdir, V.file, J.file){
   # Plot
   pdf(paste(outdir, paste(sample, "-mutations.pdf", sep=""), sep="/"), width = 10, height = 10)
   par(mfrow=c(2,2))
-  hist(d.V$mut.count, breaks=max(d.V$mut.count), col = "blue", main=paste("Mutations in V (count), n =",length(d.V[,1])))
-  hist(d.J$mut.count, breaks=max(d.J$mut.count), col = "green", main=paste("Mutations in J (count), n =",length(d.J[,1])))
+  nr.breaks.V=max(d.V$mut.count)
+  nr.breaks.J=max(d.J$mut.count)
+  if (nr.breaks.V < 1){
+      nr.breaks.V=10
+  }
+  if (nr.breaks.J < 1){
+      nr.breaks.J=10
+  }
+  hist(d.V$mut.count, breaks=nr.breaks.V, col = "blue", main=paste("Mutations in V (count), n =",length(d.V[,1])))
+  hist(d.J$mut.count, breaks=nr.breaks.J, col = "green", main=paste("Mutations in J (count), n =",length(d.J[,1])))
   hist(d.V$mut.frac, breaks=20, col = "blue", main=paste("Mutations/Length in V, n =",length(d.V[,1])))
   hist(d.J$mut.frac, breaks=20, col = "green", main=paste("Mutations/Length in J, n =",length(d.J[,1])))
   mtext(sample, side=3, outer=TRUE, line=-3)
