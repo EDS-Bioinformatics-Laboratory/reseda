@@ -29,5 +29,5 @@ if __name__ == '__main__':
         except:
             continue
         if mid == get_mid:    # if mid is the correct mid, then print the path
-            print("mv", file_path, dirname + "/fastq-correct-mid/")
+            print("mv -v", file_path, dirname + "/fastqc-correct-mid/")
     fh.close()
