@@ -161,6 +161,34 @@ def getMotifs(cellType, mismatches):
     return(combinedMotifs)
 
 
+def getAlternativeVmotifs(cellType, mismatches):
+    '''
+    Description: retrieve V motifs and add a wildcard to it (10 times .)
+    In: string cellType, int mismatches (usually 0 or 1)
+    Out: string combinedMotifs (a regular expression)
+    '''
+
+    if mismatches == 0 and type(mismatches) == type(10):
+        mismatches = ""
+    elif mismatches > 0 and type(mismatches) == type(10):
+        mismatches = "{e<=" + str(mismatches) + "}"
+    else:
+        raise TypeError('wrong input for mismatches')
+
+    motifsV = getVmotifs(cellType)
+
+    motifs = list()
+    for v in motifsV:
+        if v == "":  # skip empty values
+            continue
+
+        motifs.append(v + ".{13}")
+
+    combinedMotifs = ".+(" + "|".join(motifs) + ")" + mismatches
+
+    return(combinedMotifs)
+
+
 def getImgtMotifs():
     '''
     Description: Return regular expression for Cys-Phe/Trp motif or Cys-Val
@@ -228,9 +256,11 @@ if __name__ == "__main__":
 
     # Get all the motifs to search for V .* J, define mismatches (usually 0 or 1)
     motif = getMotifs(cellType, args.mismatches)
-
-    # Transform motif to regular expressions
     p = regex.compile(motif, regex.BESTMATCH)
+
+    # Alternative motif: search for V motif plus 10 amino acids
+    motifAltV = getAlternativeVmotifs(cellType, args.mismatches)
+    p_alt_v = regex.compile(motifAltV, regex.BESTMATCH)
 
     # Check for an extra motif Asn-X-Ser/Thr (X is not Proline)
     p_extra = regex.compile("N[^P][ST]")
@@ -242,6 +272,7 @@ if __name__ == "__main__":
     # Open fastq file(s) and search for patterns
     for inFile in args.fastq_files:
         outFile = inFile + "-" + cellType + "-CDR3.csv"
+        altVFile = inFile + "-" + cellType + "-alt-V-CDR3.csv"
         extraFile = inFile + "-" + cellType + "-extra.txt"
         rawFile = inFile + "-" + cellType + ".csv"
         repFile = inFile + "-" + cellType + "-report.txt"
@@ -280,6 +311,10 @@ if __name__ == "__main__":
             fhExtra = open(extraFile, "w")
         except:
             sys.exit("cannot write to file:" + extraFile)
+        try:
+            fhAltV = open(altVFile, "w")
+        except:
+            sys.exit("cannot write to file:" + altVFile)
 
         # Container to count stuff
         count_stuff = dict()
@@ -355,6 +390,15 @@ if __name__ == "__main__":
                         break
 
             if cdr3_found is False:
+                # Make an alternative clones file
+                for i in range(len(translations)):
+                    (cdr3pep, aa_pos) = extractCDR3(cellType, str(translations[i]), p_alt_v)
+                    if cdr3pep is not None:
+                        cdr3_found = True
+                        print("\t".join([record.id, str(i), str(record.seq), str(cdr3pep)]), file=fhAltV)
+
+            if cdr3_found is False:
+                # Still nothing found
                 print("\t".join([record.id, str(i), str(record.seq), str(translations)]), file=fhNoCdr3)
 
         # Make report
@@ -373,3 +417,4 @@ if __name__ == "__main__":
         fhUncalled.close()
         fhNoCdr3.close()
         fhExtra.close()
+        fhAltV.close()
