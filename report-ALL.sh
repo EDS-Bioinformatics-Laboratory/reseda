@@ -15,6 +15,10 @@ echo "Wrote report-MIDs.txt"
 files="/mnt/immunogenomics/RUNS/${run}/${resultsdir}/reports/*HUMAN-report.txt /mnt/immunogenomics/RUNS/${run}/${resultsdir}/reports/*MOUSE-report.txt"
 grep '^4' $files > report-CDR3.txt
 echo "Wrote report-CDR3.txt"
+grep '^5' $files > report-ALT-V.txt
+echo "Wrote report-ALT-V.txt"
+grep '^6' $files > report-ALT-J.txt
+echo "Wrote report-ALT-J.txt"
 
 files="/mnt/immunogenomics/RUNS/${run}/${resultsdir}/reports/*-productive.txt"
 grep 'Unique reads with V and J in all_info' $files > report-PRODUCTIVE.txt
