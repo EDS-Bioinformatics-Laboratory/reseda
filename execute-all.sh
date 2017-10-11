@@ -101,6 +101,14 @@ fi
 
 ### Continue with assembled fastq files ###
 
+# # Split on sequence length
+# set_status ${ip} "RUNNING" "${celltype} Split sequences on length"
+# runcmd python2 FastqSplitOnSequenceLength.py -l 270 ${samples}
+# wait
+#
+# # New sample list
+# samples=`cat SAMPLES_long`
+
 # Split on MID
 set_status ${ip} "RUNNING" "${celltype} Sorting sequences per MID"
 runcmd python2 FastqSplitOnMid.py ${mids} split ${samples}

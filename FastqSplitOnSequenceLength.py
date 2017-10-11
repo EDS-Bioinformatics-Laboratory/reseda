@@ -17,8 +17,13 @@ def splitFastq(f, seq_length):
     except:
         sys.exit("cannot open file:" + f)
 
-    fastq_short = f.replace(".fastq.gz", ".short." + str(seq_length) + ".fastq.gz")
-    fastq_long = f.replace(".fastq.gz", ".long." + str(seq_length) + ".fastq.gz")
+    if f.endswith("_L001.assembled.fastq.gz"):
+        fastq_short = f.replace("_L001.assembled.fastq.gz", ".short" + str(seq_length) + "_L001.assembled.fastq.gz")
+        fastq_long = f.replace("_L001.assembled.fastq.gz", ".long" + str(seq_length) + "_L001.assembled.fastq.gz")
+    else:
+        fastq_short = f.replace(".fastq.gz", ".short" + str(seq_length) + ".fastq.gz")
+        fastq_long = f.replace(".fastq.gz", ".long" + str(seq_length) + ".fastq.gz")
+
     try:
         fh_short = gzip.open(fastq_short, "w")
         fh_long = gzip.open(fastq_long, "w")
@@ -42,7 +47,7 @@ def splitFastq(f, seq_length):
     fh_long.close()
     print("Wrote", fastq_short, "to disk")
     print("Wrote", fastq_long, "to disk")
-    return(count_short, count_long, count_total)
+    return(fastq_short, fastq_long, count_short, count_long, count_total)
 
 
 if __name__ == '__main__':
@@ -53,11 +58,20 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     fh_report = open("report-SEQLENGTH.txt", "w")
+    fh_samples_short = open("SAMPLES_short", "w")
+    fh_samples_long = open("SAMPLES_long", "w")
+
     print("File Total Short Long Perc_short Perc_long Threshold", file=fh_report)
     for fastq_file in args.fastq_files:
-        (count_short, count_long, count_total) = splitFastq(fastq_file, args.length)
+        (fastq_short, fastq_long, count_short, count_long, count_total) = splitFastq(fastq_file, args.length)
+        print(fastq_short, file=fh_samples_short)
+        print(fastq_long, file=fh_samples_long)
         perc_short = 100 * count_short / float(count_total)
         perc_long = 100 * count_long / float(count_total)
         print(fastq_file, count_total, count_short, count_long, perc_short, perc_long, args.length, file=fh_report)
     fh_report.close()
+    fh_samples_long.close()
+    fh_samples_short.close()
     print("Wrote report-SEQLENGTH.txt to disk")
+    print("Wrote SAMPLES_short to disk")
+    print("Wrote SAMPLES_long to disk")
