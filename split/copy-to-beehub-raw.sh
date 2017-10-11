@@ -5,7 +5,7 @@
 myurl=$1; shift
 
 #myfiles="runmetrics* *.sff"
-myfiles="*.fastq.gz *_fastqc.zip"
+myfiles="*.fastq.gz *_fastqc.zip *-alt-V-CDR3.csv *-alt-J-CDR3.csv"
 filelist=`echo $myfiles | perl -ne "@c=split(/\s/); print join(',', @c);"`
 
 starttime=`date +%s`
