@@ -420,7 +420,7 @@ if __name__ == "__main__":
                         count_stuff["3. Discarded reads uncalled bases in CDR3"] = count_stuff.get("3. Discarded reads uncalled bases in CDR3", 0) + 1
                         print("\t".join([record.id, str(i), str(record.seq), str(translations[i]), quality_scores]), file=fhUncalled)
                     else:                                 # Correct CDR3 peptide found without uncalled bases or stop codons
-                        print("\t".join([record.id, str(i), str(cdr3pep), str(cdr3nuc), str(cdr3_qual_min), str(cdr3_qual_max), str(cdr3_qual_avg), cdr3_quality_scores]), file=fhOut)
+                        print("\t".join([record.id, str(i), str(cdr3pep), str(cdr3nuc), str(cdr3_qual_min), str(cdr3_qual_max), str(cdr3_qual_avg), cdr3_quality_scores, str(nt_start), str(nt_end), str(len(record.seq))]), file=fhOut)
                         print("\t".join([record.id, str(i), str(record.seq), str(translations[i]), quality_scores]), file=fhRaw)
 
                         count_stuff["4. Reads with CDR3"] = count_stuff.get("4. Reads with CDR3", 0) + 1
