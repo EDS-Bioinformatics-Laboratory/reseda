@@ -8,6 +8,7 @@ if __name__ == '__main__':
 
     sample_list = sys.argv[1]
     data_sheet = sys.argv[2]
+    delim = ";"
 
     # Open file with requested samples and put them in a list
 
@@ -19,10 +20,10 @@ if __name__ == '__main__':
     samples = list()
     header = fh.readline()
     header = header.rstrip()
-    header = header.split(",")
+    header = header.split(delim)
     for line in fh:
         line = line.rstrip()
-        line = line.split(",")
+        line = line.split(delim)
         sample = line[header.index("SampleID")]
         sample = re.sub("_S\d+$", "", sample)
         samples.append(sample)
