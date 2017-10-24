@@ -167,11 +167,11 @@ if __name__ == '__main__':
             print("\t".join(str_row), file=fhAllInfo)
         fhAllInfo.close()
 
-        # Create a clone report based on V_sub, J_sub and CDR3peptide
+        # Create a clone report based on CDR3peptide
         query = "DROP TABLE IF EXISTS clones_subs"
         print(query)
         cur.execute(query)
-        query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY V_sub, J_sub, cdr3pep"
+        query = "CREATE TABLE clones_subs AS SELECT cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis, group_concat(distinct V_sub) as V_sub, group_concat(distinct J_sub) as J_sub FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY cdr3pep"
         print(query)
         cur.execute(query)
 
@@ -194,9 +194,9 @@ if __name__ == '__main__':
             for i in range(len(row)):
                 str_row.append(str(row[i]))
             # Calculate percentage
-            read_perc = 100 * float(str_row[3]) / float(total_reads)  # column 3 is the frequency
+            read_perc = 100 * float(str_row[1]) / float(total_reads)  # column 1 is the read frequency
             str_row.append(str(read_perc))
-            umi_perc = 100 * float(str_row[4]) / float(total_umis)  # column 3 is the frequency
+            umi_perc = 100 * float(str_row[2]) / float(total_umis)  # column 2 is the umi frequency
             str_row.append(str(umi_perc))
             print("\t".join(str_row), file=fhClonesSubs)
 
