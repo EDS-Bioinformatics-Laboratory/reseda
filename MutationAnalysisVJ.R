@@ -20,11 +20,11 @@ if(length(args)==0){
 
 library(plyr)
 
-#indir="RESEDA/results-tbcell-B0"
-#outdir="/home/barbera/git/hotel-acpa/RESEDA/results-tbcell-B0"
-#V.file="ACPAclones_CLONEsimulatie_cellsORpools2-SingleCell-IGHV_human-e-clean.sam.mut.txt"
-#J.file="ACPAclones_CLONEsimulatie_cellsORpools2-SingleCell-IGHJ_human-e-clean.sam.mut.txt"
-#CDR3.file="/mnt/beehub/hotel-acpa/hotel/results-tbcell/final/correct-mid/ACPA_ALL_full_nt_seq_L001.assembled-nomatch-IGH_HUMAN-all_info.csv"
+# indir="/home/barbera/git/tbcell-miseq-pipeline"
+# outdir="/home/barbera/git/tbcell-miseq-pipeline"
+# V.file="test_L001.assembled-AGCTAGCT-IGHV_human-e-clean.sam.mut.txt"
+# J.file="test_L001.assembled-AGCTAGCT-IGHJ_human-e-clean.sam.mut.txt"
+# CDR3.file="final/correct-mid/test_L001.assembled-AGCTAGCT-IGH_HUMAN-all_info.csv"
 
 plotMutations<-function(indir, outdir, V.file, J.file){
   sample = gsub("(^.+)_L001.*", "\\1", V.file)
@@ -41,19 +41,25 @@ plotMutations<-function(indir, outdir, V.file, J.file){
   # Plot
   pdf(paste(outdir, paste(sample, "-mutations.pdf", sep=""), sep="/"), width = 10, height = 10)
   par(mfrow=c(2,2))
-  nr.breaks.V=max(d.V$mut.count)
-  nr.breaks.J=max(d.J$mut.count)
-  if (nr.breaks.V < 1){
-      nr.breaks.V=10
+  if (length(d.V$mut.count) > 0){
+      nr.breaks.V=max(d.V$mut.count)
+      if (nr.breaks.V < 1){
+          nr.breaks.V=10
+      }
+      hist(d.V$mut.count, breaks=nr.breaks.V, col = "blue", main=paste("Mutations in V (count), n =",length(d.V[,1])))
+      hist(d.V$mut.frac, breaks=20, col = "blue", main=paste("Mutations/Length in V, n =",length(d.V[,1])))
   }
-  if (nr.breaks.J < 1){
-      nr.breaks.J=10
+  if (length(d.J$mut.count) > 0){
+      nr.breaks.J=max(d.J$mut.count)
+      if (nr.breaks.J < 1){
+          nr.breaks.J=10
+      }
+      hist(d.J$mut.count, breaks=nr.breaks.J, col = "green", main=paste("Mutations in J (count), n =",length(d.J[,1])))
+      hist(d.J$mut.frac, breaks=20, col = "green", main=paste("Mutations/Length in J, n =",length(d.J[,1])))
   }
-  hist(d.V$mut.count, breaks=nr.breaks.V, col = "blue", main=paste("Mutations in V (count), n =",length(d.V[,1])))
-  hist(d.J$mut.count, breaks=nr.breaks.J, col = "green", main=paste("Mutations in J (count), n =",length(d.J[,1])))
-  hist(d.V$mut.frac, breaks=20, col = "blue", main=paste("Mutations/Length in V, n =",length(d.V[,1])))
-  hist(d.J$mut.frac, breaks=20, col = "green", main=paste("Mutations/Length in J, n =",length(d.J[,1])))
-  mtext(sample, side=3, outer=TRUE, line=-3)
+  if (length(d.J$mut.count) > 0 | length(d.V$mut.count) > 0){
+      mtext(sample, side=3, outer=TRUE, line=-3)
+  }
   dev.off()
   cat("Wrote", paste(outdir, paste(sample, "-mutations.pdf", sep=""), sep="/"), "to disk\n")
 
@@ -72,6 +78,9 @@ main<-function(indir, outdir, V.file, J.file, CDR3.file){
   d.combined = merge(merge(d.CDR3, d.V, by="acc", all.x=T), d.J, by="acc", all.x=T)
   write.csv(d.combined, file=paste(outdir, paste(sample, "-mutations-per-accession.csv", sep=""), sep="/"))
   cat("Wrote", paste(outdir, paste(sample, "-mutations-per-accession.csv", sep=""), sep="/"), "to disk\n")
+
+  # Apply filter before making a clones file
+  d.combined=d.combined[which(d.combined$V_sub!='None' & d.combined$J_sub!='None' & d.combined$cdr3_qual_min>=30 & (d.combined$V_flag == 0 | d.combined$V_flag == 16) & (d.combined$J_flag == 0 | d.combined$J_flag == 16)),]
 
   # Summarize mutations per VJCDR3 clone
   clones = ddply(d.combined, .(VJCDR3), summarise, freq=length(acc), total.mut.count.V=sum(mut.count.x), avg.mut.frac.V=mean(mut.frac.x), total.mut.count.J=sum(mut.count.y), avg.mut.frac.J=mean(mut.frac.y))

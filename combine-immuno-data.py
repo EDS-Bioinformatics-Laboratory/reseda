@@ -188,7 +188,7 @@ if __name__ == '__main__':
     # ************ Make clone reports and write them to a file ****************
 
     # Create a clone report based on V, J and CDR3peptide
-    query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_gene!='None' AND J_gene!='None' and cast(cdr3_qual_min as int)>=30 GROUP BY V_gene, J_gene, cdr3pep"
+    query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_gene!='None' AND J_gene!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY V_gene, J_gene, cdr3pep"
     print(query)
     cur.execute(query)
 
@@ -216,7 +216,7 @@ if __name__ == '__main__':
     fhClones.close()
 
     # Create a clone report based on V_sub, J_sub and CDR3peptide
-    query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 GROUP BY V_sub, J_sub, cdr3pep"
+    query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY V_sub, J_sub, cdr3pep"
     print(query)
     cur.execute(query)
 
@@ -241,7 +241,7 @@ if __name__ == '__main__':
     fhClonesSubs.close()
 
     # Create a clone report based on V_main, J_sub and CDR3peptide
-    query = "CREATE TABLE clones_mains AS SELECT V_main, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_main!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 GROUP BY V_main, J_sub, cdr3pep"
+    query = "CREATE TABLE clones_mains AS SELECT V_main, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_main!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY V_main, J_sub, cdr3pep"
     print(query)
     cur.execute(query)
 

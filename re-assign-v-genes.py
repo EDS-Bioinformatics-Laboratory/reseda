@@ -23,8 +23,8 @@ def importData(datafile, fhLog):
     for row in result:
         no_vj = row[0]
 
-    # Count entries with low quality CDR3 and no V/J assigned
-    result = cur.execute("SELECT COUNT(DISTINCT acc) FROM all_info WHERE V_gene='None' OR J_gene='None' OR CAST(cdr3_qual_min as int)<30")
+    # Count entries with low quality CDR3, no V/J assigned, and BWA flag not 0 or 16
+    result = cur.execute("SELECT COUNT(DISTINCT acc) FROM all_info WHERE V_gene='None' OR J_gene='None' OR CAST(cdr3_qual_min as int)<30 or (cast(V_flag as int)!=0 and cast(V_flag as int)!=16) or (cast(J_flag as int)!=0 and cast(J_flag as int)!=16)")
     for row in result:
         filtered_out = row[0]
 
@@ -171,7 +171,7 @@ if __name__ == '__main__':
         query = "DROP TABLE IF EXISTS clones_subs"
         print(query)
         cur.execute(query)
-        query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info WHERE V_sub!='None' AND J_sub!='None' GROUP BY V_sub, J_sub, cdr3pep"
+        query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY V_sub, J_sub, cdr3pep"
         print(query)
         cur.execute(query)
 
