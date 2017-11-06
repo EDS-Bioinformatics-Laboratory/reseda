@@ -2,7 +2,7 @@ from __future__ import print_function
 # import subprocess
 import json
 import sys
-
+import argparse
 
 def executeCmd(cmd):
     '''
@@ -32,8 +32,13 @@ def lookupChain(chain):
 
 
 if __name__ == '__main__':
-    mydir = "/mnt/immunogenomics/RUNS/run17-20170821-miseq/results-tbcell/final/correct-mid/"
-    runinfo = "20170821-RUN17-datasheet-new.json"
+    parser = argparse.ArgumentParser(description='Concatenates clones files per project and cell type')
+    parser.add_argument('-w', '--webdav', default='/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/results-tbcell/final/correct-mid/', type=str, help='Webdav directory (default: %(default)s)')
+    parser.add_argument('-r', '--runinfo', default='yyyymmdd-RUNnn-datasheet-new.json', type=str, help='Sample sheet in json format (default: %(default)s)')
+    args = parser.parse_args()
+
+    mydir = args.webdav
+    runinfo = args.runinfo
 
     # Read json file
     try:
@@ -55,5 +60,7 @@ if __name__ == '__main__':
     for project, chains_species in projects.items():
         chains_species = list(set(chains_species))
         for chain_specie in chains_species:
-            cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv"
+            cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + "cdr3-clones-" + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv"
+            executeCmd(cmd)
+            cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + "assign-info-" + " " + mydir + "*" + chain_specie + "*-all_info.csv.rr.csv"
             executeCmd(cmd)

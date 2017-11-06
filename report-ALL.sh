@@ -1,7 +1,12 @@
 #!/bin/bash
 
-run="run16-20170808-miseq"
-runinfo="20170804_RUN16_Datasheet-new.json"
+# Get settings from commandline arguments
+run=$1
+runinfo=$2
+
+#run="run16-20170808-miseq"
+#runinfo="20170804_RUN16_Datasheet-new.json"
+
 resultsdir="results-tbcell"
 
 files="/mnt/immunogenomics/RUNS/${run}/${resultsdir}/reports/*.log"

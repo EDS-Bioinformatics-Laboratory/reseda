@@ -172,6 +172,7 @@ if __name__ == '__main__':
         print(query)
         cur.execute(query)
         query = "CREATE TABLE clones_subs AS SELECT cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis, group_concat(distinct V_sub) as V_sub, group_concat(distinct J_sub) as J_sub FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY cdr3pep"
+        # query = "CREATE TABLE clones_subs AS SELECT cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY cdr3pep"
         print(query)
         cur.execute(query)
 
