@@ -76,12 +76,16 @@ runcmd ./log-versions.sh
 set_status ${ip} "RUNNING" "Started ${mids} ${celltype} analysis on ${starttime}"
 
 ### Change this if you work with local/remote files ###
+
 # Remote files:
 runcmd ./copy-from-beehub.sh
 wait
+
 # # Local files:
 # cp SAMPLES LOCAL_SAMPLES
 # wait
+
+#######################################################
 
 samples=`cat LOCAL_SAMPLES`  # get all arguments
 r1_samples=`grep R1_001 LOCAL_SAMPLES`
@@ -179,6 +183,7 @@ for sample in ${samples}; do
     cloneSubsFile="final/${prefix}-${celltype}-clones-subs.csv"
     cloneMainsFile="final/${prefix}-${celltype}-clones-mains.csv"
     totalFile="final/${prefix}-${celltype}-productive.txt"
+    echo "### runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile} ###"
     runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 
@@ -200,7 +205,7 @@ cd ..
 
 # Correct V gene assignments
 set_status ${ip} "RUNNING" "${celltype} Re-assign V genes"
-runcmd python2 re-assign-v-genes.py final/correct-mid/*-all_info.csv
+runcmd python2 ReAssignVGenes.py final/correct-mid/*-all_info.csv
 wait
 # Move files to final
 mv *.rr.* final/correct-mid
