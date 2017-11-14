@@ -2,10 +2,20 @@ from __future__ import print_function
 import sys
 import os
 import json
+import argparse
 
 if __name__ == '__main__':
-    jsonFile = "20170709_RUN015_Datasheet_finalV_Selection.json"
-    mountdir = "/mnt/immunogenomics/RUNS/run15-20170711-miseq/data/"
+    parser = argparse.ArgumentParser(description='Checks sample sheet (json) and adds sample numbers. Creates a file -new.json')
+    parser.add_argument('-r', '--runinfo', default='yyyymmdd-RUNnn-datasheet.json', type=str, help='Sample sheet in json format (default: %(default)s)')
+    parser.add_argument('-w', '--webdav', default='/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/data/', type=str, help='Webdav directory (default: %(default)s)')
+    args = parser.parse_args()
+
+    if args.webdav == '/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/data/' or args.runinfo == 'yyyymmdd-RUNnn-datasheet.json':
+        parser.print_help()
+        exit()
+
+    jsonFile = args.runinfo   # = "20170709_RUN015_Datasheet_finalV_Selection.json"
+    mountdir = args.webdav    # = "/mnt/immunogenomics/RUNS/run15-20170711-miseq/data/"
 
     # Read json with parsed sample sheet info (made with MetaData.py)
     try:
@@ -45,6 +55,14 @@ if __name__ == '__main__':
 
         # Add the sample number to the json object
         js["Samples"][inx]["Sample_Nr"] = sample_nr
+
+        # Check if the project name contains a whitespace. If so, replace it with an underscore
+        try:
+            if js["Samples"][inx]["Sample_Project"] == "":
+                print("WARNING", sample_name, ": 'Sample_Project' is empty")
+            js["Samples"][inx]["Sample_Project"] = js["Samples"][inx]["Sample_Project"].replace(" ", "_")
+        except:
+            print("WARNING", sample_name, ": attribute 'Sample_Project' does not exist")
 
         # Print info to SAMPLES file
         sampleFile = "SAMPLES-" + run + "-" + js["Samples"][inx]["Species"] + "-" + js["Samples"][inx]["Chain"]
