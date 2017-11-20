@@ -24,15 +24,17 @@
 ### Output: <date>.<projectname>.contamination.plots.pdf
 
 # Input file
-#clones.file1="run-clones_subs-ABI-MS-IGH_HUMAN.csv"
-#clones.file2="run-clones_subs-ABI-RTX-IGH_HUMAN.csv"
-#clones.file3="run-clones_subs-Cordblood-IGH_HUMAN.csv"
-clones.file1="run-clones_subs-ABI-MS-TRB_HUMAN.csv"
-clones.file2="run-clones_subs-ABI-RTX-TRB_HUMAN.csv"
-clones.file3="run-clones_subs-CEA-Ada-TRB_HUMAN.csv"
-clones.file4="run-clones_subs-CEA-CEF-TRB_HUMAN.csv"
-clones.file5="run-clones_subs-Inserm-TRB_HUMAN.csv"
-pt.file = "20170709_RUN015_pt.table.csv"
+clones.file1="cdr3-clones-AB-ADA-IGH_HUMAN-after-reassignment.csv"
+clones.file2="cdr3-clones-AB-MS-IGH_HUMAN-after-reassignment.csv"
+clones.file3="cdr3-clones-AB-RTX-IGH_HUMAN-after-reassignment.csv"
+clones.file4="cdr3-clones-Cordblood-IGH_HUMAN-after-reassignment.csv"
+clones.file5="cdr3-clones-DOMINO-IGH_HUMAN-after-reassignment.csv"
+clones.file6="cdr3-clones-Pipeline_test-IGH_HUMAN-after-reassignment.csv"
+pt.file = "20171004_MSrun019_pt.table.csv"
+
+# Read patient table
+pt.table = read.csv(pt.file, header=TRUE, sep=";", stringsAsFactors=FALSE)
+pt.table$pt = pt.table$Patient
 
 # Read clones file
 clones1 = read.csv(clones.file1, header=TRUE, sep="\t", stringsAsFactors=FALSE)
@@ -40,14 +42,13 @@ clones2 = read.csv(clones.file2, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 clones3 = read.csv(clones.file3, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 clones4 = read.csv(clones.file4, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 clones5 = read.csv(clones.file5, header=TRUE, sep="\t", stringsAsFactors=FALSE)
-pt.table = read.csv(pt.file, header=TRUE, sep=";", stringsAsFactors=FALSE)
-pt.table$pt = pt.table$Patient
+clones6 = read.csv(clones.file6, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 
 #clones = clones1
-clones = rbind(clones1,clones2, clones3, clones4, clones5)
+clones = rbind(clones1,clones2, clones3, clones4, clones5, clones6)
 clones$SampleName=gsub("_S[0-9]+","",clones$Sample)
 clones = merge(clones,pt.table, by.x="SampleName", by.y="Sample.name", all.x = TRUE)
-project = "run15-TRB"
+project = "run19-IGH"
 
 # Add the ID2 column: PT [space] SAMPLE
 clones$ID2 = paste(clones$pt,clones$SampleName)
