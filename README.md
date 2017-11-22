@@ -81,6 +81,14 @@ Example: ./execute-all.sh output-dir-on-webdav-server MIDS-miseq.txt human IGH I
     * Run the script
     * Usually I make reports for all samples per project+cell_type and one report for all the samples in a run
 
+## Preparation for Roche data ##
+* Use MakePTtableFromAAreads.R - Create a pt.table (sample description) from AA.reads file
+* SplitAAreads.py - Splits the AA.reads table per sample (check the column names that you want to include in the file name!)
+* SeqToFastq.py - Convert the tab-delimited files to fastq format
+* Remove the mid != 'nomatch' statement in
+    * select-correct-mids.py
+    * report-combine-all.py
+
 ## How to cite
 
 Barbera D. C. van Schaik, Paul L. Klarenbeek, Marieke E. Doorenspleet, Sabrina Pollastro, Anne Musters, Giulia Balzaretti, Rebecca E. Esveldt, Frank Baas, Niek de Vries and Antoine H. C. van Kampen (2016) T- and B-cell Receptor Repertoire Sequencing: Quality Control and Clone Identification. _In prep_.
