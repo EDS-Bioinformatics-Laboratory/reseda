@@ -84,7 +84,9 @@ main<-function(indir, outdir, V.file, J.file, CDR3.file){
 
   # Summarize mutations per VJCDR3 clone
   clones = ddply(d.combined, .(VJCDR3), summarise, freq=length(acc), total.mut.count.V=sum(mut.count.x), avg.mut.frac.V=mean(mut.frac.x), total.mut.count.J=sum(mut.count.y), avg.mut.frac.J=mean(mut.frac.y))
-  clones = clones[order(clones$freq, decreasing=T),]
+  if(length(clones$freq) > 0){
+    clones = clones[order(clones$freq, decreasing=T),]
+  }
   write.csv(clones,file=paste(outdir, paste(sample,"-mutations-per-clone.csv",sep=""), sep="/"))
   cat("Wrote", paste(outdir, paste(sample,"-mutations-per-clone.csv",sep=""), sep="/"), "to disk\n")
   return(clones)
