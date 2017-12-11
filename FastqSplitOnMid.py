@@ -59,12 +59,12 @@ def sortMIDS(motifs, fastqFile, outdir):
             SeqIO.write(record, fh["nomatch"], "fastq")
             midCount["nomatch"] = midCount.get("nomatch", 0) + 1
         else:
-            umi = keepMatch.group(1)
-            mid = keepMatch.group(2)
-            primerTB = keepMatch.group(3)
-            # umi = keepMatch.group(3)      # NEW
-            # mid = keepMatch.group(2)      # NEW
-            # primerTB = keepMatch.group(4) # NEW
+            # umi = keepMatch.group(1)
+            # mid = keepMatch.group(2)
+            # primerTB = keepMatch.group(3)
+            umi = keepMatch.group(3)      # NEW
+            mid = keepMatch.group(2)      # NEW
+            primerTB = keepMatch.group(4) # NEW
             if mid not in fh:  # If it is a new MID open a new output file
                 fh[mid] = gzip.open(outdir + "/" + prefixFastq + "-" + mid + ".fastq.gz", "w")
             print(record.id, umi, mid, primerTB, file=fh["report"])  # UMI, MID, Primer T or B
