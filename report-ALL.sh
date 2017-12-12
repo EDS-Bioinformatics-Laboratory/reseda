@@ -36,7 +36,8 @@ echo "Wrote report-ALIGNED-*"
 python2 report-after-v-reassignment.py /mnt/immunogenomics/RUNS/${run}/${resultsdir}/final/correct-mid/*.rr.clones_subs.csv
 echo "Wrote report-AFTER-V-REASSIGNMENT.txt"
 
-python2 report-combine-all.py ${runinfo}
+# First argument: were additional mids used, yes or no
+python2 report-combine-all.py yes ${runinfo}
 wait
 
 echo "FINISHED"

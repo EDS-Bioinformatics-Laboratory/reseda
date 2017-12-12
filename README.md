@@ -45,9 +45,9 @@ Tip: divide the samples over multiple (virtual) machines and run everything in p
 
 ## How to run - Using only the code in this repository
 
-The input files (in fastq format) can be specified by putting the paths in the file SAMPLES. At the top of execute-all.sh you see which other parameters have to be set.
+The input files (in fastq format) can be specified by putting the paths in the file SAMPLES. Running ./execute-all.sh without arguments show you which parameters can be set.
 
-Example: ./execute-all.sh output-dir-on-webdav-server MIDS-miseq.txt human IGH IGH_HUMAN
+Example: ./execute-all.sh -r output-dir-on-webdav-server -m MIDS-miseq.txt -org human -cell IGH -celltype IGH_HUMAN
 
 ## How to run - Using Topos for sending jobs and a job monitor tool
 
