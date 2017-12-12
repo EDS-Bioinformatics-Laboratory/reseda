@@ -56,7 +56,10 @@ def parseMids(totalreads, mids):
             midcount[sample] = dict()
         else:                      # parse MIDs and frequency
             mid, freq = line.split()
-            if mid != "nomatch":
+            if barcodes == "yes":
+                if mid != "nomatch":
+                    midcount[sample][mid] = int(freq)
+            else:
                 midcount[sample][mid] = int(freq)
 
     for sample in midcount:
@@ -183,11 +186,12 @@ def makeBarChart(plotfile, title, y_label, threshold, x, v, w, y, z, a, b):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("Usage:", sys.argv[0], "2017etcetc-new.json (json file with run and sample information)")
+    if len(sys.argv) < 3:
+        print("Usage:", sys.argv[0], "barcodes(yes/no) 2017etcetc-new.json (json file with run and sample information)")
         exit()
 
-    jsonFile = sys.argv[1]  # "20170224_Rheuma_MiSeqRUN013.json"
+    barcodes = sys.argv[1]   # yes/no
+    jsonFile = sys.argv[2]  # "20170224_Rheuma_MiSeqRUN013.json"
 
     # Read json with parsed sample sheet info (made with MetaData.py)
     try:

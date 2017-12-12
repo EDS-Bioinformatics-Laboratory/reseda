@@ -2,7 +2,8 @@ from __future__ import print_function
 import sys
 
 # Create this file with: wc -l *-all_info.csv > wc-run04.txt
-wcFile = sys.argv[1]   # "wc.txt"
+barcodes = sys.argv[1]   # were internal mids used? yes/no
+wcFile = sys.argv[2]   # "wc.txt"
 
 try:
     fh = open(wcFile, "r")
@@ -27,9 +28,13 @@ for line in fh:
     mid = elements[-3]
     sample = "-".join(elements[:-3])
 
-    if mid != "nomatch":
-        d[(sample, celltype)] = d.get((sample, celltype), dict())  # create new dict if not exist
-        d[(sample, celltype)][mid] = wc
+    if barcodes == "yes":
+        if mid != "nomatch":
+            d[(sample, celltype)] = d.get((sample, celltype), dict())  # create new dict if not exist
+            d[(sample, celltype)][mid] = wc
+    else:
+            d[(sample, celltype)] = d.get((sample, celltype), dict())  # create new dict if not exist
+            d[(sample, celltype)][mid] = wc
 
 for (sample, celltype) in sorted(d):
     d_tmp = d[(sample, celltype)]
