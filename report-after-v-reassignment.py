@@ -18,7 +18,7 @@ def countReads(datafile):
     for line in fh:
         line = line.strip()
         c = line.split()
-        freq = int(c[3])
+        freq = int(c[1])    # freq column: 1
         totalreads += freq
 
     fh.close()
