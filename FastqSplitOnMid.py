@@ -40,10 +40,12 @@ def sortMIDS(umis, motifs, fastqFile, outdir):
         keepMatch = 0
         for motif in motifs:
             # Search for the motif in normal orientation
-            m = regex.search(motif, sequence)
+            motif = motif.replace("E", "e")
+            p = regex.compile(motif, regex.BESTMATCH)
+            m = p.search(sequence)
             if not m:
                 # Search for the motif in reverse complement if it was not found
-                m = regex.search(motif, comrev(sequence))
+                m = p.search(comrev(sequence))
                 if not m:
                     next
                 else:
@@ -60,9 +62,9 @@ def sortMIDS(umis, motifs, fastqFile, outdir):
             midCount["nomatch"] = midCount.get("nomatch", 0) + 1
         else:
             if umis == "yes":
-                umi = keepMatch.group(3)       # NEW
+                umi = keepMatch.group(4)       # NEW
                 mid = keepMatch.group(2)       # NEW
-                primerTB = keepMatch.group(4)  # NEW
+                primerTB = keepMatch.group(5)  # NEW
             else:
                 umi = keepMatch.group(1)
                 mid = keepMatch.group(2)
@@ -99,11 +101,6 @@ if __name__ == '__main__':
 
     # Read file with MIDs
     motifs = readMotifsFromFile(midFile)
-
-    # Search with 1 nt mismatch when searching with UMI search motif
-    # if umis == "yes":
-    #     for i in range(len(motifs)):
-    #         motifs[i] = motifs[i] + "{e<=1}"
 
     # Create output directory if it doesn't exist
     if not os.path.exists(outdir):
