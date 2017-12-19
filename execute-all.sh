@@ -13,7 +13,7 @@ function show_help {
     echo "USAGE: ./execute-all.sh [options]"
     echo "    -r --run             required: runNN-YYYYMMDD-miseq"
     echo "    -l --location        local|webdav, default: webdav"
-    echo "    -m --mids            default: MIDS-miseq-new.txt"
+    echo "    -m --mids            default: MIDS-miseq-umi.txt"
     echo "    -org --organism      human|mouse, default: human"
     echo "    -cell --cell         IGH|IGK|IGL|TRA|TRB, default:IGH"
     echo "    -celltype --celltype IGH_HUMAN|TRB_MOUSE|etc, default: IGH_HUMAN"
@@ -25,7 +25,7 @@ function show_help {
 }
 
 LOCATION="webdav"
-MIDS="MIDS-miseq-new.txt"
+MIDS="MIDS-miseq-umi.txt"
 ORGANISM="human"
 CELL="IGH"
 CELLTYPE="IGH_HUMAN"
