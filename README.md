@@ -54,13 +54,12 @@ Example: ./execute-all.sh -r output-dir-on-webdav-server -m MIDS-miseq.txt -org 
 ### Preparation ###
 * Mount basespace. Instructions are in basespace.txt
 * Specify the basespace directories in copy-basespace-data-to-beehub.py and run: python copy-basespace-data-to-beehub.py > basespace-copy-data.sh
-* Verify if all data has been copied with VerifyBasespaceCopy.py
 * Convert the MiSeq sample sheet with MetaData.py (creates a json file)
 * Mount the beehub webdav server
+* Verify if all data has been copied with VerifyBasespaceCopy.py. You need the mounted beehub directory name and the json file from the previous step.
 * Add extra information to the json file with MakeSamplesFiles.py (this will also make the SAMPLE-* files)
-* Sort the SAMPLE-* files
-* Make manageable jobs by splitting the SAMPLE-* files, e.g.: split -l 20 SAMPLES-run13-human-BCRh SAMPLES-run13-human-BCRh-
-* Check manually if the nr of lines in the SAMPLE-* files (the total divided by 2) is equal to the nr of samples in the sample sheet
+* Sort the SAMPLE-* files: sort SAMPLE-blah > SAMPLE-blah.sort
+* Make manageable jobs by splitting the SAMPLE-*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
 * Create Topos jobs with ToposCreateTokens.py
 * Upload Topos jobs with ToposUploadFiles.py
 
@@ -72,22 +71,19 @@ Example: ./execute-all.sh -r output-dir-on-webdav-server -m MIDS-miseq.txt -org 
 
 ### When all jobs are finished ###
 * In the jobs the data is automatically transferred to the beehub webdav server
-* Specify the mounted directory and sample.json file in ConcatenateCloneFilesBatch.py and run it to concatenate the clone files per project+organism+cell_type
-* Specify the mounted directory in report-ALL.sh and run it to generate reports about the sequence run
+* Execute ConcatenateCloneFilesBatch.py to concatenate the clone files per project+organism+cell_type
+* Run report-ALL.sh to generate reports about the sequence run (help is available for this script)
 * Check for contamination with contamination-figure.R
     * Specify the files that were created by ConcatenateCloneFilesBatch.py
     * Specify the pt.table.csv that you got from the immunogenomics group
     * Check by hand if the column names in the pt.table are correct
     * Run the script
-    * Usually I make reports for all samples per project+cell_type and one report for all the samples in a run
+    * Usually I make reports for all samples per project+cell_type
 
 ## Preparation for Roche data ##
 * Use MakePTtableFromAAreads.R - Create a pt.table (sample description) from AA.reads file
 * SplitAAreads.py - Splits the AA.reads table per sample (check the column names that you want to include in the file name!)
 * SeqToFastq.py - Convert the tab-delimited files to fastq format
-* Remove the mid != 'nomatch' statement in
-    * select-correct-mids.py
-    * report-combine-all.py
 
 ## How to cite
 
