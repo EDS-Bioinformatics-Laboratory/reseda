@@ -61,13 +61,14 @@ def getSamplesOfProject(project_name, runinfo):
 
 if __name__ == '__main__':
 
-    if len(sys.argv) < 2:
-        sys.exit("Usage: concatenate-clone-files.py run-info.json project-name *clones_subs.csv")
+    if len(sys.argv) < 5:
+        sys.exit("Usage: concatenate-clone-files.py run-info.json project-name chain-species cdr3-clones- *clones_subs.csv")
 
     runinfo = sys.argv[1]
     project_name = sys.argv[2]
     chain_specie = sys.argv[3]
-    myfiles = sys.argv[4:]
+    prefix = sys.argv[4]
+    myfiles = sys.argv[5:]
 
     print("Project:", project_name)
     print("Chain Specie:", chain_specie)
@@ -75,9 +76,9 @@ if __name__ == '__main__':
     # Open file for writing
     try:
         if ".rr." in myfiles[0]:
-            fhOut = open("run-clones_subs-" + project_name + "-" + chain_specie + "-after-reassignment.csv", "w")
+            fhOut = open(prefix + project_name + "-" + chain_specie + "-after-reassignment.csv", "w")
         else:
-            fhOut = open("run-clones_subs-" + project_name + "-" + chain_specie + ".csv", "w")
+            fhOut = open(prefix + project_name + "-" + chain_specie + ".csv", "w")
     except:
         sys.exit("cannot write to file")
 

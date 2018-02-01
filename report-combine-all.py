@@ -9,6 +9,10 @@ mids = "report-MIDs.txt"
 cdr3 = "report-CDR3.txt"
 prod = "report-PRODUCTIVE.txt"
 reassign = "report-AFTER-V-REASSIGNMENT.txt"
+alignV_file = "report-ALIGNED-V.txt"
+alignJ_file = "report-ALIGNED-J.txt"
+alignV_again_file = "report-ALIGNED-AGAIN-V.txt"
+alignJ_again_file = "report-ALIGNED-AGAIN-J.txt"
 
 
 def parsePear(pear):
@@ -52,7 +56,10 @@ def parseMids(totalreads, mids):
             midcount[sample] = dict()
         else:                      # parse MIDs and frequency
             mid, freq = line.split()
-            if mid != "nomatch":
+            if barcodes == "yes":
+                if mid != "nomatch":
+                    midcount[sample][mid] = int(freq)
+            else:
                 midcount[sample][mid] = int(freq)
 
     for sample in midcount:
@@ -127,6 +134,26 @@ def parseReassign(totalreads, summary_mids, reassign):
     return(summary)
 
 
+def parseAligned(totalreads, summary_mids, align_file):
+    try:
+        fh = open(align_file)
+    except:
+        return(dict())  # return an empty dictionary if file doesn't exist
+
+    summary = dict()
+    for line in fh:
+        line = line.strip()
+        c = line.split()
+        sample, rest = c[0].split("_L001.assembled-")
+        mid = rest.split("-")[0]
+        freq = int(c[-1])
+        if mid in summary_mids[sample]:
+            percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
+            summary[sample] = (freq, percentage)
+
+    return(summary)
+
+
 def makeBarChart(plotfile, title, y_label, threshold, x, v, w, y, z, a, b):
     x_pos = np.arange(len(x))
 
@@ -159,11 +186,12 @@ def makeBarChart(plotfile, title, y_label, threshold, x, v, w, y, z, a, b):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("Usage:", sys.argv[0], "2017etcetc-new.json (json file with run and sample information)")
+    if len(sys.argv) < 3:
+        print("Usage:", sys.argv[0], "barcodes(yes/no) 2017etcetc-new.json (json file with run and sample information)")
         exit()
 
-    jsonFile = sys.argv[1]  # "20170224_Rheuma_MiSeqRUN013.json"
+    barcodes = sys.argv[1]   # yes/no
+    jsonFile = sys.argv[2]  # "20170224_Rheuma_MiSeqRUN013.json"
 
     # Read json with parsed sample sheet info (made with MetaData.py)
     try:
@@ -186,6 +214,10 @@ if __name__ == '__main__':
     summary_cdr3 = parseCdr3(totalreads, summary_mids, cdr3)
     summary_prod = parseProductive(totalreads, summary_mids, prod)
     summary_reassign = parseReassign(totalreads, summary_mids, reassign)
+    summary_aligned_v = parseAligned(totalreads, summary_mids, alignV_file)
+    summary_aligned_j = parseAligned(totalreads, summary_mids, alignJ_file)
+    summary_aligned_v_again = parseAligned(totalreads, summary_mids, alignV_again_file)
+    summary_aligned_j_again = parseAligned(totalreads, summary_mids, alignJ_again_file)
 
     # Create one big table with all summary statistics
     try:
@@ -193,7 +225,7 @@ if __name__ == '__main__':
     except:
         sys.exit("cannot write file report-all.csv")
 
-    print("Sample TotalReads AssembledFreq AssembledPerc MID MidFreq MidPerc Cdr3Freq Cdr3Perc VJFreq VJPerc ReassignedFreq ReassignedPerc", file=fhOut)
+    print("Sample TotalReads AssembledFreq AssembledPerc MID MidFreq MidPerc Cdr3Freq Cdr3Perc VJFreq VJPerc ReassignedFreq ReassignedPerc AlignedVFreq AlignedVPerc AlignedJFreq AlignedJPerc AlignedVAgainFreq AlignedVAgainPerc AlignedJAgainFreq AlignedJAgainPerc", file=fhOut)
     samples = list()
     totals = list()
     assembledfreqs = list()
@@ -214,7 +246,11 @@ if __name__ == '__main__':
         (cdr3freq, cdr3perc) = summary_cdr3.get(sample, (0, 0))
         (prodfreq, prodperc) = summary_prod.get(sample, (0, 0))
         (reassignfreq, reassignperc) = summary_reassign.get(sample, (0, 0))
-        print(sample, total, assembledfreq, assembledperc, mid, midfreq, midperc, cdr3freq, cdr3perc, prodfreq, prodperc, reassignfreq, reassignperc, file=fhOut)
+        (aligned_v_freq, aligned_v_perc) = summary_aligned_v.get(sample, (0, 0))
+        (aligned_j_freq, aligned_j_perc) = summary_aligned_j.get(sample, (0, 0))
+        (aligned_v_again_freq, aligned_v_again_perc) = summary_aligned_v_again.get(sample, (0, 0))
+        (aligned_j_again_freq, aligned_j_again_perc) = summary_aligned_j_again.get(sample, (0, 0))
+        print(sample, total, assembledfreq, assembledperc, mid, midfreq, midperc, cdr3freq, cdr3perc, prodfreq, prodperc, reassignfreq, reassignperc, aligned_v_freq, aligned_v_perc, aligned_j_freq, aligned_j_perc, aligned_v_again_freq, aligned_v_again_perc, aligned_j_again_freq, aligned_j_again_perc, file=fhOut)
 
         # Store percentages in lists
         samples.append(sample)

@@ -1,6 +1,7 @@
 from __future__ import print_function
 import sys
 import json
+import argparse
 
 # Usage: python ToposCreateTokens.py runNN-YYYYMMDD-miseq MIDS-miseq.txt SAMPLE-files
 
@@ -79,21 +80,34 @@ def guessCellAndOrganism(myfile):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        sys.exit("Usage: " + sys.argv[0] + " runNN-YYYYMMDD-miseq MIDS-miseq.txt SAMPLE-files")
 
-    run = sys.argv[1]
-    mids = sys.argv[2]
+    parser = argparse.ArgumentParser(description='Create ToPoS tokens (json)')
+    parser.add_argument('-r', '--run', default='runNN-YYYYMMDD-miseq', type=str, help='Sequence run directory (default: %(default)s)')
+    parser.add_argument('-m', '--mids', default='MIDS-miseq-umi.txt', type=str, help='MID scheme file name (default: %(default)s)')
+    parser.add_argument('-o', '--outdir', default='results-tbcell', type=str, help='Output directory (default: %(default)s)')
+    parser.add_argument('-p', '--protocol', default='paired', type=str, help='single or paired (default: %(default)s)')
+    parser.add_argument('-b', '--barcodes', default="yes", type=str, help='Were additional internal MIDs used? yes/no (default: %(default)s)')
+    parser.add_argument('-u', '--umis', default="yes", type=str, help='Were UMIs used? yes/no (default: %(default)s)')
+    parser.add_argument("sample_files", type=str, nargs='+', help='Path(s) to SAMPLE file(s)')
+    args = parser.parse_args()
 
-    for myfile in sys.argv[3:]:
+    if args.run == "runNN-YYYYMMDD-miseq":
+        parser.print_help()
+        exit()
+
+    for myfile in args.sample_files:
         outfile = "tokens/" + myfile.split("/")[-1] + ".json"
         (cell, organism, celltype) = guessCellAndOrganism(myfile)
         js = {
-            "run": run,
+            "run": args.run,
             "cell": cell,
             "organism": organism,
             "celltype": celltype,
-            "mids": mids
+            "mids": args.mids,
+            "outdir": args.outdir,
+            "protocol": args.protocol,
+            "barcodes": args.barcodes,
+            "umis": args.umis
         }
         js["samples"] = getSamples(myfile)
         writeJson(outfile, js)

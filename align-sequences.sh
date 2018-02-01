@@ -66,3 +66,22 @@ else
 fi
 
 rm -f ${prefix}-${refprefix}RG.pileup
+wait
+
+echo "### Get unmapped reads ###"
+java -Djava.io.tmpdir=./tmp -jar picard-tools-1.126/picard.jar ViewSam I=${prefix}-${refprefix}-e-clean.sam ALIGNMENT_STATUS=Unaligned > ${prefix}-${refprefix}-unmapped.sam
+wait
+
+echo "### Unmapped reads sam > fastq ###"
+java -Djava.io.tmpdir=./tmp -jar picard-tools-1.126/picard.jar SamToFastq I=${prefix}-${refprefix}-unmapped.sam F=${prefix}-${refprefix}-unmapped.fastq
+wait
+
+echo "### Align unmapped reads with less stringent parameters ###"
+./bwa-0.7.12/bwa mem ${ref} ${prefix}-${refprefix}-unmapped.fastq -B 0 > ${prefix}-${refprefix}-unmapped-bwa-loose-param.sam
+wait
+
+echo "### Only keep the aligned sequences from last alignment ###"
+java -Djava.io.tmpdir=./tmp -jar picard-tools-1.126/picard.jar ViewSam I=${prefix}-${refprefix}-unmapped-bwa-loose-param.sam ALIGNMENT_STATUS=Aligned RECORDS_ONLY=true > ${prefix}-${refprefix}-unmapped-aligned-again.sam
+wait
+
+rm -f ${prefix}-${refprefix}-unmapped.sam ${prefix}-${refprefix}-unmapped.fastq ${prefix}-${refprefix}-unmapped-bwa-loose-param.sam

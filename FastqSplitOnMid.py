@@ -7,7 +7,7 @@ from sequences import *
 from Bio import SeqIO
 
 
-def sortMIDS(motifs, fastqFile, outdir):
+def sortMIDS(umis, motifs, fastqFile, outdir):
     '''
     In: motifs (list), fastqFile (file path), outdir (directory path without slash at the end)
     Out: output files are generated in the directory specified in "outdir"
@@ -40,10 +40,12 @@ def sortMIDS(motifs, fastqFile, outdir):
         keepMatch = 0
         for motif in motifs:
             # Search for the motif in normal orientation
-            m = regex.search(motif, sequence)
+            motif = motif.replace("E", "e")
+            p = regex.compile(motif, regex.BESTMATCH)
+            m = p.search(sequence)
             if not m:
                 # Search for the motif in reverse complement if it was not found
-                m = regex.search(motif, comrev(sequence))
+                m = p.search(comrev(sequence))
                 if not m:
                     next
                 else:
@@ -59,12 +61,14 @@ def sortMIDS(motifs, fastqFile, outdir):
             SeqIO.write(record, fh["nomatch"], "fastq")
             midCount["nomatch"] = midCount.get("nomatch", 0) + 1
         else:
-            umi = keepMatch.group(1)
-            mid = keepMatch.group(2)
-            primerTB = keepMatch.group(3)
-            # umi = keepMatch.group(3)      # NEW
-            # mid = keepMatch.group(2)      # NEW
-            # primerTB = keepMatch.group(4) # NEW
+            if umis == "yes":
+                umi = keepMatch.group(4)       # NEW
+                mid = keepMatch.group(2)       # NEW
+                primerTB = keepMatch.group(5)  # NEW
+            else:
+                umi = keepMatch.group(1)
+                mid = keepMatch.group(2)
+                primerTB = keepMatch.group(3)
             if mid not in fh:  # If it is a new MID open a new output file
                 fh[mid] = gzip.open(outdir + "/" + prefixFastq + "-" + mid + ".fastq.gz", "w")
             print(record.id, umi, mid, primerTB, file=fh["report"])  # UMI, MID, Primer T or B
@@ -86,10 +90,10 @@ if __name__ == '__main__':
 
     # Check if an argument was given to this script
     if len(sys.argv) < 4:
-        sys.exit('Usage: %s midfile outdir fastq-file(s)' % sys.argv[0])
+        sys.exit('Usage: %s umis(yes/no) midfile outdir fastq-file(s)' % sys.argv[0])
 
-    [midFile, outdir] = sys.argv[1:3]
-    fastqFiles = sys.argv[3:]
+    [umis, midFile, outdir] = sys.argv[1:4]
+    fastqFiles = sys.argv[4:]
 
     # midFile = "MIDS-miseq.txt"
     # indir = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/data"
@@ -104,6 +108,6 @@ if __name__ == '__main__':
 
     # Sort the fastq files on MID
     for i in range(len(fastqFiles)):
-        sortMIDS(motifs, fastqFiles[i], outdir)
+        sortMIDS(umis, motifs, fastqFiles[i], outdir)
 
     print("FINISHED")

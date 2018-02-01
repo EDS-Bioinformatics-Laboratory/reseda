@@ -54,7 +54,7 @@ def runJob(token, js):
     fhOut.close()
 
     # Start analysis
-    cmd = ["./execute-all.sh", js["run"], js["mids"], js["organism"], js["cell"], js["celltype"]]
+    cmd = ["./execute-all.sh", "-r", js["run"], "-m", js["mids"], "-org", js["organism"], "-cell", js["cell"], "-celltype", js["celltype"], "-p", js["protocol"], "-o", js["outdir"], "-b", js["barcodes"], "-u", js["umis"]]
     print(cmd)
     rc = subprocess.call(cmd)
     return(rc)
@@ -92,7 +92,7 @@ def cleanUp():
 
     myfiles = os.listdir("./final/correct-mid")
     for myfile in myfiles:
-        if "L001" in myfile:
+        if "L001" in myfile or "mutations" in myfile:
             os.remove("final/correct-mid/" + myfile)
 
 
