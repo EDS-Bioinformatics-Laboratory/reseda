@@ -129,7 +129,7 @@ j="${CELL}J_${ORGANISM}"
 
 # Mount the Beehub webdav server and configure the location
 beehub_mount="/mnt/immunogenomics/RUNS/${RUN}"
-beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/${RUN}"
+beehub_web="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/${RUN}"
 
 # Then run ./execute-all.sh
 

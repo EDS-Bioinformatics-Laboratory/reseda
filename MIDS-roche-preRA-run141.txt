@@ -1,0 +1,2 @@
+Name	Regex
+LN49	^(.{0,5})(ACAACTCTTA)(.{5})

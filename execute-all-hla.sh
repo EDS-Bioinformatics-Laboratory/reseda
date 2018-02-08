@@ -27,7 +27,7 @@ refs="hla_nuc_nospace.fasta"
 # Mount the Beehub webdav server and configure the location
 resultsdir="results-tbcell-nov2016"
 beehub_mount="/mnt/immunogenomics/RUNS/${run}"
-beehub_web="https://beehub.nl/amc-immunogenomics/RUNS/${run}"
+beehub_web="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/${run}"
 
 # Then run ./execute-all-hla.sh
 

@@ -19,7 +19,7 @@ if __name__ == '__main__':
         parser.print_help()
         exit()
 
-    myurl = "https://beehub.nl/amc-immunogenomics/RUNS/" + args.run + "/data/"
+    myurl = "https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/" + args.run + "/data/"
 
     fhOut = open("basespace-copy-data.sh", "w")
     for mydir in args.sub_dirs:
