@@ -2,6 +2,7 @@
 
 # Example URL: myurl="https://beehub.nl/amc-immunogenomics/RUNS/run246/data/"
 # Example URL: myurl="https://beehub.nl/amc-immunogenomics/RUNS/run246/results-tbcell/"
+# Example URL: myurl="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/run246/data/"
 myurl=$1; shift
 
 #myfiles="runmetrics* *.sff"
