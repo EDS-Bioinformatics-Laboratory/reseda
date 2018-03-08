@@ -78,7 +78,7 @@ Example: ./execute-all.sh -r output-dir-on-webdav-server -m MIDS-miseq.txt -org 
     * Specify the pt.table.csv that you got from the immunogenomics group
     * Check by hand if the column names in the pt.table are correct
     * Run the script
-    * Usually I make reports for all samples per project+cell_type
+    * Usually I make reports for all samples per cell_type
 
 ## Preparation for Roche data ##
 * Use MakePTtableFromAAreads.R - Create a pt.table (sample description) from AA.reads file
