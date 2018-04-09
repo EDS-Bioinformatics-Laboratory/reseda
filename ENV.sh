@@ -1,4 +1,4 @@
 # Source this file to have shortcuts to the ResearchDrive
-RUN=run25-20180326-miseq
+RUN=run26-20180409-miseq
 WEBDAV=https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/${RUN}
-JSON=blah-new.json
+POOLNAME=d8c24f78f9772cbdff54cf62
