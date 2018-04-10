@@ -96,6 +96,10 @@ echo "Wrote report-ALIGNED-*"
 python2 report-after-v-reassignment.py /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/final/correct-mid/*.rr.clones_subs.csv
 echo "Wrote report-AFTER-V-REASSIGNMENT.txt"
 
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*.quality-filter.log"
+perl -ne 'print if ! m/^datafile/;' $files > report-QUALITY-FILTER.txt
+echo "Wrote report-QUALITY-FILTER.txt"
+
 # First argument: were additional mids used, yes or no
 python2 report-combine-all.py ${BARCODES} ${INFO}
 wait
