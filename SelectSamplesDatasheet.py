@@ -8,7 +8,7 @@ if __name__ == '__main__':
 
     sample_list = sys.argv[1]
     data_sheet = sys.argv[2]
-    delim = ";"
+    delim = " "
 
     # Open file with requested samples and put them in a list
 
@@ -44,13 +44,16 @@ if __name__ == '__main__':
             print(line)
             if line.startswith("[Data]"):
                 data = 1
-                header = fh.readline()
-                header = header.rstrip()
-                print(header)
-                header = header.split(",")
+        elif data == 1:
+            print(line)
+            header = line.rstrip()
+            print(header)
+            header = header.split(",")
+            data = 2
         else:                           # Sample information
             c = line.split(",")
             sample = c[header.index("Sample_Name")]
             if sample in samples:       # Only print samples that are in the samples list
                 print(line)
     fh.close()
+
