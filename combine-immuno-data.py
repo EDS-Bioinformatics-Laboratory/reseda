@@ -3,10 +3,11 @@ import sqlite3
 import sys
 
 if len(sys.argv) < 8:
-    sys.exit("Usage: combine-immuno-data.py midFile cdr3File vFile jFile seqFile outFile clonesFile clonesSubsFile clonesMainsFile totalFile")
+    sys.exit("Usage: combine-immuno-data.py midFile cdr3File vFile jFile seqFile extraFile outFile clonesFile clonesSubsFile clonesMainsFile totalFile")
 
 # Input files
-[midFile, cdr3File, vFile, jFile, seqFile, outFile, clonesFile, clonesSubsFile, clonesMainsFile, totalFile] = sys.argv[1:11]
+print(sys.argv)
+[midFile, cdr3File, vFile, jFile, seqFile, extraFile, outFile, clonesFile, clonesSubsFile, clonesMainsFile, totalFile] = sys.argv[1:12]
 
 # Input files - TEST
 # midFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-tbcell/reports/BCRh_S40_L001.assembled-report.txt"
@@ -14,6 +15,7 @@ if len(sys.argv) < 8:
 # vFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHV_human-easy-import.txt"
 # jFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHJ_human-easy-import.txt"
 # seqFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/paul/BCRh_S40_L001.assembled.fastq.gz-IGH_HUMAN.csv"
+# extraFile = "SAMPLE_Sxx_L001.assembled.fastq.gz-IGH_HUMAN-extra.txt"
 # outFile = "all_info.txt"
 # clonesFile = "clones.txt"
 # clonesSubsFile = "clones-subs.txt"
@@ -111,6 +113,11 @@ if __name__ == '__main__':
     create_table("seq", colnames)
     import_data(seqFile, "\t", "seq", colnames)
 
+    # N glycosylation sites
+    colnames = ["acc", "readingframe", "site", "start", "end"]
+    create_table("sites", colnames)
+    import_data(extraFile, " ", "sites", colnames)
+
     # Combine all tables into one big table: all_info
     query = "CREATE TABLE all_info AS SELECT * FROM mid JOIN cdr3 USING (acc) LEFT OUTER JOIN v USING (acc) LEFT OUTER JOIN j USING (acc) LEFT OUTER JOIN seq USING (acc);"
     print(query)
@@ -169,8 +176,13 @@ if __name__ == '__main__':
     print(query)
     cur.execute(query)
 
+    # Count number of different sites found in one accession code
+    query = "CREATE TABLE sites_count AS SELECT acc,readingframe,COUNT(*) AS nr_sites FROM sites GROUP BY acc,readingframe"
+    print(query)
+    cur.execute(query)
+
     # Combine all_info with v and j counts per accession
-    query = "CREATE TABLE all_info_nrs AS SELECT * FROM all_info JOIN accs_v_j USING (acc)"
+    query = "CREATE TABLE all_info_nrs AS SELECT all_info.*,accs_v_j.*,sites_count.* FROM all_info JOIN accs_v_j USING (acc) LEFT JOIN sites_count ON all_info.acc=sites_count.acc AND all_info.readingframe=sites_count.readingframe"
     print(query)
     cur.execute(query)
 

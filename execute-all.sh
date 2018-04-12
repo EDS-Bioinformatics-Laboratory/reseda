@@ -223,11 +223,6 @@ samples=`ls split/*.fastq.gz`
 runcmd ./run-fastqc.sh ${samples}
 wait
 
-# # Search for primers in the fastq files
-# set_status ${ip} "RUNNING" "${CELLTYPE} Searching for primers"
-# runcmd python2 motif-search-batch.py ${samples}
-# wait
-
 # Extract the CDR3 sequence
 set_status ${ip} "RUNNING" "${CELLTYPE} Extracting CDR3's"
 runcmd python2 TranslateAndExtractCdr3.py -c ${CELLTYPE} ${samples}
@@ -236,27 +231,14 @@ wait
 # Align sequences against IMGT and call SNPs
 set_status ${ip} "RUNNING" "${CELLTYPE} Aligning sequences"
 for ref in $refs; do
-    runcmd ./batch-align.sh ${ref} ${samples}
+   runcmd ./batch-align.sh ${ref} ${samples}
 done
 wait
 
+# Get SNPs from SAM files
 set_status ${ip} "RUNNING" "Determine SNPs from the SAM files" # creates file: ${prefix}-${refprefix}-e-clean.sam.mut.txt
 runcmd python MutationsFromSam.py *-e-clean.sam
 wait
-
-### Continue with the aligned sequences ###
-
-bamfiles=`ls *clean.sam`
-
-# Alignment quality report TO IMPLEMENT
-
-## HLAforest for HLA samples
-# for ref in $refs; do
-#     for bam in $bamfiles; do
-#         ./hla-forest.sh ${ref} ${bam}
-#         wait
-#     done
-# done
 
 ### Generate reports ###
 
@@ -274,13 +256,14 @@ for sample in ${samples}; do
     vFile=${prefix}-${v}-easy-import.txt
     jFile=${prefix}-${j}-easy-import.txt
     seqFile=${sample}-${CELLTYPE}.csv
+    extraFile=${sample}-${CELLTYPE}-extra.txt
     outFile="final/${prefix}-${CELLTYPE}-all_info.csv"
     cloneFile="final/${prefix}-${CELLTYPE}-clones.csv"
     cloneSubsFile="final/${prefix}-${CELLTYPE}-clones-subs.csv"
     cloneMainsFile="final/${prefix}-${CELLTYPE}-clones-mains.csv"
     totalFile="final/${prefix}-${CELLTYPE}-productive.txt"
-    echo "### runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile} ###"
-    runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
+    echo "### runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile} ###"
+    runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 
 done

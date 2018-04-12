@@ -6,6 +6,9 @@ POOLNAME=d8c24f78f9772cbdff54cf62
 ./mount-beehub.sh
 wait
 
+# Clean up the apt cache
+sudo apt clean
+
 # Start progess monitor
 cd git/progress
 wait

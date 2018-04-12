@@ -59,6 +59,7 @@ def create_and_import(con, cur, table, datafile):
     header = fh.readline()
     header = header.rstrip()
     header = header.replace(":1", "2")
+    header = header.replace(":2", "3")
     header = header.replace(".", "_")
     header = header.replace('"', "")
     fh.close()
