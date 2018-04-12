@@ -96,7 +96,7 @@ def parseSam(f):
             countMut = len(subseq) - countEqual
             percMut = None
             try:
-                percMut = countMut / len(subseq)
+                percMut = float(countMut) / len(subseq)
             except:
                 print("WARNING: aligned part has zero length:", acc, line[5], seq)
                 # exit()
