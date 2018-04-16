@@ -248,7 +248,7 @@ if __name__ == '__main__':
     except:
         sys.exit("cannot write file report-all.csv")
 
-    print("Sample TotalReads AssembledFreq AssembledPerc MID MidFreq MidPerc Cdr3Freq Cdr3Perc VJFreq VJPerc ReassignedFreq ReassignedPerc QualityFreq QualityPerc AlignedVFreq AlignedVPerc AlignedJFreq AlignedJPerc AlignedVAgainFreq AlignedVAgainPerc AlignedJAgainFreq AlignedJAgainPerc", file=fhOut)
+    print("Sample TotalReads AssembledFreq AssembledPerc MID MidFreq MidPerc Cdr3Freq Cdr3Perc VJFreq VJPerc ReassignedFreq ReassignedPerc QualityDiscardedFreq QualityDiscardedPerc AlignedVFreq AlignedVPerc AlignedJFreq AlignedJPerc AlignedVAgainFreq AlignedVAgainPerc AlignedJAgainFreq AlignedJAgainPerc", file=fhOut)
     samples = list()
     totals = list()
     assembledfreqs = list()
