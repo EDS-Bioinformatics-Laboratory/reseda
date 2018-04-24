@@ -53,7 +53,7 @@ Example: ./execute-all.sh -r output-dir-on-webdav-server -m MIDS-miseq.txt -org 
 
 ### Preparation ###
 * Mount basespace. Instructions are in basespace.txt
-* Specify the run and the basespace sub-directories as argument to copy-basespace-data-to-beehub.py and run it. The file basespace-copy-data.sh will be created. Run that script to copy the data from basespace to the ResearchDrive
+* Specify the run and the basespace sub-directories as argument to copy-basespace-data-to-beehub.py and run it. The file basespace-copy-data.sh and basespace-calc-checksum.sh will be created. Run these scripts to copy the data from basespace to the ResearchDrive and to calculate the SHA1 sums (last one is needed for the VerifyBasespaceCopy.py script)
 * Convert the MiSeq sample sheet with MetaData.py (creates a json file)
 * Mount the beehub webdav server
 * Verify if all data has been copied with VerifyBasespaceCopy.py. You need the mounted beehub directory name and the json file from the previous step.
