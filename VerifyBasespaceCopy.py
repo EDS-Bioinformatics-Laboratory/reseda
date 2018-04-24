@@ -4,6 +4,30 @@ import argparse
 import json
 import subprocess
 
+
+def parseChecksumFile(checksumfile):
+    '''
+    Description: Read the checksums of all original files
+    In: filename
+    Out: checksums[samplename] = checksum (dict)
+    '''
+
+    try:
+        fh = open(checksumfile)
+    except:
+        sys.exit("cannot read checksum file")
+
+    checksums = dict()
+    for line in fh:
+        line = line.rstrip()
+        (sha1, filepath) = line.split()
+        filename = filepath.split("/")[-1]
+        sample, rest = filename.split("_L001")
+        checksums[sample] = sha1
+
+    return(checksums)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Checks sample sheet (json) and adds sample numbers. Creates a file -new.json')
     parser.add_argument('-i', '--info', default='yyyymmdd-RUNnn-datasheet.json', type=str, help='Sample sheet in json format (default: %(default)s)')
@@ -18,6 +42,9 @@ if __name__ == '__main__':
         exit()
 
     webdav = args.webdav_mount + args.run + "/data/"
+
+    # Read checksums (assumes that the file CHECKSUM.SHA1.orig exists)
+    checksums = parseChecksumFile("CHECKSUM.SHA1.orig")
 
     # Read json with parsed sample sheet info (made with MetaData.py)
     try:
@@ -60,21 +87,22 @@ if __name__ == '__main__':
             print("grep", sample, "basespace-copy-data.sh")
 
     # Now check if all uploaded files have a good file size on the webdav server
-    print("============ CHECK FILE SIZE ===========")
+    print("============ CHECK FILE TRANSFERS ===========")
 
     # Connect to all files and check the file size
     for myfile in files:
         sample, rest = myfile.split("_L001")
         link = args.webdav_url + args.run + "/data/" + myfile
         cmd = "curl -sI --netrc " + link 
+        #print(cmd)
         p = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         info = p.communicate()[0]
         info = info.split("\r\n")
+        checksum = ""
 	for entry in info:
-            if entry.startswith("Content-Length"):
-                fs = int(entry.replace("Content-Length: ", ""))
+            if entry.startswith("Oc-Checksum: SHA1:"):
+                checksum = entry.replace("Oc-Checksum: SHA1:", "")
                 break
 
-        if fs < 1000:
+        if checksum != checksums[sample]:
             print("grep", myfile, "basespace-copy-data.sh")
-

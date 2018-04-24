@@ -22,6 +22,8 @@ if __name__ == '__main__':
     myurl = "https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/" + args.run + "/data/"
 
     fhOut = open("basespace-copy-data.sh", "w")
+    fhCheck = open("basespace-calc-checksum.sh", "w")
+    print("rm -f CHECKSUM.SHA1.orig", file=fhCheck)
     for mydir in args.sub_dirs:
         # syscall = os.popen("ls " + args.basespace_dir + mydir + "/*/*.fastq.gz")
         # syscall = os.popen("find " + args.basespace_dir + mydir + " -maxdepth 5 -mtime 5 -regex '.*.fastq.gz'")
@@ -30,5 +32,8 @@ if __name__ == '__main__':
         for line in syscall:
             line = line.rstrip()
             print('curl -T "' + line + '" --netrc', myurl, "; wait", file=fhOut)
+            print('sha1sum', line, ">> CHECKSUM.SHA1.orig", file=fhCheck)
     fhOut.close()
+    fhCheck.close()
     print("Wrote basespace-copy-data.sh to disk")
+    print("Wrote basespace-calc-checksum.sh to disk")
