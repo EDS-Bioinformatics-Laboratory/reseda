@@ -22,8 +22,7 @@ def parseChecksumFile(checksumfile):
         line = line.rstrip()
         (sha1, filepath) = line.split()
         filename = filepath.split("/")[-1]
-        sample, rest = filename.split("_L001")
-        checksums[sample] = sha1
+        checksums[filename] = sha1
 
     return(checksums)
 
@@ -87,7 +86,7 @@ if __name__ == '__main__':
             print("grep", sample, "basespace-copy-data.sh")
 
     # Now check if all uploaded files have a good file size on the webdav server
-    print("============ CHECK FILE TRANSFERS ===========")
+    print("# ============ CHECK FILE TRANSFERS ===========")
 
     # Connect to all files and check the file size
     for myfile in files:
@@ -104,5 +103,8 @@ if __name__ == '__main__':
                 checksum = entry.replace("Oc-Checksum: SHA1:", "")
                 break
 
-        if checksum != checksums[sample]:
+        if checksum != checksums[myfile]:
+            #print("Sample:", sample)
+            #print("This:", checksum)
+            #print("Orig:", checksums[myfile])
             print("grep", myfile, "basespace-copy-data.sh")
