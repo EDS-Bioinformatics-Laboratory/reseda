@@ -1,5 +1,6 @@
 from __future__ import print_function
 import os
+import sys
 import argparse
 import json
 import subprocess
@@ -103,8 +104,9 @@ if __name__ == '__main__':
                 checksum = entry.replace("Oc-Checksum: SHA1:", "")
                 break
 
+        print(myfile, checksums[myfile], checksum, file=sys.stderr)
+
         if checksum != checksums[myfile]:
-            #print("Sample:", sample)
-            #print("This:", checksum)
-            #print("Orig:", checksums[myfile])
             print("grep", myfile, "basespace-copy-data.sh")
+
+    print("FINISHED", file=sys.stderr)
