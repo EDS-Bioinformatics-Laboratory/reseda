@@ -100,8 +100,8 @@ if __name__ == '__main__':
         info = info.split("\r\n")
         checksum = ""
 	for entry in info:
-            if entry.startswith("Oc-Checksum: SHA1:"):
-                checksum = entry.replace("Oc-Checksum: SHA1:", "")
+            if entry.startswith("OC-Checksum: SHA1:"):
+                checksum = entry.replace("OC-Checksum: SHA1:", "")
                 break
 
         print(myfile, checksums[myfile], checksum, file=sys.stderr)
