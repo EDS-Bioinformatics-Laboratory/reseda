@@ -455,9 +455,12 @@ if __name__ == "__main__":
         count_stuff["5. Reads with only V motif"] = len(set(count_accs_alt_v))
         count_stuff["6. Reads with only J motif"] = len(set(count_accs_alt_j))
 
-        total = count_stuff["1. Total reads"]
+        total = count_stuff.get("1. Total reads")
         for key, value in sorted(count_stuff.iteritems()):
-            perc = 100.00 * value / total
+            if total > 0:
+                perc = 100.00 * value / total
+            else:
+                perc = 0
             print("\t".join([key, str(value), str(perc) + "%"]), file=fhRep)
 
         fhIn.close()
