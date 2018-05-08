@@ -13,6 +13,11 @@ def importData(datafile, fhLog):
     # basename = datafile.split("/")[-1]
     create_and_import(con, cur, table, datafile)
 
+    # Change 'None' to zero in the nr_sites column
+    query = "UPDATE all_info SET nr_sites=0 WHERE nr_sites=='None'"
+    print(query)
+    cur.execute(query)
+
     # Count entries with low quality CDR3
     result = cur.execute("SELECT COUNT(DISTINCT acc) FROM all_info WHERE CAST(cdr3_qual_min as int)<30")
     for row in result:
@@ -171,7 +176,7 @@ if __name__ == '__main__':
         query = "DROP TABLE IF EXISTS clones_subs"
         print(query)
         cur.execute(query)
-        query = "CREATE TABLE clones_subs AS SELECT cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis, group_concat(distinct V_sub) as V_sub, group_concat(distinct J_sub) as J_sub FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY cdr3pep"
+        query = "CREATE TABLE clones_subs AS SELECT cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis, group_concat(distinct V_sub) as V_sub, group_concat(distinct J_sub) as J_sub, sum(CAST(nr_sites as int)) AS sum_sites, sum(CAST(nr_sites as float))/count(DISTINCT acc) AS avg_sites FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY cdr3pep"
         # query = "CREATE TABLE clones_subs AS SELECT cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY cdr3pep"
         print(query)
         cur.execute(query)
