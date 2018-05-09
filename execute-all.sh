@@ -308,24 +308,23 @@ mkdir ${beehub_mount}/${RESULTSDIR}/raw/correct-mid
 mkdir ${beehub_mount}/${RESULTSDIR}/reports
 mkdir ${beehub_mount}/${RESULTSDIR}/final
 mkdir ${beehub_mount}/${RESULTSDIR}/final/correct-mid
-mkdir ${beehub_mount}/${RESULTSDIR}/hla
+# mkdir ${beehub_mount}/${RESULTSDIR}/hla
 wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Beehub"
-runcmd ./copy-to-beehub-reports.sh ${beehub_web}/${RESULTSDIR}/reports/
-runcmd ./copy-to-beehub-raw.sh ${beehub_web}/${RESULTSDIR}/raw/
-runcmd ./copy-to-beehub-hla.sh ${beehub_web}/${RESULTSDIR}/hla/
-cd split
-runcmd ./copy-to-beehub-reports.sh ${beehub_web}/${RESULTSDIR}/reports/
-runcmd ./copy-to-beehub-raw.sh ${beehub_web}/${RESULTSDIR}/raw/
-cd ../final
-runcmd ./copy-to-beehub-reports.sh ${beehub_web}/${RESULTSDIR}/reports/
-runcmd ./copy-to-beehub-final.sh ${beehub_web}/${RESULTSDIR}/final/
-cd correct-mid
-runcmd ./copy-to-beehub-final.sh ${beehub_web}/${RESULTSDIR}/final/correct-mid/
-runcmd ./copy-to-beehub-raw.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/
-cd ../..
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt versions-*
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
+# runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/hla/ *.hla.count.txt* *.haplotypes.txt *.seqlength.report
+
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
+
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-productive.txt
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*-all_info.csv final/*-clones-subs.csv
+
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/correct-mid/ final/correct-mid/*.rr.* final/correct-mid/*mutations*
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/correct-mid/*-all_info.csv final/correct-mid/*-clones-subs.csv
 
 wait
 
