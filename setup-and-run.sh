@@ -12,6 +12,8 @@ sudo apt clean
 # Start progess monitor
 cd git/progress
 wait
+git pull origin master
+wait
 screen ./run.sh
 wait
 
