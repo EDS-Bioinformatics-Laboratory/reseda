@@ -93,7 +93,7 @@ if __name__ == '__main__':
     for myfile in files:
         sample, rest = myfile.split("_L001")
         link = args.webdav_url + args.run + "/data/" + myfile
-        cmd = "curl -sI --netrc " + link 
+        cmd = "curl -sI --netrc " + link
         #print(cmd)
         p = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         info = p.communicate()[0]
@@ -104,9 +104,9 @@ if __name__ == '__main__':
                 checksum = entry.replace("OC-Checksum: SHA1:", "")
                 break
 
-        print(myfile, checksums[myfile], checksum, file=sys.stderr)
+        print(myfile, checksums.get(myfile, ""), checksum, file=sys.stderr)
 
-        if checksum != checksums[myfile]:
+        if checksum != checksums.get(myfile, ""):
             print("grep", myfile, "basespace-copy-data.sh")
 
     print("FINISHED", file=sys.stderr)
