@@ -169,7 +169,7 @@ def parseAligned(totalreads, summary_mids, align_file):
         sample, rest = c[0].split("_L001.assembled-")
         mid = rest.split("-")[0]
         freq = int(c[-1])
-        if mid in summary_mids[sample]:
+        if mid in summary_mids.get(sample, list()):
             percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 
