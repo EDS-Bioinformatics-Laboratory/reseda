@@ -8,18 +8,18 @@
 # ls TESTDATA/* > SAMPLES
 
 # Get settings from commandline arguments
-run=$1
-mids=$2
-organism=$3
-cell=$4
-celltype=$5
+#run=$1
+#mids=$2
+#organism=$3
+#cell=$4
+#celltype=$5
 
 # Configure this:
-# run="run09-20160919-miseq"
-# mids="MIDS-miseq.txt"
-# cell="HLA"
-# organism="human"
-# celltype="${cell}_HUMAN"
+run="run28-20180514-miseq"
+mids="MIDS-miseq.txt"
+cell="HLA"
+organism="human"
+celltype="${cell}_HUMAN"
 
 # Reference sequences
 refs="hla_nuc_nospace.fasta"
@@ -41,7 +41,7 @@ ip=${ips[0]}
 
 thisdir=`pwd`
 
-function test {
+function runcmd {
     "$@"
     local status=$?
     if [ $status -ne 0 ]; then
@@ -69,12 +69,12 @@ r1_samples=`grep R1_001 SAMPLES`
 ### Analysis on raw fastq files ###
 
 # FastQC
-test ./run-fastqc.sh ${samples}
+runcmd ./run-fastqc.sh ${samples}
 wait
 
 # Pairwise assembly
 set_status ${ip} "RUNNING" "${celltype} Pairwise assembly"
-test ./batch-pear.sh ${r1_samples}
+runcmd ./batch-pear.sh ${r1_samples}
 wait
 
 ### Continue with assembled fastq files ###
@@ -91,7 +91,7 @@ samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
 set_status ${ip} "RUNNING" "${celltype} Sorting sequences per MID"
-test python FastqSplitOnMid.py ${mids} split ${samples}
+runcmd python FastqSplitOnMid.py no ${mids} split ${samples}
 wait
 
 ### Continue with the assembled, split per mid, fastq files ###
@@ -99,13 +99,13 @@ wait
 samples=`ls split/*.fastq.gz`
 
 # FastQC report
-test ./run-fastqc.sh ${samples}
+runcmd ./run-fastqc.sh ${samples}
 wait
 
 # Align sequences against IMGT and call SNPs
 set_status ${ip} "RUNNING" "${celltype} Aligning sequences"
 for ref in $refs; do
-    test ./batch-align.sh ${ref} ${samples}
+    runcmd ./batch-align.sh ${ref} ${samples}
 done
 wait
 
@@ -115,7 +115,7 @@ bamfiles=`ls *clean.sam`
 
 # Alignment quality report TO IMPLEMENT
 
-## HLAforest for HLA samples
+# HLAforest for HLA samples
 for ref in $refs; do
     for bam in $bamfiles; do
         ./hla-forest.sh ${ref} ${bam}
@@ -137,18 +137,18 @@ wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Webdav"
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt versions-*
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/hla/ *.hla.count.txt* *.haplotypes.txt *.seqlength.report
+runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt versions-*
+runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
+runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/hla/ *.hla.count.txt* *.haplotypes.txt *.seqlength.report
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
+runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-productive.txt
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*-all_info.csv final/*-clones-subs.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/reports/ final/*-productive.txt
+runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/final/ final/*-all_info.csv final/*-clones-subs.csv
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/correct-mid/ final/correct-mid/*.rr.* final/correct-mid/*mutations*
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/correct-mid/*-all_info.csv final/correct-mid/*-clones-subs.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/final/correct-mid/ final/correct-mid/*.rr.* final/correct-mid/*mutations*
+runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/raw/correct-mid/ final/correct-mid/*-all_info.csv final/correct-mid/*-clones-subs.csv
 
 wait
 
