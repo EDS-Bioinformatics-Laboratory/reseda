@@ -25,7 +25,7 @@ celltype=$5
 refs="hla_nuc_nospace.fasta"
 
 # Mount the Beehub webdav server and configure the location
-resultsdir="results-tbcell-nov2016"
+resultsdir="hla"
 beehub_mount="/mnt/immunogenomics/RUNS/${run}"
 beehub_web="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/${run}"
 
@@ -81,6 +81,14 @@ wait
 
 samples=`ls *.assembled.fastq.gz`
 
+# # Split on sequence length
+# set_status ${ip} "RUNNING" "${CELLTYPE} Split sequences on length"
+# runcmd python2 FastqSplitOnSequenceLength.py -l 270 ${samples}
+# wait
+#
+# # New sample list
+# samples=`cat SAMPLES_long`
+
 # Split on MID
 set_status ${ip} "RUNNING" "${celltype} Sorting sequences per MID"
 test python FastqSplitOnMid.py ${mids} split ${samples}
@@ -92,11 +100,6 @@ samples=`ls split/*.fastq.gz`
 
 # FastQC report
 test ./run-fastqc.sh ${samples}
-wait
-
-# Search for primers in the fastq files
-set_status ${ip} "RUNNING" "${celltype} Searching for primers"
-test python motif-search-batch.py ${samples}
 wait
 
 # Align sequences against IMGT and call SNPs
@@ -133,19 +136,19 @@ mkdir ${beehub_mount}/${resultsdir}/hla
 wait
 
 # Transfer data to Beehub
-set_status ${ip} "RUNNING" "Transferring ${celltype} data to Beehub"
-test ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
-test ./copy-to-beehub-raw.sh ${beehub_web}/${resultsdir}/raw/
-test ./copy-to-beehub-hla.sh ${beehub_web}/${resultsdir}/hla/
-cd split
-test ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
-test ./copy-to-beehub-raw.sh ${beehub_web}/${resultsdir}/raw/
-cd ../final
-test ./copy-to-beehub-reports.sh ${beehub_web}/${resultsdir}/reports/
-test ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/
-cd correct-mid
-test ./copy-to-beehub-final.sh ${beehub_web}/${resultsdir}/final/correct-mid/
-cd ../..
+set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Webdav"
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt versions-*
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/hla/ *.hla.count.txt* *.haplotypes.txt *.seqlength.report
+
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
+
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-productive.txt
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*-all_info.csv final/*-clones-subs.csv
+
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/correct-mid/ final/correct-mid/*.rr.* final/correct-mid/*mutations*
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/correct-mid/*-all_info.csv final/correct-mid/*-clones-subs.csv
 
 wait
 
