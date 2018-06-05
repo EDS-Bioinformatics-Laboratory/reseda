@@ -29,7 +29,7 @@ def parseChecksumFile(checksumfile):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Checks sample sheet (json) and adds sample numbers. Creates a file -new.json')
+    parser = argparse.ArgumentParser(description='Checks if all fastq files were transferred correcly. Needs the file CHECKSUM.SHA1.orig')
     parser.add_argument('-i', '--info', default='yyyymmdd-RUNnn-datasheet.json', type=str, help='Sample sheet in json format (default: %(default)s)')
     parser.add_argument('-r', '--run', default='runNN-yyyymmdd-miseq', type=str, help='Run name (default: %(default)s)')
     parser.add_argument('-wm', '--webdav_mount', default='/mnt/immunogenomics/RUNS/', type=str, help='Webdav mounted directory (default: %(default)s)')
