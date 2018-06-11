@@ -64,7 +64,10 @@ if __name__ == '__main__':
     for project, chains_species in projects.items():
         chains_species = list(set(chains_species))
         for chain_specie in chains_species:
-            cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + "cdr3-clones-" + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv"
+            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "cdr3-clones-" + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv"
             executeCmd(cmd)
-            cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + "assign-info-" + " " + mydir + "*" + chain_specie + "*-all_info.csv.rr.csv"
+            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "assign-info-" + " " + mydir + "*" + chain_specie + "*-all_info.csv.rr.csv"
             executeCmd(cmd)
+            if "IG" in chain_specie:
+                cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "cdr3-clones-mut-" + " -d ',' " + " " + mydir + "*-mutations-per-clone.csv"
+                executeCmd(cmd)
