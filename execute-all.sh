@@ -228,6 +228,22 @@ set_status ${ip} "RUNNING" "${CELLTYPE} Extracting CDR3's"
 runcmd python2 TranslateAndExtractCdr3.py -c ${CELLTYPE} ${samples}
 wait
 
+# Count lines of CDR3.csv files
+set_status ${ip} "RUNNING" "${CELLTYPE} Select correct MIDs"
+runcmd wc -l split/*${CELLTYPE}-CDR3.csv > wc-${ip}.txt
+wait
+runcmd python2 select-correct-mids.py ${BARCODES} wc-${ip}.txt > mv-samples-with-correct-mid.sh
+wait
+mkdir split/correct-mid
+wait
+cd split
+runcmd bash ../mv-samples-with-correct-mid.sh
+wait
+mv *.assembled-report.txt correct-mid
+cd ..
+
+samples=`ls split/correct-mid/*.fastq.gz`
+
 # Align sequences against IMGT and call SNPs
 set_status ${ip} "RUNNING" "${CELLTYPE} Aligning sequences"
 for ref in $refs; do
@@ -268,35 +284,25 @@ for sample in ${samples}; do
 
 done
 
-# Count lines of all_info.csv files
-set_status ${ip} "RUNNING" "${CELLTYPE} Select correct MIDs"
-runcmd wc -l final/*all_info.csv > wc-${ip}.txt
+# Move results to 'final'
+mv split/correct-mid/* final
 wait
-runcmd python2 select-correct-mids.py ${BARCODES} wc-${ip}.txt > mv-samples-with-correct-mid.sh
-wait
-mkdir final/correct-mid
-wait
-cd final
-runcmd bash ../mv-samples-with-correct-mid.sh
-wait
-mv correct-mid/*-productive.txt .
-cd ..
 
 # Correct V gene assignments
 set_status ${ip} "RUNNING" "${CELLTYPE} Re-assign V genes"
-runcmd python2 ReAssignVGenes.py final/correct-mid/*-all_info.csv
+runcmd python2 ReAssignVGenes.py final/*-all_info.csv
 wait
 # Move files to final
-mv *.rr.* final/correct-mid
+mv *.rr.* final
 wait
 
 # Do mutation analysis if reference is IGH_HUMAN
 if [[ ${CELLTYPE} -eq "IGH_HUMAN" ]]; then
     set_status ${ip} "RUNNING" "${CELLTYPE} Mutation analysis"
-    samples=`ls final/correct-mid/*-IGH_HUMAN-all_info.csv.rr.all_info.csv`
+    samples=`ls final/*-IGH_HUMAN-all_info.csv.rr.all_info.csv`
     for sample in ${samples}; do
         prefix=`basename ${sample} -IGH_HUMAN-all_info.csv.rr.all_info.csv`
-        runcmd Rscript MutationAnalysisVJ.R indir=\'.\' outdir=\'final/correct-mid\' V.file=\'${prefix}-IGHV_human-e-clean.sam.mut.txt\' J.file=\'${prefix}-IGHJ_human-e-clean.sam.mut.txt\' CDR3.file=\'final/correct-mid/${prefix}-IGH_HUMAN-all_info.csv.rr.all_info.csv\'
+        runcmd Rscript MutationAnalysisVJ.R indir=\'.\' outdir=\'final\' V.file=\'${prefix}-IGHV_human-e-clean.sam.mut.txt\' J.file=\'${prefix}-IGHJ_human-e-clean.sam.mut.txt\' CDR3.file=\'final/${prefix}-IGH_HUMAN-all_info.csv.rr.all_info.csv\'
     done
 fi
 
@@ -307,24 +313,21 @@ mkdir ${beehub_mount}/${RESULTSDIR}/raw
 mkdir ${beehub_mount}/${RESULTSDIR}/raw/correct-mid
 mkdir ${beehub_mount}/${RESULTSDIR}/reports
 mkdir ${beehub_mount}/${RESULTSDIR}/final
-mkdir ${beehub_mount}/${RESULTSDIR}/final/correct-mid
+# mkdir ${beehub_mount}/${RESULTSDIR}/final/correct-mid
 # mkdir ${beehub_mount}/${RESULTSDIR}/hla
 wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Beehub"
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt versions-*
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
-# runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/hla/ *.hla.count.txt* *.haplotypes.txt *.seqlength.report
-
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
-
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-productive.txt
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*-all_info.csv final/*-clones-subs.csv
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/correct-mid/ final/correct-mid/*.rr.* final/correct-mid/*mutations*
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/correct-mid/*-all_info.csv final/correct-mid/*-clones-subs.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
+
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations*
 
 wait
 

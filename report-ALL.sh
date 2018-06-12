@@ -93,7 +93,7 @@ files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/raw/*.sam"
 python report-alignments.py ${files}
 echo "Wrote report-ALIGNED-*"
 
-python2 report-after-v-reassignment.py /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/final/correct-mid/*.rr.clones_subs.csv
+python2 report-after-v-reassignment.py /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/final/*.rr.clones_subs.csv
 echo "Wrote report-AFTER-V-REASSIGNMENT.txt"
 
 files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*.quality-filter.log"

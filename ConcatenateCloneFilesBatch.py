@@ -34,7 +34,7 @@ def lookupChain(chain):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Concatenates clones files per project and cell type')
     parser.add_argument('-r', '--runinfo', default='yyyymmdd-RUNnn-datasheet-new.json', type=str, help='Sample sheet in json format (default: %(default)s)')
-    parser.add_argument('-w', '--webdav', default='/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/results-tbcell/final/correct-mid/', type=str, help='Webdav directory (default: %(default)s)')
+    parser.add_argument('-w', '--webdav', default='/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/results-tbcell/final/', type=str, help='Webdav directory (default: %(default)s)')
     args = parser.parse_args()
 
     if args.webdav == '/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/results-tbcell/final/correct-mid/' or args.runinfo == 'yyyymmdd-RUNnn-datasheet-new.json':
