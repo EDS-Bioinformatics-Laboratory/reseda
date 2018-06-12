@@ -72,7 +72,7 @@ def parseSam(f):
     except:
         sys.exit("cannot open or write file: " + f)
 
-    print("acc cigar start.pos end.pos mut.count mut.frac align.length align.seq", file=fhOut)
+    print("acc gene cigar start.pos end.pos mut.count mut.frac align.length align.seq", file=fhOut)
 
     for line in fh:
         # Skip header
@@ -87,9 +87,10 @@ def parseSam(f):
         except:
             continue
         acc = line[0]
+        gene = line[2]
         seq = line[9]
         if len(cigar) > 1:
-            print("WARNING: multiple parts aligned:", acc, line[5], cigar, "\n", seq, "\n-----------------------------------------------------------------------")
+            print("WARNING: multiple parts aligned:", acc, gene, line[5], cigar, "\n", seq, "\n-----------------------------------------------------------------------")
         for (start, end) in cigar:
             subseq = seq[start:end]
             countEqual = subseq.count("=")
@@ -100,7 +101,7 @@ def parseSam(f):
             except:
                 print("WARNING: aligned part has zero length:", acc, line[5], seq)
                 # exit()
-            print(acc, line[5], start, end, countMut, percMut, len(subseq), subseq, file=fhOut)
+            print(acc, gene, line[5], start, end, countMut, percMut, len(subseq), subseq, file=fhOut)
 
     print("Wrote", outfile, "to disk")
     return(outfile)
