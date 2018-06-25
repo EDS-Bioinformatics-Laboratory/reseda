@@ -21,7 +21,7 @@ def getGeneNames(ref):
         if line.startswith('>'):
             line = line.rstrip()
             line = line.split(" ")
-            acc = line[0]
+            acc = line[0][1:]   # exclude the '>' in front of the accession code
             descr = " ".join(line[1:])
             d[acc] = descr
     fh.close()
@@ -50,14 +50,14 @@ def summaryGeneNames(refseq, samfile):
         gene_summary[gene] = gene_summary.get(gene, 0) + 1
     fh.close()
 
-    outfile = sam_files + "-genes.txt"
+    outfile = samfile + "-genes.txt"
     try:
         fhOut = open(outfile, "w")
     except:
         sys.exit("cannot write file: " + outfile)
 
     for gene in sorted(gene_summary, key=gene_summary.get, reverse=True):
-        print(gene, gene_summary[gene], file=fhOut)
+        print(gene_summary[gene], gene, file=fhOut)
     fhOut.close()
     return(outfile)
 
