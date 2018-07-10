@@ -273,15 +273,20 @@ for sample in ${samples}; do
     jFile=${prefix}-${j}-easy-import.txt
     seqFile=${sample}-${CELLTYPE}.csv
     extraFile=${sample}-${CELLTYPE}-extra.txt
-    outFile="final/${prefix}-${CELLTYPE}-all_info.csv"
+    allinfoFile="final/${prefix}-${CELLTYPE}-all_info.csv"
     cloneFile="final/${prefix}-${CELLTYPE}-clones.csv"
     cloneSubsFile="final/${prefix}-${CELLTYPE}-clones-subs.csv"
     cloneMainsFile="final/${prefix}-${CELLTYPE}-clones-mains.csv"
     totalFile="final/${prefix}-${CELLTYPE}-productive.txt"
-    echo "### runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile} ###"
-    runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${outFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
+    echo "### runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${allinfoFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile} ###"
+    runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${allinfoFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 
+    # Integrate allinfo file with V and J mutation information, if it fails it will just continue with the next sample
+    vMutFile=${prefix}-${v}-e-clean.sam.mut.txt
+    jMutFile=${prefix}-${j}-e-clean.sam.mut.txt
+    python MutationAnalysisVJ.py -a ${allinfoFile} -v ${vMutFile} -j ${jMutFile}
+    wait
 done
 
 # Move results to 'final'
@@ -327,7 +332,7 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mu
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations*
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-clones-mut-sites.csv
 
 wait
 
