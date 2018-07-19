@@ -54,20 +54,23 @@ if __name__ == '__main__':
 
     # Output
     outfile = cloneFile.replace("-clones-mut-sites.csv", "-clones-mut-sites-reassigned.csv")
+    reportfile = cloneFile.replace("-clones-mut-sites.csv", "-qual-reassign.log")
+
+    fhOut = open(reportfile, "w")
 
     # read cloneFile and put it in a dataframe
     df = pd.read_csv(cloneFile, sep="\t")
-    print("Nr of entries in clone file", len(df))
+    print("Nr of entries in clone file", len(df), file=fhOut)
     ###df.head()
 
     # group by cdr3peptide and count nr of different V genes and reads
     cols = ['cdr3pep', 'V_sub', 'acc.nunique']
     cdr3pep_uniq = df[cols].groupby('cdr3pep').agg({'V_sub': 'nunique', 'acc.nunique': sum})
-    print("Nr of unique CDR3s:", len(cdr3pep_uniq))
+    print("Nr of unique CDR3s:", len(cdr3pep_uniq), file=fhOut)
 
     # select CDR3's with more than one V gene assigned
     cdr3pep_uniq = cdr3pep_uniq.loc[cdr3pep_uniq['V_sub'] > 1]
-    print("Nr of cdr3s with more than one V gene", len(cdr3pep_uniq))
+    print("Nr of uniq cdr3s with more than one V gene", len(cdr3pep_uniq), file=fhOut)
 
     ###cdr3pep_uniq.head()
 
@@ -87,17 +90,17 @@ if __name__ == '__main__':
 
     ## Check if sum of nr of accessions is the same ##
 
-    print("Sum reads the same?", df['acc.nunique'].sum(), clones['acc.nunique'].sum(), df['acc.nunique'].sum() == clones['acc.nunique'].sum())
+    print("Sum reads the same?", df['acc.nunique'].sum(), clones['acc.nunique'].sum(), df['acc.nunique'].sum() == clones['acc.nunique'].sum(), file=fhOut)
 
-    print("Sum UMIs the same?", df['beforeMID.nunique'].sum(), clones['beforeMID.nunique'].sum(), df['beforeMID.nunique'].sum() == clones['beforeMID.nunique'].sum())
+    print("Sum UMIs the same?", df['beforeMID.nunique'].sum(), clones['beforeMID.nunique'].sum(), df['beforeMID.nunique'].sum() == clones['beforeMID.nunique'].sum(), file=fhOut)
 
     ## Get nr of unique UMIs from the allinfo file ##
 
     # Read allinfo file and apply quality filter
     allinfo = pd.read_csv(allinfoFile, sep='\t')
-    print("Reads in allinfo before quality filter:", allinfo['acc'].nunique())
+    print("Reads in allinfo before quality filter:", allinfo['acc'].nunique(), file=fhOut)
     allinfo = allinfo.loc[(allinfo['cdr3_qual_min'] >= 30) & (allinfo['V_sub'] != 'None') & (allinfo['J_sub'] != 'None') & ((allinfo['V_flag'] == '0') | (allinfo['V_flag'] == '16')) & ((allinfo['J_flag'] == '0') | (allinfo['J_flag'] == '16'))]
-    print("Reads in allinfo after quality filter:", allinfo['acc'].nunique())
+    print("Reads in allinfo after quality filter:", allinfo['acc'].nunique(), file=fhOut)
 
     # Group the original entries by cdr3pep and J-gene
     select = ['cdr3pep', 'V_sub', 'J_sub', 'acc', 'beforeMID']
@@ -116,8 +119,10 @@ if __name__ == '__main__':
 
     ###clones_final.head()
 
-    print("Nr of clones (after mutation analysis, after V gene assignment, final)", len(clones_orig), len(clones), len(clones_final))
+    print("Nr of clones (after mutation analysis, after V gene assignment, final)", len(clones_orig), len(clones), len(clones_final), file=fhOut)
 
     # Write the clones to disk
     clones_final.to_csv(outfile, sep='\t', index=False)
     print("Wrote", outfile, "to disk")
+
+    fhOut.close()
