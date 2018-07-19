@@ -13,7 +13,7 @@ function show_help {
     echo "USAGE: ./execute-all.sh [options]"
     echo "    -r --run             required: runNN-YYYYMMDD-miseq"
     echo "    -l --location        local|webdav, default: webdav"
-    echo "    -m --mids            default: MIDS-miseq-umi.txt"
+    echo "    -m --mids            default: MIDS-miseq-umi.txt (older version is MIDS-miseq.txt)"
     echo "    -org --organism      human|mouse, default: human"
     echo "    -cell --cell         IGH|IGK|IGL|TRA|TRB, default:IGH"
     echo "    -celltype --celltype IGH_HUMAN|TRB_MOUSE|etc, default: IGH_HUMAN"
@@ -282,18 +282,22 @@ for sample in ${samples}; do
     runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${allinfoFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 
-    # Integrate allinfo file with V and J mutation information, if it fails it will just continue with the next sample
+    # Integrate allinfo file with V and J mutation information, if it fails it will just continue with the next sample, creates a clones file
     vMutFile=${prefix}-${v}-e-clean.sam.mut.txt
     jMutFile=${prefix}-${j}-e-clean.sam.mut.txt
     python MutationAnalysisVJ.py -a ${allinfoFile} -v ${vMutFile} -j ${jMutFile}
     wait
+
+    # Reassign V genes based on the created clones file above, creates a new clones file
+    cloneMutFile = final/${prefix}-${CELLTYPE}-clones-mut-sites.csv # this is the result of the script MutationAnalysisVJ.py
+    python ReassignGenes.py -c ${cloneMutFile} -a ${allinfoFile} # creates a file with extension -clones-mut-sites-reassigned.csv
 done
 
 # Move results to 'final'
 mv split/correct-mid/* final
 wait
 
-# Correct V gene assignments
+# Correct V gene assignments (OLD, can be removed when new procedure is correct)
 set_status ${ip} "RUNNING" "${CELLTYPE} Re-assign V genes"
 runcmd python2 ReAssignVGenes.py final/*-all_info.csv
 wait
@@ -301,7 +305,7 @@ wait
 mv *.rr.* final
 wait
 
-# Do mutation analysis if reference is IGH_HUMAN
+# Do mutation analysis if reference is IGH_HUMAN (OLD, can be removed when new procedure is correct)
 if [[ ${CELLTYPE} -eq "IGH_HUMAN" ]]; then
     set_status ${ip} "RUNNING" "${CELLTYPE} Mutation analysis"
     samples=`ls final/*-IGH_HUMAN-all_info.csv.rr.all_info.csv`
@@ -332,7 +336,7 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mu
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-clones-mut-sites.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
 
 wait
 
