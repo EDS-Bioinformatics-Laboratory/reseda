@@ -99,7 +99,7 @@ if __name__ == '__main__':
         info = p.communicate()[0]
         info = info.split("\r\n")
         checksum = ""
-	for entry in info:
+        for entry in info:
             if entry.startswith("OC-Checksum: SHA1:"):
                 checksum = entry.replace("OC-Checksum: SHA1:", "")
                 break
