@@ -37,7 +37,7 @@ if __name__ == '__main__':
     parser.add_argument('-w', '--webdav', default='/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/results-tbcell/final/', type=str, help='Webdav directory (default: %(default)s)')
     args = parser.parse_args()
 
-    if args.webdav == '/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/results-tbcell/final/correct-mid/' or args.runinfo == 'yyyymmdd-RUNnn-datasheet-new.json':
+    if args.webdav == '/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/results-tbcell/final/' or args.runinfo == 'yyyymmdd-RUNnn-datasheet-new.json':
         parser.print_help()
         exit()
 
