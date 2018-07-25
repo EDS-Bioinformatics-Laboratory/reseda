@@ -295,6 +295,7 @@ done
 
 # Move results to 'final'
 mv split/correct-mid/* final
+mv final/*-report.txt split
 wait
 
 # Correct V gene assignments (OLD, can be removed when new procedure is correct)
