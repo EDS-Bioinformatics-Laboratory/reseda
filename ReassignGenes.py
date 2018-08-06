@@ -59,7 +59,7 @@ if __name__ == '__main__':
     fhOut = open(reportfile, "w")
 
     # read cloneFile and put it in a dataframe
-    df = pd.read_csv(cloneFile, sep="\t")
+    df = pd.read_csv(cloneFile, sep="\t", na_values=['None', ''])
     print("Nr of entries in clone file", len(df), file=fhOut)
     ###df.head()
 
@@ -97,9 +97,9 @@ if __name__ == '__main__':
     ## Get nr of unique UMIs from the allinfo file ##
 
     # Read allinfo file and apply quality filter
-    allinfo = pd.read_csv(allinfoFile, sep='\t')
+    allinfo = pd.read_csv(allinfoFile, sep='\t', na_values=['None', ''])
     print("Reads in allinfo before quality filter:", allinfo['acc'].nunique(), file=fhOut)
-    allinfo = allinfo.loc[(allinfo['cdr3_qual_min'] >= 30) & (allinfo['V_sub'] != 'None') & (allinfo['J_sub'] != 'None') & ((allinfo['V_flag'] == '0') | (allinfo['V_flag'] == '16')) & ((allinfo['J_flag'] == '0') | (allinfo['J_flag'] == '16'))]
+    allinfo = allinfo.loc[(allinfo['cdr3_qual_min'] >= 30) & (pd.isna(allinfo['V_sub']) == False) & (pd.isna(allinfo['J_sub']) == False) & ((allinfo['V_flag'] == 0) | (allinfo['V_flag'] == 16)) & ((allinfo['J_flag'] == 0) | (allinfo['J_flag'] == 16))]
     print("Reads in allinfo after quality filter:", allinfo['acc'].nunique(), file=fhOut)
 
     # Group the original entries by cdr3pep and J-gene

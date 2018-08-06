@@ -5,13 +5,13 @@ import argparse
 
 def readData(allinfo_file, v_file, j_file):
     # ## Read files
-    allinfo = pd.read_csv(allinfo_file, sep='\t')
+    allinfo = pd.read_csv(allinfo_file, sep='\t', na_values=['None', ''])
 
     # Replace 'None' with 0 for the nr_sites column
-    allinfo['nr_sites'] = allinfo['nr_sites'].replace('None', 0).apply(int)
+    allinfo['nr_sites'] = allinfo['nr_sites'].fillna(0)
 
-    v = pd.read_csv(v_file, sep=' ')
-    j = pd.read_csv(j_file, sep=' ')
+    v = pd.read_csv(v_file, sep=' ', na_values=['None', ''])
+    j = pd.read_csv(j_file, sep=' ', na_values=['None', ''])
 
     # clean up the gene names
     clean_name = lambda x: x.split("|")[1]
@@ -29,7 +29,7 @@ def combineDataFrames(allinfo, v, j):
 
 def filterData(df):
     # ## Filter data
-    df = df.loc[(df['cdr3_qual_min'] >= 30) & (df['V_sub'] != 'None') & (df['J_sub'] != 'None') & ((df['V_flag'] == '0') | (df['V_flag'] == '16')) & ((df['J_flag'] == '0') | (df['J_flag'] == '16'))]
+    df = df.loc[(df['cdr3_qual_min'] >= 30) & (pd.isna(df['V_sub']) == False) & (pd.isna(df['J_sub']) == False) & ((df['V_flag'] == 0) | (df['V_flag'] == 16)) & ((df['J_flag'] == 0) | (df['J_flag'] == 16))]
 
     # Remove entries where the V and J alignments overlap each other
     df = df.drop(df.loc[(df['start.pos_y']>df['start.pos_x']) & (df['start.pos_y']<df['end.pos_x']) | (df['end.pos_y']>df['start.pos_x']) & (df['end.pos_y']<df['end.pos_x'])].index)
