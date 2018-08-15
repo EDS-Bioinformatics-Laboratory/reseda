@@ -48,7 +48,9 @@ def allinfoToClones(df,allinfo_file):
     # ## Output
     outfile = allinfo_file.replace("-all_info.csv", "-clones-mut-sites.csv")
 
-    clones = df.groupby(['cdr3pep','V_sub','J_sub']).agg({'acc': 'nunique', 'beforeMID': 'nunique', 'mut.count_x': [sum, np.mean], 'mut.frac_x': [sum, np.mean], 'mut.count_y': [sum, np.mean], 'mut.frac_y': [sum, np.mean], 'nr_sites': [sum, np.mean]})
+    concat_values = lambda x: "|".join([str(e) for e in x])
+
+    clones = df.groupby(['cdr3pep','V_sub','J_sub']).agg({'acc': 'nunique', 'beforeMID': 'nunique', 'mut.count_x': [sum, np.mean, np.median, concat_values], 'mut.frac_x': [sum, np.mean], 'mut.count_y': [sum, np.mean, np.median, concat_values], 'mut.frac_y': [sum, np.mean], 'nr_sites': [sum, np.mean, np.median]})
     clones = clones.sort_values(by=('acc','nunique'), ascending=False)
 
     clones.columns = ['.'.join(col).strip() for col in clones.columns.values]

@@ -35,6 +35,12 @@ def reAssign(df, peptide, threshold):
     return(df, v_gene)
 
 
+def mode(array):
+    # From: https://stackoverflow.com/questions/10797819/finding-the-mode-of-a-list (user mathwizurd)
+    most = max(list(map(array.count, array)))
+    return list(set(filter(lambda x: array.count(x) == most, array)))
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Reassigns V gene names, creates a clones file')
     parser.add_argument('-c', '--clones', default='SampleName_S1_L001.assembled-MID-IGH_HUMAN-clones-mut-sites.csv', type=str, help='Clone file name, output of MutationAnalysisVJ.py (default: %(default)s)')
@@ -82,7 +88,8 @@ if __name__ == '__main__':
 
     # Group the re-assigned entries
     cols = ['cdr3pep', 'V_sub', 'J_sub']
-    clones = df.groupby(cols).agg({'acc.nunique': sum, 'beforeMID.nunique': sum, 'mut.count_x.sum': sum, 'mut.count_x.mean': np.mean, 'mut.frac_x.sum': sum, 'mut.frac_x.mean': np.mean, 'mut.count_y.sum': sum, 'mut.count_y.mean': np.mean, 'mut.frac_y.sum': sum, 'mut.frac_y.mean': np.mean, 'nr_sites.sum': sum, 'nr_sites.mean': np.mean})
+    concat_mode = lambda x: min(mode([float(e) for e in "|".join(x).split("|")]))
+    clones = df.groupby(cols).agg({'acc.nunique': sum, 'beforeMID.nunique': sum, 'mut.count_x.sum': sum, 'mut.count_x.mean': np.mean, 'mut.count_x.<lambda>': concat_mode, 'mut.frac_x.sum': sum, 'mut.frac_x.mean': np.mean, 'mut.count_y.sum': sum, 'mut.count_y.mean': np.mean, 'mut.frac_y.sum': sum, 'mut.frac_y.mean': np.mean, 'nr_sites.sum': sum, 'nr_sites.mean': np.mean})
     clones = clones.sort_values(by='acc.nunique', ascending=False)
     clones = clones.reset_index()
 
