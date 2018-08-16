@@ -68,6 +68,5 @@ if __name__ == '__main__':
             executeCmd(cmd)
             cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "assign-info-" + " " + mydir + "*" + chain_specie + "*-all_info.csv.rr.csv"
             executeCmd(cmd)
-            if "IG" in chain_specie:
-                cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "cdr3-clones-mut-" + " -d ',' " + " " + mydir + "*-mutations-per-clone.csv"
-                executeCmd(cmd)
+            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "vjcdr3-clones-mut-" + " " + mydir + "*-clones-mut-sites-reassigned.csv"
+            executeCmd(cmd)
