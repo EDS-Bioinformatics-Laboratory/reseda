@@ -89,7 +89,7 @@ if __name__ == '__main__':
     # Group the re-assigned entries
     cols = ['cdr3pep', 'V_sub', 'J_sub']
     concat_mode = lambda x: min(mode([float(e) for e in "|".join(x).split("|")]))
-    clones = df.groupby(cols).agg({'acc.nunique': sum, 'beforeMID.nunique': sum, 'mut.count_x.sum': sum, 'mut.count_x.mean': np.mean, 'mut.count_x.<lambda>': concat_mode, 'mut.frac_x.sum': sum, 'mut.frac_x.mean': np.mean, 'mut.count_y.sum': sum, 'mut.count_y.mean': np.mean, 'mut.frac_y.sum': sum, 'mut.frac_y.mean': np.mean, 'nr_sites.sum': sum, 'nr_sites.mean': np.mean})
+    clones = df.groupby(cols).agg({'acc.nunique': sum, 'beforeMID.nunique': sum, 'mut.count_x.sum': sum, 'mut.count_x.mean': np.mean, 'mut.count_x.concat_values': concat_mode, 'mut.frac_x.mean': np.mean, 'mut.count_y.sum': sum, 'mut.count_y.mean': np.mean, 'mut.count_y.concat_values': concat_mode, 'mut.frac_y.mean': np.mean, 'nr_sites.sum': sum, 'nr_sites.mean': np.mean, 'nr_sites.concat_values': concat_mode})
     clones = clones.sort_values(by='acc.nunique', ascending=False)
     clones = clones.reset_index()
 
@@ -123,6 +123,7 @@ if __name__ == '__main__':
     # Merge clones with clones_orig to get the unique number of UMIs
     clones_final = pd.merge(clones, clones_orig, how='inner', left_on=['cdr3pep','J_sub'], right_on=['cdr3pep','J_sub'])
     clones_final = clones_final.sort_values(by='acc.nunique', ascending=False)
+    clones_final = clones_final.rename(columns={"acc.nunique": "freq", "mut.count_x.concat_values": "mut.count_x.mode", "mut.count_y.concat_values": "mut.count_y.mode", "nr_sites.concat_values": "nr_sites.mode"})
 
     ###clones_final.head()
 

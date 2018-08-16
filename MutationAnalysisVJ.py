@@ -42,17 +42,21 @@ def filterData(df):
     return(df)
 
 
+# Concatenate mutation count values with a '|' between the values
+def concat_values(x):
+    return "|".join([str(e) for e in x])
+
+
 def allinfoToClones(df,allinfo_file):
     # ## Group data per clone (CDR3pep)
 
     # ## Output
     outfile = allinfo_file.replace("-all_info.csv", "-clones-mut-sites.csv")
 
-    concat_values = lambda x: "|".join([str(e) for e in x])
-
-    clones = df.groupby(['cdr3pep','V_sub','J_sub']).agg({'acc': 'nunique', 'beforeMID': 'nunique', 'mut.count_x': [sum, np.mean, np.median, concat_values], 'mut.frac_x': [sum, np.mean], 'mut.count_y': [sum, np.mean, np.median, concat_values], 'mut.frac_y': [sum, np.mean], 'nr_sites': [sum, np.mean, np.median]})
+    clones = df.groupby(['cdr3pep','V_sub','J_sub']).agg({'acc': 'nunique', 'beforeMID': 'nunique', 'mut.count_x': [sum, np.mean, concat_values], 'mut.frac_x': np.mean, 'mut.count_y': [sum, np.mean, concat_values], 'mut.frac_y': np.mean, 'nr_sites': [sum, np.mean, np.median, concat_values]})
     clones = clones.sort_values(by=('acc','nunique'), ascending=False)
 
+    # Convert multilevel column names to single string column names
     clones.columns = ['.'.join(col).strip() for col in clones.columns.values]
 
     clones.to_csv(outfile, sep='\t')
