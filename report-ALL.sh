@@ -69,7 +69,7 @@ echo BARCODES        = "${BARCODES}"
 
 ################## End get arguments #############
 
-files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*.log"
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-pear.log"
 grep '^Assembled reads \.' $files > report-PEAR.txt
 echo "Wrote report-PEAR.txt"
 
@@ -99,6 +99,14 @@ echo "Wrote report-AFTER-V-REASSIGNMENT.txt"
 files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*.quality-filter.log"
 perl -ne 'print if ! m/^datafile/;' $files > report-QUALITY-FILTER.txt
 echo "Wrote report-QUALITY-FILTER.txt"
+
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-qual-reassign.log"
+grep '^Reads in allinfo before quality filter' $files > report-ALLINFO.txt
+echo "Wrote report-ALLINFO.txt"
+grep '^Reads in allinfo after quality filter' $files > report-ALLINFO-FILTER.txt
+echo "Wrote report-ALLINFO-FILTER.txt"
+grep '^Nr of clones' $files > report-CLONES.txt
+echo "Wrote report-CLONES.txt"
 
 # First argument: were additional mids used, yes or no
 python2 report-combine-all.py ${BARCODES} ${INFO}
