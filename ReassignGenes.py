@@ -41,6 +41,11 @@ def mode(array):
     return list(set(filter(lambda x: array.count(x) == most, array)))
 
 
+def show_uniq(mylist):
+    # return "|".join(list(set(mylist)))
+    return "|".join(list(set(mylist)))
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Reassigns V gene names, creates a clones file')
     parser.add_argument('-c', '--clones', default='SampleName_S1_L001.assembled-MID-IGH_HUMAN-clones-mut-sites.csv', type=str, help='Clone file name, output of MutationAnalysisVJ.py (default: %(default)s)')
@@ -110,14 +115,15 @@ if __name__ == '__main__':
     print("Reads in allinfo after quality filter:", allinfo['acc'].nunique(), file=fhOut)
 
     # Group the original entries by cdr3pep and J-gene
-    select = ['cdr3pep', 'V_sub', 'J_sub', 'acc', 'beforeMID']
+    select = ['cdr3pep', 'V_sub', 'J_sub', 'acc', 'beforeMID', 'cdr3nuc']
     cols = ['cdr3pep', 'J_sub']
-    clones_orig = allinfo[select].groupby(cols).agg({'beforeMID': 'nunique'})
-    clones_orig = clones_orig.sort_values(by='beforeMID', ascending=False)
+    clones_orig = allinfo[select].groupby(cols).agg({'beforeMID': 'nunique', 'cdr3nuc': ['nunique', show_uniq]})
+    clones_orig.columns = ['.'.join(col).strip() for col in clones_orig.columns.values] # Convert multilevel column names to single string column names
+    clones_orig = clones_orig.sort_values(by='beforeMID.nunique', ascending=False)
 
     # Reset index and rename the 'beforeMID' column to 'UMIs'
     clones_orig = clones_orig.reset_index()
-    clones_orig = clones_orig.rename(columns={'beforeMID': 'UMIs'})
+    clones_orig = clones_orig.rename(columns={'beforeMID.nunique': 'UMIs'})
     ###clones_orig.head()
 
     # Merge clones with clones_orig to get the unique number of UMIs
