@@ -41,9 +41,8 @@ def mode(array):
     return list(set(filter(lambda x: array.count(x) == most, array)))
 
 
-def show_uniq(mylist):
-    # return "|".join(list(set(mylist)))
-    return "|".join(list(set(mylist)))
+# def show_mode(mylist):
+#     return "|".join(mode(mylist))
 
 
 if __name__ == '__main__':
@@ -117,7 +116,7 @@ if __name__ == '__main__':
     # Group the original entries by cdr3pep and J-gene
     select = ['cdr3pep', 'V_sub', 'J_sub', 'acc', 'beforeMID', 'cdr3nuc']
     cols = ['cdr3pep', 'J_sub']
-    clones_orig = allinfo[select].groupby(cols).agg({'beforeMID': 'nunique', 'cdr3nuc': ['nunique', show_uniq]})
+    clones_orig = allinfo[select].groupby(cols).agg({'beforeMID': 'nunique', 'cdr3nuc': ['nunique', pd.Series.mode]})
     clones_orig.columns = ['.'.join(col).strip() for col in clones_orig.columns.values] # Convert multilevel column names to single string column names
     clones_orig = clones_orig.sort_values(by='beforeMID.nunique', ascending=False)
 
