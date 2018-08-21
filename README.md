@@ -58,8 +58,9 @@ Example: ./execute-all.sh -r output-dir-on-webdav-server -m MIDS-miseq.txt -org 
 * Mount the beehub webdav server
 * Verify if all data has been copied with python2 VerifyBasespaceCopy.py |grep grep. You need the mounted beehub directory name and the json file from the previous step.
 * Add extra information to the json file with MakeSamplesFiles.py (this will also make the SAMPLE-* files)
-* Sort the SAMPLE-* files: sort SAMPLE-blah > SAMPLE-blah.sort
-* Make manageable jobs by splitting the SAMPLE-*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
+* Sort and split the SAMPLE-* files with: ./SortAndSplit.sh SAMPLE-* It does the following:
+    * Sort the SAMPLE-* files: sort SAMPLE-blah > SAMPLE-blah.sort
+    * Make manageable jobs by splitting the SAMPLE-*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
 * Create Topos jobs with ToposCreateTokens.py
 * Upload Topos jobs with ToposUploadFiles.py
 
