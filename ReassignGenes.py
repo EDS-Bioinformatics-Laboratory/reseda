@@ -69,7 +69,7 @@ if __name__ == '__main__':
     fhOut = open(reportfile, "w")
 
     # read cloneFile and put it in a dataframe
-    df = pd.read_csv(cloneFile, sep="\t", na_values=['None', ''])
+    df = pd.read_csv(cloneFile, sep="\t", na_values=['None', ''], dtype={'mut.count_x.concat_values': str, 'mut.count_y.concat_values': str, 'nr_sites.concat_values': str})
     print("Nr of entries in clone file", len(df), file=fhOut)
     ###df.head()
 
