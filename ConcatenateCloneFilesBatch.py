@@ -70,3 +70,5 @@ if __name__ == '__main__':
             executeCmd(cmd)
             cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "vjcdr3-clones-mut-" + " " + mydir + "*-clones-mut-sites-reassigned.csv"
             executeCmd(cmd)
+
+    print("echo 'FINISHED'")
