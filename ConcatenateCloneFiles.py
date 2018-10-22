@@ -131,4 +131,10 @@ if __name__ == '__main__':
 
     fhOut.close()
 
+    # Check if number of expected samples is the same as number of sample files
+    if len(samples_of_project) != len(myfiles):
+        print("WARNING: nr of samples and nr of files is not the same")
+    print("  Nr samples in sample info:", len(samples_of_project))
+    print("  Nr of sample files       :", len(myfiles))
+
     print("DONE")
