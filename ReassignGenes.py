@@ -133,7 +133,8 @@ if __name__ == '__main__':
 
     # Merge clones with clones_orig to get the unique number of UMIs
     clones_final = pd.merge(clones, clones_orig, how='inner', left_on=['cdr3pep','J_sub'], right_on=['cdr3pep','J_sub'])
-    clones_final = clones_final.sort_values(by='acc.nunique', ascending=False)
+    clones_final['UMIs.frac'] = clones_final['UMIs'] / sum(clones_final['UMIs'])
+    clones_final = clones_final.sort_values(by='UMIs.frac', ascending=False)
     clones_final = clones_final.rename(columns={"acc.nunique": "freq", "mut.count_x.concat_values": "mut.count_x.mode", "mut.count_y.concat_values": "mut.count_y.mode", "nr_sites.concat_values": "nr_sites.mode"})
 
     ###clones_final.head()
