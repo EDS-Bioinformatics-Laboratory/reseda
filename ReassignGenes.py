@@ -47,6 +47,12 @@ def min_mode(array):
     return min(pd.Series.mode(array))
 
 
+def concat_j_gene(genes):
+    genes = list(set(genes)) # get unique names
+    genes.sort()             # sort alphabetically
+    return ",".join(genes)   # concatenate with a comma in between
+
+
 # def show_mode(mylist):
 #     return "|".join(mode(mylist))
 
@@ -97,13 +103,13 @@ if __name__ == '__main__':
     ###df.loc[df['cdr3pep'] == peptide]
 
     # Group the re-assigned entries
-    cols = ['cdr3pep', 'V_sub', 'J_sub']
+    cols = ['cdr3pep', 'V_sub']
     concat_mode = lambda x: min(mode([float(e) for e in "|".join(x).split("|")]))
-    clones = df.groupby(cols).agg({'acc.nunique': sum, 'beforeMID.nunique': sum, 'mut.count_x.sum': sum, 'mut.count_x.mean': np.mean, 'mut.count_x.concat_values': concat_mode, 'mut.frac_x.mean': np.mean, 'mut.count_y.sum': sum, 'mut.count_y.mean': np.mean, 'mut.count_y.concat_values': concat_mode, 'mut.frac_y.mean': np.mean, 'nr_sites.sum': sum, 'nr_sites.mean': np.mean, 'nr_sites.concat_values': concat_mode})
+    clones = df.groupby(cols).agg({'J_sub': concat_j_gene,'acc.nunique': sum, 'beforeMID.nunique': sum, 'mut.count_x.sum': sum, 'mut.count_x.mean': np.mean, 'mut.count_x.concat_values': concat_mode, 'mut.frac_x.mean': np.mean, 'mut.count_y.sum': sum, 'mut.count_y.mean': np.mean, 'mut.count_y.concat_values': concat_mode, 'mut.frac_y.mean': np.mean, 'nr_sites.sum': sum, 'nr_sites.mean': np.mean, 'nr_sites.concat_values': concat_mode})
     clones = clones.sort_values(by='acc.nunique', ascending=False)
     clones = clones.reset_index()
 
-    ###clones.head()
+    ##clones.head()
 
     ## Check if sum of nr of accessions is the same ##
 
@@ -121,7 +127,7 @@ if __name__ == '__main__':
 
     # Group the original entries by cdr3pep and J-gene
     select = ['cdr3pep', 'V_sub', 'J_sub', 'acc', 'beforeMID', 'cdr3nuc']
-    cols = ['cdr3pep', 'J_sub']
+    cols = ['cdr3pep']
     clones_orig = allinfo[select].groupby(cols).agg({'beforeMID': 'nunique', 'cdr3nuc': ['nunique', min_mode]})
     clones_orig.columns = ['.'.join(col).strip() for col in clones_orig.columns.values] # Convert multilevel column names to single string column names
     clones_orig = clones_orig.sort_values(by='beforeMID.nunique', ascending=False)
@@ -132,7 +138,7 @@ if __name__ == '__main__':
     ###clones_orig.head()
 
     # Merge clones with clones_orig to get the unique number of UMIs
-    clones_final = pd.merge(clones, clones_orig, how='inner', left_on=['cdr3pep','J_sub'], right_on=['cdr3pep','J_sub'])
+    clones_final = pd.merge(clones, clones_orig, how='inner', left_on=['cdr3pep'], right_on=['cdr3pep'])
     clones_final['UMIs.frac'] = clones_final['UMIs'] / sum(clones_final['UMIs'])
     clones_final = clones_final.sort_values(by='UMIs.frac', ascending=False)
     clones_final = clones_final.rename(columns={"acc.nunique": "freq", "mut.count_x.concat_values": "mut.count_x.mode", "mut.count_y.concat_values": "mut.count_y.mode", "nr_sites.concat_values": "nr_sites.mode"})
