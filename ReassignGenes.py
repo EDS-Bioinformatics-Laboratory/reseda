@@ -27,7 +27,9 @@ def reAssign(df, peptide, threshold):
     df_select = df_select.sort_values(by='V_sub', ascending=True)
 
     # concatenate the gene names with a plus sign
-    v_gene = "+".join(df_select['V_sub'].tolist())
+    v_genes = list(set(df_select['V_sub'].tolist()))
+    v_genes.sort()
+    v_gene = "+".join(v_genes)
 
     # replace v name with new v name
     df.loc[df['cdr3pep'] == peptide, 'V_sub'] = v_gene
