@@ -42,7 +42,7 @@ def writeJson(f, js):
     except:
         sys.exit("cannot create file: " + f)
 
-    print(json.dumps(js, indent=4), file=fhOut)
+    print(json.dumps(js), file=fhOut)
 
     fhOut.close()
     print("Wrote", f, "to disk")
