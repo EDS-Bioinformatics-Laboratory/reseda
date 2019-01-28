@@ -9,6 +9,6 @@ module load stopos
 STOPOS_POOL=d8c24f78f9772cbdff54cf62
 
 # Start analysis
-nohup python ToposGetTokens.py ${STOPOS_POOL} 
+nohup python StoposGetTokens.py ${STOPOS_POOL} 
 
 echo "FINISHED"
