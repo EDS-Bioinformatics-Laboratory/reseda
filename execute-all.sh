@@ -319,12 +319,10 @@ fi
 # Make output directories
 mkdir ${beehub_mount}
 mkdir ${beehub_mount}/${RESULTSDIR}
-mkdir ${beehub_mount}/${RESULTSDIR}/raw
-mkdir ${beehub_mount}/${RESULTSDIR}/raw/correct-mid
+#mkdir ${beehub_mount}/${RESULTSDIR}/raw
+#mkdir ${beehub_mount}/${RESULTSDIR}/raw/correct-mid
 mkdir ${beehub_mount}/${RESULTSDIR}/reports
 mkdir ${beehub_mount}/${RESULTSDIR}/final
-# mkdir ${beehub_mount}/${RESULTSDIR}/final/correct-mid
-# mkdir ${beehub_mount}/${RESULTSDIR}/hla
 wait
 
 # Transfer data to Beehub
@@ -333,9 +331,9 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ *-pear.log *-pea
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-productive.txt final/*.log
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
+#runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
+#runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
+#runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
 
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
 
