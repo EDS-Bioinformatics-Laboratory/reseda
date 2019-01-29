@@ -1,7 +1,7 @@
 #!/bin/bash
 
 basemnt="\/mnt\/immunogenomics\/"
-baseurl="https:\/\/beehub.nl\/amc-immunogenomics\/"
+baseurl="https:\/\/researchdrive.surfsara.nl\/remote.php\/webdav\/amc-immunogenomics\/"
 
 starttime=`date +%s`
 

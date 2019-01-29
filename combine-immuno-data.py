@@ -3,10 +3,11 @@ import sqlite3
 import sys
 
 if len(sys.argv) < 8:
-    sys.exit("Usage: combine-immuno-data.py midFile cdr3File vFile jFile seqFile outFile clonesFile clonesSubsFile clonesMainsFile totalFile")
+    sys.exit("Usage: combine-immuno-data.py midFile cdr3File vFile jFile seqFile extraFile outFile clonesFile clonesSubsFile clonesMainsFile totalFile")
 
 # Input files
-[midFile, cdr3File, vFile, jFile, seqFile, outFile, clonesFile, clonesSubsFile, clonesMainsFile, totalFile] = sys.argv[1:11]
+print(sys.argv)
+[midFile, cdr3File, vFile, jFile, seqFile, extraFile, outFile, clonesFile, clonesSubsFile, clonesMainsFile, totalFile] = sys.argv[1:12]
 
 # Input files - TEST
 # midFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-tbcell/reports/BCRh_S40_L001.assembled-report.txt"
@@ -14,6 +15,7 @@ if len(sys.argv) < 8:
 # vFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHV_human-easy-import.txt"
 # jFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHJ_human-easy-import.txt"
 # seqFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/paul/BCRh_S40_L001.assembled.fastq.gz-IGH_HUMAN.csv"
+# extraFile = "SAMPLE_Sxx_L001.assembled.fastq.gz-IGH_HUMAN-extra.txt"
 # outFile = "all_info.txt"
 # clonesFile = "clones.txt"
 # clonesSubsFile = "clones-subs.txt"
@@ -92,7 +94,7 @@ if __name__ == '__main__':
     import_data(midFile, " ", "mid", colnames)
 
     # CDR3
-    colnames = ["acc", "readingframe", "cdr3pep", "cdr3nuc", "cdr3_qual_min", "cdr3_qual_max", "cdr3_qual_avg", "cdr3_qual"]
+    colnames = ["acc", "readingframe", "cdr3pep", "cdr3nuc", "cdr3_qual_min", "cdr3_qual_max", "cdr3_qual_avg", "cdr3_qual", "nt_start", "nt_end", "seq_length"]
     create_table("cdr3", colnames)
     import_data(cdr3File, "\t", "cdr3", colnames)
 
@@ -110,6 +112,11 @@ if __name__ == '__main__':
     colnames = ["acc", "readingframe_seq", "seq", "pep", "qual"]
     create_table("seq", colnames)
     import_data(seqFile, "\t", "seq", colnames)
+
+    # N glycosylation sites
+    colnames = ["acc", "readingframe", "site", "start", "end"]
+    create_table("sites", colnames)
+    import_data(extraFile, " ", "sites", colnames)
 
     # Combine all tables into one big table: all_info
     query = "CREATE TABLE all_info AS SELECT * FROM mid JOIN cdr3 USING (acc) LEFT OUTER JOIN v USING (acc) LEFT OUTER JOIN j USING (acc) LEFT OUTER JOIN seq USING (acc);"
@@ -169,8 +176,13 @@ if __name__ == '__main__':
     print(query)
     cur.execute(query)
 
+    # Count number of different sites found in one accession code
+    query = "CREATE TABLE sites_count AS SELECT acc,readingframe,COUNT(*) AS nr_sites FROM sites GROUP BY acc,readingframe"
+    print(query)
+    cur.execute(query)
+
     # Combine all_info with v and j counts per accession
-    query = "CREATE TABLE all_info_nrs AS SELECT * FROM all_info JOIN accs_v_j USING (acc)"
+    query = "CREATE TABLE all_info_nrs AS SELECT all_info.*,accs_v_j.*,sites_count.* FROM all_info JOIN accs_v_j USING (acc) LEFT JOIN sites_count ON all_info.acc=sites_count.acc AND all_info.readingframe=sites_count.readingframe"
     print(query)
     cur.execute(query)
 
@@ -188,7 +200,7 @@ if __name__ == '__main__':
     # ************ Make clone reports and write them to a file ****************
 
     # Create a clone report based on V, J and CDR3peptide
-    query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_gene!='None' AND J_gene!='None' and cast(cdr3_qual_min as int)>=30 GROUP BY V_gene, J_gene, cdr3pep"
+    query = "CREATE TABLE clones AS SELECT V_gene, J_gene, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_gene!='None' AND J_gene!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY V_gene, J_gene, cdr3pep"
     print(query)
     cur.execute(query)
 
@@ -216,7 +228,7 @@ if __name__ == '__main__':
     fhClones.close()
 
     # Create a clone report based on V_sub, J_sub and CDR3peptide
-    query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 GROUP BY V_sub, J_sub, cdr3pep"
+    query = "CREATE TABLE clones_subs AS SELECT V_sub, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY V_sub, J_sub, cdr3pep"
     print(query)
     cur.execute(query)
 
@@ -241,7 +253,7 @@ if __name__ == '__main__':
     fhClonesSubs.close()
 
     # Create a clone report based on V_main, J_sub and CDR3peptide
-    query = "CREATE TABLE clones_mains AS SELECT V_main, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_main!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 GROUP BY V_main, J_sub, cdr3pep"
+    query = "CREATE TABLE clones_mains AS SELECT V_main, J_sub, cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info_nrs WHERE V_main!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY V_main, J_sub, cdr3pep"
     print(query)
     cur.execute(query)
 

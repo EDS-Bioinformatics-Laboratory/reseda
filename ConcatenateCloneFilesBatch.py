@@ -2,7 +2,7 @@ from __future__ import print_function
 # import subprocess
 import json
 import sys
-
+import argparse
 
 def executeCmd(cmd):
     '''
@@ -32,8 +32,17 @@ def lookupChain(chain):
 
 
 if __name__ == '__main__':
-    mydir = "/mnt/immunogenomics/RUNS/run15-20170711-miseq/results-tbcell/final/correct-mid/"
-    runinfo = "20170709_RUN015_Datasheet_finalV-new.json"
+    parser = argparse.ArgumentParser(description='Concatenates clones files per project and cell type')
+    parser.add_argument('-r', '--runinfo', default='yyyymmdd-RUNnn-datasheet-new.json', type=str, help='Sample sheet in json format (default: %(default)s)')
+    parser.add_argument('-w', '--webdav', default='/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/results-tbcell/final/', type=str, help='Webdav directory (default: %(default)s)')
+    args = parser.parse_args()
+
+    if args.webdav == '/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/results-tbcell/final/' or args.runinfo == 'yyyymmdd-RUNnn-datasheet-new.json':
+        parser.print_help()
+        exit()
+
+    mydir = args.webdav
+    runinfo = args.runinfo
 
     # Read json file
     try:
@@ -55,7 +64,49 @@ if __name__ == '__main__':
     for project, chains_species in projects.items():
         chains_species = list(set(chains_species))
         for chain_specie in chains_species:
-            cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + mydir + "*" + chain_specie + "*-clones-subs.csv"
+            cmd = "ls" + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv > SAMPLES ; wait"
             executeCmd(cmd)
-            cmd = "python ConcatenateCloneFiles.py " + runinfo + " " + project + " " + chain_specie + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv"
+            cmd = "./copy-from-beehub.sh ; wait"
             executeCmd(cmd)
+            cmd = "myfiles=`cat LOCAL_SAMPLES`"
+            executeCmd(cmd)
+            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "cdr3-clones- $myfiles ; wait"
+            executeCmd(cmd)
+            cmd = "rm $myfiles"
+            executeCmd(cmd)
+
+            print("#")
+
+            cmd = "ls" + " " + mydir + "*" + chain_specie + "*-all_info.csv.rr.csv > SAMPLES ;  wait"
+            executeCmd(cmd)
+            cmd = "./copy-from-beehub.sh ; wait"
+            executeCmd(cmd)
+            cmd = "myfiles=`cat LOCAL_SAMPLES`"
+            executeCmd(cmd)
+            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "assign-info- $myfiles ; wait"
+            executeCmd(cmd)
+            cmd = "rm $myfiles"
+            executeCmd(cmd)
+
+            print("#")
+
+            cmd = "ls" + " " + mydir + "*-clones-mut-sites-reassigned.csv > SAMPLES ; wait"
+            executeCmd(cmd)
+            cmd = "./copy-from-beehub.sh ; wait"
+            executeCmd(cmd)
+            cmd = "myfiles=`cat LOCAL_SAMPLES`"
+            executeCmd(cmd)
+            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "vjcdr3-clones-mut- $myfiles ; wait"
+            executeCmd(cmd)
+            cmd = "rm $myfiles"
+            executeCmd(cmd)
+
+            print("#")
+
+    print("echo 'FINISHED'")
+
+
+# ls /mnt/immunogenomics/RUNS/run20-20171127-miseq/VDJMOUSE20181017/final/*-clones-mut-sites-reassigned.csv |head > SAMPLES
+# myfiles=`perl -ne 's/.*\///;print;' SAMPLES`
+# python ConcatenateCloneFiles.py -r run20-miseq-samplesheet-vdjmouse-new.json -n VDJmouse -c IGK_MOUSE -pre vjcdr3-clones-mut- $myfiles
+# rm $myfiles

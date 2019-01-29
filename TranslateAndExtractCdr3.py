@@ -161,6 +161,62 @@ def getMotifs(cellType, mismatches):
     return(combinedMotifs)
 
 
+def getAlternativeVmotifs(cellType, mismatches):
+    '''
+    Description: retrieve V motifs and add a wildcard to it (10 times .)
+    In: string cellType, int mismatches (usually 0 or 1)
+    Out: string combinedMotifs (a regular expression)
+    '''
+
+    if mismatches == 0 and type(mismatches) == type(10):
+        mismatches = ""
+    elif mismatches > 0 and type(mismatches) == type(10):
+        mismatches = "{e<=" + str(mismatches) + "}"
+    else:
+        raise TypeError('wrong input for mismatches')
+
+    motifsV = getVmotifs(cellType)
+
+    motifs = list()
+    for v in motifsV:
+        if v == "":  # skip empty values
+            continue
+
+        motifs.append(v + ".{13}")
+
+    combinedMotifs = ".+(" + "|".join(motifs) + ")" + mismatches
+
+    return(combinedMotifs)
+
+
+def getAlternativeJmotifs(cellType, mismatches):
+    '''
+    Description: retrieve J motifs and add a wildcard in front of it (10 times .)
+    In: string cellType, int mismatches (usually 0 or 1)
+    Out: string combinedMotifs (a regular expression)
+    '''
+
+    if mismatches == 0 and type(mismatches) == type(10):
+        mismatches = ""
+    elif mismatches > 0 and type(mismatches) == type(10):
+        mismatches = "{e<=" + str(mismatches) + "}"
+    else:
+        raise TypeError('wrong input for mismatches')
+
+    motifsJ = getJmotifs(cellType)
+
+    motifs = list()
+    for j in motifsJ:
+        if j == "":  # skip empty values
+            continue
+
+        motifs.append(".{14}" + j)
+
+    combinedMotifs = ".+(" + "|".join(motifs) + ")" + mismatches
+
+    return(combinedMotifs)
+
+
 def getImgtMotifs():
     '''
     Description: Return regular expression for Cys-Phe/Trp motif or Cys-Val
@@ -228,9 +284,13 @@ if __name__ == "__main__":
 
     # Get all the motifs to search for V .* J, define mismatches (usually 0 or 1)
     motif = getMotifs(cellType, args.mismatches)
-
-    # Transform motif to regular expressions
     p = regex.compile(motif, regex.BESTMATCH)
+
+    # Alternative motif: search for V motif plus 10 amino acids and 10aa + J motif
+    motifAltV = getAlternativeVmotifs(cellType, args.mismatches)
+    p_alt_v = regex.compile(motifAltV, regex.BESTMATCH)
+    motifAltJ = getAlternativeJmotifs(cellType, args.mismatches)
+    p_alt_j = regex.compile(motifAltJ, regex.BESTMATCH)
 
     # Check for an extra motif Asn-X-Ser/Thr (X is not Proline)
     p_extra = regex.compile("N[^P][ST]")
@@ -242,6 +302,8 @@ if __name__ == "__main__":
     # Open fastq file(s) and search for patterns
     for inFile in args.fastq_files:
         outFile = inFile + "-" + cellType + "-CDR3.csv"
+        altVFile = inFile + "-" + cellType + "-alt-V-CDR3.csv"
+        altJFile = inFile + "-" + cellType + "-alt-J-CDR3.csv"
         extraFile = inFile + "-" + cellType + "-extra.txt"
         rawFile = inFile + "-" + cellType + ".csv"
         repFile = inFile + "-" + cellType + "-report.txt"
@@ -280,9 +342,19 @@ if __name__ == "__main__":
             fhExtra = open(extraFile, "w")
         except:
             sys.exit("cannot write to file:" + extraFile)
+        try:
+            fhAltV = open(altVFile, "w")
+        except:
+            sys.exit("cannot write to file:" + altVFile)
+        try:
+            fhAltJ = open(altJFile, "w")
+        except:
+            sys.exit("cannot write to file:" + altJFile)
 
         # Container to count stuff
         count_stuff = dict()
+        count_accs_alt_v = list()
+        count_accs_alt_j = list()
 
         for record in SeqIO.parse(fhIn, "fastq"):
 
@@ -348,21 +420,47 @@ if __name__ == "__main__":
                         count_stuff["3. Discarded reads uncalled bases in CDR3"] = count_stuff.get("3. Discarded reads uncalled bases in CDR3", 0) + 1
                         print("\t".join([record.id, str(i), str(record.seq), str(translations[i]), quality_scores]), file=fhUncalled)
                     else:                                 # Correct CDR3 peptide found without uncalled bases or stop codons
-                        print("\t".join([record.id, str(i), str(cdr3pep), str(cdr3nuc), str(cdr3_qual_min), str(cdr3_qual_max), str(cdr3_qual_avg), cdr3_quality_scores]), file=fhOut)
+                        print("\t".join([record.id, str(i), str(cdr3pep), str(cdr3nuc), str(cdr3_qual_min), str(cdr3_qual_max), str(cdr3_qual_avg), cdr3_quality_scores, str(nt_start), str(nt_end), str(len(record.seq))]), file=fhOut)
                         print("\t".join([record.id, str(i), str(record.seq), str(translations[i]), quality_scores]), file=fhRaw)
 
                         count_stuff["4. Reads with CDR3"] = count_stuff.get("4. Reads with CDR3", 0) + 1
                         break
 
+            # Nothing found: try searching for V + 10 amino acids
+            if cdr3_found is False:
+                for i in range(len(translations)):
+                    (cdr3pep, aa_pos) = extractCDR3(cellType, str(translations[i]), p_alt_v)
+                    if cdr3pep is not None:
+                        cdr3_found = True
+                        count_accs_alt_v.append(record.id)
+                        print("\t".join([record.id, str(i), str(record.seq), str(cdr3pep)]), file=fhAltV)
+
+            # Still nothing found: try searching for 10 amino acids + J
+            if cdr3_found is False:
+                # Make an alternative clones file
+                for i in range(len(translations)):
+                    (cdr3pep, aa_pos) = extractCDR3(cellType, str(translations[i]), p_alt_j)
+                    if cdr3pep is not None:
+                        cdr3_found = True
+                        count_accs_alt_j.append(record.id)
+                        print("\t".join([record.id, str(i), str(record.seq), str(cdr3pep)]), file=fhAltJ)
+
+            # Could not find anything
             if cdr3_found is False:
                 print("\t".join([record.id, str(i), str(record.seq), str(translations)]), file=fhNoCdr3)
 
         # Make report
         print("Motifs:", motif, file=fhRep)
 
-        total = count_stuff["1. Total reads"]
+        count_stuff["5. Reads with only V motif"] = len(set(count_accs_alt_v))
+        count_stuff["6. Reads with only J motif"] = len(set(count_accs_alt_j))
+
+        total = count_stuff.get("1. Total reads")
         for key, value in sorted(count_stuff.iteritems()):
-            perc = 100.00 * value / total
+            if total > 0:
+                perc = 100.00 * value / total
+            else:
+                perc = 0
             print("\t".join([key, str(value), str(perc) + "%"]), file=fhRep)
 
         fhIn.close()
@@ -373,3 +471,5 @@ if __name__ == "__main__":
         fhUncalled.close()
         fhNoCdr3.close()
         fhExtra.close()
+        fhAltV.close()
+        fhAltJ.close()

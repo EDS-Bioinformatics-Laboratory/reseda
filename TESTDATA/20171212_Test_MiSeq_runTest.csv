@@ -1,0 +1,23 @@
+[Header],,,,,,,,,,
+IEMFileVersion,4,,,,,,,,,
+Investigator Name,Barbera,,,,,,,,,
+Experiment Name,RUNTEST,,,,,,,,,
+Date,12-12-2017,,,,,,,,,
+Workflow,GenerateFASTQ,,,,,,,,,
+Application,FASTQ Only,,,,,,,,,
+Assay,Nextera XT v2,,,,,,,,,
+Description,RNA,,,,,,,,,
+Chemistry,Amplicon,,,,,,,,,
+,,,,,,,,,,
+[Reads],,,,,,,,,,
+301,,,,,,,,,,
+301,,,,,,,,,,
+,,,,,,,,,,
+[Settings],,,,,,,,,,
+ReverseComplement,0,,,,,,,,,
+Adapter,CTGTCTCTTATACACATCT,,,,,,,,,
+,,,,,,,,,,
+[Data],,,,,,,,,,
+Sample_ID,Sample_Name,Sample_Plate,Sample_Well,I7_Index_ID,index,I5_Index_ID,index2,Sample_Project,Species,Chain
+Nxxx_Sxxx,test-B,,,N701-A,TAAGGCGA,S503-A,TATCCTCT,TestProject,human,BCRh
+Nxxx_Sxxx,test-T,,,N701-A,TAAGGCGA,S503-A,TATCCTCT,TestProject,human,TCRb

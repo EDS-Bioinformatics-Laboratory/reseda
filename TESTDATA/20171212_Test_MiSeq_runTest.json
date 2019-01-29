@@ -1,0 +1,41 @@
+{
+    "Date": "12-12-2017",
+    "Experiment Name": "RUNTEST",
+    "ReverseComplement": "0",
+    "Workflow": "GenerateFASTQ",
+    "Application": "FASTQ Only",
+    "Description": "RNA",
+    "Chemistry": "Amplicon",
+    "Investigator Name": "Barbera",
+    "Assay": "Nextera XT v2",
+    "Samples": [
+        {
+            "Sample_Plate": "",
+            "Sample_Project": "TestProject",
+            "Sample_ID": "Nxxx_Sxxx",
+            "Sample_Name": "test-B",
+            "I5_Index_ID": "S503-A",
+            "Species": "human",
+            "Chain": "BCRh",
+            "index": "TAAGGCGA",
+            "index2": "TATCCTCT",
+            "Sample_Well": "",
+            "I7_Index_ID": "N701-A"
+        },
+        {
+            "Sample_Plate": "",
+            "Sample_Project": "TestProject",
+            "Sample_ID": "Nxxx_Sxxx",
+            "Sample_Name": "test-T",
+            "I5_Index_ID": "S503-A",
+            "Species": "human",
+            "Chain": "TCRb",
+            "index": "TAAGGCGA",
+            "index2": "TATCCTCT",
+            "Sample_Well": "",
+            "I7_Index_ID": "N701-A"
+        }
+    ],
+    "Adapter": "CTGTCTCTTATACACATCT",
+    "IEMFileVersion": "4"
+}

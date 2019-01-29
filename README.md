@@ -19,25 +19,31 @@ The workflow identifies clones and their frequency from next generation sequenci
 ## Other requirements
 
 * Bash
-* Python 2.7
-    * future (print_function)
-    * sys
-    * os
-    * subprocess
-    * gzip
-    * re
-    * regex
-    * math
-    * random
-    * sqlite3
-    * matplotlib
-    * biopython
-    * editdistance
-    * alignment
-    * numpy
-    * scipy
+* Python 2.7 and 3.5
+    * Common libraries
+        * future (print_function)
+        * sys
+        * os
+        * subprocess
+        * gzip
+        * re
+        * math
+        * random
+    * Specific libaries
+      * biopython
+      * regex
+      * sqlite3
+      * matplotlib
+      * numpy
+      * scipy
+      * json
+      * pandas
+      * shutil
+      * argparse
+      * csv
+
 * R
-    * beeswarm
+    * plyr
 
 ## Job monitoring
 
@@ -45,21 +51,22 @@ Tip: divide the samples over multiple (virtual) machines and run everything in p
 
 ## How to run - Using only the code in this repository
 
-The input files (in fastq format) can be specified by putting the paths in the file SAMPLES. At the top of execute-all.sh you see which other parameters have to be set.
+The input files (in fastq format) can be specified by putting the paths in the file SAMPLES. Running ./execute-all.sh without arguments show you which parameters can be set.
 
-Example: ./execute-all.sh output-dir-on-webdav-server MIDS-miseq.txt human IGH IGH_HUMAN
+Example: ./execute-all.sh -r output-dir-on-webdav-server -m MIDS-miseq.txt -org human -cell IGH -celltype IGH_HUMAN
 
-## How to run - Using the job monitoring and submission tool
+## How to run - Using Topos for sending jobs and a job monitor tool
 
 ### Preparation ###
 * Mount basespace. Instructions are in basespace.txt
-* Specify the basespace directories in copy-basespace-data-to-beehub.py and run: python copy-basespace-data-to-beehub.py > basespace-copy-data.sh
-* Verify if all data has been copied with VerifyBasespaceCopy.py
+* Specify the run and the basespace sub-directories as argument to copy-basespace-data-to-beehub.py and run it. The file basespace-copy-data.sh and basespace-calc-checksum.sh will be created. Run these scripts to copy the data from basespace to the ResearchDrive and to calculate the SHA1 sums (last one is needed for the VerifyBasespaceCopy.py script)
 * Convert the MiSeq sample sheet with MetaData.py (creates a json file)
 * Mount the beehub webdav server
+* Verify if all data has been copied with python2 VerifyBasespaceCopy.py |grep grep. You need the mounted beehub directory name and the json file from the previous step.
 * Add extra information to the json file with MakeSamplesFiles.py (this will also make the SAMPLE-* files)
-* Make manageable jobs by splitting the SAMPLE-* files, e.g.: split -l 20 SAMPLES-run13-human-BCRh SAMPLES-run13-human-BCRh-
-* Check manually if the nr of lines in the SAMPLE-* files (the total divided by 2) is equal to the nr of samples in the sample sheet
+* Sort and split the SAMPLE-* files with: ./SortAndSplit.sh SAMPLE-* It does the following:
+    * Sort the SAMPLE-* files: sort SAMPLE-blah > SAMPLE-blah.sort
+    * Make manageable jobs by splitting the SAMPLE-*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
 * Create Topos jobs with ToposCreateTokens.py
 * Upload Topos jobs with ToposUploadFiles.py
 
@@ -71,14 +78,19 @@ Example: ./execute-all.sh output-dir-on-webdav-server MIDS-miseq.txt human IGH I
 
 ### When all jobs are finished ###
 * In the jobs the data is automatically transferred to the beehub webdav server
-* Specify the mounted directory and sample.json file in ConcatenateCloneFilesBatch.py and run it to concatenate the clone files per project+organism+cell_type
-* Specify the mounted directory in report-ALL.sh and run it to generate reports about the sequence run
+* Execute ConcatenateCloneFilesBatch.py to concatenate the clone files per project+organism+cell_type
+* Run report-ALL.sh to generate reports about the sequence run (help is available for this script)
 * Check for contamination with contamination-figure.R
     * Specify the files that were created by ConcatenateCloneFilesBatch.py
     * Specify the pt.table.csv that you got from the immunogenomics group
     * Check by hand if the column names in the pt.table are correct
     * Run the script
-    * Usually I make reports for all samples per project+cell_type and one report for all the samples in a run
+    * Usually I make reports for all samples per cell_type
+
+## Preparation for Roche data ##
+* Use MakePTtableFromAAreads.R - Create a pt.table (sample description) from AA.reads file
+* SplitAAreads.py - Splits the AA.reads table per sample (check the column names that you want to include in the file name!)
+* SeqToFastq.py - Convert the tab-delimited files to fastq format
 
 ## How to cite
 

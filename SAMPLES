@@ -1,2 +1,4 @@
-TESTDATA/test_L001_R1_001.fastq.gz
-TESTDATA/test_L001_R2_001.fastq.gz
+TESTDATA/test-B_S1_L001_R1_001.fastq.gz
+TESTDATA/test-B_S1_L001_R2_001.fastq.gz
+TESTDATA/test-T_S2_L001_R1_001.fastq.gz
+TESTDATA/test-T_S2_L001_R2_001.fastq.gz
