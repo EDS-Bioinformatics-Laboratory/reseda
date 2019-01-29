@@ -19,25 +19,31 @@ The workflow identifies clones and their frequency from next generation sequenci
 ## Other requirements
 
 * Bash
-* Python 2.7
-    * future (print_function)
-    * sys
-    * os
-    * subprocess
-    * gzip
-    * re
-    * regex
-    * math
-    * random
-    * sqlite3
-    * matplotlib
-    * biopython
-    * editdistance
-    * alignment
-    * numpy
-    * scipy
+* Python 2.7 and 3.5
+    * Common libraries
+        * future (print_function)
+        * sys
+        * os
+        * subprocess
+        * gzip
+        * re
+        * math
+        * random
+    * Specific libaries
+      * biopython
+      * regex
+      * sqlite3
+      * matplotlib
+      * numpy
+      * scipy
+      * json
+      * pandas
+      * shutil
+      * argparse
+      * csv
+
 * R
-    * beeswarm
+    * plyr
 
 ## Job monitoring
 
