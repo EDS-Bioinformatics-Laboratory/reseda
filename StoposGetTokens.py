@@ -15,18 +15,31 @@ def getJob(poolname):
     '''
 
     # Get next token
-    cmd = ["stoposclient", "next", "-p", poolname]
-    rc = subprocess.call(cmd)
-    if os.environ.get('STOPOS_RC') != "OK":
-        print("WARNING: couldn't get token from pool:", poolname)
-        print("FINISHED")
-        exit()
-    token = os.environ.get("STOPOS_KEY")
+    cmd = "stoposclient next -p " + poolname
+    syscall = os.popen(cmd)
+    result = syscall.read()
+    syscall.close()
 
-    print("token", token)
+    # Parse result
+    result = result.replace("\n", "")
+    result = result.split(";")
+    myenv = dict()
+    for row in result:
+        if row.startswith("STOPOS"):
+            key, value = row.split("=")
+            value = value[1:-1] # remove quotes at start and end
+            myenv[key] = value
+
+    # Check if token retrieval was successful
+    print("MESSAGE STOPOS_RC:", myenv['STOPOS_RC'])
+    if myenv['STOPOS_RC'] != "OK":
+        print("ERROR")
+        exit()
+
+    token = myenv["STOPOS_KEY"]
 
     # Get token content
-    text = os.environ.get('STOPOS_VALUE')
+    text = myenv['STOPOS_VALUE']
     js = json.loads(text)
 
     return(token, js)

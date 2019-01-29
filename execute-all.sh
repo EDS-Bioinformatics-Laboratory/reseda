@@ -160,7 +160,7 @@ function set_status {
     local stat=$2
     local message=$3
     cd ../progress
-    python set-status.py ip:"${ip}" status:"${stat}" message:"${message}"
+    python3 set-status.py ip:"${ip}" status:"${stat}" message:"${message}"
     cd $thisdir
 }
 
@@ -253,7 +253,7 @@ wait
 
 # Get SNPs from SAM files
 set_status ${ip} "RUNNING" "Determine SNPs from the SAM files" # creates file: ${prefix}-${refprefix}-e-clean.sam.mut.txt
-runcmd python MutationsFromSam.py *-e-clean.sam
+runcmd python3 MutationsFromSam.py *-e-clean.sam
 wait
 
 ### Generate reports ###
@@ -285,12 +285,12 @@ for sample in ${samples}; do
     # Integrate allinfo file with V and J mutation information, if it fails it will just continue with the next sample, creates a clones file
     vMutFile=${prefix}-${v}-e-clean.sam.mut.txt
     jMutFile=${prefix}-${j}-e-clean.sam.mut.txt
-    python MutationAnalysisVJ.py -a ${allinfoFile} -v ${vMutFile} -j ${jMutFile}
+    python3 MutationAnalysisVJ.py -a ${allinfoFile} -v ${vMutFile} -j ${jMutFile}
     wait
 
     # Reassign V genes based on the created clones file above, creates a new clones file
     cloneMutFile=final/${prefix}-${CELLTYPE}-clones-mut-sites.csv # this is the result of the script MutationAnalysisVJ.py
-    python ReassignGenes.py -c ${cloneMutFile} -a ${allinfoFile} # creates a file with extension -clones-mut-sites-reassigned.csv
+    python3 ReassignGenes.py -c ${cloneMutFile} -a ${allinfoFile} # creates a file with extension -clones-mut-sites-reassigned.csv
 done
 
 # Move results to 'final'

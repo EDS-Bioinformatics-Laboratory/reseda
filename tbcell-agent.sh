@@ -5,10 +5,14 @@
 #SBATCH --mail-user=b.d.vanschaik@amc.uva.nl
 
 module load stopos
+module load python
+module load python/3.5.0
+module load samtools
+module load R
 
-STOPOS_POOL=d8c24f78f9772cbdff54cf62
+export STOPOS_POOL=d8c24f78f9772cbdff54cf62
 
 # Start analysis
-nohup python StoposGetTokens.py ${STOPOS_POOL} 
+python2 StoposGetTokens.py ${STOPOS_POOL} 
 
 echo "FINISHED"
