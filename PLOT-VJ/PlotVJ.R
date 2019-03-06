@@ -1,6 +1,10 @@
 # Example from commandline:
 # Rscript PlotVJ.R myfile=\"BASTA-2202-B_S57_L001.assembled-ACGTACGT-IGH_HUMAN-clones-mut-sites-reassigned.csv\"
 
+# Batch processing:
+# myfiles=`ls *.csv`; for myfile in $myfiles; do Rscript PlotVJ.R myfile=\"$myfile\"; done
+# mogrify -density 96 -flatten -format png *.pdf
+
 args = (commandArgs(TRUE))
 
 # Input parameters
