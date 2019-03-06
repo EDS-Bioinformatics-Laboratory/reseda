@@ -21,8 +21,8 @@ mat <- data.frame(Vgene,Jgene)
 mat <- with(mat, table(Vgene, Jgene))
 
 # Make the circular plot
+pdf(paste(mytitle, "circos.pdf", sep="-"),width=7,height=7)
 grid.col <- setNames(rainbow(length(unlist(dimnames(mat)))), union(rownames(mat), colnames(mat)))
-
 circos.par(start.degree = 90, gap.degree = 5, track.margin = c(-0.1, 0.1), points.overflow.warning = FALSE)
 
 # now, the image with rotated labels
@@ -35,3 +35,4 @@ circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
   circos.axis(h = "top", labels.cex = 0.5, major.tick.percentage = 0.2, sector.index = sector.name, track.index = 2)
 }, bg.border = NA)
 title(main=mytitle)
+dev.off()
