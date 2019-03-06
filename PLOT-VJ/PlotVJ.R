@@ -1,0 +1,37 @@
+library(circlize)
+
+### BEGIN CONFIG ###
+myfile = "BASTA-2202-B_S57_L001.assembled-ACGTACGT-IGH_HUMAN-clones-mut-sites-reassigned.csv"
+#### END CONFIG ####
+
+# Read the file
+mytitle = sub("_L001.*", "", myfile)
+df = read.csv(myfile, sep="\t", header=T, stringsAsFactors = F)
+
+# Select columns
+Vgene=df$V_sub
+Jgene=df$J_sub
+
+# Select only the first V and J assignment
+Vgene = sub("\\+.*", "", Vgene)
+Jgene = sub(",.*", "", Jgene)
+
+# Reformat data
+mat <- data.frame(Vgene,Jgene)
+mat <- with(mat, table(Vgene, Jgene))
+
+# Make the circular plot
+grid.col <- setNames(rainbow(length(unlist(dimnames(mat)))), union(rownames(mat), colnames(mat)))
+
+circos.par(start.degree = 90, gap.degree = 5, track.margin = c(-0.1, 0.1), points.overflow.warning = FALSE)
+
+# now, the image with rotated labels
+chordDiagram(mat, annotationTrack = "grid", preAllocateTracks = 1, grid.col = grid.col)
+circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
+  xlim = get.cell.meta.data("xlim")
+  ylim = get.cell.meta.data("ylim")
+  sector.name = get.cell.meta.data("sector.index")
+  circos.text(mean(xlim), ylim[1] + .1, sector.name, facing = "clockwise", niceFacing = TRUE, adj = c(0, 0.5))
+  circos.axis(h = "top", labels.cex = 0.5, major.tick.percentage = 0.2, sector.index = sector.name, track.index = 2)
+}, bg.border = NA)
+title(main=mytitle)
