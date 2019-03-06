@@ -1,8 +1,23 @@
-library(circlize)
+# Example from commandline:
+# Rscript PlotVJ.R myfile=\"BASTA-2202-B_S57_L001.assembled-ACGTACGT-IGH_HUMAN-clones-mut-sites-reassigned.csv\"
 
-### BEGIN CONFIG ###
-myfile = "BASTA-2202-B_S57_L001.assembled-ACGTACGT-IGH_HUMAN-clones-mut-sites-reassigned.csv"
-#### END CONFIG ####
+args = (commandArgs(TRUE))
+
+# Input parameters
+if(length(args)==0){
+    cat("ERROR: no arguments supplied\n")
+    cat("  myfile='SAMPLE_Sn_L001-etc-clones-mut-sites-reassigned.csv'\n")
+    q()
+} else {
+    for(i in 1:length(args)){
+        cat(i, args[[i]], "\n")
+        eval(parse(text=args[[i]]))
+    }
+    cat("arguments given to script\n")
+    # q()
+}
+
+library(circlize)
 
 # Read the file
 mytitle = sub("_L001.*", "", myfile)
