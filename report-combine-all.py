@@ -69,6 +69,7 @@ def parseMids(totalreads, mids):
         for mid in sorted(midcount[sample], key=midcount[sample].get, reverse=True):
             percentage = round(100.0 * midcount[sample][mid] / totalreads.get(sample, -1), 2)
             summary[sample] = (mid, midcount[sample][mid], percentage)
+            print(sample, mid)
             break
 
     return(summary)
@@ -88,7 +89,7 @@ def parseCdr3(totalreads, summary_mids, cdr3):
         sample, rest = path.split("_L001.assembled-")
         mid = rest.split(".")[0]
         freq = int(c[-2])
-        if mid in summary_mids[sample]:
+        if mid in summary_mids.get(sample,[]):
             percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 
@@ -109,7 +110,7 @@ def parseProductive(totalreads, summary_mids, prod):
         sample, rest = path.split("_L001.assembled-")
         mid = rest.split("-")[0]
         freq = int(c[-1])
-        if mid in summary_mids[sample]:
+        if mid in summary_mids.get(sample, []):
             percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 
@@ -130,7 +131,7 @@ def parseReassign(totalreads, summary_mids, reassign):
         sample, rest = path.split("_L001.assembled-")
         mid = rest.split("-")[0]
         freq = int(c[-1])
-        if mid in summary_mids[sample]:
+        if mid in summary_mids.get(sample, []):
             percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 
@@ -151,7 +152,7 @@ def parseQuality(totalreads, summary_mids, quality):
         sample, rest = path.split("_L001.assembled-")
         mid = rest.split("-")[0]
         freq = int(c[-1])
-        if mid in summary_mids[sample]:
+        if mid in summary_mids.get(sample, []):
             percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 
@@ -172,7 +173,7 @@ def parseAllInfo(totalreads, summary_mids, allinfo_file):
         sample, rest = path.split("_L001.assembled-")
         mid = rest.split("-")[0]
         freq = int(c[-1])
-        if mid in summary_mids[sample]:
+        if mid in summary_mids.get(sample, []):
             percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 
@@ -193,7 +194,7 @@ def parseAllInfoFiltered(totalreads, summary_mids, allinfo_filtered_file):
         sample, rest = path.split("_L001.assembled-")
         mid = rest.split("-")[0]
         freq = int(c[-1])
-        if mid in summary_mids[sample]:
+        if mid in summary_mids.get(sample, []):
             percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 
@@ -234,7 +235,7 @@ def parseClones(totalreads, summary_mids, clones_file):
         sample, rest = path.split("_L001.assembled-")
         mid = rest.split("-")[0]
         freq = int(c[-1])
-        if mid in summary_mids[sample]:
+        if mid in summary_mids.get(sample, []):
             percentage = round(100.0 * freq / totalreads.get(sample, -1), 2)
             summary[sample] = (freq, percentage)
 

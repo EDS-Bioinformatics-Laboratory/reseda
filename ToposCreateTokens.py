@@ -62,7 +62,7 @@ def guessCellAndOrganism(myfile):
     elif "mouse" in myfile:
         organism = "mouse"
 
-    if "IGH" in myfile or "BCRh" in myfile:
+    if "IGH" in myfile or "BCRh" in myfile or "IgM" in myfile or "IgG" in myfile or "IgD" in myfile:
         cell = "IGH"
     elif "TCRb" in myfile:
         cell = "TRB"

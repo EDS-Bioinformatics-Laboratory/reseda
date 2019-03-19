@@ -90,7 +90,7 @@ if __name__ == '__main__':
 
             print("#")
 
-            cmd = "ls" + " " + mydir + "*-clones-mut-sites-reassigned.csv > SAMPLES ; wait"
+            cmd = "ls" + " " + mydir + "*" + chain_specie + "-clones-mut-sites-reassigned.csv > SAMPLES ; wait"
             executeCmd(cmd)
             cmd = "./copy-from-beehub.sh ; wait"
             executeCmd(cmd)
