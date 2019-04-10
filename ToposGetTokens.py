@@ -95,10 +95,10 @@ def cleanUp():
         if "L001" in myfile or "mutations" in myfile:
             os.remove("final/" + myfile)
 
-    myfiles = os.listdir("./final/correct-mid")
-    for myfile in myfiles:
-        if "L001" in myfile or "mutations" in myfile:
-            os.remove("final/correct-mid/" + myfile)
+    # myfiles = os.listdir("./final/correct-mid")
+    # for myfile in myfiles:
+    #     if "L001" in myfile or "mutations" in myfile:
+    #         os.remove("final/correct-mid/" + myfile)
 
 
 if __name__ == '__main__':
