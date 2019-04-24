@@ -18,69 +18,96 @@ The workflow identifies clones and their frequency from next generation sequenci
 
 ## Other requirements
 
-* Bash
-* Python 2.7 and 3.5
-    * Common libraries
-        * future (print_function)
-        * sys
-        * os
-        * subprocess
-        * gzip
-        * re
-        * math
-        * random
-    * Specific libaries
-      * biopython
-      * regex
-      * sqlite3
-      * matplotlib
-      * numpy
-      * scipy
-      * json
-      * pandas
-      * shutil
-      * argparse
-      * csv
-
+The older scripts only work in Python 2 (see execute-all.sh)
+* Python 2.7 and 3.5 (or higher)
+    * future (print_function)
+    * sys
+    * os
+    * subprocess
+    * gzip
+    * re
+    * math
+    * random
+    * biopython
+    * regex
+    * sqlite3
+    * matplotlib
+    * numpy
+    * scipy
+    * json
+    * pandas
+    * shutil
+    * argparse
+    * csv
 * R
     * plyr
+* Bash
 
 ## Job monitoring
 
 Tip: divide the samples over multiple (virtual) machines and run everything in parallel. You can download a lightweight job monitoring tool [HERE](https://bitbucket.org/barbera/progress).
 
+## Settings webdav server
+
+These scripts assume that the data is on the SurfSara ResearchDrive (webdav server) and that the drive is mounted in /mnt/immunogenomics
+* copy-from-beehub.sh
+* copy-basespace-data-to-beehub.py
+* execute-all.sh
+* report-ALL.sh
+* ConcatenateCloneFilesBatch.py
+* MakeSamplesFiles.py
+* VerifyBasespaceCopy.py
+
+sudo mount -t davfs -o uid=bioinfo,gid=bioinfo,rw https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics /mnt/immunogenomics
+
+Create a .netrc file in your home directory:
+* machine researchdrive.surfsara.nl
+* login YOUR_RESEARCHDRIVE_USER
+* password YOUR_PASSWORD
+
 ## How to run - Using only the code in this repository
 
-The input files (in fastq format) can be specified by putting the paths in the file SAMPLES. Running ./execute-all.sh without arguments show you which parameters can be set.
+Copy/move the relevant (or all) database files from directory "reference" to the root directory of the repository (same directory as the execute-all.sh script)
 
-Example: ./execute-all.sh -r output-dir-on-webdav-server -m MIDS-miseq.txt -org human -cell IGH -celltype IGH_HUMAN
+The input files (in fastq format) can be specified by putting the paths in the file SAMPLES. Running ./execute-all.sh without arguments shows you which parameters can be set.
 
-## How to run - Using Topos for sending jobs and a job monitor tool
+Example: ./execute-all.sh -r mytestrun -l local -m MIDS-miseq.txt -org human -cell IGH -celltype IGH_HUMAN -u no
+
+The results will be on the machine where you run this script, and if the webdav settings are configured well a new directory with all the files will appear on the ResearchDrive:
+https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/mytestrun
+
+## How to run - Using ToPoS for sending jobs and using a job monitor tool
+
+Note: this is what Barbera does for each sequence run
+
+ToPoS: https://topos.grid.sara.nl/4.1/
+
+Job monitoring tool: https://bitbucket.org/barbera/progress/
 
 ### Preparation ###
 * Mount basespace. Instructions are in basespace.txt
 * Specify the run and the basespace sub-directories as argument to copy-basespace-data-to-beehub.py and run it. The file basespace-copy-data.sh and basespace-calc-checksum.sh will be created. Run these scripts to copy the data from basespace to the ResearchDrive and to calculate the SHA1 sums (last one is needed for the VerifyBasespaceCopy.py script)
 * Convert the MiSeq sample sheet with MetaData.py (creates a json file)
-* Mount the beehub webdav server
-* Verify if all data has been copied with python2 VerifyBasespaceCopy.py |grep grep. You need the mounted beehub directory name and the json file from the previous step.
+* Mount the ResearchDrive webdav server
+* Verify if all data has been copied with python2 VerifyBasespaceCopy.py |grep grep. You need the mounted ResearchDrive directory name and the json file from the previous step.
 * Add extra information to the json file with MakeSamplesFiles.py (this will also make the SAMPLE-* files)
 * Sort and split the SAMPLE-* files with: ./SortAndSplit.sh SAMPLE-* It does the following:
-    * Sort the SAMPLE-* files: sort SAMPLE-blah > SAMPLE-blah.sort
-    * Make manageable jobs by splitting the SAMPLE-*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
-* Create Topos jobs with ToposCreateTokens.py
-* Upload Topos jobs with ToposUploadFiles.py
+    * Sorts the SAMPLE-* files: sort SAMPLE-blah > SAMPLE-blah.sort
+    * Makes manageable jobs by splitting the SAMPLE-\*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
+* Create Topos jobs with ToposCreateTokens.py (run with the -h option to see the arguments)
+* Upload Topos jobs with ToposUploadFiles.py (run without arguments to see the arguments)
 
 ### Starting the jobs ###
 * Start virtual machines for the analysis (in the SurfSara HPC cloud webinterface)
-* Add all ip-adresses to the ip-list file in the '../progress' directory
+* Add all ip-adresses to the ip-list file in the '../progress' directory (the job monitoring tool)
 * Transfer the setup-and-run.sh by running roll-out-scripts.py and executing the code that was generated by this roll-out script
 * Login to each machine and run ./setup-and-run.sh
 
 ### When all jobs are finished ###
-* In the jobs the data is automatically transferred to the beehub webdav server
-* Execute ConcatenateCloneFilesBatch.py to concatenate the clone files per project+organism+cell_type
-* Run report-ALL.sh to generate reports about the sequence run (help is available for this script)
-* Check for contamination with contamination-figure.R
+* In the jobs the data is automatically transferred to the ResearchDrive webdav server
+* Execute ConcatenateCloneFilesBatch.py to generate a bash script for concatenating clone files per project+organism+cell_type (run the generated script)
+* Run report-ALL.sh to generate reports about the sequence run (help is available for this script if you do not give arguments)
+* Check for contamination with contamination-figure.R or the pandas-sample-similarity.ipynb notebook
     * Specify the files that were created by ConcatenateCloneFilesBatch.py
     * Specify the pt.table.csv that you got from the immunogenomics group
     * Check by hand if the column names in the pt.table are correct
