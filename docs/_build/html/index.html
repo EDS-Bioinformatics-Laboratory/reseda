@@ -1,17 +1,26 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Welcome to RESEDA’s documentation! &#8212; RESEDA  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
    
@@ -20,73 +29,100 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head><body>
+  </head>
+  <body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
   <div class="section" id="welcome-to-reseda-s-documentation">
 <h1>Welcome to RESEDA’s documentation!<a class="headerlink" href="#welcome-to-reseda-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>REpertoire SEquencing Data Analysis</p>
+<p>Data analysis workflow for T- and B-cell receptor repertoire sequencing.
+The workflow identifies clones and their frequency from next generation
+sequencing of repertoires and includes steps for quality control and bias
+correction.</p>
+<img alt="_images/workflow.png" src="_images/workflow.png" />
+<div class="section" id="table-of-contents">
+<h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
-</div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="requirements.html#software">Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="requirements.html#python-and-r-libraries">Python and R libraries</a></li>
 </ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#job-monitoring">Job monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#settings-webdav-server">Settings webdav server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="input-files.html">Prepare input files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="input-files.html#expected-input">Expected input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="input-files.html#prepare-roche-data">Prepare Roche data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="run-standalone.html">Run standalone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run-with-topos.html">Run with ToPoS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="run-with-topos.html#helper-scripts">Helper scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run-with-topos.html#preparation">Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run-with-topos.html#starting-the-jobs">Starting the jobs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run-with-topos.html#when-all-jobs-are-finished">When all jobs are finished</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="input-files.html">Prepare input files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="input-files.html#expected-input">Expected input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="input-files.html#prepare-roche-data">Prepare Roche data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="how-to-cite.html">How to cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact</a></li>
+</ul>
+</div>
+</div>
 </div>
 
 
           </div>
-          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">RESEDA</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-
+  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to RESEDA’s documentation!</a><ul>
+<li><a class="reference internal" href="#table-of-contents">Table of contents</a></li>
+</ul>
+</li>
+</ul>
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="#">Documentation overview</a><ul>
+  <li><a href="contents.html">Documentation overview</a><ul>
   </ul></li>
 </ul>
 </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
+  <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
@@ -95,8 +131,8 @@
       &copy;2019, Barbera DC van Schaik.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
       <a href="_sources/index.rst.txt"
