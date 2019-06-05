@@ -49,7 +49,8 @@ root directory of the repository (same directory as the execute-all.sh script)</
 file SAMPLES. Running ./execute-all.sh without arguments shows you which
 parameters can be set.</p>
 <p>Example:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>./execute-all.sh -r mytestrun -l <span class="nb">local</span> -m MIDS-miseq.txt -org human -cell IGH -celltype IGH_HUMAN -u no
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ls TESTDATA/test-B*.fastq.gz &gt; SAMPLES
+./execute-all.sh -r mytestrun -l <span class="nb">local</span> -m MIDS-miseq.txt -org human -cell IGH -celltype IGH_HUMAN -u no
 </pre></div>
 </div>
 <p>The results will be on the machine where you run this script, and if the webdav

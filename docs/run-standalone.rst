@@ -14,6 +14,7 @@ Example:
 
 .. code-block:: bash
 
+   ls TESTDATA/test-B*.fastq.gz > SAMPLES
    ./execute-all.sh -r mytestrun -l local -m MIDS-miseq.txt -org human -cell IGH -celltype IGH_HUMAN -u no
 
 The results will be on the machine where you run this script, and if the webdav

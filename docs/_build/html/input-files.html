@@ -45,12 +45,14 @@
 <div class="section" id="expected-input">
 <h2>Expected input<a class="headerlink" href="#expected-input" title="Permalink to this headline">¶</a></h2>
 <p>RESEDA assumes that input files have the following names and comes in fastq format:</p>
-<p>Paired end: SAMPLENAME_S1_L001_R1_001.fastq.gz and SAMPLENAME_S1_L001_R2_001.fastq.gz
-Where SAMPLENAME is unique in a run and S1 can have any number.</p>
+<p>Paired end: SAMPLENAME_S1_L001_R1_001.fastq.gz and SAMPLENAME_S1_L001_R2_001.fastq.gz</p>
+<p>Where SAMPLENAME is unique in a run and S1 can have any number.</p>
 <p>Single end: SAMPLENAME_S1_L001.assembled.fastq.gz</p>
 </div>
 <div class="section" id="prepare-roche-data">
 <h2>Prepare Roche data<a class="headerlink" href="#prepare-roche-data" title="Permalink to this headline">¶</a></h2>
+<p>When starting from a table with sequence data. Note that this table usually
+doesn’t contain quality scores. These will be set to 40.</p>
 <ul class="simple">
 <li>Use MakePTtableFromAAreads.R - Create a pt.table (sample description) from AA.reads file</li>
 <li>SplitAAreads.py - Splits the AA.reads table per sample (check the column names that you want to include in the file name!)</li>

@@ -4,8 +4,8 @@ Settings
 Job monitoring
 --------------
 
-Tip: divide the samples over multiple (virtual) machines and run everything in
-parallel. You can download a lightweight job monitoring tool
+The samples can be divided over multiple (virtual) machines and be processed in
+parallel. A lightweight job monitoring tool can be downloaded
 here: https://bitbucket.org/barbera/progress
 
 Settings webdav server
