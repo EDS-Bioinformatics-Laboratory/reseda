@@ -10,18 +10,4 @@ correction.
 
 .. image:: images/workflow.png
 
-Table of contents
------------------
-
-.. toctree::
-   :maxdepth: 2
-
-   requirements
-   settings
-   input-files
-   run-standalone
-   run-with-topos
-   input-files
-   how-to-cite
-   license
-   contact
+.. include:: contents.rst
