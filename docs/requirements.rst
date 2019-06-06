@@ -4,12 +4,12 @@ Requirements
 Software
 --------
 
-* PEAR
-* FastQC
-* BWA
-* VarScan
-* Picard
-* Samtools
+* PEAR  (0.9.6, included in repository) https://cme.h-its.org/exelixis/web/software/pear/doc.html
+* FastQC (0.11.3, included in repository) https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+* BWA (0.7.12, included in repository) http://bio-bwa.sourceforge.net/
+* VarScan (2.3.7, included in repository) http://varscan.sourceforge.net/
+* Picard (1.126, included in repository) https://broadinstitute.github.io/picard/
+* Samtools http://samtools.sourceforge.net/
 
 Python and R libraries
 ----------------------
