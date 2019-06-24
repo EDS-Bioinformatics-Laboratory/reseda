@@ -47,7 +47,19 @@ Data can be transferred from the webdav server with:
 Preparation
 -----------
 
-Mount basespace. Instructions are in basespace.txt
+Mount the ResearchDrive from the home directory on the cloud machine and create a directory from the new run.
+
+.. code-block:: bash
+
+    ./mount-beehub.sh
+    mkdir /mnt/immunogenomics/RUNS/run35-20190609-miseq
+    mkdir /mnt/immunogenomics/RUNS/run35-20190609-miseq/data
+
+Mount basespace from the home directory. Instructions are in basespace.txt (you need the password for Illumina base space, Rebecca has it) The latest sequence run is in basespace/Projects/
+
+.. code-block:: bash
+
+    basemount basespace
 
 Specify the run and the basespace sub-directories as argument to
 copy-basespace-data-to-beehub.py and run it. The file basespace-copy-data.sh
@@ -61,23 +73,25 @@ data from basespace to the ResearchDrive and to calculate the SHA1 sums
    nohup bash basespace-copy-data.sh > nohup-copy.out 2> nohup-copy.err < /dev/null &
    nohup bash basespace-calc-checksum.sh > nohup-check.out 2> nohup-check.err < /dev/null &
 
-Convert the MiSeq sample sheet with MetaData.py (creates a json file)
+The immunogenomics group normally sends a semicolon-separated files with all the required information. When you receive a so-called 'pt-table' file you need to copy/paste this information in a 'datasheet'. Download one of the earlier datasheets (e.g. from the previous run), edit the header to match it with the latest sequence run and copy/paste the right columns in this sheet. The order of the columns is not important, but the column names are.
+
+Convert the MiSeq sample sheet (datasheet) with MetaData.py (creates a json file)
 
 .. code-block:: bash
 
-   python MetaData.py Miseq-sample-Datasheet.csv
+   python MetaData.py Miseq-sample-Datasheet.csv > Miseq-sample-Datasheet.json
 
-Mount the ResearchDrive webdav server
+Mount the ResearchDrive webdav server if you have not done so already.
 
 .. code-block:: bash
 
    sudo mount -t davfs -o uid=bioinfo,gid=bioinfo,rw https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics /mnt/immunogenomics
 
-Verify if all data has been copied
+Verify if all data has been copied (optional). Note that the SHAsum verification does not work currently.
 
 .. code-block:: bash
 
-   python2 VerifyBasespaceCopy.py |grep grep
+   python2 VerifyBasespaceCopy.py -i yyyymmdd_RUNxx_Datasheet.json -r runNN-yyyymmdd-miseq
 
 You need the mounted ResearchDrive directory name and the json file from the previous step.
 
@@ -129,6 +143,21 @@ Login to each machine and run:
 .. code-block:: bash
 
    ./setup-and-run.sh
+
+When you see "Serving HTTP on 0.0.0.0 port 8000 ..." do ctrl+a d. This will detach the current "screen" and run the process in the background. After this the script will continue. Log out when you get the prompt back. The ToPoS job has started in the background. Repeat for all the other virtual machines.
+
+Check progress of the analysis
+------------------------------
+
+Go to the "progress" repository and run the display.py script. When all jobs are "FINISHED" you can move on and generate clone files and reports.
+
+.. code-block:: bash
+
+    cd ../progress
+    ./display.py
+
+The status of the jobs can also be traced via ToPoS. https://topos.grid.sara.nl/4.1/pools/d8c24f78f9772cbdff54cf62/ The analysis is finished when there are no more jobs (tokens) left.
+
 
 When all jobs are finished
 --------------------------

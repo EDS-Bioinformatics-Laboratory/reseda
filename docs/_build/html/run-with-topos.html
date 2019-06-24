@@ -75,7 +75,16 @@ then use:</p>
 </div>
 <div class="section" id="preparation">
 <h2>Preparation<a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h2>
-<p>Mount basespace. Instructions are in basespace.txt</p>
+<p>Mount the ResearchDrive from the home directory on the cloud machine and create a directory from the new run.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>./mount-beehub.sh
+mkdir /mnt/immunogenomics/RUNS/run35-20190609-miseq
+mkdir /mnt/immunogenomics/RUNS/run35-20190609-miseq/data
+</pre></div>
+</div>
+<p>Mount basespace from the home directory. Instructions are in basespace.txt (you need the password for Illumina base space, Rebecca has it) The latest sequence run is in basespace/Projects/</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>basemount basespace
+</pre></div>
+</div>
 <p>Specify the run and the basespace sub-directories as argument to
 copy-basespace-data-to-beehub.py and run it. The file basespace-copy-data.sh
 and basespace-calc-checksum.sh will be created. Run these scripts to copy the
@@ -86,16 +95,17 @@ nohup bash basespace-copy-data.sh &gt; nohup-copy.out <span class="m">2</span>&g
 nohup bash basespace-calc-checksum.sh &gt; nohup-check.out <span class="m">2</span>&gt; nohup-check.err &lt; /dev/null <span class="p">&amp;</span>
 </pre></div>
 </div>
-<p>Convert the MiSeq sample sheet with MetaData.py (creates a json file)</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python MetaData.py Miseq-sample-Datasheet.csv
+<p>The immunogenomics group normally sends a semicolon-separated files with all the required information. When you receive a so-called ‘pt-table’ file you need to copy/paste this information in a ‘datasheet’. Download one of the earlier datasheets (e.g. from the previous run), edit the header to match it with the latest sequence run and copy/paste the right columns in this sheet. The order of the columns is not important, but the column names are.</p>
+<p>Convert the MiSeq sample sheet (datasheet) with MetaData.py (creates a json file)</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python MetaData.py Miseq-sample-Datasheet.csv &gt; Miseq-sample-Datasheet.json
 </pre></div>
 </div>
-<p>Mount the ResearchDrive webdav server</p>
+<p>Mount the ResearchDrive webdav server if you have not done so already.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>sudo mount -t davfs -o <span class="nv">uid</span><span class="o">=</span>bioinfo,gid<span class="o">=</span>bioinfo,rw https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics /mnt/immunogenomics
 </pre></div>
 </div>
-<p>Verify if all data has been copied</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python2 VerifyBasespaceCopy.py <span class="p">|</span>grep grep
+<p>Verify if all data has been copied (optional). Note that the SHAsum verification does not work currently.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python2 VerifyBasespaceCopy.py -i yyyymmdd_RUNxx_Datasheet.json -r runNN-yyyymmdd-miseq
 </pre></div>
 </div>
 <p>You need the mounted ResearchDrive directory name and the json file from the previous step.</p>
@@ -137,6 +147,16 @@ bash tmp.sh
 <div class="highlight-bash"><div class="highlight"><pre><span></span>./setup-and-run.sh
 </pre></div>
 </div>
+<p>When you see “Serving HTTP on 0.0.0.0 port 8000 …” do ctrl+a d. This will detach the current “screen” and run the process in the background. After this the script will continue. Log out when you get the prompt back. The ToPoS job has started in the background. Repeat for all the other virtual machines.</p>
+</div>
+<div class="section" id="check-progress-of-the-analysis">
+<h2>Check progress of the analysis<a class="headerlink" href="#check-progress-of-the-analysis" title="Permalink to this headline">¶</a></h2>
+<p>Go to the “progress” repository and run the display.py script. When all jobs are “FINISHED” you can move on and generate clone files and reports.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> ../progress
+./display.py
+</pre></div>
+</div>
+<p>The status of the jobs can also be traced via ToPoS. <a class="reference external" href="https://topos.grid.sara.nl/4.1/pools/d8c24f78f9772cbdff54cf62/">https://topos.grid.sara.nl/4.1/pools/d8c24f78f9772cbdff54cf62/</a> The analysis is finished when there are no more jobs (tokens) left.</p>
 </div>
 <div class="section" id="when-all-jobs-are-finished">
 <h2>When all jobs are finished<a class="headerlink" href="#when-all-jobs-are-finished" title="Permalink to this headline">¶</a></h2>
@@ -170,6 +190,8 @@ nohup bash tmp.sh &gt; nohup-concat.out <span class="m">2</span>&gt; nohup-conca
         <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Welcome to RESEDA’s documentation!</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#running-the-software-on-one-machine">Running the software on one machine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#running-the-software-on-multiple-machines">Running the software on multiple machines</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html#table-of-contents">Table of contents</a></li>
 </ul>
 </li>
@@ -181,6 +203,7 @@ nohup bash tmp.sh &gt; nohup-concat.out <span class="m">2</span>&gt; nohup-conca
 <li class="toctree-l2"><a class="reference internal" href="#helper-scripts">Helper scripts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#preparation">Preparation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#starting-the-jobs">Starting the jobs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#check-progress-of-the-analysis">Check progress of the analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#when-all-jobs-are-finished">When all jobs are finished</a></li>
 </ul>
 </li>
