@@ -42,6 +42,19 @@
             
   <div class="section" id="prepare-input-files">
 <h1>Prepare input files<a class="headerlink" href="#prepare-input-files" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="reference-database">
+<h2>Reference database<a class="headerlink" href="#reference-database" title="Permalink to this headline">¶</a></h2>
+<p><strong>Required for V and J assignment</strong></p>
+<p>Download the reference sequences of the chains you are interested in (nucleotide sequences in fasta format) from the IMGT website (<a class="reference external" href="http://imgt.org/">http://imgt.org/</a>)</p>
+<ul class="simple">
+<li>Select species, gene type, functionality (functional) and the locus in the GeneDB</li>
+<li>Select all genes and download the “F+ORF+all P nucleotide sequences”, store as e.g. TRBV_human.fasta and TRBJ_human.fasta</li>
+<li>Do this for the variable and joining genes</li>
+<li>Build a BWA index and a samtools faidx on the fasta files</li>
+</ul>
+<p><strong>Required for CDR3 identification</strong></p>
+<p>Download the peptide sequences of the variable genes (F+ORF+in-frame P amino acid sequences with IMGT gaps). Convert the downloaded fasta entries with the helper-ref-table.py script</p>
+</div>
 <div class="section" id="expected-input">
 <h2>Expected input<a class="headerlink" href="#expected-input" title="Permalink to this headline">¶</a></h2>
 <p>RESEDA assumes that input files have the following names and comes in fastq format:</p>
@@ -75,12 +88,15 @@ doesn’t contain quality scores. These will be set to 40.</p>
         <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Welcome to RESEDA’s documentation!</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#running-the-software-on-one-machine">Running the software on one machine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#running-the-software-on-multiple-machines">Running the software on multiple machines</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html#table-of-contents">Table of contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Prepare input files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reference-database">Reference database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#expected-input">Expected input</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#prepare-roche-data">Prepare Roche data</a></li>
 </ul>
@@ -88,6 +104,7 @@ doesn’t contain quality scores. These will be set to 40.</p>
 <li class="toctree-l1"><a class="reference internal" href="run-standalone.html">Run standalone</a></li>
 <li class="toctree-l1"><a class="reference internal" href="run-with-topos.html">Run with ToPoS</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Prepare input files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reference-database">Reference database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#expected-input">Expected input</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#prepare-roche-data">Prepare Roche data</a></li>
 </ul>

@@ -1,6 +1,22 @@
 Prepare input files
 ===================
 
+Reference database
+------------------
+
+**Required for V and J assignment**
+
+Download the reference sequences of the chains you are interested in (nucleotide sequences in fasta format) from the IMGT website (http://imgt.org/)
+
+* Select species, gene type, functionality (functional) and the locus in the GeneDB
+* Select all genes and download the "F+ORF+all P nucleotide sequences", store as e.g. TRBV_human.fasta and TRBJ_human.fasta
+* Do this for the variable and joining genes
+* Build a BWA index and a samtools faidx on the fasta files
+
+**Required for CDR3 identification**
+
+Download the peptide sequences of the variable genes (F+ORF+in-frame P amino acid sequences with IMGT gaps). Convert the downloaded fasta entries with the helper-ref-table.py script
+
 Expected input
 --------------
 
