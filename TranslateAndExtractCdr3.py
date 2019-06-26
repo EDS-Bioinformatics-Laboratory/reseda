@@ -53,6 +53,8 @@ def getVmotifs(cellType):
         refFile = "ref.table.mouse.TCRb.csv"
     elif cellType == "TRA_MOUSE":    # Not tested yet and probably needs to be changed
         refFile = "ref.table.mouse.TCRa.csv"
+    elif cellType == "IGH_RHESUS":    # Not tested yet and probably needs to be changed
+        refFile = "ref.table.rhesus.heavy.csv"
     else:
         sys.exit("Cell type " + cellType + " is not implemented yet.\n" + usage)
 
@@ -81,6 +83,8 @@ def getVmotifs(cellType):
         seq = c[idx]
         if cellType.startswith("TR"):   # TRB, TRA human
             motifs.append(seq[99:104])
+        elif cellType.startswith("IGH_RHESUS"):  # IGH rhesus
+            motifs.append(seq[-9:-4])
         elif cellType.startswith("IGH"):  # IGH human
             motifs.append(seq[97:102])
         elif cellType == "IGL_HUMAN" or cellType == "IGK_HUMAN":
@@ -117,6 +121,8 @@ def getJmotifs(cellType):
         return(["FG.G"])
     elif cellType == "IGL_MOUSE":
         return(["FG.G"])
+    elif cellType == "IGH_RHESUS":
+        return(["VTVS", "SPSL", "SPSP"])   # This needs to be verified
     elif cellType == "TRA_HUMAN":
         return(["FG.G", "FARG", "WGAG", "WGLG"])
     elif cellType == "TRA_MOUSE":
