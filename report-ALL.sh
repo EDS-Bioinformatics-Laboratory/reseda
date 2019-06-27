@@ -77,7 +77,7 @@ files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-midcount.txt"
 more $files > report-MIDs.txt
 echo "Wrote report-MIDs.txt"
 
-files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*HUMAN-report.txt /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*MOUSE-report.txt"
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*HUMAN-report.txt /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*MOUSE-report.txt /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*RHESUS-report.txt"
 grep '^4' $files > report-CDR3.txt
 echo "Wrote report-CDR3.txt"
 grep '^5' $files > report-ALT-V.txt
