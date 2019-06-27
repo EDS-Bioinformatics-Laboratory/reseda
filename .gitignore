@@ -1,4 +1,6 @@
 *.pyc
 *CHECKSUM*
 *lifescope.hg19*
+.Rhistory
+.ipynb_checkpoints
 wc-*.txt
