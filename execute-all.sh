@@ -335,7 +335,7 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-producti
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv final/*-allinfo-filtered.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
 
 wait
 
