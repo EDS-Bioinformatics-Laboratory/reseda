@@ -290,7 +290,7 @@ for sample in ${samples}; do
 
     # Reassign V genes based on the created clones file above, creates a new clones file
     cloneMutFile=final/${prefix}-${CELLTYPE}-clones-mut-sites.csv # this is the result of the script MutationAnalysisVJ.py
-    python3 ReassignGenes.py -c ${cloneMutFile} -a ${allinfoFile} # creates a file with extension -clones-mut-sites-reassigned.csv
+    python3 ReassignGenes.py -c ${cloneMutFile} -a ${allinfoFile} # creates a file with extension -clones-mut-sites-reassigned.csv and -allinfo-filtered.csv
 done
 
 # Move results to 'final'
@@ -326,7 +326,7 @@ mkdir ${beehub_mount}/${RESULTSDIR}/final
 wait
 
 # Transfer data to Beehub
-set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Beehub"
+set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Webdav server"
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt versions-*
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-productive.txt final/*.log
@@ -335,7 +335,7 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-producti
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv final/*-allinfo-filtered.csv
 
 wait
 
