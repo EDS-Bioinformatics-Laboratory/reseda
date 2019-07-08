@@ -1,26 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Prepare input files &#8212; RESEDA  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Run standalone" href="run-standalone.html" />
@@ -31,57 +22,70 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="prepare-input-files">
 <h1>Prepare input files<a class="headerlink" href="#prepare-input-files" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="reference-database">
 <h2>Reference database<a class="headerlink" href="#reference-database" title="Permalink to this headline">¶</a></h2>
+<p>The reference files are already part of the repository. The following steps are necessary for an update of the reference database or for a new reference.</p>
 <p><strong>Required for V and J assignment</strong></p>
 <p>Download the reference sequences of the chains you are interested in (nucleotide sequences in fasta format) from the IMGT website (<a class="reference external" href="http://imgt.org/">http://imgt.org/</a>)</p>
 <ul class="simple">
-<li>Select species, gene type, functionality (functional) and the locus in the GeneDB</li>
-<li>Select all genes and download the “F+ORF+all P nucleotide sequences”, store as e.g. TRBV_human.fasta and TRBJ_human.fasta</li>
-<li>Do this for the variable and joining genes</li>
-<li>Build a BWA index and a samtools faidx on the fasta files</li>
+<li><p>Select species, gene type, functionality (functional) and the locus in the GeneDB</p></li>
+<li><p>Select all genes and download the “F+ORF+all P nucleotide sequences”, store as e.g. TRBV_human.fasta and TRBJ_human.fasta</p></li>
+<li><p>Do this for the variable and joining genes</p></li>
+<li><p>Build a BWA index and a samtools faidx on the fasta files</p></li>
 </ul>
 <p><strong>Required for CDR3 identification</strong></p>
 <p>Download the peptide sequences of the variable genes (F+ORF+in-frame P amino acid sequences with IMGT gaps). Convert the downloaded fasta entries with the helper-ref-table.py script</p>
+<p><strong>Adding reference sequences of a new organism</strong></p>
+<p>The new reference files need to be specified in TranslateAndExtractCdr3.py</p>
 </div>
-<div class="section" id="expected-input">
-<h2>Expected input<a class="headerlink" href="#expected-input" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="expected-input-sequences">
+<h2>Expected input (sequences)<a class="headerlink" href="#expected-input-sequences" title="Permalink to this headline">¶</a></h2>
 <p>RESEDA assumes that input files have the following names and comes in fastq format:</p>
 <p>Paired end: SAMPLENAME_S1_L001_R1_001.fastq.gz and SAMPLENAME_S1_L001_R2_001.fastq.gz</p>
 <p>Where SAMPLENAME is unique in a run and S1 can have any number.</p>
 <p>Single end: SAMPLENAME_S1_L001.assembled.fastq.gz</p>
+</div>
+<div class="section" id="data-descriptions-metadata">
+<h2>Data descriptions (metadata)<a class="headerlink" href="#data-descriptions-metadata" title="Permalink to this headline">¶</a></h2>
+<p>When the data analysis is done with ToPoS you need a ‘Datasheet’ from which input parameters are generated automatically.
+An example can be found in the ‘TESTDATA’ directory: 20190609_RUN35_Datasheet-UMI.csv</p>
+<p>The columns ‘Sample_Plate,Sample_Well,I7_Index_ID,index,I5_Index_ID,index2’ can be left empty.
+If there are both sample with and without UMI in the sequence run the datasheet needs to be split into one datasheet with all the samples with and one datasheet with the samples without UMI.
+It is easiest to create different output directories for these two types of samples, but this is not mandatory.</p>
 </div>
 <div class="section" id="prepare-roche-data">
 <h2>Prepare Roche data<a class="headerlink" href="#prepare-roche-data" title="Permalink to this headline">¶</a></h2>
 <p>When starting from a table with sequence data. Note that this table usually
 doesn’t contain quality scores. These will be set to 40.</p>
 <ul class="simple">
-<li>Use MakePTtableFromAAreads.R - Create a pt.table (sample description) from AA.reads file</li>
-<li>SplitAAreads.py - Splits the AA.reads table per sample (check the column names that you want to include in the file name!)</li>
-<li>SeqToFastq.py - Convert the tab-delimited files to fastq format</li>
+<li><p>Use MakePTtableFromAAreads.R - Create a pt.table (sample description) from AA.reads file</p></li>
+<li><p>SplitAAreads.py - Splits the AA.reads table per sample (check the column names that you want to include in the file name!)</p></li>
+<li><p>SeqToFastq.py - Convert the tab-delimited files to fastq format</p></li>
 </ul>
 <p>When starting from files in sff format:</p>
 <ul class="simple">
-<li>Convert sff to fastq with SeqToFastq.py</li>
-<li>Split the fastq files with FastqSplitOnMid.py</li>
-<li>Rename the files with jupyter notebook RenameSplitRoche.ipynb</li>
+<li><p>Convert sff to fastq with SeqToFastq.py</p></li>
+<li><p>Split the fastq files with FastqSplitOnMid.py</p></li>
+<li><p>Rename the files with jupyter notebook RenameSplitRoche.ipynb</p></li>
 </ul>
 </div>
 </div>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -97,7 +101,8 @@ doesn’t contain quality scores. These will be set to 40.</p>
 <li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Prepare input files</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#reference-database">Reference database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#expected-input">Expected input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#expected-input-sequences">Expected input (sequences)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-descriptions-metadata">Data descriptions (metadata)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#prepare-roche-data">Prepare Roche data</a></li>
 </ul>
 </li>
@@ -105,7 +110,8 @@ doesn’t contain quality scores. These will be set to 40.</p>
 <li class="toctree-l1"><a class="reference internal" href="run-with-topos.html">Run with ToPoS</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Prepare input files</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#reference-database">Reference database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#expected-input">Expected input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#expected-input-sequences">Expected input (sequences)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-descriptions-metadata">Data descriptions (metadata)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#prepare-roche-data">Prepare Roche data</a></li>
 </ul>
 </li>
@@ -116,13 +122,13 @@ doesn’t contain quality scores. These will be set to 40.</p>
 
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -133,8 +139,8 @@ doesn’t contain quality scores. These will be set to 40.</p>
       &copy;2019, Barbera DC van Schaik.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/input-files.rst.txt"

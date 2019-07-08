@@ -21,3 +21,5 @@ The results will be on the machine where you run this script, and if the webdav
 settings are configured well a new directory with all the files will appear on
 the ResearchDrive:
 https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/mytestrun
+
+MIDs: You need MIDS-miseq.txt for samples without UMI and MIDS-miseq-umi.txt for samples with UMI

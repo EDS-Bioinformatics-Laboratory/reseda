@@ -1,0 +1,125 @@
+[Header],,,,,,,,,,,,,,,,
+IEMFileVersion,4,,,,,,,,,,,,,,,
+Investigator Name,Niek de Vries,,,,,,,,,,,,,,,
+Experiment Name,RUN35,,,,,,,,,,,,,,,
+Date,2019-06-09,,,,,,,,,,,,,,,
+Workflow,GenerateFASTQ,,,,,,,,,,,,,,,
+Application,FASTQ Only,,,,,,,,,,,,,,,
+Assay,Nextera XT v2,,,,,,,,,,,,,,,
+Description,RNA,,,,,,,,,,,,,,,
+Chemistry,Amplicon,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+[Reads],,,,,,,,,,,,,,,,
+301,,,,,,,,,,,,,,,,
+301,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+[Settings],,,,,,,,,,,,,,,,
+ReverseComplement,0,,,,,,,,,,,,,,,
+Adapter,CTGTCTCTTATACACATCT,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+[Data],,,,,,,,,,,,,,,,
+Sample_ID,Sample_Name,Sample_Plate,Sample_Well,I7_Index_ID,index,I5_Index_ID,index2,Run,Nr,Sample_Project,Species,Chain,Patient,Sample,Group,UMI
+N726_S503,2172-PE-block,,,,,,,RUN35,S37,BASTA,human,BCRh,2172,PE block,,yes
+N727_S503,SS4-PE-block,,,,,,,RUN35,S38,BASTA,human,BCRh,SS4,PE block,,yes
+N728_S503,3684-PE-block,,,,,,,RUN35,S39,BASTA,human,BCRh,3684,PE block,,yes
+N729_S503,1467-PE-block,,,,,,,RUN35,S40,BASTA,human,BCRh,1467,PE block,,yes
+N721_S505,SS4-PE-slice,,,,,,,RUN35,S57,BASTA,human,BCRh,SS4,PE slice,,yes
+N722_S505,2172-PE-slice,,,,,,,RUN35,S58,BASTA,human,BCRh,2172,PE slice,,yes
+N723_S505,3684-PE-slice,,,,,,,RUN35,S59,BASTA,human,BCRh,3684,PE slice,,yes
+N701_S511,BASTA-2172-B,,,,,,,RUN35,S150,BASTA,human,BCRh,2172,paxgene,,yes
+N702_S511,BASTA-10-12-B,,,,,,,RUN35,S151,BASTA,human,BCRh,10-12,paxgene,,yes
+N703_S511,1193-DN,,,,,,,RUN35,S152,BASTA,human,BCRh,SS4,DN,,yes
+N704_S511,1193-mem,,,,,,,RUN35,S153,BASTA,human,BCRh,SS4,memory,,yes
+N705_S511,1193-MZ,,,,,,,RUN35,S154,BASTA,human,BCRh,SS4,MZ,,yes
+N706_S511,1193-naive,,,,,,,RUN35,S155,BASTA,human,BCRh,SS4,naive,,yes
+N707_S511,2172-CD20p,,,,,,,RUN35,S156,BASTA,human,BCRh,2172,CD20+,,yes
+N710_S511,2172-DN,,,,,,,RUN35,S157,BASTA,human,BCRh,2172,DN,,yes
+N701_S513,2172-mem,,,,,,,RUN35,S166,BASTA,human,BCRh,2172,memory,,yes
+N702_S513,2172-MZ,,,,,,,RUN35,S167,BASTA,human,BCRh,2172,MZ,,yes
+N703_S513,2172-naive,,,,,,,RUN35,S168,BASTA,human,BCRh,2172,naive,,yes
+N704_S513,2172-PB,,,,,,,RUN35,S169,BASTA,human,BCRh,2172,PB,,yes
+N706_S513,3684-CD20p,,,,,,,RUN35,S170,BASTA,human,BCRh,3684,CD20+,,yes
+N707_S513,3684-DN,,,,,,,RUN35,S171,BASTA,human,BCRh,3684,DN,,yes
+N710_S513,3684-mem,,,,,,,RUN35,S172,BASTA,human,BCRh,3684,memory,,yes
+N701_S515,3684-MZ,,,,,,,RUN35,S181,BASTA,human,BCRh,3684,MZ,,yes
+N702_S515,3684-naive,,,,,,,RUN35,S182,BASTA,human,BCRh,3684,naive,,yes
+N703_S515,3684-PB,,,,,,,RUN35,S183,BASTA,human,BCRh,3684,PB,,yes
+N705_S515,1467-DN,,,,,,,RUN35,S184,BASTA,human,BCRh,1467,DN,,yes
+N706_S515,1467-mem,,,,,,,RUN35,S185,BASTA,human,BCRh,1467,memory,,yes
+N707_S515,1467-MZ,,,,,,,RUN35,S186,BASTA,human,BCRh,1467,MZ,,yes
+N710_S515,1467-naive,,,,,,,RUN35,S187,BASTA,human,BCRh,1467,naive,,yes
+N701_S516,BASTA-1467-B,,,,,,,RUN35,S196,BASTA,human,BCRh,1467,paxgene,,yes
+N703_S516,B005-PB,,,,,,,RUN35,S197,BASTA,human,BCRh,SS3,PB,,yes
+N701_S517,B007-naive,,,,,,,RUN35,S206,BASTA,human,BCRh,B007,naive,,yes
+N702_S517,B007-PB,,,,,,,RUN35,S207,BASTA,human,BCRh,B007,PB,,yes
+N701_S502,DO-002V3-U,,,,,,,RUN35,S1,DOMINO,human,BCRh,DO-002V3,paxgene,,yes
+N702_S502,DO-006V2-U,,,,,,,RUN35,S2,DOMINO,human,BCRh,DO-006V2,paxgene,,yes
+N703_S502,DO-009V2-U,,,,,,,RUN35,S3,DOMINO,human,BCRh,DO-009V2,paxgene,,yes
+N704_S502,DO-026V2-U,,,,,,,RUN35,S4,DOMINO,human,BCRh,DO-026V2,paxgene,,yes
+N705_S502,DO-034V1-U,,,,,,,RUN35,S5,DOMINO,human,BCRh,DO-034V1,paxgene,,yes
+N706_S502,DO-035V1-U,,,,,,,RUN35,S6,DOMINO,human,BCRh,DO-035V1,paxgene,,yes
+N707_S502,DO-038V1-U,,,,,,,RUN35,S7,DOMINO,human,BCRh,DO-038V1,paxgene,,yes
+N710_S502,DO-039V1-U,,,,,,,RUN35,S8,DOMINO,human,BCRh,DO-039V1,paxgene,,yes
+N701_S503,DO-040V1-U,,,,,,,RUN35,S24,DOMINO,human,BCRh,DO-040V1,paxgene,,yes
+N702_S503,DO-043V1-U,,,,,,,RUN35,S25,DOMINO,human,BCRh,DO-043V1,paxgene,,yes
+N703_S503,DO-045V1-U,,,,,,,RUN35,S26,DOMINO,human,BCRh,DO-045V1,paxgene,,yes
+N704_S503,DO-046V0-U,,,,,,,RUN35,S27,DOMINO,human,BCRh,DO-046V0,paxgene,,yes
+N705_S503,DO-047V0-U,,,,,,,RUN35,S28,DOMINO,human,BCRh,DO-047V0,paxgene,,yes
+N706_S503,DO-048V0-U,,,,,,,RUN35,S29,DOMINO,human,BCRh,DO-048V0,paxgene,,yes
+N707_S503,DO-049V0-U,,,,,,,RUN35,S30,DOMINO,human,BCRh,DO-049V0,paxgene,,yes
+N701_S505,DO-002V3-pre-U,,,,,,,RUN35,S41,DOMINO,human,BCRh,DO-002V3,presort,,yes
+N702_S505,DO-006V2-pre-U,,,,,,,RUN35,S42,DOMINO,human,BCRh,DO-006V2,presort,,yes
+N703_S505,DO-009V2-pre-U,,,,,,,RUN35,S43,DOMINO,human,BCRh,DO-009V2,presort,,yes
+N704_S505,DO-034V1-pre-U,,,,,,,RUN35,S44,DOMINO,human,BCRh,DO-034V1,presort,,yes
+N705_S505,DO-035V1-pre-U,,,,,,,RUN35,S45,DOMINO,human,BCRh,DO-035V1,presort,,yes
+N706_S505,DO-038V1-pre-U,,,,,,,RUN35,S46,DOMINO,human,BCRh,DO-038V1,presort,,yes
+N707_S505,DO-039V1-pre-U,,,,,,,RUN35,S47,DOMINO,human,BCRh,DO-039V1,presort,,yes
+N710_S505,DO-040V1-pre-U,,,,,,,RUN35,S48,DOMINO,human,BCRh,DO-040V1,presort,,yes
+N701_S506,DO-043V1-pre-U,,,,,,,RUN35,S63,DOMINO,human,BCRh,DO-043V1,presort,,yes
+N702_S506,DO-045V1-pre-U,,,,,,,RUN35,S64,DOMINO,human,BCRh,DO-045V1,presort,,yes
+N703_S506,DO-002V3-mem-U,,,,,,,RUN35,S65,DOMINO,human,BCRh,DO-002V3,memory,,yes
+N704_S506,DO-002V3-plas-U,,,,,,,RUN35,S66,DOMINO,human,BCRh,DO-002V3,plasma,,yes
+N705_S506,DO-006V2-mem-U,,,,,,,RUN35,S67,DOMINO,human,BCRh,DO-006V2,memory,,yes
+N706_S506,DO-006V2-plas-U,,,,,,,RUN35,S68,DOMINO,human,BCRh,DO-006V2,plasma,,yes
+N707_S506,DO-009V2-mem-U,,,,,,,RUN35,S69,DOMINO,human,BCRh,DO-009V2,memory,,yes
+N710_S506,DO-009V2-plas-U,,,,,,,RUN35,S70,DOMINO,human,BCRh,DO-009V2,plasma,,yes
+N701_S507,DO-026V2-mem-U,,,,,,,RUN35,S85,DOMINO,human,BCRh,DO-026V2,memory,,yes
+N702_S507,DO-026V2-plas-U,,,,,,,RUN35,S86,DOMINO,human,BCRh,DO-026V2,plasma,,yes
+N703_S507,DO-034V1-mem-U,,,,,,,RUN35,S87,DOMINO,human,BCRh,DO-034V1,memory,,yes
+N704_S507,DO-034V1-plas-U,,,,,,,RUN35,S88,DOMINO,human,BCRh,DO-034V1,plasma,,yes
+N705_S507,DO-035V1-mem-U,,,,,,,RUN35,S89,DOMINO,human,BCRh,DO-035V1,memory,,yes
+N706_S507,DO-035V1-plas-U,,,,,,,RUN35,S90,DOMINO,human,BCRh,DO-035V1,plasma,,yes
+N707_S507,DO-038V1-mem-U,,,,,,,RUN35,S91,DOMINO,human,BCRh,DO-038V1,memory,,yes
+N710_S507,DO-038V1-plas-U,,,,,,,RUN35,S92,DOMINO,human,BCRh,DO-038V1,plasma,,yes
+N701_S508,DO-039V1-mem-U,,,,,,,RUN35,S106,DOMINO,human,BCRh,DO-039V1,memory,,yes
+N702_S508,DO-039V1-plas-U,,,,,,,RUN35,S107,DOMINO,human,BCRh,DO-039V1,plasma,,yes
+N703_S508,DO-039V1-mem1-U,,,,,,,RUN35,S108,DOMINO,human,BCRh,DO-039V1,memory1,,yes
+N704_S508,DO-039V1-plas1-U,,,,,,,RUN35,S109,DOMINO,human,BCRh,DO-039V1,plasma1,,yes
+N705_S508,DO-039V1-mem2-U,,,,,,,RUN35,S110,DOMINO,human,BCRh,DO-039V1,memory2,,yes
+N706_S508,DO-039V1-plas2-U,,,,,,,RUN35,S111,DOMINO,human,BCRh,DO-039V1,plasma2,,yes
+N701_S510,DO-039V1-mem4-U,,,,,,,RUN35,S128,DOMINO,human,BCRh,DO-039V1,memory4,,yes
+N702_S510,DO-039V1-plas4-U,,,,,,,RUN35,S129,DOMINO,human,BCRh,DO-039V1,plasma4,,yes
+N703_S510,DO-040V1-mem-U,,,,,,,RUN35,S130,DOMINO,human,BCRh,DO-040V1,memory,,yes
+N704_S510,DO-040V1-plas-U,,,,,,,RUN35,S131,DOMINO,human,BCRh,DO-040V1,plasma,,yes
+N705_S510,DO-043V1-mem-U,,,,,,,RUN35,S132,DOMINO,human,BCRh,DO-043V1,memory,,yes
+N706_S510,DO-043V1-plas-U,,,,,,,RUN35,S133,DOMINO,human,BCRh,DO-043V1,plasma,,yes
+N707_S510,DO-045V1-mem-U,,,,,,,RUN35,S134,DOMINO,human,BCRh,DO-045V1,memory,,yes
+N710_S510,DO-045V1-plas-U,,,,,,,RUN35,S135,DOMINO,human,BCRh,D0-045V1,plasma,,yes
+N721_S502,G034t0-B,,,,,,,RUN35,S16,GIOCA,human,BCRh,G034,t=0,,yes
+N722_S502,G034t1-B,,,,,,,RUN35,S17,GIOCA,human,BCRh,G034,t=1,,yes
+N723_S502,G048t0-B,,,,,,,RUN35,S18,GIOCA,human,BCRh,G048,t=0,,yes
+N724_S502,G048t1-B,,,,,,,RUN35,S19,GIOCA,human,BCRh,G048,t=1,,yes
+N726_S502,G061t0-B,,,,,,,RUN35,S20,GIOCA,human,BCRh,G061,t=0,,yes
+N727_S502,G061t1-B,,,,,,,RUN35,S21,GIOCA,human,BCRh,G061,t=1,,yes
+N721_S506,G034t0-T,,,,,,,RUN35,S79,GIOCA,human,TCRb,G034,t=0,,yes
+N722_S506,G034t1-T,,,,,,,RUN35,S80,GIOCA,human,TCRb,G034,t=1,,yes
+N723_S506,G048t0-T,,,,,,,RUN35,S81,GIOCA,human,TCRb,G048,t=0,,yes
+N724_S506,G048t1-T,,,,,,,RUN35,S82,GIOCA,human,TCRb,G048,t=1,,yes
+N726_S506,G061t0-T,,,,,,,RUN35,S83,GIOCA,human,TCRb,G061,t=0,,yes
+N727_S506,G061t1-T,,,,,,,RUN35,S84,GIOCA,human,TCRb,G061,t=1,,yes
+N728_S502,PRIK003-B,,,,,,,RUN35,S22,IgSub,human,BCRh,PRIK003,UMI-BCRh,,yes
+N729_S502,PRIK004-B,,,,,,,RUN35,S23,IgSub,human,BCRh,PRIK004,UMI-BCRh,,yes
+N721_S503,ID543t0-B,,,,,,,RUN35,S33,IgSub,human,BCRh,ID543,UMI-BCRh,,yes
+N722_S503,ID544t0-B,,,,,,,RUN35,S34,IgSub,human,BCRh,ID544,UMI-BCRh,,yes
+N723_S503,ID303-B,,,,,,,RUN35,S35,IgSub,human,BCRh,ID303,UMI-BCRh,,yes
+N724_S503,ID311-B,,,,,,,RUN35,S36,IgSub,human,BCRh,ID311,UMI-BCRh,,yes

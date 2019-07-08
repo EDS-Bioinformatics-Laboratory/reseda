@@ -186,3 +186,11 @@ Check for contamination with contamination-figure.R or the pandas-sample-similar
 * Check by hand if the column names in the pt.table are correct
 * Run the script
 * Usually the reports are made for all samples per cell_type
+
+Starting the jupyter notebook server:
+
+.. code-block:: bash
+
+   jupyter notebook --no-browser
+
+The (password-protected) notebook will be accessible via the ip address of the virtual machine and port 8888. E.g. http://145.100.57.10:8888/
