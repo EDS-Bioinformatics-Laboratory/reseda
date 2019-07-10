@@ -1,0 +1,9 @@
+Name	Regex
+BCRh-7	^(.{0,5})(ACTGACTCCT)(.{5})
+BCRh-22	^(.{0,5})(CTGACTCCTT)(.{5})
+BCRh-15	^(.{0,5})(CCGAGCTTAC)(.{5})
+BCRh-20	^(.{0,5})(CTCGACCTTA)(.{5})
+BCRig-18	^(.{0,5})(AGTCAGAGGC)(.{5})
+BCRig-20	^(.{0,5})(AGTCATGTCT)(.{5})
+BCRig-19	^(.{0,5})(AGTCAGGGGA)(.{5})
+BCRig-17	^(.{0,5})(AGTCACAGGA)(.{5})
