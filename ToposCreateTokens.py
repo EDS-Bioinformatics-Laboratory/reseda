@@ -88,6 +88,7 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--protocol', default='paired', type=str, help='single or paired (default: %(default)s)')
     parser.add_argument('-b', '--barcodes', default="yes", type=str, help='Were additional internal MIDs used? yes/no (default: %(default)s)')
     parser.add_argument('-u', '--umis', default="yes", type=str, help='Were UMIs used? yes/no (default: %(default)s)')
+    parser.add_argument('-mm', '--mismatches', default=0, type=str, help='Number of mismatches in CDR3 extraction (default: %(default)s)')
     parser.add_argument("sample_files", type=str, nargs='+', help='Path(s) to SAMPLE file(s)')
     args = parser.parse_args()
 
@@ -107,7 +108,8 @@ if __name__ == '__main__':
             "outdir": args.outdir,
             "protocol": args.protocol,
             "barcodes": args.barcodes,
-            "umis": args.umis
+            "umis": args.umis,
+            "mismatches": args.mismatches
         }
         js["samples"] = getSamples(myfile)
         writeJson(outfile, js)
