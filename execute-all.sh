@@ -17,6 +17,7 @@ function show_help {
     echo "    -org --organism      human|mouse, default: human"
     echo "    -cell --cell         IGH|IGK|IGL|TRA|TRB, default:IGH"
     echo "    -celltype --celltype IGH_HUMAN|TRB_MOUSE|etc, default: IGH_HUMAN"
+    echo "    -mm --mismatches     default: 0 (mismatches allowed in CDR3 motifs)"
     echo "    -p --protocol        single|paired, default: paired"
     echo "    -o --outdir          default: results-tbcell"
     echo "    -b --barcodes        yes|no, were extra internal barcodes used? default=yes"
@@ -29,6 +30,7 @@ MIDS="MIDS-miseq-umi.txt"
 ORGANISM="human"
 CELL="IGH"
 CELLTYPE="IGH_HUMAN"
+MISMATCHES=0
 PROTOCOL="paired"
 RESULTSDIR="results-tbcell"
 BARCODES="yes"
@@ -74,6 +76,11 @@ do
         shift # past argument
         shift # past value
         ;;
+        -mm|--mismatches)
+        MISMATCHES="$2"
+        shift # past argument
+        shift # past value
+        ;;
         -p|--protocol)
         PROTOCOL="$2"
         shift # past argument
@@ -113,6 +120,7 @@ echo MIDS            = "${MIDS}"
 echo ORGANISM        = "${ORGANISM}"
 echo CELL            = "${CELL}"
 echo CELLTYPE        = "${CELLTYPE}"
+echo MISMATCHES      = "${MISMATCHES}"
 echo PROTOCOL        = "${PROTOCOL}"
 echo RESULTSDIR      = "${RESULTSDIR}"
 echo BARCODES        = "${BARCODES}"
@@ -225,7 +233,7 @@ wait
 
 # Extract the CDR3 sequence
 set_status ${ip} "RUNNING" "${CELLTYPE} Extracting CDR3's"
-runcmd python2 TranslateAndExtractCdr3.py -c ${CELLTYPE} ${samples}
+runcmd python2 TranslateAndExtractCdr3.py -c ${CELLTYPE} -m ${MISMATCHES} ${samples}
 wait
 
 # Count lines of CDR3.csv files
