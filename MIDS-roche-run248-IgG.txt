@@ -1,3 +1,4 @@
+Name	Regex
 BCRh-2	^(.{0,5})(ACACTCTTAC)(.{5})
 BCRig-9	^(.{0,5})(ACATGACAGGA)(.{5})
 BCRig-10	^(.{0,5})(ACATGAGAGGC)(.{5})
