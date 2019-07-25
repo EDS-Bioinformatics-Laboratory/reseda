@@ -53,11 +53,12 @@ def parseMids(totalreads, mids):
         line = line.strip()
         if line.startswith(":"):   # skip these lines
             continue
-        elif line.startswith("/mnt"):  # parse sample name
+        elif line.startswith("/mnt") or "midcount.txt" in line:  # parse sample name
             line = line.split("/")[-1]
             sample, rest = line.split("_L001")
             midcount[sample] = dict()
         else:                      # parse MIDs and frequency
+            print(line)
             mid, freq = line.split()
             if barcodes == "yes":
                 if mid != "nomatch":
