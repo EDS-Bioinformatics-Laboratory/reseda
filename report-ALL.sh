@@ -70,42 +70,99 @@ echo BARCODES        = "${BARCODES}"
 ################## End get arguments #############
 
 files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-pear.log"
-grep '^Assembled reads \.' $files > report-PEAR.txt
+wait
+echo $files > SAMPLES
+./copy-from-beehub.sh
+wait
+localfiles=`cat LOCAL_SAMPLES`
+grep '^Assembled reads \.' $localfiles > report-PEAR.txt
+wait
+rm -f $localfiles
 echo "Wrote report-PEAR.txt"
 
 files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-midcount.txt"
-more $files > report-MIDs.txt
+wait
+echo $files > SAMPLES
+./copy-from-beehub.sh
+wait
+localfiles=`cat LOCAL_SAMPLES`
+more $localfiles > report-MIDs.txt
+wait
+rm -f $localfiles
 echo "Wrote report-MIDs.txt"
 
 files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*HUMAN-report.txt /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*MOUSE-report.txt /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*RHESUS-report.txt"
-grep '^4' $files > report-CDR3.txt
+wait
+echo $files > SAMPLES
+./copy-from-beehub.sh
+wait
+localfiles=`cat LOCAL_SAMPLES`
+grep '^4' $localfiles > report-CDR3.txt
 echo "Wrote report-CDR3.txt"
-grep '^5' $files > report-ALT-V.txt
+grep '^5' $localfiles > report-ALT-V.txt
 echo "Wrote report-ALT-V.txt"
-grep '^6' $files > report-ALT-J.txt
+grep '^6' $localfiles > report-ALT-J.txt
+wait
+rm -f $localfiles
 echo "Wrote report-ALT-J.txt"
 
 files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-productive.txt"
-grep 'Unique reads with V and J in all_info' $files > report-PRODUCTIVE.txt
+wait
+echo $files > SAMPLES
+./copy-from-beehub.sh
+wait
+localfiles=`cat LOCAL_SAMPLES`
+grep 'Unique reads with V and J in all_info' $localfiles > report-PRODUCTIVE.txt
+wait
+rm -f $localfiles
 echo "Wrote report-PRODUCTIVE.txt"
 
 files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/raw/*.sam"
-python report-alignments.py ${files}
+wait
+echo $files > SAMPLES
+./copy-from-beehub.sh
+wait
+localfiles=`cat LOCAL_SAMPLES`
+python report-alignments.py ${localfiles}
+wait
+rm -f $localfiles
 echo "Wrote report-ALIGNED-*"
 
-python2 report-after-v-reassignment.py /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/final/*.rr.clones_subs.csv
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/final/*.rr.clones_subs.csv"
+wait
+echo $files > SAMPLES
+./copy-from-beehub.sh
+wait
+localfiles=`cat LOCAL_SAMPLES`
+python2 report-after-v-reassignment.py $localfiles
+wait
+rm -f $localfiles
 echo "Wrote report-AFTER-V-REASSIGNMENT.txt"
 
 files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*.quality-filter.log"
-perl -ne 'print if ! m/^datafile/;' $files > report-QUALITY-FILTER.txt
+wait
+echo $files > SAMPLES
+./copy-from-beehub.sh
+wait
+localfiles=`cat LOCAL_SAMPLES`
+perl -ne 'print if ! m/^datafile/;' $localfiles > report-QUALITY-FILTER.txt
+wait
+rm -f $localfiles
 echo "Wrote report-QUALITY-FILTER.txt"
 
 files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-qual-reassign.log"
-grep '^Reads in allinfo before quality filter' $files > report-ALLINFO.txt
+wait
+echo $files > SAMPLES
+./copy-from-beehub.sh
+wait
+localfiles=`cat LOCAL_SAMPLES`
+grep '^Reads in allinfo before quality filter' $localfiles > report-ALLINFO.txt
 echo "Wrote report-ALLINFO.txt"
-grep '^Reads in allinfo after quality filter' $files > report-ALLINFO-FILTER.txt
+grep '^Reads in allinfo after quality filter' $localfiles > report-ALLINFO-FILTER.txt
 echo "Wrote report-ALLINFO-FILTER.txt"
-grep '^Nr of clones' $files > report-CLONES.txt
+grep '^Nr of clones' $localfiles > report-CLONES.txt
+wait
+rm -f $localfiles
 echo "Wrote report-CLONES.txt"
 
 # First argument: were additional mids used, yes or no
