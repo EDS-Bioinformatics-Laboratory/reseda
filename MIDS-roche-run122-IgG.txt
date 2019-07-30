@@ -1,0 +1,7 @@
+Name	Regex
+BCRh-5  ^(.{0,5})(ACATGACTTA)(.{5})
+BCRig-9 ^(.{0,5})(ACATGACAGGA)(.{5})
+BCRh-b  ^(.{0,5})(CCGATGAGA)(.{5})
+BCRh-c  ^(.{0,5})(TTAGTACT)(.{5})
+BCRh-d  ^(.{0,5})(CTTAGGCGG)(.{5})
+BCRh-e  ^(.{0,5})(TGGCGATC)(.{5})
