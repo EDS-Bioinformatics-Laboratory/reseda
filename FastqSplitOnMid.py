@@ -65,6 +65,10 @@ def sortMIDS(umis, motifs, fastqFile, outdir):
                 umi = keepMatch.group(4)       # NEW
                 mid = keepMatch.group(2)       # NEW
                 primerTB = keepMatch.group(5)  # NEW
+            elif umis == "roche":
+                umi = ""       # NEW
+                mid = keepMatch.group(1)       # NEW
+                primerTB = keepMatch.group(2)  # NEW
             else:
                 umi = keepMatch.group(1)
                 mid = keepMatch.group(2)
@@ -90,7 +94,7 @@ if __name__ == '__main__':
 
     # Check if an argument was given to this script
     if len(sys.argv) < 4:
-        sys.exit('Usage: %s umis(yes/no) midfile outdir fastq-file(s)' % sys.argv[0])
+        sys.exit('Usage: %s umis(yes/no/roche) midfile outdir fastq-file(s)' % sys.argv[0])
 
     [umis, midFile, outdir] = sys.argv[1:4]
     fastqFiles = sys.argv[4:]
