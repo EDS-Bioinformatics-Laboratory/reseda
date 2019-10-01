@@ -1,0 +1,4 @@
+Name	Regex
+LN91	^(.{4})(CGTCTC)(.{5})
+LN93	^(.{4})(AGTCAC)(.{5})
+LNunknown	^(.{4})(CCGAGC)(.{5})
