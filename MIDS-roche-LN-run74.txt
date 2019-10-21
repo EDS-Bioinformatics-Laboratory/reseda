@@ -1,0 +1,3 @@
+Name	Regex
+LN89	^(.{4})(TGTACTC)(.{5})
+LN90	^(.{4})(TGCGACC)(.{5})
