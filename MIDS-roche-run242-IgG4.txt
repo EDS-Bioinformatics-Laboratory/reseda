@@ -1,0 +1,12 @@
+Name	Regex
+11	^(.{4})(CCGAGCTTAC)(.{5})
+15	^(.{4})(TGGCGCTTAC)(.{5})
+2	^(.{4})(CTGACCTTAC)(.{5})
+31	^(.{4})(TGCGCGCCTT)(.{5})
+32	^(.{4})(ACTGACTCCT)(.{5})
+33	^(.{4})(CTGACTCCTT)(.{5})
+34	^(.{4})(AGTTCGTCCT)(.{5})
+35	^(.{4})(ACACTTACCT)(.{5})
+36	^(.{4})(TCGGACACCT)(.{5})
+37	^(.{4})(CGTCTACCTT)(.{5})
+38	^(.{4})(CACTTGACCT)(.{5})
