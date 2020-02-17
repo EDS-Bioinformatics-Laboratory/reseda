@@ -1,0 +1,2 @@
+Name	Regex
+4	^(.{4})(TGGAC)(.{5})

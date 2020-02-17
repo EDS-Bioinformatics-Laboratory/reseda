@@ -1,0 +1,4 @@
+Name	Regex
+36	^(.{4})(CTTGACTG)(.{5})
+4	^(.{4})(TGGACG)(.{5})
+41	^(.{4})(CGTCTAGG)(.{5})

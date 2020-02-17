@@ -1,0 +1,5 @@
+Name	Regex
+A	^(.{2})GCAGAGA(TAAGC)(.{22})
+B	^(.{2})GCAGAGA(TGCAC)(.{22})
+C	^(.{2})GCAGAGA(CTCAG)(.{22})
+D	^(.{2})GCAGAGA(GGAAT)(.{22})
