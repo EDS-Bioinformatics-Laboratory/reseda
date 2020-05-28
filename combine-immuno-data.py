@@ -94,7 +94,7 @@ if __name__ == '__main__':
     import_data(midFile, " ", "mid", colnames)
 
     # CDR3
-    colnames = ["acc", "readingframe", "cdr3pep", "cdr3nuc", "cdr3_qual_min", "cdr3_qual_max", "cdr3_qual_avg", "cdr3_qual", "nt_start", "nt_end", "seq_length"]
+    colnames = ["acc", "readingframe", "cdr3pep", "cdr3nuc", "cdr3pepshort", "cdr3nucshort", "cdr3_qual_min", "cdr3_qual_max", "cdr3_qual_avg", "cdr3_qual", "nt_start", "nt_end", "seq_length"]
     create_table("cdr3", colnames)
     import_data(cdr3File, "\t", "cdr3", colnames)
 
