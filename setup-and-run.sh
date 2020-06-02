@@ -20,7 +20,9 @@ wait
 # Get latest version of the pipeline
 cd ../tbcell-miseq-pipeline/
 wait
-git pull origin devel
+git checkout master
+wait
+git pull origin master
 wait
 
 # Put reference files in the right place
