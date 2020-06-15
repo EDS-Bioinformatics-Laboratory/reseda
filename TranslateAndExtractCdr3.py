@@ -301,6 +301,10 @@ if __name__ == "__main__":
     # Check for an extra motif Asn-X-Ser/Thr (X is not Proline)
     p_extra = regex.compile("N[^P][ST]")
 
+    # Check for an extra J motif in the CDR3
+    motifsJ = getJmotifs(cellType)
+    p_j = regex.compile("(" + "|".join(motifsJ) + "){e<=1}", regex.BESTMATCH)
+
     # Pattern for stop codon and untranslated codons
     p_stop = regex.compile("\*")
     p_x = regex.compile("X")
@@ -308,6 +312,7 @@ if __name__ == "__main__":
     # Open fastq file(s) and search for patterns
     for inFile in args.fastq_files:
         outFile = inFile + "-" + cellType + "-CDR3.csv"
+        truncatedFile = inFile + "-" + cellType + "-CDR3-truncated.csv"
         altVFile = inFile + "-" + cellType + "-alt-V-CDR3.csv"
         altJFile = inFile + "-" + cellType + "-alt-J-CDR3.csv"
         extraFile = inFile + "-" + cellType + "-extra.txt"
@@ -324,6 +329,10 @@ if __name__ == "__main__":
             fhOut = open(outFile, "w")
         except:
             sys.exit("cannot write to file: " + outFile)
+        try:
+            fhTruncated = open(truncatedFile, "w")
+        except:
+            sys.exit("cannot write to file: " + truncatedFile)
         try:
             fhRaw = open(rawFile, "w")
         except:
@@ -383,6 +392,14 @@ if __name__ == "__main__":
 
                 if cdr3pep is not None:
                     cdr3_found = True
+
+                    # m_J = p_j.search(cdr3pep)
+                    # if m_J is not None and len(m_J.group(0)) == 4:
+                    #     cdr3_orig = cdr3pep[:]
+                    #     cdr3pep = cdr3pep[:m_J.span()[0] + 2]
+                    #     aa_pos[1] = aa_pos[0] + m_J.span()[0] + 2
+                    #     count_stuff["7. CDR3 with extra J motif, truncated"] = count_stuff.get("7. CDR3 with extra J motif, truncated", 0) + 1
+                    #     print("\t".join([record.id, str(i), str(record.seq), cdr3_orig, cdr3pep]), file=fhTruncated)
 
                     # Extract CDR3 nucleotide sequence
                     nt_start = aa_pos[0] * 3
@@ -475,6 +492,7 @@ if __name__ == "__main__":
 
         fhIn.close()
         fhOut.close()
+        fhTruncated.close()
         fhRaw.close()
         fhRep.close()
         fhStop.close()
