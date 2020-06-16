@@ -283,6 +283,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Translates nucleotide to protein and extracts CDR3')
     parser.add_argument('-c', '--celltype', default='IGH_HUMAN', type=str, help='Cell type: (IGH|TRB|IGK|IGL|TRA)_HUMAN (default: %(default)s)')
     parser.add_argument('-m', '--mismatches', default=0, type=int, help='Allowed nr of mismatches in motif search (default: %(default)s)')
+    parser.add_argument('-j', '--jsearch', default=False, type=bool, help='Search for second J motif in CDR3 (default: %(default)s)')
     parser.add_argument("fastq_files", type=str, nargs='+', help='Path(s) to fastq file(s)')
     args = parser.parse_args()
 
@@ -329,10 +330,11 @@ if __name__ == "__main__":
             fhOut = open(outFile, "w")
         except:
             sys.exit("cannot write to file: " + outFile)
-        try:
-            fhTruncated = open(truncatedFile, "w")
-        except:
-            sys.exit("cannot write to file: " + truncatedFile)
+        if args.jsearch:
+            try:
+                fhTruncated = open(truncatedFile, "w")
+            except:
+                sys.exit("cannot write to file: " + truncatedFile)
         try:
             fhRaw = open(rawFile, "w")
         except:
@@ -393,13 +395,14 @@ if __name__ == "__main__":
                 if cdr3pep is not None:
                     cdr3_found = True
 
-                    # m_J = p_j.search(cdr3pep)
-                    # if m_J is not None and len(m_J.group(0)) == 4:
-                    #     cdr3_orig = cdr3pep[:]
-                    #     cdr3pep = cdr3pep[:m_J.span()[0] + 2]
-                    #     aa_pos[1] = aa_pos[0] + m_J.span()[0] + 2
-                    #     count_stuff["7. CDR3 with extra J motif, truncated"] = count_stuff.get("7. CDR3 with extra J motif, truncated", 0) + 1
-                    #     print("\t".join([record.id, str(i), str(record.seq), cdr3_orig, cdr3pep]), file=fhTruncated)
+                    if args.jsearch:
+                        m_J = p_j.search(cdr3pep)
+                        if m_J is not None and len(m_J.group(0)) == 4:
+                            cdr3_orig = cdr3pep[:]
+                            cdr3pep = cdr3pep[:m_J.span()[0] + 2]
+                            aa_pos[1] = aa_pos[0] + m_J.span()[0] + 2
+                            count_stuff["7. CDR3 with extra J motif, truncated"] = count_stuff.get("7. CDR3 with extra J motif, truncated", 0) + 1
+                            print("\t".join([record.id, str(i), str(record.seq), cdr3_orig, cdr3pep]), file=fhTruncated)
 
                     # Extract CDR3 nucleotide sequence
                     nt_start = aa_pos[0] * 3
@@ -492,7 +495,8 @@ if __name__ == "__main__":
 
         fhIn.close()
         fhOut.close()
-        fhTruncated.close()
+        if args.jsearch:
+            fhTruncated.close()
         fhRaw.close()
         fhRep.close()
         fhStop.close()
