@@ -334,7 +334,7 @@ fi
 # Make output directories
 mkdir ${beehub_mount}
 mkdir ${beehub_mount}/${RESULTSDIR}
-#mkdir ${beehub_mount}/${RESULTSDIR}/raw
+mkdir ${beehub_mount}/${RESULTSDIR}/raw
 #mkdir ${beehub_mount}/${RESULTSDIR}/raw/correct-mid
 mkdir ${beehub_mount}/${RESULTSDIR}/reports
 mkdir ${beehub_mount}/${RESULTSDIR}/final
@@ -349,6 +349,7 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-producti
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ final/*CDR3*.csv final/*discarded*.txt
 
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-allinfo-filtered.csv final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
 
