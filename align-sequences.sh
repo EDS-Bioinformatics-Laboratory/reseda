@@ -29,7 +29,7 @@ wait
 echo "### replace nucleotides that are identical with = ###"
 samtools calmd -eS ${prefix}-${refprefix}.sam ${ref} > ${prefix}-${refprefix}-e.sam
 wait
-rm -f ${prefix}-${refprefix}.sam # REMOVE TMP FILE
+# rm -f ${prefix}-${refprefix}.sam # REMOVE TMP FILE
 
 echo "### fix CIGAR string KEEP THIS FILE ###"
 java -Djava.io.tmpdir=./tmp -jar picard-tools-1.126/picard.jar CleanSam I=${prefix}-${refprefix}-e.sam O=${prefix}-${refprefix}-e-clean.sam
