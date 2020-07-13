@@ -18,9 +18,9 @@ screen ./run.sh
 wait
 
 # Get latest version of the pipeline
-cd ../tbcell-miseq-pipeline/
+cd ../reseda/
 wait
-git pull origin devel
+git pull origin master
 wait
 
 # Put reference files in the right place
