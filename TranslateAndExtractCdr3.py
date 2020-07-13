@@ -283,6 +283,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Translates nucleotide to protein and extracts CDR3')
     parser.add_argument('-c', '--celltype', default='IGH_HUMAN', type=str, help='Cell type: (IGH|TRB|IGK|IGL|TRA)_HUMAN (default: %(default)s)')
     parser.add_argument('-m', '--mismatches', default=0, type=int, help='Allowed nr of mismatches in motif search (default: %(default)s)')
+    parser.add_argument('-j', '--jsearch', default=False, type=bool, help='Search for second J motif in CDR3 (default: %(default)s)')
     parser.add_argument("fastq_files", type=str, nargs='+', help='Path(s) to fastq file(s)')
     args = parser.parse_args()
 
@@ -301,6 +302,10 @@ if __name__ == "__main__":
     # Check for an extra motif Asn-X-Ser/Thr (X is not Proline)
     p_extra = regex.compile("N[^P][ST]")
 
+    # Check for an extra J motif in the CDR3
+    motifsJ = getJmotifs(cellType)
+    p_j = regex.compile("(" + "|".join(motifsJ) + "){e<=1}", regex.BESTMATCH)
+
     # Pattern for stop codon and untranslated codons
     p_stop = regex.compile("\*")
     p_x = regex.compile("X")
@@ -308,6 +313,7 @@ if __name__ == "__main__":
     # Open fastq file(s) and search for patterns
     for inFile in args.fastq_files:
         outFile = inFile + "-" + cellType + "-CDR3.csv"
+        truncatedFile = inFile + "-" + cellType + "-CDR3-truncated.csv"
         altVFile = inFile + "-" + cellType + "-alt-V-CDR3.csv"
         altJFile = inFile + "-" + cellType + "-alt-J-CDR3.csv"
         extraFile = inFile + "-" + cellType + "-extra.txt"
@@ -324,6 +330,11 @@ if __name__ == "__main__":
             fhOut = open(outFile, "w")
         except:
             sys.exit("cannot write to file: " + outFile)
+        if args.jsearch:
+            try:
+                fhTruncated = open(truncatedFile, "w")
+            except:
+                sys.exit("cannot write to file: " + truncatedFile)
         try:
             fhRaw = open(rawFile, "w")
         except:
@@ -384,6 +395,15 @@ if __name__ == "__main__":
                 if cdr3pep is not None:
                     cdr3_found = True
 
+                    if args.jsearch:
+                        m_J = p_j.search(cdr3pep)
+                        if m_J is not None and len(m_J.group(0)) == 4:
+                            cdr3_orig = cdr3pep[:]
+                            cdr3pep = cdr3pep[:m_J.span()[0] + 2]
+                            aa_pos[1] = aa_pos[0] + m_J.span()[0] + 2
+                            count_stuff["7. CDR3 with extra J motif, truncated"] = count_stuff.get("7. CDR3 with extra J motif, truncated", 0) + 1
+                            print("\t".join([record.id, str(i), str(record.seq), cdr3_orig, cdr3pep]), file=fhTruncated)
+
                     # Extract CDR3 nucleotide sequence
                     nt_start = aa_pos[0] * 3
                     nt_end = aa_pos[1] * 3
@@ -392,6 +412,10 @@ if __name__ == "__main__":
                     else:                       # retrieve nucleotide reading frame of reverse complement
                         tmp_seq = comrev(record.seq)[i - 3:]
                     cdr3nuc = tmp_seq[nt_start:nt_end]
+
+                    # Short version of CDR3pep and CDR3nuc
+                    cdr3pepshort = cdr3pep[:-7]
+                    cdr3nucshort = cdr3nuc[:-21]
 
                     # Convert fastq quality scores to phred scores
                     quality_scores = record.letter_annotations["phred_quality"]
@@ -426,7 +450,7 @@ if __name__ == "__main__":
                         count_stuff["3. Discarded reads uncalled bases in CDR3"] = count_stuff.get("3. Discarded reads uncalled bases in CDR3", 0) + 1
                         print("\t".join([record.id, str(i), str(record.seq), str(translations[i]), quality_scores]), file=fhUncalled)
                     else:                                 # Correct CDR3 peptide found without uncalled bases or stop codons
-                        print("\t".join([record.id, str(i), str(cdr3pep), str(cdr3nuc), str(cdr3_qual_min), str(cdr3_qual_max), str(cdr3_qual_avg), cdr3_quality_scores, str(nt_start), str(nt_end), str(len(record.seq))]), file=fhOut)
+                        print("\t".join([record.id, str(i), str(cdr3pep), str(cdr3nuc), str(cdr3pepshort), str(cdr3nucshort), str(cdr3_qual_min), str(cdr3_qual_max), str(cdr3_qual_avg), cdr3_quality_scores, str(nt_start), str(nt_end), str(len(record.seq))]), file=fhOut)
                         print("\t".join([record.id, str(i), str(record.seq), str(translations[i]), quality_scores]), file=fhRaw)
 
                         count_stuff["4. Reads with CDR3"] = count_stuff.get("4. Reads with CDR3", 0) + 1
@@ -471,6 +495,8 @@ if __name__ == "__main__":
 
         fhIn.close()
         fhOut.close()
+        if args.jsearch:
+            fhTruncated.close()
         fhRaw.close()
         fhRep.close()
         fhStop.close()

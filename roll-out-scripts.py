@@ -10,9 +10,6 @@ except:
 
 for line in fh:
     line = line.strip()
-    # print("scp execute-all.sh bioinfo@" + line + ":~/git/tbcell-miseq-pipeline/")
-    # print("scp execute-part.sh bioinfo@" + line + ":~/git/tbcell-miseq-pipeline/")
-    # print("scp translate-and-extract-cdr3-1mm.py bioinfo@" + line + ":~/git/tbcell-miseq-pipeline/")
     print("scp setup-and-run.sh bioinfo@" + line + ":~/")
 
 fh.close()

@@ -54,7 +54,7 @@ def runJob(token, js):
     fhOut.close()
 
     # Start analysis
-    cmd = ["./execute-all.sh", "-r", js["run"], "-m", js["mids"], "-org", js["organism"], "-cell", js["cell"], "-celltype", js["celltype"], "-mm", str(js["mismatches"]), "-p", js["protocol"], "-o", js["outdir"], "-b", js["barcodes"], "-u", js["umis"]]
+    cmd = ["./execute-all.sh", "-r", js["run"], "-m", js["mids"], "-org", js["organism"], "-cell", js["cell"], "-celltype", js["celltype"], "-mm", str(js["mismatches"]), "-j", js["jsearch"], "-p", js["protocol"], "-o", js["outdir"], "-b", js["barcodes"], "-u", js["umis"]]
     print(cmd)
     rc = subprocess.call(cmd)
     return(rc)

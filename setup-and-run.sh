@@ -18,9 +18,7 @@ screen ./run.sh
 wait
 
 # Get latest version of the pipeline
-cd ../tbcell-miseq-pipeline/
-wait
-git checkout master
+cd ../reseda/
 wait
 git pull origin master
 wait

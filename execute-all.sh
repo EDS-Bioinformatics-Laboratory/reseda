@@ -18,6 +18,7 @@ function show_help {
     echo "    -cell --cell         IGH|IGK|IGL|TRA|TRB, default:IGH"
     echo "    -celltype --celltype IGH_HUMAN|TRB_MOUSE|etc, default: IGH_HUMAN"
     echo "    -mm --mismatches     default: 0 (mismatches allowed in CDR3 motifs)"
+    echo "    -j --jsearch         default: False (search for extra J motif in CDR3)"
     echo "    -p --protocol        single|paired, default: paired"
     echo "    -o --outdir          default: results-tbcell"
     echo "    -b --barcodes        yes|no, were extra internal barcodes used? default=yes"
@@ -31,6 +32,7 @@ ORGANISM="human"
 CELL="IGH"
 CELLTYPE="IGH_HUMAN"
 MISMATCHES=0
+JSEARCH="False"
 PROTOCOL="paired"
 RESULTSDIR="results-tbcell"
 BARCODES="yes"
@@ -78,6 +80,11 @@ do
         ;;
         -mm|--mismatches)
         MISMATCHES="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        -j|--jsearch)
+        JSEARCH="$2"
         shift # past argument
         shift # past value
         ;;
@@ -233,7 +240,7 @@ wait
 
 # Extract the CDR3 sequence
 set_status ${ip} "RUNNING" "${CELLTYPE} Extracting CDR3's"
-runcmd python2 TranslateAndExtractCdr3.py -c ${CELLTYPE} -m ${MISMATCHES} ${samples}
+runcmd python2 TranslateAndExtractCdr3.py -c ${CELLTYPE} -m ${MISMATCHES} -j ${JSEARCH} ${samples}
 wait
 
 # Count lines of CDR3.csv files
@@ -327,7 +334,7 @@ fi
 # Make output directories
 mkdir ${beehub_mount}
 mkdir ${beehub_mount}/${RESULTSDIR}
-#mkdir ${beehub_mount}/${RESULTSDIR}/raw
+mkdir ${beehub_mount}/${RESULTSDIR}/raw
 #mkdir ${beehub_mount}/${RESULTSDIR}/raw/correct-mid
 mkdir ${beehub_mount}/${RESULTSDIR}/reports
 mkdir ${beehub_mount}/${RESULTSDIR}/final
@@ -342,8 +349,9 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-producti
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ final/*CDR3*.csv final/*discarded*.txt
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-allinfo-filtered.csv final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
 
 wait
 

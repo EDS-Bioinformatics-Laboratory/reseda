@@ -75,6 +75,7 @@ if __name__ == '__main__':
     threshold = args.threshold
 
     # Output
+    allinfoFilteredFile = cloneFile.replace("-clones-mut-sites.csv", "-allinfo-filtered.csv")
     outfile = cloneFile.replace("-clones-mut-sites.csv", "-clones-mut-sites-reassigned.csv")
     reportfile = cloneFile.replace("-clones-mut-sites.csv", "-qual-reassign.log")
 
@@ -124,6 +125,9 @@ if __name__ == '__main__':
     print("Reads in allinfo before quality filter:", allinfo['acc'].nunique(), file=fhOut)
     allinfo = allinfo.loc[(allinfo['cdr3_qual_min'] >= 30) & (pd.isna(allinfo['V_sub']) == False) & (pd.isna(allinfo['J_sub']) == False) & ((allinfo['V_flag'] == 0) | (allinfo['V_flag'] == 16)) & ((allinfo['J_flag'] == 0) | (allinfo['J_flag'] == 16))]
     print("Reads in allinfo after quality filter:", allinfo['acc'].nunique(), file=fhOut)
+
+    # Write -allinfo-filtered.csv to disk
+    allinfo.to_csv(allinfoFilteredFile, sep='\t', index=False)
 
     # Group the original entries by cdr3pep and J-gene
     select = ['cdr3pep', 'V_sub', 'J_sub', 'acc', 'beforeMID', 'cdr3nuc']
