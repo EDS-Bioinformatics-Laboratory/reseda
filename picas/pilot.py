@@ -6,7 +6,7 @@ description:
 	Connect to PiCaS server
 	Get the next token in todo View
 	Fetch the token parameters, e.g. input value
-	Run main job (process_task.sh) with the input argument
+	Run main job (execute-all.sh) with the input argument
 	When done, return the exit code to the token
 	Attach the logs to the token
 '''
@@ -16,6 +16,7 @@ from __future__ import print_function
 import os
 import sys
 import time
+import shutil
 import couchdb
 import picasconfig
 
@@ -55,9 +56,37 @@ class ExampleActor(RunActor):
         # Start running the main job
         command = "/usr/bin/time -v " + ".join(["./execute-all.sh", "-r", js["run"], "-m", js["mids"], "-org", js["organism"], "-cell", js["cell"], "-celltype", js["celltype"], "-mm", str(js["mismatches"]), "-j", js["jsearch"], "-p", js["protocol"], "-o", js["outdir"], "-b", js["barcodes"], "-u", js["umis"]])
 
-#        command = "/usr/bin/time -v ./process_task.sh " + "\"" +token['input'] + "\" " + token['_id'] + " 2> logs_" + str(token['_id']) + ".err 1> logs_" + str(token['_id']) + ".out"
-
         print(command)
+
+    def cleanup_run(self):
+        '''
+        Description: Clean up input and result files
+        In: -
+        Out: -
+        '''
+
+        myfiles = os.listdir(".")
+        for myfile in myfiles:
+            if "L001" in myfile:
+                if os.path.isfile(myfile):
+                    os.remove(myfile)
+                else:
+                    shutil.rmtree(myfile, ignore_errors=True)
+
+        myfiles = os.listdir("./split")
+        for myfile in myfiles:
+            if "L001" in myfile:
+                shutil.rmtree("split/" + myfile, ignore_errors=True)
+
+        myfiles = os.listdir("./split")
+        for myfile in myfiles:
+            if "L001" in myfile:
+                os.remove("split/" + myfile)
+
+        myfiles = os.listdir("./final")
+        for myfile in myfiles:
+            if "L001" in myfile or "mutations" in myfile:
+                os.remove("final/" + myfile)
 
 	out = execute(command,shell=True)
 
@@ -80,6 +109,7 @@ class ExampleActor(RunActor):
 
 	except:
   	   pass
+
 
 def main():
     # setup connection to db
