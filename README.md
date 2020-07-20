@@ -76,11 +76,13 @@ Example: ./execute-all.sh -r mytestrun -l local -m MIDS-miseq.txt -org human -ce
 The results will be on the machine where you run this script, and if the webdav settings are configured well a new directory with all the files will appear on the ResearchDrive:
 https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/mytestrun
 
-## How to run - Using ToPoS for sending jobs and using a job monitor tool
+## How to run - Using PiCaS for sending jobs and using a job monitor tool
 
 Note: this is what Barbera does for each sequence run
 
-ToPoS: https://topos.grid.sara.nl/4.1/
+ToPoS: https://topos.grid.sara.nl/4.1/ (migrating to PiCaS, so this URL will be removed when done)
+
+PiCaS: URL-HERE
 
 Job monitoring tool: https://bitbucket.org/barbera/progress/
 
@@ -94,8 +96,8 @@ Job monitoring tool: https://bitbucket.org/barbera/progress/
 * Sort and split the SAMPLE-* files with: ./SortAndSplit.sh SAMPLE-* It does the following:
     * Sorts the SAMPLE-* files: sort SAMPLE-blah > SAMPLE-blah.sort
     * Makes manageable jobs by splitting the SAMPLE-\*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
-* Create Topos jobs with ToposCreateTokens.py (run with the -h option to see the arguments)
-* Upload Topos jobs with ToposUploadFiles.py (run without arguments to see the arguments)
+* Create PiCaS jobs with ToposCreateTokens.py (run with the -h option to see the arguments)
+* Upload PiCaS jobs with picas/createTokens.py JSON-FILES (json files that were created in the previous step)
 
 ### Starting the jobs ###
 * Start virtual machines for the analysis (in the SurfSara HPC cloud webinterface)

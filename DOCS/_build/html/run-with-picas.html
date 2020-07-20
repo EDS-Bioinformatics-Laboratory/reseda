@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Run with ToPoS &#8212; RESEDA  documentation</title>
+    <title>Run with PiCaS &#8212; RESEDA  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,6 +23,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How to cite" href="how-to-cite.html" />
+    <link rel="prev" title="Run standalone" href="run-standalone.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -38,11 +40,11 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="run-with-topos">
-<h1>Run with ToPoS<a class="headerlink" href="#run-with-topos" title="Permalink to this headline">¶</a></h1>
-<p>How to run - Using ToPoS for sending jobs and using a job monitor tool</p>
+  <div class="section" id="run-with-picas">
+<h1>Run with PiCaS<a class="headerlink" href="#run-with-picas" title="Permalink to this headline">¶</a></h1>
+<p>How to run - Using PiCaS for sending jobs and using a job monitor tool</p>
 <p>Note: this is what Barbera does for each sequence run</p>
-<p>ToPoS: <a class="reference external" href="https://topos.grid.sara.nl/4.1/">https://topos.grid.sara.nl/4.1/</a></p>
+<p>PiCaS: URL-HERE</p>
 <p>Job monitoring tool: <a class="reference external" href="https://bitbucket.org/barbera/progress/">https://bitbucket.org/barbera/progress/</a></p>
 <div class="section" id="helper-scripts">
 <h2>Helper scripts<a class="headerlink" href="#helper-scripts" title="Permalink to this headline">¶</a></h2>
@@ -121,12 +123,13 @@ nohup bash basespace-calc-checksum.sh &gt; nohup-check.out <span class="m">2</sp
 <div class="highlight-bash"><div class="highlight"><pre><span></span>./SortAndSplit.sh SAMPLE-*
 </pre></div>
 </div>
-<p>Create Topos jobs with ToposCreateTokens.py (run with the -h option to see the arguments)</p>
+<p>Create PiCaS jobs with ToposCreateTokens.py (run with the -h option to see the arguments)</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>python ToposCreateTokens.py -r runNN-yyyymmdd-miseq -m MIDS-miseq-umi.txt -o results-tbcell -p paired -b yes -u yes
 </pre></div>
 </div>
-<p>Upload Topos jobs with ToposUploadFiles.py (run without arguments to see the arguments)</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python ToposUploadFiles.py d8c24f78f9772cbdff54cf62 tokens/*
+<p>Upload PiCaS jobs with picas/createTokens.py JSON-FILES (json files that were created in the previous step)</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> picas
+python createTokens.py ../tokens/*
 </pre></div>
 </div>
 </div>
@@ -154,7 +157,12 @@ bash tmp.sh
 ./display.py
 </pre></div>
 </div>
-<p>The status of the jobs can also be traced via ToPoS. <a class="reference external" href="https://topos.grid.sara.nl/4.1/pools/d8c24f78f9772cbdff54cf62/">https://topos.grid.sara.nl/4.1/pools/d8c24f78f9772cbdff54cf62/</a> The analysis is finished when there are no more jobs (tokens) left.</p>
+<p>The status of the jobs can also be traced via PiCas. URL-HERE The analysis is finished when there are no more jobs (tokens) left.</p>
+<p>Monitoring PiCaS via the command-line:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> picas
+python createViews.py
+</pre></div>
+</div>
 </div>
 <div class="section" id="when-all-jobs-are-finished">
 <h2>When all jobs are finished<a class="headerlink" href="#when-all-jobs-are-finished" title="Permalink to this headline">¶</a></h2>
@@ -191,13 +199,25 @@ nohup bash tmp.sh &gt; nohup-concat.out <span class="m">2</span>&gt; nohup-conca
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to RESEDA’s documentation!</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Welcome to RESEDA’s documentation!</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#running-the-software-on-one-machine">Running the software on one machine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#running-the-software-on-multiple-machines">Running the software on multiple machines</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#table-of-contents">Table of contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input-files.html">Prepare input files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="run-standalone.html">Run standalone</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run-with-picas.html">Run with PiCaS</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Run with PiCaS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#helper-scripts">Helper scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preparation">Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-the-jobs">Starting the jobs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#check-progress-of-the-analysis">Check progress of the analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#when-all-jobs-are-finished">When all jobs are finished</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="input-files.html">Prepare input files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="how-to-cite.html">How to cite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -227,7 +247,7 @@ nohup bash tmp.sh &gt; nohup-concat.out <span class="m">2</span>&gt; nohup-conca
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/run-with-topos.rst.txt"
+      <a href="_sources/run-with-picas.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
