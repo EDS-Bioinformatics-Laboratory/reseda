@@ -27,5 +27,12 @@ wait
 mv reference/* .
 wait
 
+# Put all scripts necessary for Picas in the work directory
+mv picas/* .
+tar -xvf picas.tar
+tar -zxf couchdb.tgz
+
 # Start analysis
-nohup python ToposGetTokens.py ${POOLNAME} > nohup.out 2> nohup.err < /dev/null &
+#nohup python ToposGetTokens.py ${POOLNAME} > nohup.out 2> nohup.err < /dev/null &
+echo "Start the pilot job tasks by contacting PiCaS tokens"
+python pilot.py
