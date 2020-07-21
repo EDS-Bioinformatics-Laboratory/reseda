@@ -23,8 +23,12 @@ wait
 git pull origin master
 wait
 
-# Put reference files in the right place
+# Put reference files in the work directory
 mv reference/* .
+wait
+
+# Put MIDS files in the work directory
+mv mids/* .
 wait
 
 # Put all scripts necessary for Picas in the work directory
