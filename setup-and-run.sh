@@ -31,6 +31,10 @@ wait
 mv mids/* .
 wait
 
+# Put the ref.table.* files in the work directory
+mv reftables/* .
+wait
+
 # Put all scripts necessary for Picas in the work directory
 mv picas/* .
 tar -xvf picas.tar
