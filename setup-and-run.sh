@@ -40,10 +40,6 @@ mv picas/* .
 tar -xvf picas.tar
 tar -zxf couchdb.tgz
 
-# This is temporary until the library is installed on the virtual machine
-pip install couchdb
-
 # Start analysis
-#nohup python ToposGetTokens.py ${POOLNAME} > nohup.out 2> nohup.err < /dev/null &
 echo "Start the pilot job tasks by contacting PiCaS tokens"
-python2 pilot.py
+nohup python2 pilot.py > nohup.out 2> nohup.err < /dev/null &
