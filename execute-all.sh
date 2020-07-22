@@ -19,6 +19,7 @@ function show_help {
     echo "    -celltype --celltype IGH_HUMAN|TRB_MOUSE|etc, default: IGH_HUMAN"
     echo "    -mm --mismatches     default: 0 (mismatches allowed in CDR3 motifs)"
     echo "    -j --jsearch         default: False (search for extra J motif in CDR3)"
+    echo "    -c --cregion         default: no (sequences contain the C-region, align and mask this region)"
     echo "    -p --protocol        single|paired, default: paired"
     echo "    -o --outdir          default: results-tbcell"
     echo "    -b --barcodes        yes|no, were extra internal barcodes used? default=yes"
@@ -33,6 +34,7 @@ CELL="IGH"
 CELLTYPE="IGH_HUMAN"
 MISMATCHES=0
 JSEARCH="False"
+CREGION="no"
 PROTOCOL="paired"
 RESULTSDIR="results-tbcell"
 BARCODES="yes"
@@ -88,6 +90,11 @@ do
         shift # past argument
         shift # past value
         ;;
+        -c|--cregion)
+        CREGION="$2"
+        shift # past argument
+        shift # past value
+        ;;
         -p|--protocol)
         PROTOCOL="$2"
         shift # past argument
@@ -128,6 +135,8 @@ echo ORGANISM        = "${ORGANISM}"
 echo CELL            = "${CELL}"
 echo CELLTYPE        = "${CELLTYPE}"
 echo MISMATCHES      = "${MISMATCHES}"
+echo JSEARCH         = "${JSEARCH}"
+echo CREGION         = "${CREGION}"
 echo PROTOCOL        = "${PROTOCOL}"
 echo RESULTSDIR      = "${RESULTSDIR}"
 echo BARCODES        = "${BARCODES}"
@@ -237,6 +246,19 @@ samples=`ls split/*.fastq.gz`
 # FastQC report
 runcmd ./run-fastqc.sh ${samples}
 wait
+
+# Align against the C-region and mask the sequences
+if [ "${CREGION}" == "yes" ]; then
+    runcmd ./batch-align.sh IGHC_CH12_human.fasta ${samples}
+    samfiles=`ls split/*-IGHC_CH12_human.sam`
+    python MaskSequences.py ${samfiles}
+    samfiles=`ls split/*.masked.sam`
+    for samfile in ${samfiles}; do
+        java -Djava.io.tmpdir=./tmp -jar picard-tools-1.126/picard.jar SamToFastq I=${samfile} F=${samfile}.fastq
+        gzip ${samfile}
+    done
+    samples=`ls split/*.masked.sam.fastq.gz`
+fi
 
 # Extract the CDR3 sequence
 set_status ${ip} "RUNNING" "${CELLTYPE} Extracting CDR3's"
