@@ -19,6 +19,7 @@ import time
 import shutil
 import couchdb
 import picasconfig
+import json
 
 #picas imports
 from picas.actors import RunActor
@@ -42,7 +43,7 @@ class ExampleActor(RunActor):
             print("-----------------------")
 
         # Get the parameters
-        js = token['input']
+        js = json.loads(token['input'])
 
         # Write SAMPLES file
         try:

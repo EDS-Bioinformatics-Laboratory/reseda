@@ -46,4 +46,4 @@ pip install couchdb
 # Start analysis
 #nohup python ToposGetTokens.py ${POOLNAME} > nohup.out 2> nohup.err < /dev/null &
 echo "Start the pilot job tasks by contacting PiCaS tokens"
-python pilot.py
+python2 pilot.py
