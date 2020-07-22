@@ -1,7 +1,5 @@
 #!/bin/bash
 
-POOLNAME=d8c24f78f9772cbdff54cf62
-
 # Mount beehub
 ./mount-beehub.sh
 wait
@@ -42,4 +40,4 @@ tar -zxf couchdb.tgz
 
 # Start analysis
 echo "Start the pilot job tasks by contacting PiCaS tokens"
-nohup python2 pilot.py > nohup.out 2> nohup.err < /dev/null &
+screen python2 pilot.py
