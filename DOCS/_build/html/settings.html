@@ -1,17 +1,26 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Settings &#8212; RESEDA  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Prepare input files" href="input-files.html" />
@@ -22,14 +31,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head><body>
+  </head>
+  <body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
   <div class="section" id="settings">
@@ -44,31 +52,31 @@ here: <a class="reference external" href="https://bitbucket.org/barbera/progress
 <h2>Usernames and passwords<a class="headerlink" href="#usernames-and-passwords" title="Permalink to this headline">¶</a></h2>
 <p>The following accounts are necessary:</p>
 <ul class="simple">
-<li><p>Illumina basespace (via Rebecca Esveldt or Barbera van Schaik)</p></li>
-<li><p>HPC cloud account with access to the ‘tbcellrep-amc’ group</p></li>
-<li><p>Barbera needs to add your public SSH key to the virtual image (needs to be done once)</p></li>
-<li><p>‘bioinfo’ password on the cloud machine</p></li>
-<li><p>Your own ResearchDrive account with access to the immunogenomics repository</p></li>
-<li><p>Password of the jupyter notebook server</p></li>
+<li>Illumina basespace (via Rebecca Esveldt or Barbera van Schaik)</li>
+<li>HPC cloud account with access to the ‘tbcellrep-amc’ group</li>
+<li>Barbera needs to add your public SSH key to the virtual image (needs to be done once)</li>
+<li>‘bioinfo’ password on the cloud machine</li>
+<li>Your own ResearchDrive account with access to the immunogenomics repository</li>
+<li>Password of the jupyter notebook server</li>
 </ul>
 </div>
 <div class="section" id="settings-webdav-server">
 <h2>Settings webdav server<a class="headerlink" href="#settings-webdav-server" title="Permalink to this headline">¶</a></h2>
 <p>These scripts assume that the data is on the SurfSara ResearchDrive (webdav server) and that the drive is mounted in /mnt/immunogenomics</p>
 <ul class="simple">
-<li><p>copy-from-beehub.sh</p></li>
-<li><p>copy-basespace-data-to-beehub.py</p></li>
-<li><p>execute-all.sh</p></li>
-<li><p>report-ALL.sh</p></li>
-<li><p>ConcatenateCloneFilesBatch.py</p></li>
-<li><p>MakeSamplesFiles.py</p></li>
-<li><p>VerifyBasespaceCopy.py</p></li>
+<li>copy-from-beehub.sh</li>
+<li>copy-basespace-data-to-beehub.py</li>
+<li>execute-all.sh</li>
+<li>report-ALL.sh</li>
+<li>ConcatenateCloneFilesBatch.py</li>
+<li>MakeSamplesFiles.py</li>
+<li>VerifyBasespaceCopy.py</li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo mount -t davfs -o <span class="nv">uid</span><span class="o">=</span>bioinfo,gid<span class="o">=</span>bioinfo,rw https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics /mnt/immunogenomics
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo mount -t davfs -o <span class="nv">uid</span><span class="o">=</span>bioinfo,gid<span class="o">=</span>bioinfo,rw https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics /mnt/immunogenomics
 </pre></div>
 </div>
 <p>Create a .netrc file in your home directory:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>machine researchdrive.surfsara.nl
+<div class="highlight-bash"><div class="highlight"><pre><span></span>machine researchdrive.surfsara.nl
 login YOUR_RESEARCHDRIVE_USER
 password YOUR_PASSWORD
 </pre></div>
@@ -87,7 +95,6 @@ She will add your public key to the .ssh/authorized_keys file on the cloud machi
 
 
           </div>
-          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -109,7 +116,7 @@ She will add your public key to the .ssh/authorized_keys file on the cloud machi
 </li>
 <li class="toctree-l1"><a class="reference internal" href="input-files.html">Prepare input files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="run-standalone.html">Run standalone</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run-with-topos.html">Run with ToPoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run-with-picas.html">Run with PiCaS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input-files.html">Prepare input files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="how-to-cite.html">How to cite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -118,13 +125,13 @@ She will add your public key to the .ssh/authorized_keys file on the cloud machi
 
 
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
+  <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -135,8 +142,8 @@ She will add your public key to the .ssh/authorized_keys file on the cloud machi
       &copy;2019, Barbera DC van Schaik.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
       <a href="_sources/settings.rst.txt"
