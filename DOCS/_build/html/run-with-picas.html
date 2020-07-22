@@ -128,8 +128,10 @@ nohup bash basespace-calc-checksum.sh &gt; nohup-check.out <span class="m">2</sp
 </pre></div>
 </div>
 <p>Upload PiCaS jobs with picas/createTokens.py JSON-FILES (json files that were created in the previous step)</p>
+<p>Create a “view” in the database with picas/createViews.py</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> picas
 python createTokens.py ../tokens/*
+python createViews.py
 </pre></div>
 </div>
 </div>

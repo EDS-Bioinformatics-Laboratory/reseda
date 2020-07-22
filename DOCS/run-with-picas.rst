@@ -118,10 +118,13 @@ Create PiCaS jobs with ToposCreateTokens.py (run with the -h option to see the a
 
 Upload PiCaS jobs with picas/createTokens.py JSON-FILES (json files that were created in the previous step)
 
+Create a "view" in the database with picas/createViews.py
+
 .. code-block:: bash
 
    cd picas
    python createTokens.py ../tokens/*
+   python createViews.py
 
 Starting the jobs
 -----------------

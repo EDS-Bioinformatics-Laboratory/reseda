@@ -39,7 +39,6 @@ The older scripts only work in Python 2 (see execute-all.sh)
     * shutil
     * argparse
     * csv
-    * couchdb (when using the PiCaS pilotjob server)
 * R
     * plyr
 * Bash
@@ -97,6 +96,7 @@ Job monitoring tool: https://bitbucket.org/barbera/progress/
     * Makes manageable jobs by splitting the SAMPLE-\*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
 * Create PiCaS jobs with ToposCreateTokens.py (run with the -h option to see the arguments)
 * Upload PiCaS jobs with picas/createTokens.py JSON-FILES (json files that were created in the previous step)
+* Create a "view" in the database with picas/createViews.py
 
 ### Starting the jobs ###
 * Start virtual machines for the analysis (in the SurfSara HPC cloud webinterface)
