@@ -46,6 +46,8 @@ def get_db():
     return db
 
 if __name__ == '__main__':
+   if len(sys.argv) < 2:
+       sys.exit("Usage: python createTokens.py ../tokens/*")
    #Create a connection to the server
    db = get_db()
    #Load the tokens to the database
