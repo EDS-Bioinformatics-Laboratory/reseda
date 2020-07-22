@@ -5,7 +5,7 @@ How to run - Using PiCaS for sending jobs and using a job monitor tool
 
 Note: this is what Barbera does for each sequence run
 
-PiCaS: URL-HERE
+PiCaS: https://picas.surfsara.nl:6984/_utils/database.html?tbcellrep-bschaik-hpc
 
 Job monitoring tool: https://bitbucket.org/barbera/progress/
 

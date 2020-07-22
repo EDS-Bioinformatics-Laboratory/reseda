@@ -39,6 +39,7 @@ The older scripts only work in Python 2 (see execute-all.sh)
     * shutil
     * argparse
     * csv
+    * couchdb (when using the PiCaS pilotjob server)
 * R
     * plyr
 * Bash
@@ -80,9 +81,7 @@ https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/myte
 
 Note: this is what Barbera does for each sequence run
 
-ToPoS: https://topos.grid.sara.nl/4.1/ (migrating to PiCaS, so this URL will be removed when done)
-
-PiCaS: URL-HERE
+PiCaS: https://picas.surfsara.nl:6984/_utils/database.html?tbcellrep-bschaik-hpc
 
 Job monitoring tool: https://bitbucket.org/barbera/progress/
 

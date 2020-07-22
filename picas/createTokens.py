@@ -29,7 +29,7 @@ def loadTokens(db):
             'done': 0,
             'hostname': '',
             'scrub_count': 0,
-            'input': fractal,
+            'input': input,
             'exit_code': ''
         }
         tokens.append(token)
