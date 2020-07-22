@@ -54,9 +54,32 @@ class ExampleActor(RunActor):
         fhOut.close()
 
         # Start running the main job
-        command = "/usr/bin/time -v " + ".join(["./execute-all.sh", "-r", js["run"], "-m", js["mids"], "-org", js["organism"], "-cell", js["cell"], "-celltype", js["celltype"], "-mm", str(js["mismatches"]), "-j", js["jsearch"], "-p", js["protocol"], "-o", js["outdir"], "-b", js["barcodes"], "-u", js["umis"]])
+        command = "/usr/bin/time -v " + " ".join(["./execute-all.sh", "-r", js["run"], "-m", js["mids"], "-org", js["organism"], "-cell", js["cell"], "-celltype", js["celltype"], "-mm", str(js["mismatches"]), "-j", js["jsearch"], "-p", js["protocol"], "-o", js["outdir"], "-b", js["barcodes"], "-u", js["umis"]])
 
         print(command)
+
+    	out = execute(command,shell=True)
+
+    	# Get the job exit code in the token
+        token['exit_code'] = out[0]
+
+    	token = self.modifier.close(token)
+    	self.client.db[token['_id']] = token
+
+    	# Attach logs in token
+    	curdate=time.strftime("%d/%m/%Y_%H:%M:%S_")
+    	try:
+           logsout = "logs_" + str(token['_id']) + ".out"
+           log_handle = open(logsout, 'rb')
+           self.client.db.put_attachment(token,log_handle,curdate+logsout)
+
+           logserr = "logs_" + str(token['_id']) + ".err"
+           log_handle = open(logserr, 'rb')
+           self.client.db.put_attachment(token,log_handle,curdate+logserr)
+
+    	except:
+      	   pass
+
 
     def cleanup_run(self):
         '''
@@ -87,28 +110,6 @@ class ExampleActor(RunActor):
         for myfile in myfiles:
             if "L001" in myfile or "mutations" in myfile:
                 os.remove("final/" + myfile)
-
-	out = execute(command,shell=True)
-
-	# Get the job exit code in the token
-        token['exit_code'] = out[0]
-
-	token = self.modifier.close(token)
-	self.client.db[token['_id']] = token
-
-	# Attach logs in token
-	curdate=time.strftime("%d/%m/%Y_%H:%M:%S_")
-	try:
-           logsout = "logs_" + str(token['_id']) + ".out"
-           log_handle = open(logsout, 'rb')
-           self.client.db.put_attachment(token,log_handle,curdate+logsout)
-
-           logserr = "logs_" + str(token['_id']) + ".err"
-           log_handle = open(logserr, 'rb')
-           self.client.db.put_attachment(token,log_handle,curdate+logserr)
-
-	except:
-  	   pass
 
 
 def main():
