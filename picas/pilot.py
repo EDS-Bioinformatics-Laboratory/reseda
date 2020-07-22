@@ -3,12 +3,12 @@
 
 usage: python pilot.py
 description:
-	Connect to PiCaS server
-	Get the next token in todo View
-	Fetch the token parameters, e.g. input value
-	Run main job (execute-all.sh) with the input argument
-	When done, return the exit code to the token
-	Attach the logs to the token
+    Connect to PiCaS server
+    Get the next token in todo View
+    Fetch the token parameters, e.g. input value
+    Run main job (execute-all.sh) with the input argument
+    When done, return the exit code to the token
+    Attach the logs to the token
 '''
 
 #python imports
@@ -34,12 +34,12 @@ class ExampleActor(RunActor):
         self.client = iterator.client
 
     def process_token(self, key, token):
-	# Print token information
+        # Print token information
         print("-----------------------")
         print("Working on token: " + token['_id'])
         for k, v in token.iteritems():
             print(k, v)
-        print("-----------------------")
+            print("-----------------------")
 
         # Get the parameters
         js = token['input']
@@ -58,30 +58,31 @@ class ExampleActor(RunActor):
 
         print(command)
 
-    	out = execute(command,shell=True)
+        out = execute(command,shell=True)
 
-    	# Get the job exit code in the token
+        # Get the job exit code in the token
         token['exit_code'] = out[0]
 
-    	token = self.modifier.close(token)
-    	self.client.db[token['_id']] = token
+        token = self.modifier.close(token)
+        self.client.db[token['_id']] = token
 
-    	# Attach logs in token
-    	curdate=time.strftime("%d/%m/%Y_%H:%M:%S_")
-    	try:
-           logsout = "logs_" + str(token['_id']) + ".out"
-           log_handle = open(logsout, 'rb')
-           self.client.db.put_attachment(token,log_handle,curdate+logsout)
+        # Attach logs in token
+        curdate=time.strftime("%d/%m/%Y_%H:%M:%S_")
+        try:
+            logsout = "logs_" + str(token['_id']) + ".out"
+            log_handle = open(logsout, 'rb')
+            self.client.db.put_attachment(token,log_handle,curdate+logsout)
 
-           logserr = "logs_" + str(token['_id']) + ".err"
-           log_handle = open(logserr, 'rb')
-           self.client.db.put_attachment(token,log_handle,curdate+logserr)
+            logserr = "logs_" + str(token['_id']) + ".err"
+            log_handle = open(logserr, 'rb')
+            self.client.db.put_attachment(token,log_handle,curdate+logserr)
 
-    	except:
-      	   pass
+        except:
+            pass
 
 
     def cleanup_run(self):
+
         '''
         Description: Clean up input and result files
         In: -
