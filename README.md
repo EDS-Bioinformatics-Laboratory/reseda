@@ -42,6 +42,7 @@ The older scripts only work in Python 2 (see execute-all.sh)
     * shutil
     * argparse
     * csv
+    * couchdb (when using the PiCaS pilotjob server)
 * R
     * plyr
 * Bash
@@ -70,7 +71,7 @@ Create a .netrc file in your home directory:
 
 ## How to run - Using only the code in this repository
 
-Copy/move the relevant (or all) database files from directory "reference" to the root directory of the repository (same directory as the execute-all.sh script)
+Copy/move the relevant (or all) database files from directories "reference", "reftables" and "mids" to the root directory of the repository (same directory as the execute-all.sh script)
 
 The input files (in fastq format) can be specified by putting the paths in the file SAMPLES. Running ./execute-all.sh without arguments shows you which parameters can be set.
 
