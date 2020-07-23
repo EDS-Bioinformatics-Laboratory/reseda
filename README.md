@@ -9,12 +9,15 @@ The workflow identifies clones and their frequency from next generation sequenci
 
 ## Required software
 
-* PEAR
-* FastQC
-* BWA
-* VarScan
-* Picard
-* Samtools
+* [Samtools](http://www.htslib.org/)
+
+The software packages below are included in this repository for convenience. Please visit the websites for more recent versions and information about the licenses.
+
+* [PEAR](https://cme.h-its.org/exelixis/web/software/pear/doc.html)
+* [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+* [BWA](http://bio-bwa.sourceforge.net/)
+* [VarScan](http://varscan.sourceforge.net/)
+* [Picard](https://broadinstitute.github.io/picard/)
 
 ## Other requirements
 
