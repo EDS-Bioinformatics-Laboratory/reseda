@@ -19,7 +19,7 @@ import alabaster
 # -- Project information -----------------------------------------------------
 
 project = 'RESEDA'
-copyright = '2019, Barbera DC van Schaik'
+copyright = '2016-2020, Barbera DC van Schaik'
 author = 'Barbera DC van Schaik'
 
 

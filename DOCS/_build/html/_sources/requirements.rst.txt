@@ -36,6 +36,7 @@ The older scripts only work in Python 2 (see execute-all.sh)
     * shutil
     * argparse
     * csv
+    * couchdb (when using the PiCaS pilotjob server)
 * R
     * plyr
 * Bash

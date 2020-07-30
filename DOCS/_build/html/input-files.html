@@ -1,17 +1,26 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Prepare input files &#8212; RESEDA  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Run standalone" href="run-standalone.html" />
@@ -22,14 +31,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head><body>
+  </head>
+  <body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
   <div class="section" id="prepare-input-files">
@@ -40,10 +48,10 @@
 <p><strong>Required for V and J assignment</strong></p>
 <p>Download the reference sequences of the chains you are interested in (nucleotide sequences in fasta format) from the IMGT website (<a class="reference external" href="http://imgt.org/">http://imgt.org/</a>)</p>
 <ul class="simple">
-<li><p>Select species, gene type, functionality (functional) and the locus in the GeneDB</p></li>
-<li><p>Select all genes and download the “F+ORF+all P nucleotide sequences”, store as e.g. TRBV_human.fasta and TRBJ_human.fasta</p></li>
-<li><p>Do this for the variable and joining genes</p></li>
-<li><p>Build a BWA index and a samtools faidx on the fasta files</p></li>
+<li>Select species, gene type, functionality (functional) and the locus in the GeneDB</li>
+<li>Select all genes and download the “F+ORF+all P nucleotide sequences”, store as e.g. TRBV_human.fasta and TRBJ_human.fasta</li>
+<li>Do this for the variable and joining genes</li>
+<li>Build a BWA index and a samtools faidx on the fasta files</li>
 </ul>
 <p><strong>Required for CDR3 identification</strong></p>
 <p>Download the peptide sequences of the variable genes (F+ORF+in-frame P amino acid sequences with IMGT gaps). Convert the downloaded fasta entries with the helper-ref-table.py script</p>
@@ -70,22 +78,21 @@ It is easiest to create different output directories for these two types of samp
 <p>When starting from a table with sequence data. Note that this table usually
 doesn’t contain quality scores. These will be set to 40.</p>
 <ul class="simple">
-<li><p>Use MakePTtableFromAAreads.R - Create a pt.table (sample description) from AA.reads file</p></li>
-<li><p>SplitAAreads.py - Splits the AA.reads table per sample (check the column names that you want to include in the file name!)</p></li>
-<li><p>SeqToFastq.py - Convert the tab-delimited files to fastq format</p></li>
+<li>Use MakePTtableFromAAreads.R - Create a pt.table (sample description) from AA.reads file</li>
+<li>SplitAAreads.py - Splits the AA.reads table per sample (check the column names that you want to include in the file name!)</li>
+<li>SeqToFastq.py - Convert the tab-delimited files to fastq format</li>
 </ul>
 <p>When starting from files in sff format:</p>
 <ul class="simple">
-<li><p>Convert sff to fastq with SeqToFastq.py</p></li>
-<li><p>Split the fastq files with FastqSplitOnMid.py</p></li>
-<li><p>Rename the files with jupyter notebook RenameSplitRoche.ipynb</p></li>
+<li>Convert sff to fastq with SeqToFastq.py</li>
+<li>Split the fastq files with FastqSplitOnMid.py</li>
+<li>Rename the files with jupyter notebook RenameSplitRoche.ipynb</li>
 </ul>
 </div>
 </div>
 
 
           </div>
-          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -107,7 +114,7 @@ doesn’t contain quality scores. These will be set to 40.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="run-standalone.html">Run standalone</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run-with-topos.html">Run with ToPoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run-with-picas.html">Run with PiCaS</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Prepare input files</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#reference-database">Reference database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#expected-input-sequences">Expected input (sequences)</a></li>
@@ -122,13 +129,13 @@ doesn’t contain quality scores. These will be set to 40.</p>
 
 
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
+  <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -136,11 +143,11 @@ doesn’t contain quality scores. These will be set to 40.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019, Barbera DC van Schaik.
+      &copy;2016-2020, Barbera DC van Schaik.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
       <a href="_sources/input-files.rst.txt"

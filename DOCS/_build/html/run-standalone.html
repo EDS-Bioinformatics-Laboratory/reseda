@@ -1,20 +1,29 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Run standalone &#8212; RESEDA  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Run with ToPoS" href="run-with-topos.html" />
+    <link rel="next" title="Run with PiCaS" href="run-with-picas.html" />
     <link rel="prev" title="Prepare input files" href="input-files.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -22,26 +31,25 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head><body>
+  </head>
+  <body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
   <div class="section" id="run-standalone">
 <h1>Run standalone<a class="headerlink" href="#run-standalone" title="Permalink to this headline">¶</a></h1>
 <p>How to run, using only the code in this repository</p>
-<p>Copy/move the relevant (or all) database files from directory “reference” to the
+<p>Copy/move the relevant (or all) database files from directories “reference”, “reftables” and “mids” to the
 root directory of the repository (same directory as the execute-all.sh script)</p>
 <p>The input files (in fastq format) can be specified by putting the paths in the
 file SAMPLES. Running ./execute-all.sh without arguments shows you which
 parameters can be set.</p>
 <p>Example:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls TESTDATA/test-B*.fastq.gz &gt; SAMPLES
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ls TESTDATA/test-B*.fastq.gz &gt; SAMPLES
 ./execute-all.sh -r mytestrun -l <span class="nb">local</span> -m MIDS-miseq.txt -org human -cell IGH -celltype IGH_HUMAN -u no
 </pre></div>
 </div>
@@ -54,7 +62,6 @@ the ResearchDrive:
 
 
           </div>
-          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -70,7 +77,7 @@ the ResearchDrive:
 <li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input-files.html">Prepare input files</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Run standalone</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run-with-topos.html">Run with ToPoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run-with-picas.html">Run with PiCaS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="input-files.html">Prepare input files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="how-to-cite.html">How to cite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -79,13 +86,13 @@ the ResearchDrive:
 
 
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
+  <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -93,11 +100,11 @@ the ResearchDrive:
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019, Barbera DC van Schaik.
+      &copy;2016-2020, Barbera DC van Schaik.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
       <a href="_sources/run-standalone.rst.txt"

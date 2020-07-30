@@ -3,7 +3,7 @@ Run standalone
 
 How to run, using only the code in this repository
 
-Copy/move the relevant (or all) database files from directory "reference" to the
+Copy/move the relevant (or all) database files from directories "reference", "reftables" and "mids" to the
 root directory of the repository (same directory as the execute-all.sh script)
 
 The input files (in fastq format) can be specified by putting the paths in the

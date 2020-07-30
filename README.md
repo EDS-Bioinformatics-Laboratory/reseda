@@ -3,18 +3,27 @@
 Data analysis workflow for T- and B-cell receptor repertoire sequencing.
 The workflow identifies clones and their frequency from next generation sequencing of repertoires and includes steps for quality control and bias correction.
 
+## Authors
+
+Barbera DC van Schaik - b.d.vanschaik@amsterdamumc.nl
+
+Prof. dr. Antoine HC van Kampen - a.h.vankampen@amsterdamumc.nl
+
 ## Workflow
 
 ![workflow](workflow.png)
 
 ## Required software
 
-* PEAR
-* FastQC
-* BWA
-* VarScan
-* Picard
-* Samtools
+* [Samtools](http://www.htslib.org/)
+
+The software packages below are included in this repository for convenience. Please visit the websites for more recent versions and information about the licenses.
+
+* [PEAR](https://cme.h-its.org/exelixis/web/software/pear/doc.html)
+* [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+* [BWA](http://bio-bwa.sourceforge.net/)
+* [VarScan](http://varscan.sourceforge.net/)
+* [Picard](https://broadinstitute.github.io/picard/)
 
 ## Other requirements
 
@@ -39,6 +48,7 @@ The older scripts only work in Python 2 (see execute-all.sh)
     * shutil
     * argparse
     * csv
+    * couchdb (when using the PiCaS pilotjob server)
 * R
     * plyr
 * Bash
@@ -67,7 +77,7 @@ Create a .netrc file in your home directory:
 
 ## How to run - Using only the code in this repository
 
-Copy/move the relevant (or all) database files from directory "reference" to the root directory of the repository (same directory as the execute-all.sh script)
+Copy/move the relevant (or all) database files from directories "reference", "reftables" and "mids" to the root directory of the repository (same directory as the execute-all.sh script)
 
 The input files (in fastq format) can be specified by putting the paths in the file SAMPLES. Running ./execute-all.sh without arguments shows you which parameters can be set.
 
@@ -76,11 +86,11 @@ Example: ./execute-all.sh -r mytestrun -l local -m MIDS-miseq.txt -org human -ce
 The results will be on the machine where you run this script, and if the webdav settings are configured well a new directory with all the files will appear on the ResearchDrive:
 https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/mytestrun
 
-## How to run - Using ToPoS for sending jobs and using a job monitor tool
+## How to run - Using PiCaS for sending jobs and using a job monitor tool
 
 Note: this is what Barbera does for each sequence run
 
-ToPoS: https://topos.grid.sara.nl/4.1/
+PiCaS: https://picas.surfsara.nl:6984/_utils/database.html?tbcellrep-bschaik-hpc
 
 Job monitoring tool: https://bitbucket.org/barbera/progress/
 
@@ -94,8 +104,9 @@ Job monitoring tool: https://bitbucket.org/barbera/progress/
 * Sort and split the SAMPLE-* files with: ./SortAndSplit.sh SAMPLE-* It does the following:
     * Sorts the SAMPLE-* files: sort SAMPLE-blah > SAMPLE-blah.sort
     * Makes manageable jobs by splitting the SAMPLE-\*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
-* Create Topos jobs with ToposCreateTokens.py (run with the -h option to see the arguments)
-* Upload Topos jobs with ToposUploadFiles.py (run without arguments to see the arguments)
+* Create PiCaS jobs with ToposCreateTokens.py (run with the -h option to see the arguments)
+* Upload PiCaS jobs with picas/createTokens.py JSON-FILES (json files that were created in the previous step)
+* Create a "view" in the database with picas/createViews.py
 
 ### Starting the jobs ###
 * Start virtual machines for the analysis (in the SurfSara HPC cloud webinterface)
@@ -126,7 +137,7 @@ Barbera D. C. van Schaik, Paul L. Klarenbeek, Marieke E. Doorenspleet, Sabrina P
 ## License
 ```
 RESEDA - REpertoire SEquencing Data Analysis
-Copyright (C) 2016 Barbera DC van Schaik
+Copyright (C) 2016-2020 Barbera DC van Schaik
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

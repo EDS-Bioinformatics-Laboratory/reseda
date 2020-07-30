@@ -1,7 +1,5 @@
 #!/bin/bash
 
-POOLNAME=d8c24f78f9772cbdff54cf62
-
 # Mount beehub
 ./mount-beehub.sh
 wait
@@ -23,9 +21,23 @@ wait
 git pull origin master
 wait
 
-# Put reference files in the right place
+# Put reference files in the work directory
 mv reference/* .
 wait
 
+# Put MIDS files in the work directory
+mv mids/* .
+wait
+
+# Put the ref.table.* files in the work directory
+mv reftables/* .
+wait
+
+# Put all scripts necessary for Picas in the work directory
+mv picas/* .
+tar -xvf picas.tar
+tar -zxf couchdb.tgz
+
 # Start analysis
-nohup python ToposGetTokens.py ${POOLNAME} > nohup.out 2> nohup.err < /dev/null &
+echo "Start the pilot job tasks by contacting PiCaS tokens"
+screen python2 pilot.py

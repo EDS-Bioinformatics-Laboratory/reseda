@@ -383,3 +383,5 @@ echo "FINISHED WITH EXECUTE-ALL IN $difftime seconds"
 
 # Set status when analysis is finished
 set_status ${ip} "FINISHED" "${CELLTYPE} finished in ${difftime} seconds"
+
+exit 0

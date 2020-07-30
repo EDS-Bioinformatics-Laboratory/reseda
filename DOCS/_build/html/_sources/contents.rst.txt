@@ -9,7 +9,7 @@ Table of contents
    settings
    input-files
    run-standalone
-   run-with-topos
+   run-with-picas
    input-files
    how-to-cite
    license
