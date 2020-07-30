@@ -18,7 +18,6 @@ function show_help {
     echo "    -cell --cell         IGH|IGK|IGL|TRA|TRB, default:IGH"
     echo "    -celltype --celltype IGH_HUMAN|TRB_MOUSE|etc, default: IGH_HUMAN"
     echo "    -mm --mismatches     default: 0 (mismatches allowed in CDR3 motifs)"
-    echo "    -j --jsearch         default: False (search for extra J motif in CDR3)"
     echo "    -c --cregion         default: no (sequences contain the C-region, align and mask this region)"
     echo "    -p --protocol        single|paired, default: paired"
     echo "    -o --outdir          default: results-tbcell"
@@ -33,7 +32,6 @@ ORGANISM="human"
 CELL="IGH"
 CELLTYPE="IGH_HUMAN"
 MISMATCHES=0
-JSEARCH="False"
 CREGION="no"
 PROTOCOL="paired"
 RESULTSDIR="results-tbcell"
@@ -85,11 +83,6 @@ do
         shift # past argument
         shift # past value
         ;;
-        -j|--jsearch)
-        JSEARCH="$2"
-        shift # past argument
-        shift # past value
-        ;;
         -c|--cregion)
         CREGION="$2"
         shift # past argument
@@ -135,7 +128,6 @@ echo ORGANISM        = "${ORGANISM}"
 echo CELL            = "${CELL}"
 echo CELLTYPE        = "${CELLTYPE}"
 echo MISMATCHES      = "${MISMATCHES}"
-echo JSEARCH         = "${JSEARCH}"
 echo CREGION         = "${CREGION}"
 echo PROTOCOL        = "${PROTOCOL}"
 echo RESULTSDIR      = "${RESULTSDIR}"
@@ -262,7 +254,7 @@ fi
 
 # Extract the CDR3 sequence
 set_status ${ip} "RUNNING" "${CELLTYPE} Extracting CDR3's"
-runcmd python2 TranslateAndExtractCdr3.py -c ${CELLTYPE} -m ${MISMATCHES} -j ${JSEARCH} ${samples}
+runcmd python2 TranslateAndExtractCdr3.py -c ${CELLTYPE} -m ${MISMATCHES} ${samples}
 wait
 
 # Count lines of CDR3.csv files
