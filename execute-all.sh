@@ -242,14 +242,16 @@ wait
 # Align against the C-region and mask the sequences
 if [ "${CREGION}" == "yes" ]; then
     runcmd ./batch-align.sh IGHC_CH12_human.fasta ${samples}
+    wait
+    mv *-IGHC_CH12_human.sam split/
+    wait
     samfiles=`ls split/*-IGHC_CH12_human.sam`
     python MaskSequences.py ${samfiles}
-    samfiles=`ls split/*.masked.sam`
-    for samfile in ${samfiles}; do
-        java -Djava.io.tmpdir=./tmp -jar picard-tools-1.126/picard.jar SamToFastq I=${samfile} F=${samfile}.fastq
-        gzip ${samfile}
-    done
-    samples=`ls split/*.masked.sam.fastq.gz`
+    wait
+    # Rename the files back to the original fastq file names
+    ls split/*-IGHC_CH12_human.masked.fastq.gz |perl -ne 's/\n//; $orig = $_; s/-IGHC_CH12_human.masked//; print "rename $orig $_\n"; rename $orig, $_;'
+    wait
+    samples=`ls split/*.fastq.gz`
 fi
 
 # Extract the CDR3 sequence
