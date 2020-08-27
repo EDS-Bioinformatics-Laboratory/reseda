@@ -18,7 +18,7 @@ function show_help {
     echo "    -cell --cell         IGH|IGK|IGL|TRA|TRB, default:IGH"
     echo "    -celltype --celltype IGH_HUMAN|TRB_MOUSE|etc, default: IGH_HUMAN"
     echo "    -mm --mismatches     default: 0 (mismatches allowed in CDR3 motifs)"
-    echo "    -c --cregion         default: no (sequences contain the C-region, align and mask this region)"
+    echo "    -cregion --cregion         default: no (sequences contain the C-region, align and mask this region)"
     echo "    -p --protocol        single|paired, default: paired"
     echo "    -o --outdir          default: results-tbcell"
     echo "    -b --barcodes        yes|no, were extra internal barcodes used? default=yes"
@@ -83,7 +83,7 @@ do
         shift # past argument
         shift # past value
         ;;
-        -c|--cregion)
+        -cregion|--cregion)
         CREGION="$2"
         shift # past argument
         shift # past value
