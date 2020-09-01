@@ -1,5 +1,5 @@
 from __future__ import print_function
-from PairwiseAlignment import pairAlign
+from PairwiseAlignment import pairAlign # part of the lineage-tree repository
 from sequences import readFasta
 
 
@@ -36,7 +36,10 @@ def compareGenes(f):
 
 
 if __name__ == '__main__':
-    fastafiles = ["reference/TRBJ_human.fasta", "reference/TRBV_human.fasta", "reference/IGHJ_human.fasta", "reference/IGHV_human.fasta", "reference/TRBJ_mouse.fasta", "reference/TRBV_mouse.fasta", "reference/IGHJ_mouse.fasta", "reference/IGHV_mouse.fasta", "reference/IGKJ_human.fasta", "reference/IGKJ_mouse.fasta", "reference/IGKV_human.fasta", "reference/IGKV_mouse.fasta", "reference/IGLJ_human.fasta", "reference/IGLJ_mouse.fasta", "reference/IGLV_human.fasta", "reference/IGLV_mouse.fasta", "reference/TRAJ_human.fasta", "reference/TRAJ_mouse.fasta", "reference/TRAV_human.fasta", "reference/TRAV_mouse.fasta", "reference/hla_nuc_nospace.fasta"]
+    fastafiles = ["reference/TRBJ_human.fasta", "reference/TRBV_human.fasta", "reference/IGHJ_human.fasta", "reference/IGHV_human.fasta", "reference/TRBJ_mouse.fasta", "reference/TRBV_mouse.fasta", "reference/IGHJ_mouse.fasta", "reference/IGHV_mouse.fasta", "reference/IGKJ_human.fasta", "reference/IGKJ_mouse.fasta", "reference/IGKV_human.fasta", "reference/IGKV_mouse.fasta", "reference/IGLJ_human.fasta", "reference/IGLJ_mouse.fasta", "reference/IGLV_human.fasta", "reference/IGLV_mouse.fasta", "reference/TRAJ_human.fasta", "reference/TRAJ_mouse.fasta", "reference/TRAV_human.fasta", "reference/TRAV_mouse.fasta"]
 
     for f in fastafiles:
+        print("Processing", f)
         compareGenes(f)
+
+    print("FINISHED")
