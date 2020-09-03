@@ -21,6 +21,8 @@ if(length(args)==0){
     # q()
 }
 
+#myfile = "../A234-Bk2_S1_L001.assembled-ACGTACGT-IGK_MOUSE-clones-mut-sites-reassigned-head250.csv"
+
 library(circlize)
 
 # Read the file
@@ -51,7 +53,8 @@ circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
   ylim = get.cell.meta.data("ylim")
   sector.name = get.cell.meta.data("sector.index")
   circos.text(mean(xlim), ylim[1] + .1, sector.name, facing = "clockwise", niceFacing = TRUE, adj = c(0, 0.5))
-  circos.axis(h = "top", labels.cex = 0.5, major.tick.percentage = 0.2, sector.index = sector.name, track.index = 2)
 }, bg.border = NA)
 title(main=mytitle)
 dev.off()
+
+#circos.axis(h = "top", labels.cex = 0.5, major.tick.percentage = 0.2, sector.index = sector.name, track.index = 2)
