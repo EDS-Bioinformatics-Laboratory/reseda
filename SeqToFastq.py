@@ -129,9 +129,35 @@ def convertTabToFastq(f):
     return(fastqFile)
 
 
+def convertFastqToTab(f):
+    '''
+    Description: convert sequences from fastq to tab format
+    In: file.fastq.gz (str)
+    Out: file.txt (str)
+    '''
+    txtFile = os.path.basename(f)
+    txtFile = txtFile.replace(".fastq.gz", ".tab.csv")
+
+    try:
+        fhIn = gzip.open(f)
+        fhOut = open(txtFile, "w")
+    except:
+        print("Could not open or write file:", f, txtFile)
+        exit()
+
+    print("acc\tseq", file=fhOut)
+    for record in SeqIO.parse(fhIn, "fastq"):
+        SeqIO.write(record, fhOut, "tab")
+
+    fhIn.close()
+    fhOut.close()
+
+    return(txtFile)
+
+
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        sys.exit("Usage: " + sys.argv[0] + " sff|fasta|fastaqual|tab|fastq2fasta sequence-file(s) Supported formats: sff, fasta, fastaqual, tab, fastq2fasta")
+        sys.exit("Usage: " + sys.argv[0] + " sff|fasta|fastaqual|tab|fastq2fasta|fastq2tab sequence-file(s) Supported formats: sff, fasta, fastaqual, tab, fastq2fasta fastq2tab")
 
     input_type = sys.argv[1]
     myfiles = sys.argv[2:]
@@ -142,6 +168,8 @@ if __name__ == '__main__':
             fastqFile = convertSffToFastq(f)
         elif input_type == "fastq2fasta":
             fastqFile = convertFastqToFasta(f)
+        elif input_type == "fastq2tab":
+            fastqFile = convertFastqToTab(f)
         elif input_type == "tab":
             id_col = 0
             seq_col = 1

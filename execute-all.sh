@@ -248,8 +248,12 @@ if [ "${CREGION}" == "yes" ]; then
     samfiles=`ls split/*-IGHC_CH12_human.sam`
     python MaskSequences.py ${samfiles}
     wait
-    # Rename the files back to the original fastq file names
-    ls split/*-IGHC_CH12_human.masked.fastq.gz |perl -ne 's/\n//; $orig = $_; s/-IGHC_CH12_human.masked//; print "rename $orig $_\n"; rename $orig, $_;'
+    # copy the original fastq files to directory "orig" and convert to tab
+    mkdir -p orig
+    cp ${samples} orig/
+    runcmd python2 SeqToFastq.py fastq2tab orig/*.fastq.gz
+    # Rename the masked files back to the original fastq file names
+    ls split/*-IGHC_CH12_human.masked.fastq.gz |perl -ne 's/\n//; $masked = $_; s/-IGHC_CH12_human.masked//; $orig = $_; print "rename $masked $orig\n"; rename $masked, $orig;'
     wait
     samples=`ls split/*.fastq.gz`
 fi
@@ -265,7 +269,7 @@ runcmd wc -l split/*${CELLTYPE}-CDR3.csv > wc-${ip}.txt
 wait
 runcmd python2 select-correct-mids.py ${BARCODES} wc-${ip}.txt > mv-samples-with-correct-mid.sh
 wait
-mkdir split/correct-mid
+mkdir -p split/correct-mid
 wait
 cd split
 runcmd bash ../mv-samples-with-correct-mid.sh
@@ -289,7 +293,7 @@ wait
 
 ### Generate reports ###
 
-mkdir final
+mkdir -p final
 
 # For each sample; do
 set_status ${ip} "RUNNING" "${CELLTYPE} Combining results"
@@ -348,12 +352,9 @@ if [[ ${CELLTYPE} -eq "IGH_HUMAN" ]]; then
 fi
 
 # Make output directories
-mkdir ${beehub_mount}
-mkdir ${beehub_mount}/${RESULTSDIR}
-mkdir ${beehub_mount}/${RESULTSDIR}/raw
-#mkdir ${beehub_mount}/${RESULTSDIR}/raw/correct-mid
-mkdir ${beehub_mount}/${RESULTSDIR}/reports
-mkdir ${beehub_mount}/${RESULTSDIR}/final
+mkdir -p ${beehub_mount}/${RESULTSDIR}/raw
+mkdir -p ${beehub_mount}/${RESULTSDIR}/reports
+mkdir -p ${beehub_mount}/${RESULTSDIR}/final
 wait
 
 # Transfer data to Beehub
@@ -368,6 +369,12 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-producti
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ final/*CDR3*.csv final/*discarded*.txt
 
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-allinfo-filtered.csv final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
+
+# Transfer the split fastq files that were converted to tab
+if [ "${CREGION}" == "yes" ]; then
+    mkdir -p ${beehub_mount}/${RESULTSDIR}/fastq2tab
+    runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/fastq2tab/ *.tab.csv
+fi
 
 wait
 

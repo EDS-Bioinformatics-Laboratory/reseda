@@ -98,6 +98,11 @@ class ExampleActor(RunActor):
                 else:
                     shutil.rmtree(myfile, ignore_errors=True)
 
+        if os.path.isdir("./orig"):
+            myfiles = os.listdir("./orig")
+            for myfile in myfiles:
+                os.remove("orig/" + myfile)
+
         myfiles = os.listdir("./split")
         for myfile in myfiles:
             if "L001" in myfile:
