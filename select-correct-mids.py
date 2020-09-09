@@ -39,5 +39,6 @@ for line in fh:
 for (sample, celltype) in sorted(d):
     d_tmp = d[(sample, celltype)]
     topmid = sorted(d_tmp, key=d_tmp.get, reverse=True)[0]
+    topmid = topmid.replace(".fastq.gz", "")
     # print("Highest MID:", sample, celltype, topmid, d[(sample,celltype)][topmid])
     print("mv", sample + "-" + topmid + "*", "correct-mid/")

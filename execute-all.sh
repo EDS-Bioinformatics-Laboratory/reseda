@@ -249,9 +249,11 @@ if [ "${CREGION}" == "yes" ]; then
     python MaskSequences.py ${samfiles}
     wait
     # copy the original fastq files to directory "orig" and convert to tab
-    mkdir -p orig
+    mkdir -p orig/correct-mid
     cp ${samples} orig/
     runcmd python2 SeqToFastq.py fastq2tab orig/*.fastq.gz
+    wait
+    mv *.tab.csv orig
     # Rename the masked files back to the original fastq file names
     ls split/*-IGHC_CH12_human.masked.fastq.gz |perl -ne 's/\n//; $masked = $_; s/-IGHC_CH12_human.masked//; $orig = $_; print "rename $masked $orig\n"; rename $masked, $orig;'
     wait
@@ -276,6 +278,12 @@ runcmd bash ../mv-samples-with-correct-mid.sh
 wait
 mv *.assembled-report.txt correct-mid
 cd ..
+if [ "${CREGION}" == "yes" ]; then
+    cd orig
+    runcmd bash ../mv-samples-with-correct-mid.sh
+    wait
+    cd ..
+fi
 
 samples=`ls split/correct-mid/*.fastq.gz`
 
@@ -373,7 +381,7 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final
 # Transfer the split fastq files that were converted to tab
 if [ "${CREGION}" == "yes" ]; then
     mkdir -p ${beehub_mount}/${RESULTSDIR}/fastq2tab
-    runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/fastq2tab/ *.tab.csv
+    runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/fastq2tab/ orig/correct-mid/*.tab.csv
 fi
 
 wait
