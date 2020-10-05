@@ -73,7 +73,12 @@ def getDeletedParts(refSeq, second):
         right = refSeq.split(alignparts[-1])[-1]
         return(left, right)
     else:
-        left, right = refSeq.split(second)
+        # MET HET ONDERSTAANDE: TOO MANY VALUES TO UNPACK: HIEROP TESTEN
+        results = refSeq.split(second)
+        if len(results) == 2:
+            left, right = results
+        else:
+            left, right = ["unknown", "unknown"]
         return(left, right)
 
 
@@ -93,7 +98,7 @@ def createHistDens(pdf, df, column):
 parser = argparse.ArgumentParser(description='Detect the D region')
 parser.add_argument('-cell', '--celltype', default='IGH', type=str, help='Cell type: (IGH|TRB|IGK|IGL|TRA) (default: %(default)s)')
 parser.add_argument('-org', '--organism', default='human', type=str, help='Organism: (human|mouse) (default: %(default)s)')
-parser.add_argument('-cdr3col', '--cdr3col', default='cdr3nuc.min_mode', type=str, help='Column name of column that contains the CDR3 nucleotide sequence (default: %(default)s)')
+parser.add_argument('-cdr3col', '--cdr3col', default='autodetect', type=str, help='Name of column that contains the CDR3 nucleotide sequence (default: %(default)s)')
 parser.add_argument('-match', '--match', default=2, type=int, help='Alignment score for a match (default: %(default)s)')
 parser.add_argument('-mismatch', '--mismatch', default=-1, type=int, help='Alignment score for a mismatch (default: %(default)s)')
 parser.add_argument('-gap', '--gap', default=-5, type=int, help='Alignment penalty for a gap (default: %(default)s)')
@@ -119,6 +124,22 @@ outsummary = outfile.replace(".csv", "-summary.csv")
 
 # ## Read tabel containing a column with the CDR3 nucleotide
 df = pd.read_csv(cdr3_file, sep="\t")
+
+# Autodetect the cdr3nuc column or use user input
+if cdr3nuc_column == "autodetect":
+    if "cdr3nuc" in df.columns:
+        cdr3nuc_column = "cdr3nuc"
+    elif "cdr3nuc.mode" in df.columns:
+        cdr3nuc_column = "cdr3nuc.mode"
+    elif "cdr3nuc.min_mode" in df.columns:
+        cdr3nuc_column = "cdr3nuc.min_mode"
+    else:
+        print("ERROR: couldn't automagically detect the column containing the CDR3 nucleotide sequence")
+        exit()
+    print("AUTO-DETECT CDR3 NUC COLUMN", cdr3nuc_column)
+else:
+    # use whatever the user specifies
+    pass
 
 # Get unique list of cdr3 nucleotide sequences to shorten time
 cdr3nuc = df[cdr3nuc_column].unique().tolist()
@@ -149,6 +170,8 @@ score = list()
 similarCount = list()
 
 for seqA in cdr3nuc:
+    if pd.isna(seqA): # Skip if value is empty
+        continue
     seqA = seqA.upper()
     for refID, seqB in sequences.items():
         seqB = seqB.upper()
@@ -218,10 +241,10 @@ cols = ['distance', 'gapCount', 'identicalCount', 'score', 'similarCount',
        'countM', 'countR', 'countI', 'countD', 'countIndels', 'alignLength',
        'countDeletedLeft', 'countDeletedRight']
 
-with PdfPages(outpdf) as pdf:
-    for col in cols:
-        createHistDens(pdf, df_best_align, col)
-print("Wrote", outpdf, "to disk")
+#with PdfPages(outpdf) as pdf:
+#    for col in cols:
+#        createHistDens(pdf, df_best_align, col)
+#print("Wrote", outpdf, "to disk")
 
 # Write the results to file
 df_best_align.to_csv(outfile)
