@@ -6,3 +6,5 @@ I downloaded and unpacked this and renamed the files:
 * The renamed files were uploaded to the "data" directory (for location see ENV.sh)
 
 According to Maria the samples 80 and 81 do not have to be analyzed
+
+Created a Datasheet with notebook MakeDataSheet.ipynb
