@@ -59,3 +59,7 @@ Got the pt table from the previous run and added the samples of this run (manual
 ls /mnt/immunogenomics/RUNS/runXXX-20200909-maria/20200916-Maria-pt-table-new.csv > SAMPLES
 ../copy-from-beehub.sh
 <manual edit>: 20201007-Maria-pt-table-new.csv
+Uploaded this file to the ResearchDrive
+
+Ran the notebook SampleSimilarityAllRuns.ipynb
+../copy-to-webdav.sh $WEBDAV/$OUTDIR/similarity/ runMaria1234-similarity-*
