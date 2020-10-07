@@ -33,3 +33,29 @@ Look for shared clones with SharedClonesDirection.ipynb
 
 I can not run RarefactionAnalysis.ipynb in the cloud, so this analysis was done on my laptop
 
+--------------------------
+
+Comparison with the other runs
+
+First renamed the cdr3 file
+mv cdr3-clones-GC-IGH_HUMAN-after-reassignment.csv cdr3-clones-GC4-IGH_HUMAN-after-reassignment.csv
+
+Downloaded these cdr3 files from the other runs and renamed them to GC1, GC2, GC3
+/mnt/immunogenomics/RUNS/runXXX-20200313-maria/results-tbcell/cdr3-clones-GC-IGH_HUMAN-after-reassignment.csv
+/mnt/immunogenomics/RUNS/runXXX-20200420-maria/results-tbcell/cdr3-clones-GC-IGH_HUMAN-after-reassignment.csv
+/mnt/immunogenomics/RUNS/runXXX-20200909-maria/results-tbcell/cdr3-clones-GC-IGH_HUMAN-after-reassignment.csv
+
+echo /mnt/immunogenomics/RUNS/runXXX-20200313-maria/results-tbcell/cdr3-clones-GC-IGH_HUMAN-after-reassignment.csv > SAMPLES
+../copy-from-beehub.sh 
+mv cdr3-clones-GC-IGH_HUMAN-after-reassignment.csv cdr3-clones-GC1-IGH_HUMAN-after-reassignment.csv
+echo /mnt/immunogenomics/RUNS/runXXX-20200420-maria/results-tbcell/cdr3-clones-GC-IGH_HUMAN-after-reassignment.csv > SAMPLES
+../copy-from-beehub.sh 
+mv cdr3-clones-GC-IGH_HUMAN-after-reassignment.csv cdr3-clones-GC2-IGH_HUMAN-after-reassignment.csv
+echo /mnt/immunogenomics/RUNS/runXXX-20200909-maria/results-tbcell/cdr3-clones-GC-IGH_HUMAN-after-reassignment.csv > SAMPLES
+../copy-from-beehub.sh 
+mv cdr3-clones-GC-IGH_HUMAN-after-reassignment.csv cdr3-clones-GC3-IGH_HUMAN-after-reassignment.csv
+
+Got the pt table from the previous run and added the samples of this run (manually)
+ls /mnt/immunogenomics/RUNS/runXXX-20200909-maria/20200916-Maria-pt-table-new.csv > SAMPLES
+../copy-from-beehub.sh
+<manual edit>: 20201007-Maria-pt-table-new.csv
