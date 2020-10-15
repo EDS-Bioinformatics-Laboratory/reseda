@@ -29,3 +29,6 @@ Uploaded the fastq files with cp-fastq-to-researchdrive-*.sh
 Listed all the fastq files with NOTEBOOKS/ListRawDataRocheFastq.ipynb
 
 The file SAMPLES-fastq has been created with this notebook
+
+Manually removed a few files from SAMPLES-fastq. Differences can be seen in the git log
+
