@@ -32,3 +32,8 @@ The file SAMPLES-fastq has been created with this notebook
 
 Manually removed a few files from SAMPLES-fastq. Differences can be seen in the git log
 
+Created an output directory on ResearchDrive for the extracted CDR3 sequences (variables are in ENV.sh):
+mkdir /mnt/immunogenomics/RUNS/$RUN/CDR3_20201015
+
+Ran run-translate-and-extract-cdr3.sh to extract the CDR3's and upload the results to the ResearchDrive
+
