@@ -7,7 +7,7 @@ Approach:
 * Run TranslateAndExtractCdr3.py on all raw Roche sequences (input is in fastq format)
 * Search for the CDR3 sequences in all runs
 
-Before I can do this I need to convert some raw data from sff to fastq format. In the notebook NOTEBOOKS/GrepCdr3InFiles.ipynb I compiled lists of runs where the sff files needs to be converted before doing the analysis and I made a list of runs where I already have fastq files.
+Before I can do this I need to convert some raw data from sff to fastq format. In the notebook NOTEBOOKS/ListRawDataRoche.ipynb I compiled lists of runs where the sff files needs to be converted before doing the analysis and I made a list of runs where I already have fastq files.
 
 ### Converting sff files to fastq format
 
@@ -23,3 +23,9 @@ nohup python2 ../SeqToFastq.py sff *.sff > nohup-sfftofastq.out 2> nohup-sfftofa
 ```
 
 Uploaded the fastq files with cp-fastq-to-researchdrive-*.sh
+
+### Extract CDR3 sequences from all Roche runs
+
+Listed all the fastq files with NOTEBOOKS/ListRawDataRocheFastq.ipynb
+
+The file SAMPLES-fastq has been created with this notebook
