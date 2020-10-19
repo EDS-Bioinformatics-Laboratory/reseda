@@ -37,3 +37,9 @@ mkdir /mnt/immunogenomics/RUNS/$RUN/CDR3_20201015
 
 Ran run-translate-and-extract-cdr3.sh to extract the CDR3's and upload the results to the ResearchDrive
 
+Created a notebook to find CDR3s in the files that were produced in the step above: GrepCdr3.ipynb.
+Ran this notebook as a test on 2 -CDR3.csv files.
+The notebook was exported as: GrepCdr3.py and executed on all -CDR3.csv files.
+Input CDR3s as received from Aram: 2020-08-21.presyn-top100-clones-contamination-table-on-pt.csv
+
+Uploaded the results to: <location here>
