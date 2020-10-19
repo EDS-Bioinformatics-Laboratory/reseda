@@ -47,8 +47,12 @@ df_cdr3.head()
 
 
 for myfile in myfiles:
-    df = pd.read_csv(mydir + myfile, sep="\t", header=None)
-    df.columns = ['acc', 'frame', 'CDR3pep', 'CDR3nuc', 'CDR3pep-short', 'CDR3nuc-short', 'qc1', 'qc2', 'qc3', 'basecalls', 'x', 'y', 'z']
+    try:
+        df = pd.read_csv(mydir + myfile, sep="\t", header=None)
+        df.columns = ['acc', 'frame', 'CDR3pep', 'CDR3nuc', 'CDR3pep-short', 'CDR3nuc-short', 'qc1', 'qc2', 'qc3', 'basecalls', 'x', 'y', 'z']
+    except:
+        print("ERROR: couldn't read", mydir + myfile)
+        continue
     df = pd.merge(df, df_cdr3, how="inner", left_on="CDR3pep", right_on="CDR3")
     outfile = myfile.replace(".csv", "-matches.csv")
     df.to_csv(outfile)

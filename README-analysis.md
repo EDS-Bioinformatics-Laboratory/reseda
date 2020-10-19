@@ -42,4 +42,21 @@ Ran this notebook as a test on 2 -CDR3.csv files.
 The notebook was exported as: GrepCdr3.py and executed on all -CDR3.csv files.
 Input CDR3s as received from Aram: 2020-08-21.presyn-top100-clones-contamination-table-on-pt.csv
 
-Uploaded the results to: <location here>
+The GrepCdr3.py script couldn't read these files:
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/HU5IXOJ02.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run102-r2-HA06QXN02_S2_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run114-r1-HHEXEGX01_S1_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run114-r2-HHEXEGX02_S2_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run114-r4-HHEXEGX04_S4_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run162-r1-HV4JT6A01_S1_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run24-r1-FVUGYZ001_S1_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run37-r3-GAIEXSY03_S3_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run37-r4-GAIEXSY04_S4_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run41-r3-GB5HR3003_S3_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run41-r4-GB5HR3004_S4_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run58-r2-GMUTUER02_S2_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+
+These files are all empty, so that means that no BCRh CDR3's were found in these runs/regions. I'll continue with the remaining runs/regions.
+
+Uploaded the results to: https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/runXXX-roche-LN2/grep-cdr3-20201019/
+
