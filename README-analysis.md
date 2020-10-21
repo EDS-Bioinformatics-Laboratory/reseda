@@ -34,3 +34,5 @@ grep -i b011 20* >> Basta_Datasheet_20201021.csv
 ```
 
 Manually removed double entries from Basta_Datasheet_20201021.csv (differences can be seen with git diff between two commits)
+
+Manually removed the Behcet samples from the list.
