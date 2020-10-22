@@ -65,3 +65,8 @@ grep -i basta 20*|grep -i B011 >> Basta_Datasheet_20201022.csv
 grep -i basta 20*|grep -i 8296 >> Basta_Datasheet_20201022.csv 
 grep -i basta 20*|grep -i 1467 >> Basta_Datasheet_20201022.csv 
 ```
+
+Made the list uniq
+
+``perl -ne '@c=split(/:/); print $c[$#c];' Basta_Datasheet_20201022.csv |sort|uniq > Basta_Datasheet_20201022_uniq.csv``
+
