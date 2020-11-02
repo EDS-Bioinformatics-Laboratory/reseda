@@ -71,4 +71,10 @@ Uploaded the results to: https://researchdrive.surfsara.nl/remote.php/webdav/amc
 
 After this I will have potential MID sequences for every Roche sequence (accession code). These tables can be integrated with the -CDR3.csv files
 
+MID files were uploaded to the ResearchDrive
+
+```
+mkdir /mnt/immunogenomics/RUNS/$RUN/mids-all-roche20201102
+nohup ../copy-to-webdav.sh $WEBDAV/mids-all-roche20201102/ *-mids.csv > nohup-copy.out 2> nohup-copy.err < /dev/null &
+```
 
