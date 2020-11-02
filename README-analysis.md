@@ -43,6 +43,8 @@ The notebook was exported as: GrepCdr3.py and executed on all -CDR3.csv files.
 Input CDR3s as received from Aram: 2020-08-21.presyn-top100-clones-contamination-table-on-pt.csv
 
 The GrepCdr3.py script couldn't read these files:
+
+```
 ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/HU5IXOJ02.fastq.gz-IGH_HUMAN-CDR3.csv
 ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run102-r2-HA06QXN02_S2_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
 ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run114-r1-HHEXEGX01_S1_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
@@ -55,8 +57,18 @@ ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run
 ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run41-r3-GB5HR3003_S3_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
 ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run41-r4-GB5HR3004_S4_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
 ERROR: couldn't read /mnt/immunogenomics/RUNS/runXXX-roche-LN2/CDR3_20201015/run58-r2-GMUTUER02_S2_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv
+```
 
 These files are all empty, so that means that no BCRh CDR3's were found in these runs/regions. I'll continue with the remaining runs/regions.
 
 Uploaded the results to: https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/runXXX-roche-LN2/grep-cdr3-20201019/
+
+### Extract MIDs from all Roche run sequences
+
+``ExtractFirstNucleotides.py`` - Extract the first 5, 6, 7, 8, 9, 10 nucleotides from the sequences
+
+``NOTEBOOKS/run-extract-mid.sh`` - Runs the script above on all fastq files
+
+After this I will have potential MID sequences for every Roche sequence (accession code). These tables can be integrated with the -CDR3.csv files
+
 
