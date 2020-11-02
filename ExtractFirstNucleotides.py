@@ -8,7 +8,7 @@ def getFirstNucleotides(myfile):
     fh = gzip.open(myfile, "rt")
     for record in SeqIO.parse(fh, "fastq"):
         seq = str(record.seq)
-        print(record.id, seq[:5], seq[:6], seq[:7], seq[:8], seq[:9], seq[:10], sep="\t")
+        print(record.id, seq[:5], seq[:6], seq[:7], seq[:8], seq[:9], seq[:10], seq[:11], seq[:12], seq[:13], seq[:14], sep="\t")
     fh.close()
 
 
