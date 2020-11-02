@@ -9,6 +9,8 @@ Approach:
 
 Before I can do this I need to convert some raw data from sff to fastq format. In the notebook NOTEBOOKS/ListRawDataRoche.ipynb I compiled lists of runs where the sff files needs to be converted before doing the analysis and I made a list of runs where I already have fastq files.
 
+NOTE: I didn't find files for run214 and run258!
+
 ### Converting sff files to fastq format
 
 I have 4 lists with sff files: SAMPLES-sff-aa SAMPLES-sff-ab SAMPLES-sff-ac SAMPLES-sff-ad
