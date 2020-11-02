@@ -78,3 +78,8 @@ mkdir /mnt/immunogenomics/RUNS/$RUN/mids-all-roche20201102
 nohup ../copy-to-webdav.sh $WEBDAV/mids-all-roche20201102/ *-mids.csv > nohup-copy.out 2> nohup-copy.err < /dev/null &
 ```
 
+The CDR3 and MID files were combined with ``NOTEBOOKS/CombineMidCdr3.ipynb``
+
+Uploaded the results to https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/runXXX-roche-LN2/grep-cdr3-20201019/
+
+``nohup ../copy-to-webdav.sh $WEBDAV/$OUTDIR/ *-mids-CDR3-matches.csv > nohup-copy.out 2> nohup-copy.err < /dev/null &``
