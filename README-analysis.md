@@ -83,3 +83,9 @@ The CDR3 and MID files were combined with ``NOTEBOOKS/CombineMidCdr3.ipynb``
 Uploaded the results to https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/runXXX-roche-LN2/grep-cdr3-20201019/
 
 ``nohup ../copy-to-webdav.sh $WEBDAV/$OUTDIR/ *-mids-CDR3-matches.csv > nohup-copy.out 2> nohup-copy.err < /dev/null &``
+
+### Results
+
+Counted the number of reads per CDR3, run/region/mid with ``NOTEBOOKS/CountCdr3PerRunRegionMid.ipynb``
+
+The result "lookup-CDR3-in-all-Roche" was uploaded to the researchdrive in same directory as above.. and shared by mail with Aram
