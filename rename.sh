@@ -1,0 +1,10 @@
+mv MSmm-01_1.fastq.gz MSmm-01_S1_L001_R1_001.fastq.gz
+mv MSmm-01_2.fastq.gz MSmm-01_S1_L001_R2_001.fastq.gz
+mv MSmm-02_1.fastq.gz MSmm-02_S2_L001_R1_001.fastq.gz
+mv MSmm-02_2.fastq.gz MSmm-02_S2_L001_R2_001.fastq.gz
+mv MSmm-03_1.fastq.gz MSmm-03_S3_L001_R1_001.fastq.gz
+mv MSmm-03_2.fastq.gz MSmm-03_S3_L001_R2_001.fastq.gz
+mv MSmm-04_1.fastq.gz MSmm-04_S4_L001_R1_001.fastq.gz
+mv MSmm-04_2.fastq.gz MSmm-04_S4_L001_R2_001.fastq.gz
+mv MSmm-05_1.fastq.gz MSmm-05_S5_L001_R1_001.fastq.gz
+mv MSmm-05_2.fastq.gz MSmm-05_S5_L001_R2_001.fastq.gz
