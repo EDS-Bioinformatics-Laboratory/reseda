@@ -86,3 +86,12 @@ Transferred the sample similarity and shared clones analysis results to:
 ../copy-to-webdav.sh $WEBDAV/$OUTDIR/ runMaria-mouse-*
 mv /mnt/immunogenomics/RUNS/$RUN/$OUTDIR/runMaria* /mnt/immunogenomics/RUNS/$RUN/$OUTDIR/similarity/
 ```
+
+Continued on my laptop and did the rarefaction analysis with the notebook ``RarefactionAnalysis.ipynb``
+
+Transferred data to the researchdrive
+
+```
+mkdir /mnt/immunogenomics/RUNS/$RUN/$OUTDIR/rarefaction
+../copy-to-webdav.sh $WEBDAV/$OUTDIR/rarefaction/ saturation-clones-GC-IGH_MOUSE-after-reassignment.*
+```
