@@ -79,3 +79,10 @@ Ran:
 
 * SampleSimilarity.ipynb
 * SharedClonesDirection.ipynb
+
+Transferred the sample similarity and shared clones analysis results to:
+
+```
+../copy-to-webdav.sh $WEBDAV/$OUTDIR/ runMaria-mouse-*
+mv /mnt/immunogenomics/RUNS/$RUN/$OUTDIR/runMaria* /mnt/immunogenomics/RUNS/$RUN/$OUTDIR/similarity/
+```
