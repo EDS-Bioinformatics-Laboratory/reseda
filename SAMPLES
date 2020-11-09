@@ -1,4 +1,10 @@
-TESTDATA/test-B_S1_L001_R1_001.fastq.gz
-TESTDATA/test-B_S1_L001_R2_001.fastq.gz
-TESTDATA/test-T_S2_L001_R1_001.fastq.gz
-TESTDATA/test-T_S2_L001_R2_001.fastq.gz
+/mnt/immunogenomics/RUNS/runXXX-20201013-maria-mouse/data/MSmm-01_S1_L001_R1_001.fastq.gz
+/mnt/immunogenomics/RUNS/runXXX-20201013-maria-mouse/data/MSmm-01_S1_L001_R2_001.fastq.gz
+/mnt/immunogenomics/RUNS/runXXX-20201013-maria-mouse/data/MSmm-02_S2_L001_R1_001.fastq.gz
+/mnt/immunogenomics/RUNS/runXXX-20201013-maria-mouse/data/MSmm-02_S2_L001_R2_001.fastq.gz
+/mnt/immunogenomics/RUNS/runXXX-20201013-maria-mouse/data/MSmm-03_S3_L001_R1_001.fastq.gz
+/mnt/immunogenomics/RUNS/runXXX-20201013-maria-mouse/data/MSmm-03_S3_L001_R2_001.fastq.gz
+/mnt/immunogenomics/RUNS/runXXX-20201013-maria-mouse/data/MSmm-04_S4_L001_R1_001.fastq.gz
+/mnt/immunogenomics/RUNS/runXXX-20201013-maria-mouse/data/MSmm-04_S4_L001_R2_001.fastq.gz
+/mnt/immunogenomics/RUNS/runXXX-20201013-maria-mouse/data/MSmm-05_S5_L001_R1_001.fastq.gz
+/mnt/immunogenomics/RUNS/runXXX-20201013-maria-mouse/data/MSmm-05_S5_L001_R2_001.fastq.gz

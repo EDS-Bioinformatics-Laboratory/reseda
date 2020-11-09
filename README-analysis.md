@@ -44,3 +44,38 @@ ls maria-mouse/* > SAMPLES
 nohup ./execute-all.sh -r $RUN -l local -m MIDS-abc.txt -org mouse -celltype IGH_MOUSE -o $OUTDIR -b no -u no > nohup-exe.out 2> nohup-exe.err < /dev/null &
 ```
 
+## Reports
+
+Made a datasheet with ``MakeDataSheet.ipynb``: 20201013-DataSheet-Maria-mouse.csv
+
+Converted the datasheet to json format as I always do and uploaded the metadata to the researchdrive
+
+```
+python MetaData.py 20201013-DataSheet-Maria-mouse.csv > 20201013-DataSheet-Maria-mouse.json
+python MakeSamplesFiles.py -r 20201013-DataSheet-Maria-mouse.json -w /mnt/immunogenomics/RUNS/$RUN/data/
+./copy-to-webdav.sh $WEBDAV/ 20201013-DataSheet-Maria-mouse*
+```
+
+Concatenated the clones files and made the run report, the usual way
+
+```
+python ConcatenateCloneFilesBatch.py -r 20201013-DataSheet-Maria-mouse-new.json -w /mnt/immunogenomics/RUNS/$RUN/$OUTDIR/final/ > tmp.sh
+nohup bash tmp.sh > nohup-concat.out 2> nohup-concat.err < /dev/null &
+nohup ./report-ALL.sh -r $RUN -i 20201013-DataSheet-Maria-mouse-new.json -b no -o $OUTDIR > nohup-report.out 2> nohup-report.err < /dev/null &
+./copy-to-webdav.sh $WEBDAV/$OUTDIR/ report-*.txt report-all* cdr3-clones-GC-IGH_MOUSE-after-reassignment.csv assign-info-GC-IGH_MOUSE-after-reassignment.csv vjcdr3-clones-mut-GC-IGH_MOUSE.csv
+```
+
+## Notebooks
+
+Moved files to the NOTEBOOKS directory
+
+```
+mv 20201013-DataSheet-Maria-mouse.csv NOTEBOOKS/
+mv cdr3-clones-GC-IGH_MOUSE-after-reassignment.csv NOTEBOOKS/
+mv vjcdr3-clones-mut-GC-IGH_MOUSE.csv NOTEBOOKS/
+```
+
+Ran:
+
+* SampleSimilarity.ipynb
+* SharedClonesDirection.ipynb
