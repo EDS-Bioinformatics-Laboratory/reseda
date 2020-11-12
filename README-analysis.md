@@ -1,7 +1,17 @@
+Code:
+
+```
+git clone git@github.com:EDS-Bioinformatics-Laboratory/reseda.git
+git branch runXXX-20201021-basta-autoreactive20201021
+git pull origin runXXX-20201021-basta-autoreactive20201021
+```
+
 Location of analysis results will end up here (see ENV.sh):
 RUN=runXXX-20201021-basta
 OUTDIR=autoreactive20201021
 https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/runXXX-20201021-basta
+
+## Short description
 
 Request from Rogier Thurlings (Radboud UMC) to look up sequences that react to autoreactive peptides. Rogier is a collaborator of Guilia Balzarretti.
 See e-mails on 9 and 16 October 2020.
@@ -66,7 +76,33 @@ grep -i basta 20*|grep -i 8296 >> Basta_Datasheet_20201022.csv
 grep -i basta 20*|grep -i 1467 >> Basta_Datasheet_20201022.csv 
 ```
 
-Made the list uniq
+Made the list uniq and retrieve the sample_name and run
 
-``perl -ne '@c=split(/:/); print $c[$#c];' Basta_Datasheet_20201022.csv |sort|uniq > Basta_Datasheet_20201022_uniq.csv``
+```
+perl -ne '@c=split(/:/); print $c[$#c];' Basta_Datasheet_20201022.csv |sort|uniq > Basta_Datasheet_20201022_uniq.csv
+cut -d, -f 2,9 Basta_Datasheet_20201022_uniq.csv > ../NOTEBOOKS/Basta-samples.csv
+../copy-to-webdav.sh $WEBDAV/$OUTDIR/ Basta-samples.csv
+```
+
+Python notebook to create a bash script (list-samples.sh) to list the files on the researchdrive: ``GetBastaSampleList.ipynb``
+
+Ran list-samples.sh to obtain the file "SAMPLES-basta", but a few samples were missing (on run34). Added these manually to SAMPLES-basta:
+
+```
+ls /mnt/immunogenomics/RUNS/run34-20190218-miseq/NO-UMI/final/BASTA*-clones-mut-sites-reassigned.csv >> SAMPLES-basta
+```
+
+The two samples that were missing on run35 did not have a -clones-mut-sites-reassigned.csv file, because the clones file before the reassignment step was already empty:
+
+```
+ls: cannot access '/mnt/immunogenomics/RUNS/run35-20190609-miseq/results-tbcell/final/2172-PE-slice*-clones-mut-sites-reassigned.csv': No such file or directory
+ls: cannot access '/mnt/immunogenomics/RUNS/run35-20190609-miseq/results-tbcell/final/3684-PE-slice*-clones-mut-sites-reassigned.csv': No such file or directory
+```
+
+## Download files
+
+```
+cp SAMPLES-basta SAMPLES
+../copy-from-beehub.sh 
+```
 
