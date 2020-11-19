@@ -106,3 +106,19 @@ cp SAMPLES-basta SAMPLES
 ../copy-from-beehub.sh 
 ```
 
+I need the allinfo files too, because these files contain the entire protein sequence. Made the SAMPLES-basta-allinfo file with GetListAllInfo.ipynb
+
+```
+cp SAMPLES-basta-allinfo SAMPLES
+../copy-from-beehub.sh 
+```
+
+## Lookup CDR3
+
+In the first analysis the list with autoreactive sequences have been transformed such that it matches the CDR3 output of RESEDA, i.e. starting with Cys and end with VT. This list has been matched to the clones and allinfo files with ``LookupCdr3.ipynb``
+
+## To do next
+
+* Lookup the longer sequences
+* Perform an inexact match with these sequences (allow 1 mismatch)
+
