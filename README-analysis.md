@@ -18,3 +18,21 @@ The fragments are relatively short and contain different parts of the BCR.
 From the data analysis results provided by 10X it turns out that sequences need to be assembled per cell/umi first.
 I will install and use CellRanger, at least for the first assembly step.
 I removed the results of the step above (TranslateAndExtractCdr3.py)
+
+## Ran RESEDA on the all_contig file (CellRanger output)
+
+```
+# IGH_HUMAN
+nohup ./execute-all.sh -r $RUN -l local -m MIDS-abc.txt -p single -o $OUTDIR -b no -u no > nohup-reseda-IGH.out 2> nohup-reseda-IGH.err < /dev/null &
+# IGK_HUMAN
+nohup ./execute-all.sh -r $RUN -l local -m MIDS-abc.txt -cell IGK -celltype IGK_HUMAN -p single -o $OUTDIR -b no -u no > nohup-reseda-IGK.out 2> nohup-reseda-IGK.err < /dev/null &
+# IGL_HUMAN
+nohup ./execute-all.sh -r $RUN -l local -m MIDS-abc.txt -cell IGL -celltype IGL_HUMAN -p single -o $OUTDIR -b no -u no > nohup-reseda-IGL.out 2> nohup-reseda-IGL.err < /dev/null &
+```
+
+Results have been uploaded to:
+
+* RUN=runXXX-20201130-10X
+* OUTDIR=20201222-reseda-test-data-all-contig
+
+In almost 90% of the contigs the CDR3 has been identified, so that looks promising.
