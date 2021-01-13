@@ -2,7 +2,7 @@ from __future__ import print_function
 import sys
 import sqlite3
 from CreateAndImportClonesSqlite import *
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -55,17 +55,17 @@ def plotNrGenes(datafile, geneCol):
         return
 
     # Start figure
-    fig = plt.figure()
-    fig.add_subplot(1, 1, 1)
+    #fig = plt.figure()
+    #fig.add_subplot(1, 1, 1)
 
     # Make histogram
-    hist, bins = np.histogram(data, bins=50)
-    width = 0.7 * (bins[1] - bins[0])
-    center = (bins[:-1] + bins[1:]) / 2
-    plt.xticks(np.arange(min(data) - 2, max(data) + 1, 1))
-    # ax.set_yscale('log')
-    plt.bar(center, hist, align='center', width=width)
-    plt.savefig(basename + ".rr.hist.svg")
+    #hist, bins = np.histogram(data, bins=50)
+    #width = 0.7 * (bins[1] - bins[0])
+    #center = (bins[:-1] + bins[1:]) / 2
+    #plt.xticks(np.arange(min(data) - 2, max(data) + 1, 1))
+    ## ax.set_yscale('log')
+    #plt.bar(center, hist, align='center', width=width)
+    #plt.savefig(basename + ".rr.hist.svg")
 
 
 def getCDR3WithMultipleGenes(geneCol):
