@@ -376,7 +376,7 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-producti
 #runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ final/*CDR3*.csv final/*discarded*.txt
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-allinfo-filtered.csv final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-allinfo-filtered.csv final/*-allinfo-filtered-mut.csv final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
 
 # Transfer the split fastq files that were converted to tab
 if [ "${CREGION}" == "yes" ]; then
