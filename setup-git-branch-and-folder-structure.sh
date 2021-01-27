@@ -32,9 +32,10 @@ echo "git pull origin ${mybranch}" >> _GIT.md
 echo "\`\`\`" >> _GIT.md
 
 # Create a _CONTENT.md file
-echo "## Settings" > _CONTENT.md
+echo "## Code and settings" > _CONTENT.md
 echo "" >> _CONTENT.md
 echo "* [parameters/](parameters/) - files that are used as input for RESEDA" >> _CONTENT.md
+echo "* [code/](code/) - information about code and versions" >> _CONTENT.md
 echo "" >> _CONTENT.md
 echo "## Standard output from RESEDA" >> _CONTENT.md
 echo "" >> _CONTENT.md
