@@ -1,7 +1,7 @@
 #!/bin/bash
 
 uploadurl="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/runXXX-20210210-briney/data/raw/"
-$scriptdir=`pwd`
+scriptdir=`pwd`
 
 urls=`cat _LINKS.md`
 
