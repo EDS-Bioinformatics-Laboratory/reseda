@@ -9,6 +9,8 @@
 source ENV.sh
 
 # Create directory if it is not there yet, the "raw", "reports" and "final" directories are made via execute-all.sh
+mkdir -p /mnt/immunogenomics/RUNS/$RUN/data/raw
+mkdir -p /mnt/immunogenomics/RUNS/$RUN/data/meta
 mkdir -p /mnt/immunogenomics/RUNS/$RUN/$OUTDIR/code
 mkdir -p /mnt/immunogenomics/RUNS/$RUN/$OUTDIR/parameters
 mkdir -p /mnt/immunogenomics/RUNS/$RUN/$OUTDIR/run-report
