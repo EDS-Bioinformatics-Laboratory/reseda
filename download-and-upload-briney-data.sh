@@ -1,8 +1,11 @@
 #!/bin/bash
 
 uploadurl="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/runXXX-20210210-briney/data/raw/"
+$scriptdir=`pwd`
 
 urls=`cat _LINKS.md`
+
+cd my-big-data-dir
 
 for url in $urls; do
     myfile=`basename $url`
@@ -12,10 +15,16 @@ for url in $urls; do
     wget $url
     wait
 
-    ./copy-to-webdav.sh $uploadurl $myfile
+    tar zxvf $myfile
     wait
 
-    rm $myfile
+    find data -type f -regex '.*.fastq.gz' -exec mv {} . \;
+    wait
+
+    $scriptdir/copy-to-webdav.sh $uploadurl *.fastq.gz
+    wait
+
+    rm -f *.fastq.gz
     wait
 done
 
