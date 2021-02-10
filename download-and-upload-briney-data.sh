@@ -5,7 +5,7 @@ $scriptdir=`pwd`
 
 urls=`cat _LINKS.md`
 
-cd my-big-data-dir
+cd /data2
 
 for url in $urls; do
     myfile=`basename $url`
