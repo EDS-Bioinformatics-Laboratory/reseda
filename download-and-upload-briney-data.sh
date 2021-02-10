@@ -24,7 +24,7 @@ for url in $urls; do
     $scriptdir/copy-to-webdav.sh $uploadurl *.fastq.gz
     wait
 
-    rm -f *.fastq.gz
+    rm -rf /data2/*
     wait
 done
 
