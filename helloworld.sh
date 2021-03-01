@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo "some other text"
+echo "Hello world"
