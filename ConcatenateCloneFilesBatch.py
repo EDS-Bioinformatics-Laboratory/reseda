@@ -64,44 +64,58 @@ if __name__ == '__main__':
     for project, chains_species in projects.items():
         chains_species = list(set(chains_species))
         for chain_specie in chains_species:
-            cmd = "ls" + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv > SAMPLES ; wait"
+#            cmd = "ls" + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv > SAMPLES ; wait"
+#            executeCmd(cmd)
+#            cmd = "./copy-from-beehub.sh ; wait"
+#            executeCmd(cmd)
+#            cmd = "myfiles=`cat LOCAL_SAMPLES`"
+#            executeCmd(cmd)
+#            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "cdr3-clones- $myfiles ; wait"
+#            executeCmd(cmd)
+#            cmd = "rm $myfiles"
+#            executeCmd(cmd)
+
+#            print("#")
+
+#            cmd = "ls" + " " + mydir + "*" + chain_specie + "*-all_info.csv.rr.csv > SAMPLES ;  wait"
+#            executeCmd(cmd)
+#            cmd = "./copy-from-beehub.sh ; wait"
+#            executeCmd(cmd)
+#            cmd = "myfiles=`cat LOCAL_SAMPLES`"
+#            executeCmd(cmd)
+#            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "assign-info- $myfiles ; wait"
+#            executeCmd(cmd)
+#            cmd = "rm $myfiles"
+#            executeCmd(cmd)
+
+
+            print("#")
+
+            cmd = "ls" + " " + mydir + "*" + chain_specie + "*-all_info.csv.rr.all_info.csv > SAMPLES ;  wait"
             executeCmd(cmd)
             cmd = "./copy-from-beehub.sh ; wait"
             executeCmd(cmd)
             cmd = "myfiles=`cat LOCAL_SAMPLES`"
             executeCmd(cmd)
-            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "cdr3-clones- $myfiles ; wait"
+            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "all-info- $myfiles ; wait"
             executeCmd(cmd)
             cmd = "rm $myfiles"
             executeCmd(cmd)
 
-            print("#")
+#            print("#")
 
-            cmd = "ls" + " " + mydir + "*" + chain_specie + "*-all_info.csv.rr.csv > SAMPLES ;  wait"
-            executeCmd(cmd)
-            cmd = "./copy-from-beehub.sh ; wait"
-            executeCmd(cmd)
-            cmd = "myfiles=`cat LOCAL_SAMPLES`"
-            executeCmd(cmd)
-            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "assign-info- $myfiles ; wait"
-            executeCmd(cmd)
-            cmd = "rm $myfiles"
-            executeCmd(cmd)
+#            cmd = "ls" + " " + mydir + "*" + chain_specie + "-clones-mut-sites-reassigned.csv > SAMPLES ; wait"
+#            executeCmd(cmd)
+#            cmd = "./copy-from-beehub.sh ; wait"
+#            executeCmd(cmd)
+#            cmd = "myfiles=`cat LOCAL_SAMPLES`"
+#            executeCmd(cmd)
+#            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "vjcdr3-clones-mut- $myfiles ; wait"
+#            executeCmd(cmd)
+#            cmd = "rm $myfiles"
+#            executeCmd(cmd)
 
-            print("#")
-
-            cmd = "ls" + " " + mydir + "*" + chain_specie + "-clones-mut-sites-reassigned.csv > SAMPLES ; wait"
-            executeCmd(cmd)
-            cmd = "./copy-from-beehub.sh ; wait"
-            executeCmd(cmd)
-            cmd = "myfiles=`cat LOCAL_SAMPLES`"
-            executeCmd(cmd)
-            cmd = "python ConcatenateCloneFiles.py -r " + runinfo + " -n " + project + " -c " + chain_specie + " -pre " + "vjcdr3-clones-mut- $myfiles ; wait"
-            executeCmd(cmd)
-            cmd = "rm $myfiles"
-            executeCmd(cmd)
-
-            print("#")
+#            print("#")
 
     print("echo 'FINISHED'")
 
