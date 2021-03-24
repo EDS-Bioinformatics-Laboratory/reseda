@@ -31,7 +31,7 @@ df = read.csv(myfile, sep="\t", header=T, stringsAsFactors = F)
 # Select columns
 Vgene=df$V_sub
 Jgene=df$J_sub
-UMIs.frac=100*df$UMIs.frac  # NOTE: if there are no UMIs you should use the freq column instead
+UMIs.frac=df$UMIs.frac  # NOTE: if there are no UMIs you should use the df$freq column instead
 
 # Select only the first V and J assignment
 Vgene = sub("\\+.*", "", Vgene)
