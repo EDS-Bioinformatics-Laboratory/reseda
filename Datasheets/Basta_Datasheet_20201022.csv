@@ -1,0 +1,169 @@
+20180921_RUN31_Datasheet-BASTA.csv:N701_S502,B005-SG-B,,,,,,,RUN31,S1,BASTA-study,human,BCRh,SS3,SG,yes
+20180921_RUN31_Datasheet.csv:N701_S502,B005-SG-B,,,,,,,RUN31,S1,BASTA-study,human,BCRh,SS3,SG,yes
+20180921_RUN31_Datasheet-UMI.csv:N701_S502,B005-SG-B,,,,,,,RUN31,S1,BASTA-study,human,BCRh,SS3,SG,yes
+20190609_RUN35_Datasheet.csv:N703_S516,B005-PB,,,,,,,RUN35,S197,BASTA,human,BCRh,SS3,PB,,yes
+20190609_RUN35_Datasheet-UMI.csv:N703_S516,B005-PB,,,,,,,RUN35,S197,BASTA,human,BCRh,SS3,PB,,yes
+20181125_RUN32_Datasheet.csv:N711_S513,BASTA-0352,,,,,,,RUN32,S195,BASTA study,human,BCRh,SS3,paxgene,,yes
+20180605_RUN29_Datasheet-BASTA.csv:N723_S511,BASTA11,,,,,,,RUN29,S176,BASTA study,human,BCRh,SS3,presort,yes
+20180605_RUN29_Datasheet-BASTA.csv:N724_S511,BASTA12,,,,,,,RUN29,S177,BASTA study,human,BCRh,SS3,memory,yes
+20180605_RUN29_Datasheet-BASTA.csv:N726_S511,BASTA13,,,,,,,RUN29,S178,BASTA study,human,BCRh,SS3,MZ,yes
+20180605_RUN29_Datasheet-BASTA.csv:N727_S511,BASTA14,,,,,,,RUN29,S179,BASTA study,human,BCRh,SS3,DN,yes
+20180605_RUN29_Datasheet-BASTA.csv:N728_S511,BASTA15,,,,,,,RUN29,S180,BASTA study,human,BCRh,SS3,naive,yes
+20180605_RUN29_Datasheet.csv:N723_S511,BASTA11,,,,,,,RUN29,S176,BASTA study,human,BCRh,SS3,presort,yes
+20180605_RUN29_Datasheet.csv:N724_S511,BASTA12,,,,,,,RUN29,S177,BASTA study,human,BCRh,SS3,memory,yes
+20180605_RUN29_Datasheet.csv:N726_S511,BASTA13,,,,,,,RUN29,S178,BASTA study,human,BCRh,SS3,MZ,yes
+20180605_RUN29_Datasheet.csv:N727_S511,BASTA14,,,,,,,RUN29,S179,BASTA study,human,BCRh,SS3,DN,yes
+20180605_RUN29_Datasheet.csv:N728_S511,BASTA15,,,,,,,RUN29,S180,BASTA study,human,BCRh,SS3,naive,yes
+20180921_RUN31_Datasheet-BASTA.csv:N701_S502,B005-SG-B,,,,,,,RUN31,S1,BASTA-study,human,BCRh,SS3,SG,yes
+20180921_RUN31_Datasheet-BASTA.csv:N721_S507,SS3-lung-1a-B,,,,,,,RUN31,S110,BASTA-study,human,BCRh,SS3,lung-1a,yes
+20180921_RUN31_Datasheet-BASTA.csv:N722_S507,SS3-lung-1b-B,,,,,,,RUN31,S111,BASTA-study,human,BCRh,SS3,lung-1b,yes
+20180921_RUN31_Datasheet-BASTA.csv:N723_S507,SS3-lung-1c-B,,,,,,,RUN31,S112,BASTA-study,human,BCRh,SS3,lung-1c,yes
+20180921_RUN31_Datasheet.csv:N701_S502,B005-SG-B,,,,,,,RUN31,S1,BASTA-study,human,BCRh,SS3,SG,yes
+20180921_RUN31_Datasheet.csv:N721_S507,SS3-lung-1a-B,,,,,,,RUN31,S110,BASTA-study,human,BCRh,SS3,lung-1a,yes
+20180921_RUN31_Datasheet.csv:N722_S507,SS3-lung-1b-B,,,,,,,RUN31,S111,BASTA-study,human,BCRh,SS3,lung-1b,yes
+20180921_RUN31_Datasheet.csv:N723_S507,SS3-lung-1c-B,,,,,,,RUN31,S112,BASTA-study,human,BCRh,SS3,lung-1c,yes
+20180921_RUN31_Datasheet-UMI.csv:N701_S502,B005-SG-B,,,,,,,RUN31,S1,BASTA-study,human,BCRh,SS3,SG,yes
+20180921_RUN31_Datasheet-UMI.csv:N721_S507,SS3-lung-1a-B,,,,,,,RUN31,S110,BASTA-study,human,BCRh,SS3,lung-1a,yes
+20180921_RUN31_Datasheet-UMI.csv:N722_S507,SS3-lung-1b-B,,,,,,,RUN31,S111,BASTA-study,human,BCRh,SS3,lung-1b,yes
+20180921_RUN31_Datasheet-UMI.csv:N723_S507,SS3-lung-1c-B,,,,,,,RUN31,S112,BASTA-study,human,BCRh,SS3,lung-1c,yes
+20181125_RUN32_Datasheet.csv:N711_S513,BASTA-0352,,,,,,,RUN32,S195,BASTA study,human,BCRh,SS3,paxgene,,yes
+20181125_RUN32_Datasheet.csv:N719_S513,SS3-lip,,,,,,,RUN32,S201,BASTA study,human,BCRh,SS3,Lip biopsy cells,,yes
+20190214_RUN34_Datasheet.csv:N701_S516,BASTA-1D,,,,,,,RUN34,S160,BASTA-IgSub,human,IgD,SS3,SG-IgD,,no
+20190214_RUN34_Datasheet.csv:N702_S516,BASTA-1G,,,,,,,RUN34,S161,BASTA-IgSub,human,IgG,SS3,SG-IgG,,no
+20190214_RUN34_Datasheet.csv:N703_S516,BASTA-1M,,,,,,,RUN34,S162,BASTA-IgSub,human,IgM,SS3,SG-IgM,,no
+20190214_RUN34_Datasheet.csv:N711_S516,BASTA-6G,,,,,,,RUN34,S166,BASTA-IgSub,human,IgG,SS3,Lip-IgG,,no
+20190214_RUN34_Datasheet.csv:N712_S516,BASTA-6M,,,,,,,RUN34,S167,BASTA-IgSub,human,IgM,SS3,Lip-IgM,,no
+20190214_RUN34_Datasheet-no-umi.csv:N701_S516,BASTA-1D,,,,,,,RUN34,S160,BASTA-IgSub,human,IgD,SS3,SG-IgD,,no
+20190214_RUN34_Datasheet-no-umi.csv:N702_S516,BASTA-1G,,,,,,,RUN34,S161,BASTA-IgSub,human,IgG,SS3,SG-IgG,,no
+20190214_RUN34_Datasheet-no-umi.csv:N703_S516,BASTA-1M,,,,,,,RUN34,S162,BASTA-IgSub,human,IgM,SS3,SG-IgM,,no
+20190214_RUN34_Datasheet-no-umi.csv:N711_S516,BASTA-6G,,,,,,,RUN34,S166,BASTA-IgSub,human,IgG,SS3,Lip-IgG,,no
+20190214_RUN34_Datasheet-no-umi.csv:N712_S516,BASTA-6M,,,,,,,RUN34,S167,BASTA-IgSub,human,IgM,SS3,Lip-IgM,,no
+20190609_RUN35_Datasheet.csv:N703_S516,B005-PB,,,,,,,RUN35,S197,BASTA,human,BCRh,SS3,PB,,yes
+20190609_RUN35_Datasheet-UMI.csv:N703_S516,B005-PB,,,,,,,RUN35,S197,BASTA,human,BCRh,SS3,PB,,yes
+20180921_RUN31_Datasheet-BASTA.csv:N702_S502,B007-Lnpre-B,,,,,,,RUN31,S2,BASTA-study,human,BCRh,B007,LN pre,yes
+20180921_RUN31_Datasheet-BASTA.csv:N703_S502,B007-Lnpost-B,,,,,,,RUN31,S3,BASTA-study,human,BCRh,B007,LN post,yes
+20180921_RUN31_Datasheet-BASTA.csv:N704_S502,B007-BMDC-B,,,,,,,RUN31,S4,BASTA-study,human,BCRh,B007,BMCD,yes
+20180921_RUN31_Datasheet-BASTA.csv:N705_S502,B007-PBBMDC-1-B,,,,,,,RUN31,S5,BASTA-study,human,BCRh,B007,PBBMCD-1,yes
+20180921_RUN31_Datasheet-BASTA.csv:N706_S502,B007-PBBMDC-2-B,,,,,,,RUN31,S6,BASTA-study,human,BCRh,B007,PBBMCD-2,yes
+20180921_RUN31_Datasheet.csv:N702_S502,B007-Lnpre-B,,,,,,,RUN31,S2,BASTA-study,human,BCRh,B007,LN pre,yes
+20180921_RUN31_Datasheet.csv:N703_S502,B007-Lnpost-B,,,,,,,RUN31,S3,BASTA-study,human,BCRh,B007,LN post,yes
+20180921_RUN31_Datasheet.csv:N704_S502,B007-BMDC-B,,,,,,,RUN31,S4,BASTA-study,human,BCRh,B007,BMCD,yes
+20180921_RUN31_Datasheet.csv:N705_S502,B007-PBBMDC-1-B,,,,,,,RUN31,S5,BASTA-study,human,BCRh,B007,PBBMCD-1,yes
+20180921_RUN31_Datasheet.csv:N706_S502,B007-PBBMDC-2-B,,,,,,,RUN31,S6,BASTA-study,human,BCRh,B007,PBBMCD-2,yes
+20180921_RUN31_Datasheet-UMI.csv:N702_S502,B007-Lnpre-B,,,,,,,RUN31,S2,BASTA-study,human,BCRh,B007,LN pre,yes
+20180921_RUN31_Datasheet-UMI.csv:N703_S502,B007-Lnpost-B,,,,,,,RUN31,S3,BASTA-study,human,BCRh,B007,LN post,yes
+20180921_RUN31_Datasheet-UMI.csv:N704_S502,B007-BMDC-B,,,,,,,RUN31,S4,BASTA-study,human,BCRh,B007,BMCD,yes
+20180921_RUN31_Datasheet-UMI.csv:N705_S502,B007-PBBMDC-1-B,,,,,,,RUN31,S5,BASTA-study,human,BCRh,B007,PBBMCD-1,yes
+20180921_RUN31_Datasheet-UMI.csv:N706_S502,B007-PBBMDC-2-B,,,,,,,RUN31,S6,BASTA-study,human,BCRh,B007,PBBMCD-2,yes
+20181125_RUN32_Datasheet.csv:N720_S513,B007-LN,,,,,,,RUN32,S202,BASTA study,human,BCRh,B007,LN cells,,yes
+20190214_RUN34_Datasheet.csv:N705_S516,BASTA-2G,,,,,,,RUN34,S163,BASTA-IgSub,human,IgG,B007,LNpre-IgG,,no
+20190214_RUN34_Datasheet.csv:N706_S516,BASTA-2M,,,,,,,RUN34,S164,BASTA-IgSub,human,IgM,B007,LNpre-IgM,,no
+20190214_RUN34_Datasheet.csv:N710_S516,BASTA-3G,,,,,,,RUN34,S165,BASTA-IgSub,human,IgG,B007,LNpost-IgG,,no
+20190214_RUN34_Datasheet.csv:N714_S516,BASTA-7D,,,,,,,RUN34,S168,BASTA-IgSub,human,IgD,B007,LNcells-IgD,,no
+20190214_RUN34_Datasheet.csv:N715_S516,BASTA-7G,,,,,,,RUN34,S169,BASTA-IgSub,human,IgG,B007,LNcells-IgG,,no
+20190214_RUN34_Datasheet.csv:N716_S516,BASTA-7M,,,,,,,RUN34,S170,BASTA-IgSub,human,IgM,B007,LNcells-IgM,,no
+20190214_RUN34_Datasheet.csv:N701_S517,BASTA-3M,,,,,,,RUN34,S171,BASTA-IgSub,human,IgM,B007,LNpost-IgM,,no
+20190214_RUN34_Datasheet.csv:N704_S517,BASTA-4M,,,,,,,RUN34,S172,BASTA-IgSub,human,IgM,B007,BMDC-IgM,,no
+20190214_RUN34_Datasheet-no-umi.csv:N705_S516,BASTA-2G,,,,,,,RUN34,S163,BASTA-IgSub,human,IgG,B007,LNpre-IgG,,no
+20190214_RUN34_Datasheet-no-umi.csv:N706_S516,BASTA-2M,,,,,,,RUN34,S164,BASTA-IgSub,human,IgM,B007,LNpre-IgM,,no
+20190214_RUN34_Datasheet-no-umi.csv:N710_S516,BASTA-3G,,,,,,,RUN34,S165,BASTA-IgSub,human,IgG,B007,LNpost-IgG,,no
+20190214_RUN34_Datasheet-no-umi.csv:N714_S516,BASTA-7D,,,,,,,RUN34,S168,BASTA-IgSub,human,IgD,B007,LNcells-IgD,,no
+20190214_RUN34_Datasheet-no-umi.csv:N715_S516,BASTA-7G,,,,,,,RUN34,S169,BASTA-IgSub,human,IgG,B007,LNcells-IgG,,no
+20190214_RUN34_Datasheet-no-umi.csv:N716_S516,BASTA-7M,,,,,,,RUN34,S170,BASTA-IgSub,human,IgM,B007,LNcells-IgM,,no
+20190214_RUN34_Datasheet-no-umi.csv:N701_S517,BASTA-3M,,,,,,,RUN34,S171,BASTA-IgSub,human,IgM,B007,LNpost-IgM,,no
+20190214_RUN34_Datasheet-no-umi.csv:N704_S517,BASTA-4M,,,,,,,RUN34,S172,BASTA-IgSub,human,IgM,B007,BMDC-IgM,,no
+20190609_RUN35_Datasheet.csv:N701_S517,B007-naive,,,,,,,RUN35,S206,BASTA,human,BCRh,B007,naive,,yes
+20190609_RUN35_Datasheet.csv:N702_S517,B007-PB,,,,,,,RUN35,S207,BASTA,human,BCRh,B007,PB,,yes
+20190609_RUN35_Datasheet-UMI.csv:N701_S517,B007-naive,,,,,,,RUN35,S206,BASTA,human,BCRh,B007,naive,,yes
+20190609_RUN35_Datasheet-UMI.csv:N702_S517,B007-PB,,,,,,,RUN35,S207,BASTA,human,BCRh,B007,PB,,yes
+20190609_RUN35_Datasheet.csv:N726_S503,2172-PE-block,,,,,,,RUN35,S37,BASTA,human,BCRh,2172,PE block,,yes
+20190609_RUN35_Datasheet.csv:N722_S505,2172-PE-slice,,,,,,,RUN35,S58,BASTA,human,BCRh,2172,PE slice,,yes
+20190609_RUN35_Datasheet.csv:N701_S511,BASTA-2172-B,,,,,,,RUN35,S150,BASTA,human,BCRh,2172,paxgene,,yes
+20190609_RUN35_Datasheet.csv:N707_S511,2172-CD20p,,,,,,,RUN35,S156,BASTA,human,BCRh,2172,CD20+,,yes
+20190609_RUN35_Datasheet.csv:N710_S511,2172-DN,,,,,,,RUN35,S157,BASTA,human,BCRh,2172,DN,,yes
+20190609_RUN35_Datasheet.csv:N701_S513,2172-mem,,,,,,,RUN35,S166,BASTA,human,BCRh,2172,memory,,yes
+20190609_RUN35_Datasheet.csv:N702_S513,2172-MZ,,,,,,,RUN35,S167,BASTA,human,BCRh,2172,MZ,,yes
+20190609_RUN35_Datasheet.csv:N703_S513,2172-naive,,,,,,,RUN35,S168,BASTA,human,BCRh,2172,naive,,yes
+20190609_RUN35_Datasheet.csv:N704_S513,2172-PB,,,,,,,RUN35,S169,BASTA,human,BCRh,2172,PB,,yes
+20190609_RUN35_Datasheet-UMI.csv:N726_S503,2172-PE-block,,,,,,,RUN35,S37,BASTA,human,BCRh,2172,PE block,,yes
+20190609_RUN35_Datasheet-UMI.csv:N722_S505,2172-PE-slice,,,,,,,RUN35,S58,BASTA,human,BCRh,2172,PE slice,,yes
+20190609_RUN35_Datasheet-UMI.csv:N701_S511,BASTA-2172-B,,,,,,,RUN35,S150,BASTA,human,BCRh,2172,paxgene,,yes
+20190609_RUN35_Datasheet-UMI.csv:N707_S511,2172-CD20p,,,,,,,RUN35,S156,BASTA,human,BCRh,2172,CD20+,,yes
+20190609_RUN35_Datasheet-UMI.csv:N710_S511,2172-DN,,,,,,,RUN35,S157,BASTA,human,BCRh,2172,DN,,yes
+20190609_RUN35_Datasheet-UMI.csv:N701_S513,2172-mem,,,,,,,RUN35,S166,BASTA,human,BCRh,2172,memory,,yes
+20190609_RUN35_Datasheet-UMI.csv:N702_S513,2172-MZ,,,,,,,RUN35,S167,BASTA,human,BCRh,2172,MZ,,yes
+20190609_RUN35_Datasheet-UMI.csv:N703_S513,2172-naive,,,,,,,RUN35,S168,BASTA,human,BCRh,2172,naive,,yes
+20190609_RUN35_Datasheet-UMI.csv:N704_S513,2172-PB,,,,,,,RUN35,S169,BASTA,human,BCRh,2172,PB,,yes
+20180921_RUN31_Datasheet-BASTA.csv:N711_S505,B009-clone2-B,,,,,,,RUN31,S56,BASTA-study,human,BCRh,B009,clone 2,yes
+20180921_RUN31_Datasheet-BASTA.csv:N712_S505,B009-clone6-B,,,,,,,RUN31,S57,BASTA-study,human,BCRh,B009,clone 6,yes
+20180921_RUN31_Datasheet-BASTA.csv:N714_S505,B009-clone10-B,,,,,,,RUN31,S58,BASTA-study,human,BCRh,B009,clone 10,yes
+20180921_RUN31_Datasheet-BASTA.csv:N715_S505,B009-clone17-B,,,,,,,RUN31,S59,BASTA-study,human,BCRh,B009,clone 17,yes
+20180921_RUN31_Datasheet.csv:N711_S505,B009-clone2-B,,,,,,,RUN31,S56,BASTA-study,human,BCRh,B009,clone 2,yes
+20180921_RUN31_Datasheet.csv:N712_S505,B009-clone6-B,,,,,,,RUN31,S57,BASTA-study,human,BCRh,B009,clone 6,yes
+20180921_RUN31_Datasheet.csv:N714_S505,B009-clone10-B,,,,,,,RUN31,S58,BASTA-study,human,BCRh,B009,clone 10,yes
+20180921_RUN31_Datasheet.csv:N715_S505,B009-clone17-B,,,,,,,RUN31,S59,BASTA-study,human,BCRh,B009,clone 17,yes
+20180921_RUN31_Datasheet-UMI.csv:N711_S505,B009-clone2-B,,,,,,,RUN31,S56,BASTA-study,human,BCRh,B009,clone 2,yes
+20180921_RUN31_Datasheet-UMI.csv:N712_S505,B009-clone6-B,,,,,,,RUN31,S57,BASTA-study,human,BCRh,B009,clone 6,yes
+20180921_RUN31_Datasheet-UMI.csv:N714_S505,B009-clone10-B,,,,,,,RUN31,S58,BASTA-study,human,BCRh,B009,clone 10,yes
+20180921_RUN31_Datasheet-UMI.csv:N715_S505,B009-clone17-B,,,,,,,RUN31,S59,BASTA-study,human,BCRh,B009,clone 17,yes
+20190609_RUN35_Datasheet.csv:N703_S511,1193-DN,,,,,,,RUN35,S152,BASTA,human,BCRh,SS4,DN,,yes
+20190609_RUN35_Datasheet.csv:N704_S511,1193-mem,,,,,,,RUN35,S153,BASTA,human,BCRh,SS4,memory,,yes
+20190609_RUN35_Datasheet.csv:N705_S511,1193-MZ,,,,,,,RUN35,S154,BASTA,human,BCRh,SS4,MZ,,yes
+20190609_RUN35_Datasheet.csv:N706_S511,1193-naive,,,,,,,RUN35,S155,BASTA,human,BCRh,SS4,naive,,yes
+20190609_RUN35_Datasheet-UMI.csv:N703_S511,1193-DN,,,,,,,RUN35,S152,BASTA,human,BCRh,SS4,DN,,yes
+20190609_RUN35_Datasheet-UMI.csv:N704_S511,1193-mem,,,,,,,RUN35,S153,BASTA,human,BCRh,SS4,memory,,yes
+20190609_RUN35_Datasheet-UMI.csv:N705_S511,1193-MZ,,,,,,,RUN35,S154,BASTA,human,BCRh,SS4,MZ,,yes
+20190609_RUN35_Datasheet-UMI.csv:N706_S511,1193-naive,,,,,,,RUN35,S155,BASTA,human,BCRh,SS4,naive,,yes
+20180605_RUN29_Datasheet-BASTA.csv:N729_S511,BASTA16,,,,,,,RUN29,S181,BASTA study,human,BCRh,SS4,presort,yes
+20180605_RUN29_Datasheet-BASTA.csv:N721_S513,BASTA17,,,,,,,RUN29,S198,BASTA study,human,BCRh,SS4,memory,yes
+20180605_RUN29_Datasheet-BASTA.csv:N722_S513,BASTA18,,,,,,,RUN29,S199,BASTA study,human,BCRh,SS4,MZ,yes
+20180605_RUN29_Datasheet-BASTA.csv:N723_S513,BASTA19,,,,,,,RUN29,S200,BASTA study,human,BCRh,SS4,DN,yes
+20180605_RUN29_Datasheet-BASTA.csv:N724_S513,BASTA20,,,,,,,RUN29,S201,BASTA study,human,BCRh,SS4,naive,yes
+20180605_RUN29_Datasheet.csv:N729_S511,BASTA16,,,,,,,RUN29,S181,BASTA study,human,BCRh,SS4,presort,yes
+20180605_RUN29_Datasheet.csv:N721_S513,BASTA17,,,,,,,RUN29,S198,BASTA study,human,BCRh,SS4,memory,yes
+20180605_RUN29_Datasheet.csv:N722_S513,BASTA18,,,,,,,RUN29,S199,BASTA study,human,BCRh,SS4,MZ,yes
+20180605_RUN29_Datasheet.csv:N723_S513,BASTA19,,,,,,,RUN29,S200,BASTA study,human,BCRh,SS4,DN,yes
+20180605_RUN29_Datasheet.csv:N724_S513,BASTA20,,,,,,,RUN29,S201,BASTA study,human,BCRh,SS4,naive,yes
+20190609_RUN35_Datasheet.csv:N727_S503,SS4-PE-block,,,,,,,RUN35,S38,BASTA,human,BCRh,SS4,PE block,,yes
+20190609_RUN35_Datasheet.csv:N721_S505,SS4-PE-slice,,,,,,,RUN35,S57,BASTA,human,BCRh,SS4,PE slice,,yes
+20190609_RUN35_Datasheet.csv:N703_S511,1193-DN,,,,,,,RUN35,S152,BASTA,human,BCRh,SS4,DN,,yes
+20190609_RUN35_Datasheet.csv:N704_S511,1193-mem,,,,,,,RUN35,S153,BASTA,human,BCRh,SS4,memory,,yes
+20190609_RUN35_Datasheet.csv:N705_S511,1193-MZ,,,,,,,RUN35,S154,BASTA,human,BCRh,SS4,MZ,,yes
+20190609_RUN35_Datasheet.csv:N706_S511,1193-naive,,,,,,,RUN35,S155,BASTA,human,BCRh,SS4,naive,,yes
+20190609_RUN35_Datasheet-UMI.csv:N727_S503,SS4-PE-block,,,,,,,RUN35,S38,BASTA,human,BCRh,SS4,PE block,,yes
+20190609_RUN35_Datasheet-UMI.csv:N721_S505,SS4-PE-slice,,,,,,,RUN35,S57,BASTA,human,BCRh,SS4,PE slice,,yes
+20190609_RUN35_Datasheet-UMI.csv:N703_S511,1193-DN,,,,,,,RUN35,S152,BASTA,human,BCRh,SS4,DN,,yes
+20190609_RUN35_Datasheet-UMI.csv:N704_S511,1193-mem,,,,,,,RUN35,S153,BASTA,human,BCRh,SS4,memory,,yes
+20190609_RUN35_Datasheet-UMI.csv:N705_S511,1193-MZ,,,,,,,RUN35,S154,BASTA,human,BCRh,SS4,MZ,,yes
+20190609_RUN35_Datasheet-UMI.csv:N706_S511,1193-naive,,,,,,,RUN35,S155,BASTA,human,BCRh,SS4,naive,,yes
+20190609_RUN35_Datasheet.csv:N728_S503,3684-PE-block,,,,,,,RUN35,S39,BASTA,human,BCRh,3684,PE block,,yes
+20190609_RUN35_Datasheet.csv:N723_S505,3684-PE-slice,,,,,,,RUN35,S59,BASTA,human,BCRh,3684,PE slice,,yes
+20190609_RUN35_Datasheet.csv:N706_S513,3684-CD20p,,,,,,,RUN35,S170,BASTA,human,BCRh,3684,CD20+,,yes
+20190609_RUN35_Datasheet.csv:N707_S513,3684-DN,,,,,,,RUN35,S171,BASTA,human,BCRh,3684,DN,,yes
+20190609_RUN35_Datasheet.csv:N710_S513,3684-mem,,,,,,,RUN35,S172,BASTA,human,BCRh,3684,memory,,yes
+20190609_RUN35_Datasheet.csv:N701_S515,3684-MZ,,,,,,,RUN35,S181,BASTA,human,BCRh,3684,MZ,,yes
+20190609_RUN35_Datasheet.csv:N702_S515,3684-naive,,,,,,,RUN35,S182,BASTA,human,BCRh,3684,naive,,yes
+20190609_RUN35_Datasheet.csv:N703_S515,3684-PB,,,,,,,RUN35,S183,BASTA,human,BCRh,3684,PB,,yes
+20190609_RUN35_Datasheet-UMI.csv:N728_S503,3684-PE-block,,,,,,,RUN35,S39,BASTA,human,BCRh,3684,PE block,,yes
+20190609_RUN35_Datasheet-UMI.csv:N723_S505,3684-PE-slice,,,,,,,RUN35,S59,BASTA,human,BCRh,3684,PE slice,,yes
+20190609_RUN35_Datasheet-UMI.csv:N706_S513,3684-CD20p,,,,,,,RUN35,S170,BASTA,human,BCRh,3684,CD20+,,yes
+20190609_RUN35_Datasheet-UMI.csv:N707_S513,3684-DN,,,,,,,RUN35,S171,BASTA,human,BCRh,3684,DN,,yes
+20190609_RUN35_Datasheet-UMI.csv:N710_S513,3684-mem,,,,,,,RUN35,S172,BASTA,human,BCRh,3684,memory,,yes
+20190609_RUN35_Datasheet-UMI.csv:N701_S515,3684-MZ,,,,,,,RUN35,S181,BASTA,human,BCRh,3684,MZ,,yes
+20190609_RUN35_Datasheet-UMI.csv:N702_S515,3684-naive,,,,,,,RUN35,S182,BASTA,human,BCRh,3684,naive,,yes
+20190609_RUN35_Datasheet-UMI.csv:N703_S515,3684-PB,,,,,,,RUN35,S183,BASTA,human,BCRh,3684,PB,,yes
+20180921_RUN31_Datasheet-BASTA.csv:N702_S505,BASTA-1467-B,,,,,,,RUN31,S49,BASTA-study,human,BCRh,1467,paxgene,yes
+20180921_RUN31_Datasheet.csv:N702_S505,BASTA-1467-B,,,,,,,RUN31,S49,BASTA-study,human,BCRh,1467,paxgene,yes
+20180921_RUN31_Datasheet-UMI.csv:N702_S505,BASTA-1467-B,,,,,,,RUN31,S49,BASTA-study,human,BCRh,1467,paxgene,yes
+20190609_RUN35_Datasheet.csv:N729_S503,1467-PE-block,,,,,,,RUN35,S40,BASTA,human,BCRh,1467,PE block,,yes
+20190609_RUN35_Datasheet.csv:N705_S515,1467-DN,,,,,,,RUN35,S184,BASTA,human,BCRh,1467,DN,,yes
+20190609_RUN35_Datasheet.csv:N706_S515,1467-mem,,,,,,,RUN35,S185,BASTA,human,BCRh,1467,memory,,yes
+20190609_RUN35_Datasheet.csv:N707_S515,1467-MZ,,,,,,,RUN35,S186,BASTA,human,BCRh,1467,MZ,,yes
+20190609_RUN35_Datasheet.csv:N710_S515,1467-naive,,,,,,,RUN35,S187,BASTA,human,BCRh,1467,naive,,yes
+20190609_RUN35_Datasheet.csv:N701_S516,BASTA-1467-B,,,,,,,RUN35,S196,BASTA,human,BCRh,1467,paxgene,,yes
+20190609_RUN35_Datasheet-UMI.csv:N729_S503,1467-PE-block,,,,,,,RUN35,S40,BASTA,human,BCRh,1467,PE block,,yes
+20190609_RUN35_Datasheet-UMI.csv:N705_S515,1467-DN,,,,,,,RUN35,S184,BASTA,human,BCRh,1467,DN,,yes
+20190609_RUN35_Datasheet-UMI.csv:N706_S515,1467-mem,,,,,,,RUN35,S185,BASTA,human,BCRh,1467,memory,,yes
+20190609_RUN35_Datasheet-UMI.csv:N707_S515,1467-MZ,,,,,,,RUN35,S186,BASTA,human,BCRh,1467,MZ,,yes
+20190609_RUN35_Datasheet-UMI.csv:N710_S515,1467-naive,,,,,,,RUN35,S187,BASTA,human,BCRh,1467,naive,,yes
+20190609_RUN35_Datasheet-UMI.csv:N701_S516,BASTA-1467-B,,,,,,,RUN35,S196,BASTA,human,BCRh,1467,paxgene,,yes
