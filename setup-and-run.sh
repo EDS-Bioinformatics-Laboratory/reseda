@@ -12,7 +12,7 @@ cd git/progress
 wait
 git pull origin master
 wait
-screen ./run.sh
+screen -d -m ./run.sh
 wait
 
 # Get latest version of the pipeline
@@ -40,4 +40,4 @@ tar -zxf couchdb.tgz
 
 # Start analysis
 echo "Start the pilot job tasks by contacting PiCaS tokens"
-screen python2 pilot.py
+screen -d -m python2 pilot.py
