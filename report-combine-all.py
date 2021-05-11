@@ -17,6 +17,7 @@ alignJ_again_file = "report-ALIGNED-AGAIN-J.txt"
 allinfo_file = "report-ALLINFO.txt"
 allinfo_filtered_file = "report-ALLINFO-FILTER.txt"
 clones_file = "report-CLONES.txt"
+dominant_file = "report-DOMINANT.txt"
 cdr3_altV = "report-ALT-V.txt"
 cdr3_altJ = "report-ALT-J.txt"
 
@@ -246,6 +247,27 @@ def parseClones(totalreads, summary_mids, clones_file):
     return(summary)
 
 
+def parseDominant(totalreads, summary_mids, dominant_file):
+    try:
+        fh = open(dominant_file)
+    except:
+        sys.exit("cannot open file: " + clones_file)
+
+    summary = dict()
+    for line in fh:
+        line = line.strip()
+        c = line.split()
+        path = c[0].split("/")[-1]
+        sample, rest = path.split("_L001.assembled-")
+        mid = rest.split("-")[0]
+        dominantumis = int(c[-2])
+        dominantreads = int(c[-1])
+        freq = int(c[-1])
+        summary[sample] = (dominantumis, dominantreads)
+
+    return(summary)
+
+
 def parseAltCdr3(totalreads, summary_mids, alt_file):
     try:
         fh = open(alt_file)
@@ -336,6 +358,7 @@ if __name__ == '__main__':
     summary_aligned_v_again = parseAligned(totalreads, summary_mids, alignV_again_file)
     summary_aligned_j_again = parseAligned(totalreads, summary_mids, alignJ_again_file)
     summary_clones = parseClones(totalreads, summary_mids, clones_file)
+    summary_dominant = parseDominant(totalreads, summary_mids, dominant_file)
     summary_alt_v = parseAltCdr3(totalreads, summary_mids, cdr3_altV)
     summary_alt_j = parseAltCdr3(totalreads, summary_mids, cdr3_altJ)
 
@@ -345,7 +368,7 @@ if __name__ == '__main__':
     except:
         sys.exit("cannot write file report-all.csv")
 
-    print("Sample TotalReads AssembledFreq AssembledPerc MID MidFreq MidPerc Cdr3Freq Cdr3Perc VJFreq VJPerc ReassignedFreq ReassignedPerc QualityDiscardedFreq QualityDiscardedPerc AllInfoFreq AllInfoPerc AllInfoFilteredFreq AllInfoFilteredPerc AlignedVFreq AlignedVPerc AlignedJFreq AlignedJPerc AlignedVAgainFreq AlignedVAgainPerc AlignedJAgainFreq AlignedJAgainPerc ClonesVJCDR3 AltVFreq AltVPerc AltJFreq AltJPerc", file=fhOut)
+    print("Sample TotalReads AssembledFreq AssembledPerc MID MidFreq MidPerc Cdr3Freq Cdr3Perc VJFreq VJPerc ReassignedFreq ReassignedPerc QualityDiscardedFreq QualityDiscardedPerc AllInfoFreq AllInfoPerc AllInfoFilteredFreq AllInfoFilteredPerc AlignedVFreq AlignedVPerc AlignedJFreq AlignedJPerc AlignedVAgainFreq AlignedVAgainPerc AlignedJAgainFreq AlignedJAgainPerc ClonesVJCDR3 DominantUMI DominantReads AltVFreq AltVPerc AltJFreq AltJPerc", file=fhOut)
     samples = list()
     totals = list()
     assembledfreqs = list()
@@ -374,9 +397,10 @@ if __name__ == '__main__':
         (aligned_v_again_freq, aligned_v_again_perc) = summary_aligned_v_again.get(sample, (0, 0))
         (aligned_j_again_freq, aligned_j_again_perc) = summary_aligned_j_again.get(sample, (0, 0))
         (clonesfreq, clonesperc) = summary_clones.get(sample, (0, 0))
+        (dominantumis, dominantreads) = summary_dominant.get(sample, (0, 0))
         (alt_v_freq, alt_v_perc) = summary_alt_v.get(sample, (0, 0))
         (alt_j_freq, alt_j_perc) = summary_alt_j.get(sample, (0, 0))
-        print(sample, total, assembledfreq, assembledperc, mid, midfreq, midperc, cdr3freq, cdr3perc, prodfreq, prodperc, reassignfreq, reassignperc, qualityfreq, qualityperc, allinfofreq, allinfoperc, allinfofilteredfreq, allinfofilteredperc, aligned_v_freq, aligned_v_perc, aligned_j_freq, aligned_j_perc, aligned_v_again_freq, aligned_v_again_perc, aligned_j_again_freq, aligned_j_again_perc, clonesfreq, alt_v_freq, alt_v_perc, alt_j_freq, alt_j_perc, file=fhOut)
+        print(sample, total, assembledfreq, assembledperc, mid, midfreq, midperc, cdr3freq, cdr3perc, prodfreq, prodperc, reassignfreq, reassignperc, qualityfreq, qualityperc, allinfofreq, allinfoperc, allinfofilteredfreq, allinfofilteredperc, aligned_v_freq, aligned_v_perc, aligned_j_freq, aligned_j_perc, aligned_v_again_freq, aligned_v_again_perc, aligned_j_again_freq, aligned_j_again_perc, clonesfreq, dominantumis, dominantreads, alt_v_freq, alt_v_perc, alt_j_freq, alt_j_perc, file=fhOut)
 
         # Store percentages in lists
         samples.append(sample)

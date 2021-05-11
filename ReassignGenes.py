@@ -144,12 +144,18 @@ if __name__ == '__main__':
     # Merge clones with clones_orig to get the unique number of UMIs
     clones_final = pd.merge(clones, clones_orig, how='inner', left_on=['cdr3pep'], right_on=['cdr3pep'])
     clones_final['UMIs.frac'] = clones_final['UMIs'] / sum(clones_final['UMIs'])
+    clones_final['reads.frac'] = clones_final['acc.nunique'] / sum(clones_final['acc.nunique'])
     clones_final = clones_final.sort_values(by='UMIs.frac', ascending=False)
     clones_final = clones_final.rename(columns={"acc.nunique": "freq", "mut.count_x.concat_values": "mut.count_x.mode", "mut.count_y.concat_values": "mut.count_y.mode", "nr_sites.concat_values": "nr_sites.mode"})
 
     ###clones_final.head()
 
     print("Nr of clones (after mutation analysis, after V gene assignment, final)", len(clones_orig), len(clones), len(clones_final), file=fhOut)
+
+    # Count number of dominant clones
+    dominant_clones_umis = len(clones_final[clones_final['UMIs.frac'] > 0.005])
+    dominant_clones_reads = len(clones_final[clones_final['reads.frac'] > 0.005])
+    print("Nr of dominant clones (based on UMI, based on read percentage)", dominant_clones_umis, dominant_clones_reads, file=fhOut)
 
     # Write the clones to disk
     clones_final.to_csv(outfile, sep='\t', index=False)

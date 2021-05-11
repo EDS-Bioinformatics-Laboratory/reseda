@@ -161,9 +161,11 @@ echo "Wrote report-ALLINFO.txt"
 grep '^Reads in allinfo after quality filter' $localfiles > report-ALLINFO-FILTER.txt
 echo "Wrote report-ALLINFO-FILTER.txt"
 grep '^Nr of clones' $localfiles > report-CLONES.txt
+echo "Wrote report-CLONES.txt"
+grep '^Nr of dominant clones' $localfiles > report-DOMINANT.txt
+echo "Wrote report-DOMINANT.txt"
 wait
 rm -f $localfiles
-echo "Wrote report-CLONES.txt"
 
 # First argument: were additional mids used, yes or no
 python2 report-combine-all.py ${BARCODES} ${INFO}
