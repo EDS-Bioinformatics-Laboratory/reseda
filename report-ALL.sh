@@ -69,7 +69,7 @@ echo BARCODES        = "${BARCODES}"
 
 ################## End get arguments #############
 
-files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-pear.log"
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/run*/reports/*-pear.log"
 wait
 echo $files > SAMPLES
 ./copy-from-beehub.sh
@@ -80,7 +80,7 @@ wait
 rm -f $localfiles
 echo "Wrote report-PEAR.txt"
 
-files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-midcount.txt"
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/run*/reports/*-midcount.txt"
 wait
 echo $files > SAMPLES
 ./copy-from-beehub.sh
@@ -91,7 +91,7 @@ wait
 rm -f $localfiles
 echo "Wrote report-MIDs.txt"
 
-files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*HUMAN-report.txt /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*MOUSE-report.txt /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*RHESUS-report.txt"
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/run*/reports/*HUMAN-report.txt /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*MOUSE-report.txt /mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*RHESUS-report.txt"
 wait
 echo $files > SAMPLES
 ./copy-from-beehub.sh
@@ -106,7 +106,7 @@ wait
 rm -f $localfiles
 echo "Wrote report-ALT-J.txt"
 
-files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-productive.txt"
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/run*/reports/*-productive.txt"
 wait
 echo $files > SAMPLES
 ./copy-from-beehub.sh
@@ -117,7 +117,7 @@ wait
 rm -f $localfiles
 echo "Wrote report-PRODUCTIVE.txt"
 
-files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/raw/*.sam"
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/run*/raw/*.sam"
 wait
 echo $files > SAMPLES
 ./copy-from-beehub.sh
@@ -128,7 +128,7 @@ wait
 rm -f $localfiles
 echo "Wrote report-ALIGNED-*"
 
-files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/final/*.rr.clones_subs.csv"
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/run*/final/*.rr.clones_subs.csv"
 wait
 echo $files > SAMPLES
 ./copy-from-beehub.sh
@@ -139,7 +139,7 @@ wait
 rm -f $localfiles
 echo "Wrote report-AFTER-V-REASSIGNMENT.txt"
 
-files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*.quality-filter.log"
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/run*/reports/*.quality-filter.log"
 wait
 echo $files > SAMPLES
 ./copy-from-beehub.sh
@@ -150,7 +150,7 @@ wait
 rm -f $localfiles
 echo "Wrote report-QUALITY-FILTER.txt"
 
-files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/reports/*-qual-reassign.log"
+files="/mnt/immunogenomics/RUNS/${RUN}/${OUTDIR}/run*/reports/*-qual-reassign.log"
 wait
 echo $files > SAMPLES
 ./copy-from-beehub.sh
