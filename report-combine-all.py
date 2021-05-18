@@ -381,7 +381,8 @@ if __name__ == '__main__':
     cdr3freqs = list()
     prodfreqs = list()
     reassignfreqs = list()
-    for sample in expected_samples:
+    mysamples = summary_pear.keys()
+    for sample in mysamples:
         # Print all numbers to file
         total = totalreads.get(sample, -1)
         (assembledfreq, assembledperc) = summary_pear.get(sample, (0, 0))
