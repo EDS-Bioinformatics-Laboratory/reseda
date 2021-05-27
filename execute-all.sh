@@ -299,8 +299,8 @@ set_status ${ip} "RUNNING" "Determine SNPs from the SAM files" # creates file: $
 runcmd python3 MutationsFromSam.py *-e-clean.sam
 wait
 
-### Clean up SAM files, otherwise we'll run out of disk space
-rm -f *.sam
+### Clean up SAM and FASTQ files, otherwise we'll run out of disk space
+rm -f *.sam *.fastq.gz
 wait
 
 ### Generate reports ###
