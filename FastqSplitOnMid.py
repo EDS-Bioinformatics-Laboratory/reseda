@@ -62,13 +62,17 @@ def sortMIDS(umis, motifs, fastqFile, outdir):
             midCount["nomatch"] = midCount.get("nomatch", 0) + 1
         else:
             if umis == "yes":
-                umi = keepMatch.group(4)       # NEW
-                mid = keepMatch.group(2)       # NEW
-                primerTB = keepMatch.group(5)  # NEW
+                umi = keepMatch.group(4)
+                mid = keepMatch.group(2)
+                primerTB = keepMatch.group(5)
             elif umis == "roche":
-                umi = ""       # NEW
-                mid = keepMatch.group(1)       # NEW
-                primerTB = keepMatch.group(2)  # NEW
+                umi = ""
+                mid = keepMatch.group(1)
+                primerTB = keepMatch.group(2)
+            elif umis == "race":
+                umi = keepMatch.group(3)
+                mid = keepMatch.group(2)
+                primerTB = keepMatch.group(4)
             else:
                 umi = keepMatch.group(1)
                 mid = keepMatch.group(2)
@@ -94,7 +98,7 @@ if __name__ == '__main__':
 
     # Check if an argument was given to this script
     if len(sys.argv) < 4:
-        sys.exit('Usage: %s umis(yes/roche/no) midfile outdir fastq-file(s)' % sys.argv[0])
+        sys.exit('Usage: %s umis(yes/roche/race/no) midfile outdir fastq-file(s)' % sys.argv[0])
 
     [umis, midFile, outdir] = sys.argv[1:4]
     fastqFiles = sys.argv[4:]

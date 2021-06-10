@@ -38,7 +38,12 @@ def filterData(df):
     longest_alignment = df.groupby('acc').agg({'align.length_x': max})
     longest_alignment = longest_alignment.reset_index()
 
+    # Convert float to int to avoid problems with merging
+    df['align.length_x'] = [ int(x) for x in df['align.length_x'] ]
+    longest_alignment['align.length_x'] = [ int(x) for x in longest_alignment['align.length_x'] ]
+
     df = pd.merge(df, longest_alignment, how='inner', left_on=['acc','align.length_x'], right_on=['acc','align.length_x'])
+
     return(df)
 
 
@@ -71,6 +76,10 @@ def main(allinfo_file, v_file, j_file):
     df.to_csv("try.csv", sep='\t')
 
     df = filterData(df)
+    outAllinfoFiltered = allinfo_file.replace("-all_info.csv", "-allinfo-filtered-mut.csv")
+    df.to_csv(outAllinfoFiltered)
+    print("Wrote", outAllinfoFiltered, "to disk")
+
     clones = allinfoToClones(df, allinfo_file)
     print("FINISHED")
 

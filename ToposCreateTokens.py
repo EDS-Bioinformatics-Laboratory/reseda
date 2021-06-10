@@ -83,11 +83,11 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Create ToPoS tokens (json)')
     parser.add_argument('-r', '--run', default='runNN-YYYYMMDD-miseq', type=str, help='Sequence run directory (default: %(default)s)')
-    parser.add_argument('-m', '--mids', default='MIDS-miseq-umi.txt', type=str, help='MID scheme file name (default: %(default)s)')
+    parser.add_argument('-m', '--mids', default='MIDS-miseq-umi.txt', type=str, help='MID scheme file name, e.g. MIDS-miseq-umi MIDS-miseq.txt MIDS-miseq-race.txt (default: %(default)s)')
     parser.add_argument('-o', '--outdir', default='results-tbcell', type=str, help='Output directory (default: %(default)s)')
     parser.add_argument('-p', '--protocol', default='paired', type=str, help='single or paired (default: %(default)s)')
     parser.add_argument('-b', '--barcodes', default="yes", type=str, help='Were additional internal MIDs used? yes/no (default: %(default)s)')
-    parser.add_argument('-u', '--umis', default="yes", type=str, help='Were UMIs used? yes/no (default: %(default)s)')
+    parser.add_argument('-u', '--umis', default="yes", type=str, help='Were UMIs used? yes/roche/race/no (default: %(default)s)')
     parser.add_argument('-mm', '--mismatches', default=0, type=str, help='Number of mismatches in CDR3 extraction (default: %(default)s)')
     parser.add_argument('-c', '--cregion', default="no", type=str, help='Mask C-region (default: %(default)s)')
     parser.add_argument("sample_files", type=str, nargs='+', help='Path(s) to SAMPLE file(s)')

@@ -21,9 +21,8 @@ if(length(args)==0){
     # q()
 }
 
-#myfile = "../A234-Bk2_S1_L001.assembled-ACGTACGT-IGK_MOUSE-clones-mut-sites-reassigned-head250.csv"
-
 library(circlize)
+library(reshape)
 
 # Read the file
 mytitle = sub("_L001.*", "", myfile)
@@ -32,19 +31,24 @@ df = read.csv(myfile, sep="\t", header=T, stringsAsFactors = F)
 # Select columns
 Vgene=df$V_sub
 Jgene=df$J_sub
+UMIs.frac=df$UMIs.frac  # NOTE: if there are no UMIs you should use the df$freq column instead
 
 # Select only the first V and J assignment
 Vgene = sub("\\+.*", "", Vgene)
 Jgene = sub(",.*", "", Jgene)
 
 # Reformat data
-mat <- data.frame(Vgene,Jgene)
-mat <- with(mat, table(Vgene, Jgene))
+mat <- data.frame(Vgene,Jgene,UMIs.frac)
+#mat <- with(mat, table(Vgene, Jgene))
+mat<-cast(mat, Vgene ~ Jgene, fun.aggregate=sum)
+rownames(mat) <- mat[,1]
+mat[,1] <- NULL
+mat<-as.matrix(mat)
 
 # Make the circular plot
 pdf(paste(mytitle, "circos.pdf", sep="-"),width=7,height=7)
 grid.col <- setNames(rainbow(length(unlist(dimnames(mat)))), union(rownames(mat), colnames(mat)))
-circos.par(start.degree = 90, gap.degree = 5, track.margin = c(-0.1, 0.1), points.overflow.warning = FALSE)
+circos.par(start.degree = 90, gap.degree = 4, track.margin = c(-0.1, 0.1), points.overflow.warning = FALSE)
 
 # now, the image with rotated labels
 chordDiagram(mat, annotationTrack = "grid", preAllocateTracks = 1, grid.col = grid.col)

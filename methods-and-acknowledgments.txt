@@ -1,0 +1,15 @@
+== Methods
+
+The paired-end sequences were assembled using PEAR[pear] and aligned to the IMGT gene database[imgt] with BWA (default settings)[bwa]. Variants were called with samtools mpileup and VarScan (the minimum coverage was set to 1 read)[samtools,varscan]. All differences with respect to the IMGT sequences were therefore considered as somatic hypermutations. The CDR3 sequence was determined by translating the sequences to peptide sequences and searching for conserved motifs in the V and J genes. We searched for N-glycosylation sites using the motif N-X-S/T (where X is any amino acid except proline). A list of subclones was obtained by grouping the sequences by their unique V and J name and CDR3-peptide sequence[reseda]. We calculated the sum/average/mode number of mutations and N-glycosylation sites per subclone and the average percentage of mutations in comparison to the sequence length.
+
+[pear] Jiajie Zhang, Kassian Kobert, Tomáš Flouri, and Alexandros Stamatakis. PEAR: A fast and accurate Illumina Paired-End reAd mergeR. Bioinformatics, 30(5):614–620, 2014.
+[imgt] Véronique Giudicelli, Denys Chaume, and Marie-Paule Lefranc. IMGT/GENE-DB: a comprehensive database for human and mouse immunoglobulin and T cell receptor genes. Nucleic acids research, 33(Database issue):D256–D261, 2005.
+[bwa] Heng Li and Richard Durbin. Fast and accurate long-read alignment with Burrows-Wheeler transform. Bioinformatics, 26(5):589–595, 2010.
+[samtools] Li H.*, Handsaker B.*, Wysoker A., Fennell T., Ruan J., Homer N., Marth G., Abecasis G., Durbin R. and 1000 Genome Project Data Processing Subgroup (2009) The Sequence alignment/map (SAM) format and SAMtools. Bioinformatics, 25, 2078-9.
+[varscan] Koboldt DC, Chen K, Wylie T, Larson DE, McLellan MD, Mardis ER, Weinstock GM, Wilson RK, & Ding L (2009). VarScan: variant detection in massively parallel sequencing of individual and pooled samples. Bioinformatics (Oxford, England), 25 (17), 2283-5
+[reseda] https://bitbucket.org/barbera/reseda/
+
+== Acknowledgments
+
+This work was carried out on the Dutch national e-infrastructure with the support of SURF Cooperative.
+
