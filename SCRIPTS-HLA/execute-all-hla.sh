@@ -15,8 +15,8 @@
 #celltype=$5
 
 # Configure this:
-run="run28-20180514-miseq"
-mids="MIDS-miseq.txt"
+run="run41-20210621-miseq"
+mids="MIDS-abc.txt"
 cell="HLA"
 organism="human"
 celltype="${cell}_HUMAN"
@@ -25,7 +25,7 @@ celltype="${cell}_HUMAN"
 refs="hla_nuc_nospace.fasta"
 
 # Mount the Beehub webdav server and configure the location
-resultsdir="hla"
+resultsdir="processing/20210701-hla"
 beehub_mount="/mnt/immunogenomics/RUNS/${run}"
 beehub_web="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/${run}"
 
@@ -91,7 +91,7 @@ samples=`ls *.assembled.fastq.gz`
 
 # Split on MID
 set_status ${ip} "RUNNING" "${celltype} Sorting sequences per MID"
-runcmd python FastqSplitOnMid.py no ${mids} split ${samples}
+runcmd python2 FastqSplitOnMid.py no ${mids} split ${samples}
 wait
 
 ### Continue with the assembled, split per mid, fastq files ###
@@ -145,7 +145,7 @@ runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/reports/ split/*.primers.
 runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
 
 runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/reports/ final/*-productive.txt
-runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/final/ final/*-all_info.csv final/*-clones-subs.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/final/ final/*-all_info.csv final/*-clones-subs.csv *-easy-import.txt
 
 runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/final/correct-mid/ final/correct-mid/*.rr.* final/correct-mid/*mutations*
 runcmd ./copy-to-webdav.sh ${beehub_web}/${resultsdir}/raw/correct-mid/ final/correct-mid/*-all_info.csv final/correct-mid/*-clones-subs.csv
