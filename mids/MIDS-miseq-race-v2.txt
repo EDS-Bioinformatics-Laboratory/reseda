@@ -1,0 +1,2 @@
+Name	Regex
+MID-A	^(CGTATCGCCTCCCTCGCGCCA){e<=1}(.{11,15})(TCTT)(.{8})
