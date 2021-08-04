@@ -77,7 +77,7 @@ def readMotifsFromFile(motifFile):
     try:
         fh = open(motifFile)
     except:
-        sys.exit("cannot open file", motifFile)
+        sys.exit("cannot open file" + motifFile)
 
     motifs = list()
     line = fh.readline()  # skip header
