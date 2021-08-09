@@ -3,7 +3,6 @@ import sys
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.Data import IUPACData
-from Bio.Alphabet import generic_dna
 
 testmode = 0    # is the script in testmode? 0=no 1=yes
 
@@ -102,12 +101,12 @@ def nucToPeptide(seq):
     comrevSeq = comrev(seq)
 
     # Get all reading frames
-    frame.append(Seq(seq, generic_dna))
-    frame.append(Seq(seq[1:], generic_dna))
-    frame.append(Seq(seq[2:], generic_dna))
-    frame.append(Seq(comrevSeq, generic_dna))
-    frame.append(Seq(comrevSeq[1:], generic_dna))
-    frame.append(Seq(comrevSeq[2:], generic_dna))
+    frame.append(Seq(seq))
+    frame.append(Seq(seq[1:]))
+    frame.append(Seq(seq[2:]))
+    frame.append(Seq(comrevSeq))
+    frame.append(Seq(comrevSeq[1:]))
+    frame.append(Seq(comrevSeq[2:]))
 
     # Translate sequence to protein and find motif
     for i in range(len(frame)):
