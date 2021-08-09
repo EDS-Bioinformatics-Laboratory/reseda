@@ -53,7 +53,7 @@ def create_and_import(con, cur, table, datafile):
 
     # Get header and close the file again
     try:
-        fh = open(datafile, "rb")
+        fh = open(datafile, "rt")
     except:
         sys.exit("cannot open file" + datafile)
     header = fh.readline()

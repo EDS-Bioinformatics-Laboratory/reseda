@@ -176,7 +176,7 @@ function set_status {
     local stat=$2
     local message=$3
     cd ../progress
-    python3 set-status.py ip:"${ip}" status:"${stat}" message:"${message}"
+    python set-status.py ip:"${ip}" status:"${stat}" message:"${message}"
     cd $thisdir
 }
 
@@ -228,7 +228,7 @@ fi
 
 # Split on MID
 set_status ${ip} "RUNNING" "${CELLTYPE} Sorting sequences per MID"
-runcmd python2 FastqSplitOnMid.py ${UMIS} ${MIDS} split ${samples}
+runcmd python FastqSplitOnMid.py ${UMIS} ${MIDS} split ${samples}
 wait
 
 ### Continue with the assembled, split per mid, fastq files ###
@@ -251,7 +251,7 @@ if [ "${CREGION}" == "yes" ]; then
     # copy the original fastq files to directory "orig" and convert to tab
     mkdir -p orig/correct-mid
     cp ${samples} orig/
-    runcmd python2 SeqToFastq.py fastq2tab orig/*.fastq.gz
+    runcmd python SeqToFastq.py fastq2tab orig/*.fastq.gz
     wait
     mv *.tab.csv orig
     # Rename the masked files back to the original fastq file names
@@ -262,14 +262,14 @@ fi
 
 # Extract the CDR3 sequence
 set_status ${ip} "RUNNING" "${CELLTYPE} Extracting CDR3's"
-runcmd python2 TranslateAndExtractCdr3.py -c ${CELLTYPE} -m ${MISMATCHES} ${samples}
+runcmd python TranslateAndExtractCdr3.py -c ${CELLTYPE} -m ${MISMATCHES} ${samples}
 wait
 
 # Count lines of CDR3.csv files
 set_status ${ip} "RUNNING" "${CELLTYPE} Select correct MIDs"
 runcmd wc -l split/*${CELLTYPE}-CDR3.csv > wc-${ip}.txt
 wait
-runcmd python2 select-correct-mids.py ${BARCODES} wc-${ip}.txt > mv-samples-with-correct-mid.sh
+runcmd python select-correct-mids.py ${BARCODES} wc-${ip}.txt > mv-samples-with-correct-mid.sh
 wait
 mkdir -p split/correct-mid
 wait
@@ -296,7 +296,7 @@ wait
 
 # Get SNPs from SAM files
 set_status ${ip} "RUNNING" "Determine SNPs from the SAM files" # creates file: ${prefix}-${refprefix}-e-clean.sam.mut.txt
-runcmd python3 MutationsFromSam.py *-e-clean.sam
+runcmd python MutationsFromSam.py *-e-clean.sam
 wait
 
 ### Generate reports ###
@@ -322,18 +322,18 @@ for sample in ${samples}; do
     cloneMainsFile="final/${prefix}-${CELLTYPE}-clones-mains.csv"
     totalFile="final/${prefix}-${CELLTYPE}-productive.txt"
     echo "### runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${allinfoFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile} ###"
-    runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${allinfoFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
+    runcmd python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${allinfoFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
     wait
 
     # Integrate allinfo file with V and J mutation information, if it fails it will just continue with the next sample, creates a clones file
     vMutFile=${prefix}-${v}-e-clean.sam.mut.txt
     jMutFile=${prefix}-${j}-e-clean.sam.mut.txt
-    python3 MutationAnalysisVJ.py -a ${allinfoFile} -v ${vMutFile} -j ${jMutFile}
+    python MutationAnalysisVJ.py -a ${allinfoFile} -v ${vMutFile} -j ${jMutFile}
     wait
 
     # Reassign V genes based on the created clones file above, creates a new clones file
     cloneMutFile=final/${prefix}-${CELLTYPE}-clones-mut-sites.csv # this is the result of the script MutationAnalysisVJ.py
-    python3 ReassignGenes.py -c ${cloneMutFile} -a ${allinfoFile} # creates a file with extension -clones-mut-sites-reassigned.csv and -allinfo-filtered.csv
+    python ReassignGenes.py -c ${cloneMutFile} -a ${allinfoFile} # creates a file with extension -clones-mut-sites-reassigned.csv and -allinfo-filtered.csv
 done
 
 # Move results to 'final'
@@ -343,7 +343,7 @@ wait
 
 # Correct V gene assignments (OLD, can be removed when new procedure is correct)
 set_status ${ip} "RUNNING" "${CELLTYPE} Re-assign V genes"
-runcmd python2 ReAssignVGenes.py final/*-all_info.csv
+runcmd python ReAssignVGenes.py final/*-all_info.csv
 wait
 # Move files to final
 mv *.rr.* final

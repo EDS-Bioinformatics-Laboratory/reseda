@@ -321,7 +321,7 @@ if __name__ == "__main__":
         uncalledFile = inFile + "-" + cellType + "-discarded-uncalled-bases.txt"
         nocdr3File = inFile + "-" + cellType + "-discarded-no-cdr3.txt"
         try:
-            fhIn = gzip.open(inFile, "rb")
+            fhIn = gzip.open(inFile, "rt")
         except:
             sys.exit("cannot open file: " + inFile)
         try:
@@ -470,7 +470,7 @@ if __name__ == "__main__":
         count_stuff["6. Reads with only J motif"] = len(set(count_accs_alt_j))
 
         total = count_stuff.get("1. Total reads")
-        for key, value in sorted(count_stuff.iteritems()):
+        for key, value in sorted(count_stuff.items()):
             if total > 0:
                 perc = 100.00 * value / total
             else:

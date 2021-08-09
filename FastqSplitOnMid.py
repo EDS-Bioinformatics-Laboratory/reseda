@@ -18,20 +18,14 @@ def sortMIDS(umis, motifs, fastqFile, outdir):
 
     print("Processing", prefixFastq)
 
-    # Open fastq2, check the MIDs and create a barcode file
-    try:
-        fhIn = gzip.open(fastqFile, "rb")
-    except:
-        sys.exit("cannot open file:" + fastqFile)
-
     # Go through fastq entries of fastq file
     fh = dict()
-    fh["nomatch"] = gzip.open(outdir + "/" + prefixFastq + "-nomatch.fastq.gz", "w")
+    fh["nomatch"] = gzip.open(outdir + "/" + prefixFastq + "-nomatch.fastq.gz", "wt")
     fh["report"] = open(outdir + "/" + prefixFastq + "-report.txt", "w")
     fh["midcount"] = open(outdir + "/" + prefixFastq + "-midcount.txt", "w")
     # i=0
     midCount = dict()
-    for record in SeqIO.parse(fhIn, "fastq"):
+    for record in SeqIO.parse(gzip.open(fastqFile, "rt"), "fastq"):
         # if i>=10:
         #     break
 
@@ -78,7 +72,7 @@ def sortMIDS(umis, motifs, fastqFile, outdir):
                 mid = keepMatch.group(2)
                 primerTB = keepMatch.group(3)
             if mid not in fh:  # If it is a new MID open a new output file
-                fh[mid] = gzip.open(outdir + "/" + prefixFastq + "-" + mid + ".fastq.gz", "w")
+                fh[mid] = gzip.open(outdir + "/" + prefixFastq + "-" + mid + ".fastq.gz", "wt")
             print(record.id, umi, mid, primerTB, file=fh["report"])  # UMI, MID, Primer T or B
             SeqIO.write(record, fh[mid], "fastq")
             midCount[mid] = midCount.get(mid, 0) + 1
