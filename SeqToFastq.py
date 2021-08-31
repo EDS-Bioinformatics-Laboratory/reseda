@@ -16,7 +16,7 @@ def convertSffToFastq(f):
 
     try:
         fhIn = open(f)
-        fhOut = gzip.open(fastqFile, "w")
+        fhOut = gzip.open(fastqFile, "wt")
     except:
         print("Could not open or write file:", f, fastqFile)
         exit()
@@ -41,7 +41,7 @@ def convertFastaToFastq(f):
 
     try:
         fhIn = open(f)
-        fhOut = gzip.open(fastqFile, "w")
+        fhOut = gzip.open(fastqFile, "wt")
     except:
         print("Could not open or write file:", f, fastqFile)
         exit()
@@ -66,7 +66,7 @@ def convertFastaQualToFastq(f,q):
     fastqFile = os.path.basename(f)
     fastqFile = fastqFile.replace(".seq", ".fastq.gz")
     try:
-        fhOut = gzip.open(fastqFile, "w")
+        fhOut = gzip.open(fastqFile, "wt")
     except:
         print("Could not write file:", fastqFile)
     reads = SeqIO.to_dict(SeqIO.parse(f, "fasta"))
@@ -88,7 +88,7 @@ def convertFastqToFasta(f):
     fastaFile = fastaFile.replace(".fastq.gz", ".fasta")
 
     try:
-        fhIn = gzip.open(f)
+        fhIn = gzip.open(f, "rt")
         fhOut = open(fastaFile, "w")
     except:
         print("Could not open or write file:", f, fastaFile)
@@ -114,7 +114,7 @@ def convertTabToFastq(f):
 
     try:
         fhIn = open(f)
-        fhOut = gzip.open(fastqFile, "w")
+        fhOut = gzip.open(fastqFile, "wt")
     except:
         print("Could not open or write file:", f, fastqFile)
         exit()
@@ -139,7 +139,7 @@ def convertFastqToTab(f):
     txtFile = txtFile.replace(".fastq.gz", ".tab.csv")
 
     try:
-        fhIn = gzip.open(f)
+        fhIn = gzip.open(f, "rt")
         fhOut = open(txtFile, "w")
     except:
         print("Could not open or write file:", f, txtFile)
