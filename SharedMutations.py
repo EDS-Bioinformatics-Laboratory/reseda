@@ -72,8 +72,14 @@ def main(f):
             for j in range(i+1, len(exp)):
                 e2 = exp[j]
                 nr_common_mut = len(set(mutations[e1][r]).intersection(set(mutations[e2][r])))
-                perc_e1 = round(100 * nr_common_mut / mut_count[r][e1], 1)
-                perc_e2 = round(100 * nr_common_mut / mut_count[r][e2], 1)
+                try:
+                    perc_e1 = round(100 * nr_common_mut / mut_count[r][e1], 1)
+                except:
+                    perc_e1 = 0
+                try:
+                    perc_e2 = round(100 * nr_common_mut / mut_count[r][e2], 1)
+                except:
+                    perc_e2 = 0
                 print(seq_names[r], seq_names[e1], seq_names[e2], nr_common_mut, perc_e1, perc_e2, sep="\t", file=fhOut)
 
     fhOut.close()
