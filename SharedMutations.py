@@ -4,8 +4,10 @@ from Bio import AlignIO
 def main(f):
 
     # Output report files
-    outfile = f + ".shared-mutations.txt"
+    outfile = f + ".shared-mutations.csv"
     fhOut = open(outfile, "w")
+    totalmutfile = f + ".total-mutations.csv"
+    fhTot = open(totalmutfile, "w")
     mutfile = f + ".mutations.csv"
     fhMut = open(mutfile, "w")
 
@@ -55,16 +57,15 @@ def main(f):
                     print(seq_names[e], seq_names[r], i+1, column[r], column[e], mut, sep="\t", file=fhMut)
 
     # Count mutations
-    print("Reference", "Antibody", "Mutations", sep="\t", file=fhOut)
+    print("Reference", "Antibody", "Mutations", sep="\t", file=fhTot)
     mut_count = dict()
     for r in refs:
         mut_count[r] = dict()
         for e in exp:
-            print(seq_names[r], seq_names[e], len(mutations[e][r]), sep="\t", file=fhOut)
+            print(seq_names[r], seq_names[e], len(mutations[e][r]), sep="\t", file=fhTot)
             mut_count[r][e] = len(mutations[e][r])
 
     # Create matrix for common mutations compared to the references
-    print("-----", file=fhOut)
     print("Reference", "Antibody 1", "Antibody 2", "Shared mutations", "Perc AB1", "Perc AB2", sep="\t", file=fhOut)
     for r in refs:
         for i in range(len(exp) - 1):
@@ -84,7 +85,8 @@ def main(f):
 
     fhOut.close()
     fhMut.close()
-    return(mutfile, outfile)
+    fhTot.close()
+    return(mutfile, totalmutfile, outfile)
 
 if __name__ == '__main__':
 
@@ -93,6 +95,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     for f in args.msa_fasta_files:
-        mutfile, outfile = main(f)
+        mutfile, totalmutfile, outfile = main(f)
         print("Wrote", mutfile, "to disk")
+        print("Wrote", totalmutfile, "to disk")
         print("Wrote", outfile, "to disk")
