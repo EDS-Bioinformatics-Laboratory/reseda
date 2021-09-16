@@ -1,5 +1,8 @@
 import argparse
 from Bio import AlignIO
+import pandas as pd
+import matplotlib.pyplot as plt
+plt.rcParams.update({'font.size': 30})
 
 def main(f):
 
@@ -88,6 +91,21 @@ def main(f):
     fhTot.close()
     return(mutfile, totalmutfile, outfile)
 
+def plotHist(f, col):
+    histfile = f + ".hist.pdf"
+
+    df = pd.read_csv(f, sep="\t")
+
+    # Create a histogram and write this to a file
+    fig = plt.figure(figsize=(60, 60)) # figsize=(60, 60)
+    ax = fig.add_subplot(1,1,1,)
+    n, bins, patches = ax.hist(df[col], bins=60, histtype='bar')
+    plt.xlabel(col)
+    plt.ylabel("Frequency")
+    fig.savefig(histfile)
+
+    return(histfile)
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Calls mutations from multiple sequence alignment (ClustalO, fasta) and checks for shared mutations')
@@ -96,6 +114,8 @@ if __name__ == '__main__':
 
     for f in args.msa_fasta_files:
         mutfile, totalmutfile, outfile = main(f)
+        histfile = plotHist(outfile, "Shared mutations")
         print("Wrote", mutfile, "to disk")
         print("Wrote", totalmutfile, "to disk")
         print("Wrote", outfile, "to disk")
+        print("Wrote", histfile, "to disk")
