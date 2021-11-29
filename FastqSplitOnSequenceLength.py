@@ -2,6 +2,7 @@ from __future__ import print_function
 import sys
 import os
 import gzip
+from random import randrange
 from Bio import SeqIO
 import argparse
 
@@ -13,20 +14,19 @@ def splitFastq(f, seq_length):
     Out: new files will be written to disk, count_short (int), count_long (int), count_total (int)
     '''
     try:
-        fh = gzip.open(f, "rb")
+        fh = gzip.open(f, "rt")
     except:
         sys.exit("cannot open file:" + f)
 
-    if f.endswith("_L001.assembled.fastq.gz"):
-        fastq_short = f.replace("_L001.assembled.fastq.gz", ".short" + str(seq_length) + "_L001.assembled.fastq.gz")
-        fastq_long = f.replace("_L001.assembled.fastq.gz", ".long" + str(seq_length) + "_L001.assembled.fastq.gz")
-    else:
-        fastq_short = f.replace(".fastq.gz", ".short" + str(seq_length) + ".fastq.gz")
-        fastq_long = f.replace(".fastq.gz", ".long" + str(seq_length) + ".fastq.gz")
+    f = f.split("/")
+    fastq_short = f[:-1] + ["short" + str(seq_length) + "-" + f[-1]]
+    fastq_long = f[:-1] + ["long" + str(seq_length) + "-" + f[-1]]
+    fastq_short = "/".join(fastq_short)
+    fastq_long = "/".join(fastq_long)
 
     try:
-        fh_short = gzip.open(fastq_short, "w")
-        fh_long = gzip.open(fastq_long, "w")
+        fh_short = gzip.open(fastq_short, "wt")
+        fh_long = gzip.open(fastq_long, "wt")
     except:
         sys.exit("cannot write to file: " + fastq_short + " or " + fastq_long)
 
@@ -57,7 +57,9 @@ if __name__ == '__main__':
     parser.add_argument("fastq_files", type=str, nargs='+', help='Path(s) to fastq file(s)')
     args = parser.parse_args()
 
-    fh_report = open("report-SEQLENGTH.txt", "w")
+    randnumber = randrange(1000000)
+
+    fh_report = open("report-SEQLENGTH-" + str(randnumber) + ".txt", "w")
     fh_samples_short = open("SAMPLES_short", "w")
     fh_samples_long = open("SAMPLES_long", "w")
 
@@ -72,6 +74,6 @@ if __name__ == '__main__':
     fh_report.close()
     fh_samples_long.close()
     fh_samples_short.close()
-    print("Wrote report-SEQLENGTH.txt to disk")
+    print("Wrote report-SEQLENGTH-" + str(randnumber) + ".txt to disk")
     print("Wrote SAMPLES_short to disk")
     print("Wrote SAMPLES_long to disk")
