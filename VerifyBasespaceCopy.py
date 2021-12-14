@@ -41,7 +41,7 @@ if __name__ == '__main__':
         parser.print_help()
         exit()
 
-    webdav = args.webdav_mount + args.run + "/data/"
+    webdav = args.webdav_mount + args.run + "/data/raw/"
 
     # Read checksums (assumes that the file CHECKSUM.SHA1.orig exists)
     checksums = parseChecksumFile("CHECKSUM.SHA1.orig")
