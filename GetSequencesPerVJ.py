@@ -7,7 +7,7 @@ from Bio.Seq import Seq
 def readAllInfo(f):
     samplename, rest = f.split("/")[-1].split("_L001")
     df = pd.read_csv(f, sep="\t")
-    cols = ['V_gene', 'J_gene', 'cdr3pep', 'acc', 'seq']
+    cols = ['V_gene', 'J_gene', 'cdr3nuc', 'acc', 'seq']
     df = df[cols]
     df["Sample"] = samplename
     return(df)
@@ -20,7 +20,7 @@ def selectVJ(df, option_vgene, option_jgene):
     df_vj_count.head()
 
     # Select entries with specified V and J gene (incl allele) or select the top VJ combination
-    if option_vgene != "top" and option_jgene: # Were both the V and J genes given as an option? Select those
+    if option_vgene != "top" and option_jgene != "top": # Were both the V and J genes given as an option? Select those
         v_top = option_vgene
         j_top = option_jgene
     else:                                      # Else, select the VJ combination that occurs often
@@ -30,7 +30,7 @@ def selectVJ(df, option_vgene, option_jgene):
     # Retrieve sequences for VJ combination and make these sequences unique for further analysis
     concatenate = lambda x: "|".join(list(set(x)))
     df_selection = df[(df["V_gene"] == v_top) & (df["J_gene"] == j_top)]
-    df_selection = df_selection.groupby("seq").agg({'acc': concatenate, 'Sample': concatenate, 'cdr3pep': concatenate}).reset_index()
+    df_selection = df_selection.groupby("seq").agg({'acc': concatenate, 'Sample': concatenate, 'cdr3nuc': concatenate}).reset_index()
     print("Selected entries:", len(df_selection))
 
     return(df_selection, v_top, j_top)
@@ -63,14 +63,15 @@ def writeFasta(df_selection, v_top, j_top, option_outdir, option_project_name, o
     # Function reverse complement
     comrev = lambda s: str(Seq(s).reverse_complement()).upper()
 
+    # Write the sequences in fasta format to disk
     for i in df_selection.index:
-        print(">" + df_selection.iloc[i]['acc'] + "|" + df_selection.iloc[i]['Sample'] + "|" + df_selection.iloc[i]['cdr3pep'], file=fhOutV)
+        print(">" + df_selection.iloc[i]['acc'] + "|" + df_selection.iloc[i]['Sample'] + "|" + df_selection.iloc[i]['cdr3nuc'], file=fhOutV)
         if option_comrev == 1:
             print(comrev(df_selection.iloc[i]['seq']), file=fhOutV)
         else:
             print(df_selection.iloc[i]['seq'], file=fhOutV)
 
-        print(">" + df_selection.iloc[i]['acc'] + "|" + df_selection.iloc[i]['Sample'] + "|" + df_selection.iloc[i]['cdr3pep'], file=fhOutJ)
+        print(">" + df_selection.iloc[i]['acc'] + "|" + df_selection.iloc[i]['Sample'] + "|" + df_selection.iloc[i]['cdr3nuc'], file=fhOutJ)
         if option_comrev == 1:
             print(comrev(df_selection.iloc[i]['seq']), file=fhOutJ)
         else:
@@ -89,7 +90,7 @@ if __name__ == '__main__':
     parser.add_argument('-cr', '--comrev', default=0, type=int, help='Make experiment reverse_complement (0: no, 1: yes) (default: %(default)s)')
     parser.add_argument('-p', '--project', default='myproject', type=str, help='Project name, this is the prefix of the output fasta files (default: %(default)s)')
     parser.add_argument('-o', '--outdir', default='./', type=str, help='Output directory for fasta files, with trailing / (default: %(default)s)')
-    parser.add_argument("allinfo_files", type=str, nargs='+', help="Path(s) to allinfo file(s). Tables should contain the columns 'V_gene', 'J_gene', 'cdr3pep', 'acc' and 'seq')")
+    parser.add_argument("allinfo_files", type=str, nargs='+', help="Path(s) to allinfo file(s). Tables should contain the columns 'V_gene', 'J_gene', 'cdr3nuc', 'acc' and 'seq')")
 
     args = parser.parse_args()
 
@@ -98,7 +99,7 @@ if __name__ == '__main__':
         parser.print_help()
         exit()
 
-    # Read the all_info files (tables should contain the columns 'V_gene', 'J_gene', 'cdr3pep', 'acc' and 'seq')
+    # Read the all_info files (tables should contain the columns 'V_gene', 'J_gene', 'cdr3nuc', 'acc' and 'seq')
     df = readAllInfo(args.allinfo_files[0])
     for f in args.allinfo_files[1:]:
         df = pd.concat([df, readAllInfo(f)])
