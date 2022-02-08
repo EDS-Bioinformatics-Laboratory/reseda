@@ -1,33 +1,7 @@
 from __future__ import print_function
 import sqlite3
+import argparse
 import sys
-
-if len(sys.argv) < 8:
-    sys.exit("Usage: combine-immuno-data.py midFile cdr3File vFile jFile seqFile extraFile outFile clonesFile clonesSubsFile clonesMainsFile totalFile")
-
-# Input files
-print(sys.argv)
-[midFile, cdr3File, vFile, jFile, seqFile, extraFile, outFile, clonesFile, clonesSubsFile, clonesMainsFile, totalFile] = sys.argv[1:12]
-
-# Input files - TEST
-# midFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-tbcell/reports/BCRh_S40_L001.assembled-report.txt"
-# cdr3File = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/paul/BCRh_S40_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv"
-# vFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHV_human-easy-import.txt"
-# jFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/BCRh/BCRh_S40_L001.assembled-IGHJ_human-easy-import.txt"
-# seqFile = "/mnt/immunogenomics/RUNS/run03-20150814-miseq/results-pear/paul/BCRh_S40_L001.assembled.fastq.gz-IGH_HUMAN.csv"
-# extraFile = "SAMPLE_Sxx_L001.assembled.fastq.gz-IGH_HUMAN-extra.txt"
-# outFile = "all_info.txt"
-# clonesFile = "clones.txt"
-# clonesSubsFile = "clones-subs.txt"
-# clonesMainsFile = "clones-mains.txt"
-# totalFile = "total.txt"
-
-# Output file
-fhOut = open(outFile, 'w')
-fhClones = open(clonesFile, 'w')
-fhClonesSubs = open(clonesSubsFile, 'w')
-fhClonesMains = open(clonesMainsFile, 'w')
-fhTotal = open(totalFile, 'w')
 
 
 def create_table(name, colnames):
@@ -81,6 +55,36 @@ def clean_name(gene):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Combine tables that were produced in earlier steps')
+    parser.add_argument('-m', '--midfile', default='SAMPLE_Sn_L001.assembled-report.txt', type=str, help='File with the identified MIDs (default: %(default)s)')
+    parser.add_argument('-c', '--cdr3file', default='SAMPLE_Sn_L001.assembled.fastq.gz-IGH_HUMAN-CDR3.csv', type=str, help='File with identified CDR3s (default: %(default)s)')
+    parser.add_argument('-v', '--vfile', default='SAMPLE_Sn_L001.assembled-IGHV_human-easy-import.txt', type=str, help='File with identified V regions (default: %(default)s)')
+    parser.add_argument('-j', '--jfile', default='SAMPLE_Sn_L001.assembled-IGHJ_human-easy-import.txt', type=str, help='File with identified V regions (default: %(default)s)')
+    parser.add_argument('-s', '--seqfile', default='SAMPLE_Sn_L001.assembled.fastq.gz-IGH_HUMAN.csv', type=str, help='File with ... to check ... (default: %(default)s)')
+    parser.add_argument('-e', '--extrafile', default='SAMPLE_Sn_L001.assembled.fastq.gz-IGH_HUMAN-extra.txt', type=str, help='File with extra motifs, e.g. N-glycosylation sites (default: %(default)s)')
+    parser.add_argument('-o', '--outfile', default='-all_info.csv', type=str, help='Name of the all_info output file (default: %(default)s)')
+    parser.add_argument('-ocf', '--clonesfile', default='-clones.csv', type=str, help='Name of the clones output file (default: %(default)s)')
+    parser.add_argument('-ocs', '--clonessubsfile', default='-clones-subs.csv', type=str, help='Name of the clones-subs output file (default: %(default)s)')
+    parser.add_argument('-ocm', '--clonesmainsfile', default='-clones-mains.csv', type=str, help='Name of the clones-mains output file (default: %(default)s)')
+    parser.add_argument('-t', '--totalfile', default='-productive.txt', type=str, help='Name of the summary (total) output file (default: %(default)s)')
+    args = parser.parse_args()
+
+    # Check if all arguments were specified
+    for arg in vars(args):
+        if getattr(args, arg).startswith("SAMPLE_Sn") or getattr(args, arg).startswith("-"):
+            parser.print_help()
+            exit()
+
+    #################
+
+    # Output file
+    fhOut = open(args.outfile, 'w')
+    fhClones = open(args.clonesfile, 'w')
+    fhClonesSubs = open(args.clonessubsfile, 'w')
+    fhClonesMains = open(args.clonesmainsfile, 'w')
+    fhTotal = open(args.totalfile, 'w')
+
+
     con = sqlite3.connect(":memory:")
     # con = sqlite3.connect("test.db")
     cur = con.cursor()
@@ -91,32 +95,32 @@ if __name__ == '__main__':
     # MID
     colnames = ["acc", "beforeMID", "MID", "afterMID"]
     create_table("mid", colnames)
-    import_data(midFile, " ", "mid", colnames)
+    import_data(args.midfile, " ", "mid", colnames)
 
     # CDR3
     colnames = ["acc", "readingframe", "cdr3pep", "cdr3nuc", "cdr3pepshort", "cdr3nucshort", "cdr3_qual_min", "cdr3_qual_max", "cdr3_qual_avg", "cdr3_qual", "nt_start", "nt_end", "seq_length"]
     create_table("cdr3", colnames)
-    import_data(cdr3File, "\t", "cdr3", colnames)
+    import_data(args.cdr3file, "\t", "cdr3", colnames)
 
     # V genes
     colnames = ["acc", "V_flag", "V_gene"]
     create_table("v", colnames)
-    import_data(vFile, "\t", "v", colnames)
+    import_data(args.vfile, "\t", "v", colnames)
 
     # J genes
     colnames = ["acc", "J_flag", "J_gene"]
     create_table("j", colnames)
-    import_data(jFile, "\t", "j", colnames)
+    import_data(args.jfile, "\t", "j", colnames)
 
     # Sequences
     colnames = ["acc", "readingframe_seq", "seq", "pep", "qual"]
     create_table("seq", colnames)
-    import_data(seqFile, "\t", "seq", colnames)
+    import_data(args.seqfile, "\t", "seq", colnames)
 
     # N glycosylation sites
     colnames = ["acc", "readingframe", "site", "start", "end"]
     create_table("sites", colnames)
-    import_data(extraFile, " ", "sites", colnames)
+    import_data(args.extrafile, " ", "sites", colnames)
 
     # Combine all tables into one big table: all_info
     query = "CREATE TABLE all_info AS SELECT * FROM mid JOIN cdr3 USING (acc) LEFT OUTER JOIN v USING (acc) LEFT OUTER JOIN j USING (acc) LEFT OUTER JOIN seq USING (acc);"
@@ -169,7 +173,7 @@ if __name__ == '__main__':
     query = "ALTER TABLE all_info ADD COLUMN V_main"
     print(query)
     cur.execute(query)
-    import_data(outFile, "\t", "all_info", colnames)
+    import_data(args.outfile, "\t", "all_info", colnames)
 
     # Count number of different V and J genes assigned to one accession code
     query = "CREATE TABLE accs_v_j AS SELECT acc, COUNT(DISTINCT V_main) AS nr_v_mains, COUNT(DISTINCT V_sub) AS nr_v_subs, COUNT(DISTINCT V_gene) AS nr_v_alleles, COUNT(DISTINCT J_sub) AS nr_j_subs, COUNT(DISTINCT J_gene) AS nr_j_alleles FROM all_info GROUP BY acc"
@@ -187,7 +191,7 @@ if __name__ == '__main__':
     cur.execute(query)
 
     # Write final all_info table to a file
-    fhOut = open(outFile, 'w')   # This will overwrite the original all_info file
+    fhOut = open(args.outfile, 'w')   # This will overwrite the original all_info file
     result = cur.execute('SELECT * FROM all_info_nrs ORDER BY acc')
     print("\t".join([description[0] for description in result.description]), file=fhOut)
     for row in result:

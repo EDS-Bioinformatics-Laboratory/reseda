@@ -18,6 +18,7 @@ function show_help {
     echo "    -cell --cell         IGH|IGK|IGL|TRA|TRB, default:IGH"
     echo "    -celltype --celltype IGH_HUMAN|TRB_MOUSE|etc, default: IGH_HUMAN"
     echo "    -mm --mismatches     default: 0 (mismatches allowed in CDR3 motifs)"
+    echo "    -s --seqlength      default: 0 (threshold on sequence length)"
     echo "    -cregion --cregion         default: no (sequences contain the C-region, align and mask this region)"
     echo "    -p --protocol        single|paired, default: paired"
     echo "    -o --outdir          default: results-tbcell"
@@ -32,6 +33,7 @@ ORGANISM="human"
 CELL="IGH"
 CELLTYPE="IGH_HUMAN"
 MISMATCHES=0
+SEQLENGTH=0
 CREGION="no"
 PROTOCOL="paired"
 RESULTSDIR="results-tbcell"
@@ -83,6 +85,11 @@ do
         shift # past argument
         shift # past value
         ;;
+        -s|--seqlength)
+        SEQLENGTH="$2"
+        shift # past argument
+        shift # past value
+        ;;
         -cregion|--cregion)
         CREGION="$2"
         shift # past argument
@@ -128,6 +135,7 @@ echo ORGANISM        = "${ORGANISM}"
 echo CELL            = "${CELL}"
 echo CELLTYPE        = "${CELLTYPE}"
 echo MISMATCHES      = "${MISMATCHES}"
+echo SEQLENGTH       = "${SEQLENGTH}"
 echo CREGION         = "${CREGION}"
 echo PROTOCOL        = "${PROTOCOL}"
 echo RESULTSDIR      = "${RESULTSDIR}"
@@ -218,13 +226,15 @@ fi
 
 ### Continue with assembled fastq files ###
 
-# # Split on sequence length
-# set_status ${ip} "RUNNING" "${CELLTYPE} Split sequences on length"
-# runcmd python2 FastqSplitOnSequenceLength.py -l 270 ${samples}
-# wait
-#
-# # New sample list
-# samples=`cat SAMPLES_long`
+# Split on sequence length
+if [ "${SEQLENGTH}" -gt "0" ]; then
+    set_status ${ip} "RUNNING" "${CELLTYPE} Split sequences on length"
+    runcmd python FastqSplitOnSequenceLength.py -l ${SEQLENGTH} ${samples}
+    wait
+
+    # New sample list
+    samples=`cat SAMPLES_long`
+fi
 
 # Split on MID
 set_status ${ip} "RUNNING" "${CELLTYPE} Sorting sequences per MID"
@@ -321,8 +331,8 @@ for sample in ${samples}; do
     cloneSubsFile="final/${prefix}-${CELLTYPE}-clones-subs.csv"
     cloneMainsFile="final/${prefix}-${CELLTYPE}-clones-mains.csv"
     totalFile="final/${prefix}-${CELLTYPE}-productive.txt"
-    echo "### runcmd python2 combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${allinfoFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile} ###"
-    runcmd python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${allinfoFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
+    echo "### runcmd python combine-immuno-data.py -m ${midFile} -c ${cdr3File} -v ${vFile} -j ${jFile} -s ${seqFile} -e ${extraFile} -o ${allinfoFile} -ocf ${cloneFile} -ocs ${cloneSubsFile} -ocm ${cloneMainsFile} -t ${totalFile} ###"
+    runcmd python combine-immuno-data.py -m ${midFile} -c ${cdr3File} -v ${vFile} -j ${jFile} -s ${seqFile} -e ${extraFile} -o ${allinfoFile} -ocf ${cloneFile} -ocs ${cloneSubsFile} -ocm ${cloneMainsFile} -t ${totalFile}
     wait
 
     # Integrate allinfo file with V and J mutation information, if it fails it will just continue with the next sample, creates a clones file
@@ -368,7 +378,7 @@ wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Webdav server"
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt
+runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt report-*.txt
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
 runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-productive.txt final/*.log
 
