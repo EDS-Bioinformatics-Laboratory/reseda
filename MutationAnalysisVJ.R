@@ -8,6 +8,7 @@ if(length(args)==0){
     cat("  V.file='SAMPLENAME_L001.assembled-nomatch-IGHV_human-e-clean.sam.mut.txt'\n")
     cat("  J.file='SAMPLENAME_L001.assembled-nomatch-IGHJ_human-e-clean.sam.mut.txt'\n")
     cat("  CDR3.file='path-to/SAMPLENAME_L001.assembled-nomatch-IGH_HUMAN-all_info.csv.rr.all_info.csv'\n")
+    cat("  qual=30\n")
     q()
 } else {
     for(i in 1:length(args)){
@@ -66,7 +67,7 @@ plotMutations<-function(indir, outdir, V.file, J.file){
   return(list(d.V, d.J, sample))
 }
 
-main<-function(indir, outdir, V.file, J.file, CDR3.file){
+main<-function(indir, outdir, V.file, J.file, CDR3.file, qual){
   # Read and combine data
   d = plotMutations(indir, outdir, V.file, J.file)
   d.V = d[[1]]
@@ -80,7 +81,7 @@ main<-function(indir, outdir, V.file, J.file, CDR3.file){
   cat("Wrote", paste(outdir, paste(sample, "-mutations-per-accession.csv", sep=""), sep="/"), "to disk\n")
 
   # Apply filter before making a clones file
-  d.combined=d.combined[which(d.combined$V_sub!='None' & d.combined$J_sub!='None' & d.combined$cdr3_qual_min>=30 & (d.combined$V_flag == 0 | d.combined$V_flag == 16) & (d.combined$J_flag == 0 | d.combined$J_flag == 16)),]
+  d.combined=d.combined[which(d.combined$V_sub!='None' & d.combined$J_sub!='None' & d.combined$cdr3_qual_min>=qual & (d.combined$V_flag == 0 | d.combined$V_flag == 16) & (d.combined$J_flag == 0 | d.combined$J_flag == 16)),]
 
   # Summarize mutations per VJCDR3 clone
   clones = ddply(d.combined, .(VJCDR3), summarise, freq=length(acc), total.mut.count.V=sum(mut.count.x), avg.mut.frac.V=mean(mut.frac.x), total.mut.count.J=sum(mut.count.y), avg.mut.frac.J=mean(mut.frac.y), total.sites=sum(nr_sites), avg.sites=mean(nr_sites))
@@ -91,7 +92,7 @@ main<-function(indir, outdir, V.file, J.file, CDR3.file){
   cat("Wrote", paste(outdir, paste(sample,"-mutations-per-clone.csv",sep=""), sep="/"), "to disk\n")
   return(clones)
 }
-clones = main(indir, outdir, V.file, J.file, CDR3.file)
+clones = main(indir, outdir, V.file, J.file, CDR3.file, qual)
 
 #
 # outdir = "."

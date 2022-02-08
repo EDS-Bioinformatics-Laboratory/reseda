@@ -1,16 +1,16 @@
 from __future__ import print_function
 import sys
+import argparse
 import sqlite3
 from CreateAndImportClonesSqlite import *
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def importData(datafile, fhLog):
+def importData(datafile, fhLog, qual):
     # load all_info into database
 
     table = "all_info"
-    # basename = datafile.split("/")[-1]
     create_and_import(con, cur, table, datafile)
 
     # Change 'None' to zero in the nr_sites column
@@ -19,7 +19,7 @@ def importData(datafile, fhLog):
     cur.execute(query)
 
     # Count entries with low quality CDR3
-    result = cur.execute("SELECT COUNT(DISTINCT acc) FROM all_info WHERE CAST(cdr3_qual_min as int)<30")
+    result = cur.execute("SELECT COUNT(DISTINCT acc) FROM all_info WHERE CAST(cdr3_qual_min as int)<" + str(qual))
     for row in result:
         low_qual_cdr3 = row[0]
 
@@ -29,16 +29,11 @@ def importData(datafile, fhLog):
         no_vj = row[0]
 
     # Count entries with low quality CDR3, no V/J assigned, and BWA flag not 0 or 16
-    result = cur.execute("SELECT COUNT(DISTINCT acc) FROM all_info WHERE V_gene='None' OR J_gene='None' OR CAST(cdr3_qual_min as int)<30 or (cast(V_flag as int)!=0 and cast(V_flag as int)!=16) or (cast(J_flag as int)!=0 and cast(J_flag as int)!=16)")
+    result = cur.execute("SELECT COUNT(DISTINCT acc) FROM all_info WHERE V_gene='None' OR J_gene='None' OR CAST(cdr3_qual_min as int)<" + str(qual) + " or (cast(V_flag as int)!=0 and cast(V_flag as int)!=16) or (cast(J_flag as int)!=0 and cast(J_flag as int)!=16)")
     for row in result:
         filtered_out = row[0]
 
     print(datafile, low_qual_cdr3, no_vj, filtered_out, file=fhLog)
-
-    # # Remove all entries where the min_base_qual is below 30 or genes are not found
-    # query = "DELETE FROM all_info WHERE V_gene='None' OR J_gene='None' OR CAST(cdr3_qual_min as int)<30"
-    # print(query)
-    # cur.execute(query)
 
 
 def plotNrGenes(datafile, geneCol):
@@ -103,25 +98,22 @@ def getOffset(cutOff, frac_cum):
     return([e > cutOff for e in frac_cum].index(True))
 
 
-# datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/S074-129_S129_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv"]
-# datafiles += ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB19_S52_L001.assembled-CGATCGAT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB21_S54_L001.assembled-ACGTACGT-IGH_HUMAN-all_info.csv","/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/UNIFI68-9N-MID1-Exo_S162_L001.assembled-ACGTACGT-TRB_HUMAN-all_info.csv"]
-
-# datafiles = ["/mnt/immunogenomics/RUNS/run05-20151218-miseq/results-tbcell/final/correct-mid/PS043_S135_L001.assembled-ACTGACTG-TRB_HUMAN-all_info.csv"]
-# datafiles = ["/mnt/immunogenomics/RUNS/run04-20151116-miseq/results-tbcell/final/correct-mid/SP-CB16_S49_L001.assembled-ATGCATGC-IGH_HUMAN-all_info.csv"]
 if __name__ == '__main__':
 
-    # Input
-    if len(sys.argv) < 2:
-        sys.exit("Usage: re-assign-v-genes.py all_info.csv file(s)")
-    datafiles = sys.argv[1:]
+    parser = argparse.ArgumentParser(description='Reassigns V gene names')
+    parser.add_argument('-t', '--threshold', default=0.7, type=float, help='Include V gene names with this cumulative fraction of reads (70 perc, default: %(default)s)')
+    parser.add_argument('-q', '--qual', default=30, type=int, help='Minimum base quality of the CDR3 (default: %(default)s)')
+    parser.add_argument("allinfo_files", type=str, nargs='+', help='Path(s) to allinfo file(s)')
 
-    cutOff = 0.7
+    args = parser.parse_args()
+
+    cutOff = args.threshold
 
     geneCol = "V_sub"
 
     fhOut = open("log-fix-multiple-" + geneCol + "-assignments.txt", "w")
     print("datafile corrected_accessions total_accessions", file=fhOut)
-    for datafile in datafiles:
+    for datafile in args.allinfo_files:
         outfile = datafile.split("/")[-1] + ".rr.csv"
         allfile = datafile.split("/")[-1] + ".rr.all_info.csv"
         clonefile = datafile.split("/")[-1] + ".rr.clones_subs.csv"
@@ -140,7 +132,7 @@ if __name__ == '__main__':
         # con = sqlite3.connect("rr.db")
         cur = con.cursor()
 
-        importData(datafile, fhLog)
+        importData(datafile, fhLog, args.qual)
         # plotNrGenes (datafile, geneCol)
         cdr3s = getCDR3WithMultipleGenes(geneCol)
 
@@ -176,8 +168,7 @@ if __name__ == '__main__':
         query = "DROP TABLE IF EXISTS clones_subs"
         print(query)
         cur.execute(query)
-        query = "CREATE TABLE clones_subs AS SELECT cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis, group_concat(distinct V_sub) as V_sub, group_concat(distinct J_sub) as J_sub, sum(CAST(nr_sites as int)) AS sum_sites, sum(CAST(nr_sites as float))/count(DISTINCT acc) AS avg_sites FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY cdr3pep"
-        # query = "CREATE TABLE clones_subs AS SELECT cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=30 and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY cdr3pep"
+        query = "CREATE TABLE clones_subs AS SELECT cdr3pep, count(DISTINCT acc) AS freq, count(DISTINCT beforeMID) AS uniq_umis, group_concat(distinct V_sub) as V_sub, group_concat(distinct J_sub) as J_sub, sum(CAST(nr_sites as int)) AS sum_sites, sum(CAST(nr_sites as float))/count(DISTINCT acc) AS avg_sites FROM all_info WHERE V_sub!='None' AND J_sub!='None' and cast(cdr3_qual_min as int)>=" + str(args.qual) + " and (cast(V_flag as int)=0 or cast(V_flag as int)=16) and (cast(J_flag as int)=0 or cast(J_flag as int)=16) GROUP BY cdr3pep"
         print(query)
         cur.execute(query)
 

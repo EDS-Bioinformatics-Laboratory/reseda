@@ -62,6 +62,7 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--clones', default='SampleName_S1_L001.assembled-MID-IGH_HUMAN-clones-mut-sites.csv', type=str, help='Clone file name, output of MutationAnalysisVJ.py (default: %(default)s)')
     parser.add_argument('-a', '--allinfo', default='final/SampleName_S1_L001.assembled-MID-IGH_HUMAN-all_info.csv', type=str, help='All info file, result from combine-immuno-data.py (default: %(default)s)')
     parser.add_argument('-t', '--threshold', default=0.7, type=float, help='Include V gene names with this cumulative fraction of reads (70 perc, default: %(default)s)')
+    parser.add_argument('-q', '--qual', default=30, type=int, help='Minimum base quality of the CDR3 (default: %(default)s)')
 
     args = parser.parse_args()
 
@@ -123,7 +124,7 @@ if __name__ == '__main__':
     # Read allinfo file and apply quality filter
     allinfo = pd.read_csv(allinfoFile, sep='\t', na_values=['None', ''])
     print("Reads in allinfo before quality filter:", allinfo['acc'].nunique(), file=fhOut)
-    allinfo = allinfo.loc[(allinfo['cdr3_qual_min'] >= 30) & (pd.isna(allinfo['V_sub']) == False) & (pd.isna(allinfo['J_sub']) == False) & ((allinfo['V_flag'] == 0) | (allinfo['V_flag'] == 16)) & ((allinfo['J_flag'] == 0) | (allinfo['J_flag'] == 16))]
+    allinfo = allinfo.loc[(allinfo['cdr3_qual_min'] >= args.qual) & (pd.isna(allinfo['V_sub']) == False) & (pd.isna(allinfo['J_sub']) == False) & ((allinfo['V_flag'] == 0) | (allinfo['V_flag'] == 16)) & ((allinfo['J_flag'] == 0) | (allinfo['J_flag'] == 16))]
     print("Reads in allinfo after quality filter:", allinfo['acc'].nunique(), file=fhOut)
 
     # Write -allinfo-filtered.csv to disk

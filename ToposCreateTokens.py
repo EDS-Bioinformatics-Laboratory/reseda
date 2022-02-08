@@ -90,6 +90,7 @@ if __name__ == '__main__':
     parser.add_argument('-u', '--umis', default="yes", type=str, help='Were UMIs used? yes/roche/race/no (default: %(default)s)')
     parser.add_argument('-mm', '--mismatches', default=0, type=str, help='Number of mismatches in CDR3 extraction (default: %(default)s)')
     parser.add_argument('-s', '--seqlength', default=0, type=str, help='Filter on sequence length (default: %(default)s)')
+    parser.add_argument('-q', '--qualityfilter', default=30, type=str, help='Filter on minimum base quality of CDR3 sequence (default: %(default)s)')
     parser.add_argument('-c', '--cregion', default="no", type=str, help='Mask C-region (default: %(default)s)')
     parser.add_argument("sample_files", type=str, nargs='+', help='Path(s) to SAMPLE file(s)')
     args = parser.parse_args()
@@ -113,6 +114,7 @@ if __name__ == '__main__':
             "umis": args.umis,
             "mismatches": args.mismatches,
             "seqlength": args.seqlength,
+            "qualityfilter": args.qualityfilter,
             "cregion": args.cregion
         }
         js["samples"] = getSamples(myfile)

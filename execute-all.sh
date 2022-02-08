@@ -18,8 +18,9 @@ function show_help {
     echo "    -cell --cell         IGH|IGK|IGL|TRA|TRB, default:IGH"
     echo "    -celltype --celltype IGH_HUMAN|TRB_MOUSE|etc, default: IGH_HUMAN"
     echo "    -mm --mismatches     default: 0 (mismatches allowed in CDR3 motifs)"
-    echo "    -s --seqlength      default: 0 (threshold on sequence length)"
-    echo "    -cregion --cregion         default: no (sequences contain the C-region, align and mask this region)"
+    echo "    -s --seqlength       default: 0 (threshold on sequence length)"
+    echo "    -q --qualityfilter   default: 30 (minimum base quality of CDR3 sequence)"
+    echo "    -cregion --cregion   default: no (sequences contain the C-region, align and mask this region)"
     echo "    -p --protocol        single|paired, default: paired"
     echo "    -o --outdir          default: results-tbcell"
     echo "    -b --barcodes        yes|no, were extra internal barcodes used? default=yes"
@@ -34,6 +35,7 @@ CELL="IGH"
 CELLTYPE="IGH_HUMAN"
 MISMATCHES=0
 SEQLENGTH=0
+QUALITYFILTER=30
 CREGION="no"
 PROTOCOL="paired"
 RESULTSDIR="results-tbcell"
@@ -90,6 +92,11 @@ do
         shift # past argument
         shift # past value
         ;;
+        -q|--qualityfilter)
+        QUALITYFILTER="$2"
+        shift # past argument
+        shift # past value
+        ;;
         -cregion|--cregion)
         CREGION="$2"
         shift # past argument
@@ -136,6 +143,7 @@ echo CELL            = "${CELL}"
 echo CELLTYPE        = "${CELLTYPE}"
 echo MISMATCHES      = "${MISMATCHES}"
 echo SEQLENGTH       = "${SEQLENGTH}"
+echo QUALITYFILTER   = "${QUALITYFILTER}"
 echo CREGION         = "${CREGION}"
 echo PROTOCOL        = "${PROTOCOL}"
 echo RESULTSDIR      = "${RESULTSDIR}"
@@ -332,18 +340,18 @@ for sample in ${samples}; do
     cloneMainsFile="final/${prefix}-${CELLTYPE}-clones-mains.csv"
     totalFile="final/${prefix}-${CELLTYPE}-productive.txt"
     echo "### runcmd python combine-immuno-data.py -m ${midFile} -c ${cdr3File} -v ${vFile} -j ${jFile} -s ${seqFile} -e ${extraFile} -o ${allinfoFile} -ocf ${cloneFile} -ocs ${cloneSubsFile} -ocm ${cloneMainsFile} -t ${totalFile} ###"
-    runcmd python combine-immuno-data.py -m ${midFile} -c ${cdr3File} -v ${vFile} -j ${jFile} -s ${seqFile} -e ${extraFile} -o ${allinfoFile} -ocf ${cloneFile} -ocs ${cloneSubsFile} -ocm ${cloneMainsFile} -t ${totalFile}
+    runcmd python combine-immuno-data.py -q ${QUALITYFILTER} -m ${midFile} -c ${cdr3File} -v ${vFile} -j ${jFile} -s ${seqFile} -e ${extraFile} -o ${allinfoFile} -ocf ${cloneFile} -ocs ${cloneSubsFile} -ocm ${cloneMainsFile} -t ${totalFile}
     wait
 
     # Integrate allinfo file with V and J mutation information, if it fails it will just continue with the next sample, creates a clones file
     vMutFile=${prefix}-${v}-e-clean.sam.mut.txt
     jMutFile=${prefix}-${j}-e-clean.sam.mut.txt
-    python MutationAnalysisVJ.py -a ${allinfoFile} -v ${vMutFile} -j ${jMutFile}
+    python MutationAnalysisVJ.py -q ${QUALITYFILTER} -a ${allinfoFile} -v ${vMutFile} -j ${jMutFile}
     wait
 
     # Reassign V genes based on the created clones file above, creates a new clones file
     cloneMutFile=final/${prefix}-${CELLTYPE}-clones-mut-sites.csv # this is the result of the script MutationAnalysisVJ.py
-    python ReassignGenes.py -c ${cloneMutFile} -a ${allinfoFile} # creates a file with extension -clones-mut-sites-reassigned.csv and -allinfo-filtered.csv
+    python ReassignGenes.py -q ${QUALITYFILTER} -c ${cloneMutFile} -a ${allinfoFile} # creates a file with extension -clones-mut-sites-reassigned.csv and -allinfo-filtered.csv
 done
 
 # Move results to 'final'
@@ -353,7 +361,7 @@ wait
 
 # Correct V gene assignments (OLD, can be removed when new procedure is correct)
 set_status ${ip} "RUNNING" "${CELLTYPE} Re-assign V genes"
-runcmd python ReAssignVGenes.py final/*-all_info.csv
+runcmd python ReAssignVGenes.py -q ${QUALITYFILTER} final/*-all_info.csv
 wait
 # Move files to final
 mv *.rr.* final
@@ -365,7 +373,7 @@ if [[ ${CELLTYPE} -eq "IGH_HUMAN" ]]; then
     samples=`ls final/*-IGH_HUMAN-all_info.csv.rr.all_info.csv`
     for sample in ${samples}; do
         prefix=`basename ${sample} -IGH_HUMAN-all_info.csv.rr.all_info.csv`
-        runcmd Rscript MutationAnalysisVJ.R indir=\'.\' outdir=\'final\' V.file=\'${prefix}-IGHV_human-e-clean.sam.mut.txt\' J.file=\'${prefix}-IGHJ_human-e-clean.sam.mut.txt\' CDR3.file=\'final/${prefix}-IGH_HUMAN-all_info.csv.rr.all_info.csv\'
+        runcmd Rscript MutationAnalysisVJ.R indir=\'.\' outdir=\'final\' V.file=\'${prefix}-IGHV_human-e-clean.sam.mut.txt\' J.file=\'${prefix}-IGHJ_human-e-clean.sam.mut.txt\' CDR3.file=\'final/${prefix}-IGH_HUMAN-all_info.csv.rr.all_info.csv\' qual=${QUALITYFILTER}
     done
 fi
 

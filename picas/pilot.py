@@ -55,7 +55,7 @@ class ExampleActor(RunActor):
         fhOut.close()
 
         # Start running the main job
-        command = "/usr/bin/time -v " + " ".join(["./execute-all.sh", "-r", js["run"], "-m", js["mids"], "-org", js["organism"], "-cell", js["cell"], "-celltype", js["celltype"], "-mm", str(js["mismatches"]), "-s", str(js["seqlength"]), "-cregion", js["cregion"], "-p", js["protocol"], "-o", js["outdir"], "-b", js["barcodes"], "-u", js["umis"]])
+        command = "/usr/bin/time -v " + " ".join(["./execute-all.sh", "-r", js["run"], "-m", js["mids"], "-org", js["organism"], "-cell", js["cell"], "-celltype", js["celltype"], "-mm", str(js["mismatches"]), "-s", str(js["seqlength"]), "-q", str(js["qualityfilter"]), "-cregion", js["cregion"], "-p", js["protocol"], "-o", js["outdir"], "-b", js["barcodes"], "-u", js["umis"]])
 
         print(command)
 

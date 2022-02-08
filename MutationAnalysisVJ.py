@@ -27,9 +27,9 @@ def combineDataFrames(allinfo, v, j):
     return(df)
 
 
-def filterData(df):
+def filterData(df, qual):
     # ## Filter data
-    df = df.loc[(df['cdr3_qual_min'] >= 30) & (pd.isna(df['V_sub']) == False) & (pd.isna(df['J_sub']) == False) & ((df['V_flag'] == 0) | (df['V_flag'] == 16)) & ((df['J_flag'] == 0) | (df['J_flag'] == 16))]
+    df = df.loc[(df['cdr3_qual_min'] >= qual) & (pd.isna(df['V_sub']) == False) & (pd.isna(df['J_sub']) == False) & ((df['V_flag'] == 0) | (df['V_flag'] == 16)) & ((df['J_flag'] == 0) | (df['J_flag'] == 16))]
 
     # Remove entries where the V and J alignments overlap each other
     df = df.drop(df.loc[(df['start.pos_y']>df['start.pos_x']) & (df['start.pos_y']<df['end.pos_x']) | (df['end.pos_y']>df['start.pos_x']) & (df['end.pos_y']<df['end.pos_x'])].index)
@@ -70,12 +70,12 @@ def allinfoToClones(df,allinfo_file):
     return(clones)
 
 
-def main(allinfo_file, v_file, j_file):
+def main(allinfo_file, v_file, j_file, qual):
     (allinfo, v, j) = readData(allinfo_file, v_file, j_file)
     df = combineDataFrames(allinfo, v, j)
     df.to_csv("try.csv", sep='\t')
 
-    df = filterData(df)
+    df = filterData(df, qual)
     outAllinfoFiltered = allinfo_file.replace("-all_info.csv", "-allinfo-filtered-mut.csv")
     df.to_csv(outAllinfoFiltered)
     print("Wrote", outAllinfoFiltered, "to disk")
@@ -89,6 +89,7 @@ if __name__ == '__main__':
     parser.add_argument('-a', '--allinfo', default='final/SampleName_S1_L001.assembled-MID-IGH_HUMAN-all_info.csv', type=str, help='All info file, result from combine-immuno-data.py (default: %(default)s)')
     parser.add_argument('-v', '--v', default='SampleName_S1_L001.assembled-MID-IGHV_human-e-clean.sam.mut.txt', type=str, help='Cleaned sam file for V gene assignment (default: %(default)s)')
     parser.add_argument('-j', '--j', default='SampleName_S1_L001.assembled-MID-IGHJ_human-e-clean.sam.mut.txt', type=str, help='Cleaned sam file for J gene assignment (default: %(default)s)')
+    parser.add_argument('-q', '--qual', default=30, type=int, help='Minimum base quality of the CDR3 (default: %(default)s)')
 
     args = parser.parse_args()
 
@@ -96,4 +97,4 @@ if __name__ == '__main__':
         parser.print_help()
         exit()
 
-    main(args.allinfo, args.v, args.j)
+    main(args.allinfo, args.v, args.j, args.qual)
