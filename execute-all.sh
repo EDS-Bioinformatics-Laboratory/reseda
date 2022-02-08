@@ -227,7 +227,7 @@ fi
 ### Continue with assembled fastq files ###
 
 # Split on sequence length
-if [ ${SEQLENGTH} > 0 ]; then
+if [ "${SEQLENGTH}" -gt "0" ]; then
     set_status ${ip} "RUNNING" "${CELLTYPE} Split sequences on length"
     runcmd python FastqSplitOnSequenceLength.py -l ${SEQLENGTH} ${samples}
     wait
@@ -331,8 +331,8 @@ for sample in ${samples}; do
     cloneSubsFile="final/${prefix}-${CELLTYPE}-clones-subs.csv"
     cloneMainsFile="final/${prefix}-${CELLTYPE}-clones-mains.csv"
     totalFile="final/${prefix}-${CELLTYPE}-productive.txt"
-    echo "### runcmd python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${allinfoFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile} ###"
-    runcmd python combine-immuno-data.py ${midFile} ${cdr3File} ${vFile} ${jFile} ${seqFile} ${extraFile} ${allinfoFile} ${cloneFile} ${cloneSubsFile} ${cloneMainsFile} ${totalFile}
+    echo "### runcmd python combine-immuno-data.py -m ${midFile} -c ${cdr3File} -v ${vFile} -j ${jFile} -s ${seqFile} -e ${extraFile} -o ${allinfoFile} -ocf ${cloneFile} -ocs ${cloneSubsFile} -ocm ${cloneMainsFile} -t ${totalFile} ###"
+    runcmd python combine-immuno-data.py -m ${midFile} -c ${cdr3File} -v ${vFile} -j ${jFile} -s ${seqFile} -e ${extraFile} -o ${allinfoFile} -ocf ${cloneFile} -ocs ${cloneSubsFile} -ocm ${cloneMainsFile} -t ${totalFile}
     wait
 
     # Integrate allinfo file with V and J mutation information, if it fails it will just continue with the next sample, creates a clones file
