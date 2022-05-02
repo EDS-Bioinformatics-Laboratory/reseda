@@ -341,7 +341,7 @@ if __name__ == '__main__':
     # Get all expected sample names
     expected_samples = list()
     for sample in js["Samples"]:
-        expected_samples.append(sample["Sample_Name"] + "_" + sample.get("Sample_Nr", ""))
+        expected_samples.append(sample["Sample_Name"] + "_" + sample.get("Nr", ""))
     expected_samples.sort()
 
     # Parse log files
