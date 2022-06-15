@@ -23,7 +23,7 @@ function show_help {
     echo "    -p --protocol        single|paired, default: paired"
     echo "    -o --outdir          default: results-tbcell"
     echo "    -b --barcodes        yes|no, were extra internal barcodes used? default=yes"
-    echo "    -u --umis            yes|roche|race|no, does sequence contain UMI? default=yes"
+    echo "    -u --umis            yes|roche|race|vasaseq|no, does sequence contain UMI? default=yes"
     exit
 }
 
