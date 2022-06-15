@@ -68,9 +68,9 @@ def sortMIDS(umis, motifs, fastqFile, outdir):
                 mid = keepMatch.group(3)
                 primerTB = keepMatch.group(4)
             elif umis == "vasaseq":
-                umi = keepMatch.group(2)
-                mid = keepMatch.group(3)
-                primerTB = keepMatch.group(1)
+                umi = keepMatch.group(1)
+                mid = keepMatch.group(2)
+                primerTB = keepMatch.group(3)
             else:
                 umi = keepMatch.group(1)
                 mid = keepMatch.group(2)
