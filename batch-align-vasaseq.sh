@@ -1,15 +1,17 @@
 #!/bin/bash
 
-myfiles=`ls split/T*.fastq.gz`
+myfiles=`ls split/*.fastq.gz`
+outdir="align-IGLV"
+ref="IGLV_human.fasta"
 
 for myfile in $myfiles; do
   prefix=`basename $myfile .fastq.gz`
-  echo "bwa mem IGHV_human.fasta $myfile > align/${prefix}.sam"
-  bwa mem IGHV_human.fasta $myfile > align/${prefix}.sam
+  echo "bwa mem ${ref} $myfile > ${outdir}/${prefix}.sam"
+  bwa mem ${ref} $myfile > ${outdir}/${prefix}.sam
   wait
-  samtools view -F 0x04 align/${prefix}.sam > align/${prefix}-mapped.sam
+  samtools view -F 0x04 ${outdir}/${prefix}.sam > align/${prefix}-mapped.sam
   wait
-  rm -f align/${prefix}.sam
+  rm -f ${outdir}/${prefix}.sam
 done
 
 echo "FINISHED"
