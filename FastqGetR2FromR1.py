@@ -2,7 +2,7 @@ import os
 import gzip
 
 # Read fastq files of R1 and store accessions
-mydir = "align-IGHV"
+mydir = "align-TRBV"
 myfiles = [x for x in os.listdir(mydir) if x.endswith("_R1_001-mapped.fastq.gz")]
 
 accessions = dict()
