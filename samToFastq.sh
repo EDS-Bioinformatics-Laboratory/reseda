@@ -1,7 +1,7 @@
 #!/bin/bash
 
-mydir="align-IGLV"
-myref="IGLV_human.fasta"
+mydir="align-ALL-V"
+myref="ALL_V_human.fasta"
 myfiles=`ls ${mydir}/*.sam`
 
 for sam in ${myfiles}; do
