@@ -1,8 +1,8 @@
 #!/bin/bash
 
 myfiles=`ls split/*.fastq.gz`
-outdir="align-IGLV"
-ref="IGLV_human.fasta"
+outdir="align-VJC"
+ref="VJC_human.fasta"
 
 for myfile in $myfiles; do
   prefix=`basename $myfile .fastq.gz`
