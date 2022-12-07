@@ -1,8 +1,8 @@
 #!/bin/bash
 
-mydir="align-ALL-V"
-myref="ALL_V_human.fasta"
-myfiles=`ls ${mydir}/*.sam`
+mydir="align-VJC"
+myref="VJC_human.fasta"
+myfiles=`ls ${mydir}/*-mapped.sam`
 
 for sam in ${myfiles}; do
   prefix=`basename ${sam} .sam`
