@@ -1,7 +1,7 @@
 #!/bin/bash
 
-myfiles=`ls split/*.fastq.gz`
-outdir="align-VJC"
+myfiles=`ls split-R2/*.fastq.gz`
+outdir="align-VJC-R2"
 ref="VJC_human.fasta"
 
 for myfile in $myfiles; do
