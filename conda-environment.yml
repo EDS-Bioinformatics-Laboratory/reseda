@@ -19,7 +19,7 @@ dependencies:
     - biopython
     - gzip
     - regex
-    - igraph
+#    - igraph   # needs to be changed: install by downloading the package and manual install
     - textdistance
     - bokeh
     - holoviews
