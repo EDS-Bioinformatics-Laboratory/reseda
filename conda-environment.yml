@@ -16,14 +16,11 @@ dependencies:
     - scipy
     - pyyaml
     - xlsxwriter
-    - json
     - biopython
     - gzip
     - regex
-    - alignment\
     - igraph
     - textdistance
-    - functools
     - bokeh
     - holoviews
 

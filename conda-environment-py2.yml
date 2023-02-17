@@ -1,0 +1,13 @@
+name: resedapy2
+channels:
+    - defaults
+    - conda-forge
+dependencies:
+    - python=2.7.18
+    - matplotlib
+    - numpy
+    - biopython
+    - gzip
+    - regex
+#    - alignment
+
