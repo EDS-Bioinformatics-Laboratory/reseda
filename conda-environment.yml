@@ -1,0 +1,29 @@
+name: reseda
+channels:
+    - defaults
+    - conda-forge
+dependencies:
+    - python=3.7.0
+    - matplotlib
+    - numpy
+    - pandas
+    - seaborn
+    - jupyter
+    - notebook
+    - ipykernel
+    - scikit-learn
+    - scikit-bio
+    - scipy
+    - pyyaml
+    - xlsxwriter
+    - json
+    - biopython
+    - gzip
+    - regex
+    - alignment\
+    - igraph
+    - textdistance
+    - functools
+    - bokeh
+    - holoviews
+
