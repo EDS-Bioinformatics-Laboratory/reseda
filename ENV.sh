@@ -1,4 +1,4 @@
 # Source this file to have shortcuts to the webdav server (ResearchDrive)
-RUN=runNN-2022MMDD-miseq
-OUTDIR=processing/2022MMDD-reseda
+RUN=runXX-20220412-mathieu-vasaseq
+OUTDIR=processing/20230206-align-R2-VJC
 WEBDAV=https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/${RUN}
