@@ -6,9 +6,9 @@ from Bio import SeqIO
 
 
 def changeNucleotide(sequence, pos):
-    """
+    '''
     Change nucleotide with random other nucleotide and return the change
-    """
+    '''
     try:
         ref = sequence[pos]
     except:
@@ -30,6 +30,11 @@ def changeNucleotide(sequence, pos):
 
 
 def mutate_sequence(seq, seq_err):
+    '''
+    Description: mutates 1 sequence based on given error rate
+    In: nucleotide sequence (str), sequence error rate (float)
+    Out: mutated sequence (str), list with mutations (position, original nucleotide, new nucleotide)
+    '''
     mut_pos = list()
     mutationList = list()
     newseq = seq[:]  # make a copy of the sequence
@@ -42,23 +47,33 @@ def mutate_sequence(seq, seq_err):
         for pos in mut_pos:
             newseq, ref, alt = changeNucleotide(newseq, pos)
             mutationList.append([str(pos), ref, alt])
-    print(seq, newseq, mutationList)
-    return(newseq)
+    return(newseq, mutationList)
 
 
 def mutate_all_sequences(f, seq_err):
+    '''
+    Description: opens fastq file, mutates sequences, stores the result in new fastq file
+    In: fastq filename, sequence error rate
+    Out: new fastq filename, filename of file with list of mutations
+    '''
     fhIn = gzip.open(f, "rt")
     outfile = f.replace(".fastq.gz", "-mutated-" + str(seq_err) + ".fastq.gz")
+    mutfile = f.replace(".fastq.gz", "-mutated-" + str(seq_err) + "-list.csv")
     fhOut = gzip.open(outfile, "wt")
+    fhMut = open(mutfile, "w")
+    print("acc\tpos\tref\talt", file=fhMut)
 
     for record in SeqIO.parse(fhIn, "fastq"):
-        record.seq = mutate_sequence(record.seq, seq_err)
+        record.seq, mutationList = mutate_sequence(record.seq, seq_err)
         SeqIO.write(record, fhOut, "fastq")
+        for mut in mutationList:
+            print(record.id, "\t".join(mut), sep="\t", file=fhMut)
 
     fhIn.close()
     fhOut.close()
+    fhMut.close()
 
-    return(outfile)
+    return(outfile, mutfile)
 
 
 if __name__ == '__main__':
@@ -69,5 +84,5 @@ if __name__ == '__main__':
 
     for f in args.fastq_files:
         print("Mutating", f)
-        newfile = mutate_all_sequences(f, args.error)
-        print("Wrote", newfile, "to disk")
+        newfile, mutfile = mutate_all_sequences(f, args.error)
+        print("Wrote", newfile, "and", mutfile, "to disk")
