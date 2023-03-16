@@ -23,7 +23,7 @@ def changeNucleotide(sequence, pos):
         alt = random.sample(["C", "A", "G"], 1)[0]
     else:
         print("ERROR: unknown nucleotide:", ref)
-        exit
+        exit()
     sequence = sequence[:pos] + alt + sequence[pos + 1:]
 
     return(sequence, ref, alt)
