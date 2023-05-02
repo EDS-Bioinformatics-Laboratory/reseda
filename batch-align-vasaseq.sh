@@ -1,8 +1,10 @@
 #!/bin/bash
 
-myfiles=`ls split-R2/*.fastq.gz`
-outdir="align-VJC-R2"
+myfiles=`ls sampled-R2/*.fastq.gz`
+outdir="align-VJC-sampled-R2"
 ref="VJC_human.fasta"
+
+mkdir $outdir
 
 for myfile in $myfiles; do
   prefix=`basename $myfile .fastq.gz`

@@ -8,8 +8,10 @@ samples=$@  # get all arguments
 
 for s in $samples; do
     mydir=`dirname $s`
-    prefix=`basename $s _L001_R1_001-mapped.fastq.gz`
-    ./pear-0.9.6-bin-64 -f ${mydir}/${prefix}_L001_R1_001-mapped.fastq.gz -r ${mydir}/${prefix}_L001_R2_001-mapped.fastq.gz -o ${prefix} > ${prefix}-pear.log 2> ${prefix}-pear.err
+    prefix=`basename $s _L001_R1_001-mapped-sorted.fixmates.fastq.gz`
+    ./pear-0.9.6-bin-64 -f ${mydir}/${prefix}_L001_R1_001-mapped-sorted.fixmates.fastq.gz -r ${mydir}/${prefix}_L001_R2_001-mapped-sorted.fixmates.fastq.gz -o ${prefix} > ${prefix}-pear.log 2> ${prefix}-pear.err
+#    prefix=`basename $s _L001_R1_001-mapped.fastq.gz`
+#    ./pear-0.9.6-bin-64 -f ${mydir}/${prefix}_L001_R1_001-mapped.fastq.gz -r ${mydir}/${prefix}_L001_R2_001-mapped.fastq.gz -o ${prefix} > ${prefix}-pear.log 2> ${prefix}-pear.err
     gzip -f ${prefix}.assembled.fastq
 done
 

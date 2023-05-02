@@ -3,7 +3,7 @@ import sys
 import gzip
 
 # Read fastq files of R2 and store accessions
-mydir = "align-R2-VJC"
+mydir = "align-VJC-sampled-R2"
 myfiles = [x for x in os.listdir(mydir) if x.endswith("_R2_001-mapped.fastq.gz")]
 
 ## Process in batches of 30
@@ -16,8 +16,8 @@ for f in myfiles:
   # AGTTCTCG_S1_L001_R2_001-mapped.fastq.gz
   print(f)
   barcode = f.split("_")[0]
-#  fh = gzip.open(mydir + "/" + f, "rt")
-  fh = open(mydir + "/" + f)
+  fh = gzip.open(mydir + "/" + f, "rt")
+#  fh = open(mydir + "/" + f)
   for descr1 in fh:
     descr1 = descr1.rstrip()
     acc = descr1.split(" ")[0]
@@ -44,7 +44,7 @@ for descr1 in fh:
     barcode = accessions[acc]
     if barcode not in fhOuts.keys():
       fhOuts[barcode] = gzip.open(mydir + "/" + barcode + "_S1_L001_R1_001-mapped.fastq.gz", "wt")
-#      fhOuts[barcode] = gzip.open(mydir + "-R1/" + barcode + "_S1_L001_R1_001.fastq.gz", "wt")
+#      fhOuts[barcode] = gzip.open("split-R1/" + barcode + "_S1_L001_R1_001.fastq.gz", "wt")
     print(descr1, file=fhOuts[barcode])
     print(seq, file=fhOuts[barcode])
     print(descr2, file=fhOuts[barcode])

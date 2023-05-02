@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mydir="align-VJC"
+mydir="align-VJC-sampled-R2"
 myref="VJC_human.fasta"
 myfiles=`ls ${mydir}/*-mapped.sam`
 
