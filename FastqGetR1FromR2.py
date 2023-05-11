@@ -5,6 +5,7 @@ import gzip
 # Read fastq files of R2 and store accessions
 mydir = "align-VJC-sampled-R2"
 myfiles = [x for x in os.listdir(mydir) if x.endswith("_R2_001-mapped.fastq.gz")]
+myfiles = [x for x in myfiles if "TACTGGTA" in x]
 
 ## Process in batches of 30
 #mystart = int(sys.argv[1])

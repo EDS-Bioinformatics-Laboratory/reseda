@@ -1,6 +1,6 @@
 #!/bin/bash
 
-myfiles=`ls align-VJC-sampled-R2/*-mapped.fastq.gz`
+myfiles=`ls align-VJC-sampled-R2/T*-mapped.fastq.gz`
 
 # Sort fastq files
 for f in $myfiles; do

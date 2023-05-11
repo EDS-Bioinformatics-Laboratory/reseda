@@ -1,6 +1,6 @@
 #!/bin/bash
 
-myfiles=`ls sampled-R2/*.fastq.gz`
+myfiles=`ls sampled-R2/T*.fastq.gz`
 outdir="align-VJC-sampled-R2"
 ref="VJC_human.fasta"
 
