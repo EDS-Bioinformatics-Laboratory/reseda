@@ -2,7 +2,7 @@
 
 mydir="align-VJC-sampled-R2"
 myref="VJC_human.fasta"
-myfiles=`ls ${mydir}/*-mapped.sam`
+myfiles=`ls ${mydir}/T*-mapped.sam`
 
 for sam in ${myfiles}; do
   prefix=`basename ${sam} .sam`
