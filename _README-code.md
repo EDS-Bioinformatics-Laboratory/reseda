@@ -6,4 +6,4 @@ The master branch of RESEDA was used to do the "standard" analysis steps. See th
 
 ## Data specific code
 
-A separate branch was created for data specific code. See [../_GIT.md](../_GIT.md)
+A separate branch was created for data specific code. See [../../github.md](../../github.md)
