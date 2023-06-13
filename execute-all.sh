@@ -370,30 +370,37 @@ if [[ ${CELLTYPE} -eq "IGH_HUMAN" ]]; then
 fi
 
 # Make output directories
-mkdir -p ${beehub_mount}/${RESULTSDIR}/code
-mkdir -p ${beehub_mount}/${RESULTSDIR}/raw
-mkdir -p ${beehub_mount}/${RESULTSDIR}/reports
-mkdir -p ${beehub_mount}/${RESULTSDIR}/final
+mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/versions
+mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/raw
+mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports
+mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/final
+
+# Also make these directories. The data analysis results for the directory below are uploaded manually
+mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/clones
+mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/run-report
+mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/similarity
+mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/shared-clones
+
 wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Webdav server"
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt report-*.txt
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/reports/ final/*-productive.txt final/*.log
+runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt report-*.txt
+runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
+runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/reports/ final/*-productive.txt final/*.log
 
-#runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
-#runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
-#runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/correct-mid/ final/*L001* final/*mutations*
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/code/ versions-*
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/raw/ final/*CDR3*.csv final/*discarded*.txt
+#runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
+#runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
+#runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/raw/correct-mid/ final/*L001* final/*mutations*
+runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/versions/ versions-*
+runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/raw/ final/*CDR3*.csv final/*discarded*.txt
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/final/ final/*.rr.* final/*mutations* final/*-allinfo-filtered.csv final/*-allinfo-filtered-mut.csv final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
+runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/final/ final/*.rr.* final/*mutations* final/*-allinfo-filtered.csv final/*-allinfo-filtered-mut.csv final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
 
 # Transfer the split fastq files that were converted to tab
 if [ "${CREGION}" == "yes" ]; then
-    mkdir -p ${beehub_mount}/${RESULTSDIR}/fastq2tab
-    runcmd ./copy-to-webdav.sh ${beehub_web}/${RESULTSDIR}/fastq2tab/ orig/correct-mid/*.tab.csv
+    mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/fastq2tab
+    runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/fastq2tab/ orig/correct-mid/*.tab.csv
 fi
 
 wait
