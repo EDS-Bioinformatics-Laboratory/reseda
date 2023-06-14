@@ -19,7 +19,7 @@ if __name__ == '__main__':
         parser.print_help()
         exit()
 
-    myurl = "https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/" + args.run + "/data/raw/"
+    myurl = "https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/" + args.run + "/Data/NameOfDataset_1/Raw/"
 
     fhOut = open("basespace-copy-data.sh", "w")
     fhCheck = open("basespace-calc-checksum.sh", "w")
