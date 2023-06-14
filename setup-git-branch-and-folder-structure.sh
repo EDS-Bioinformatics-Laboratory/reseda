@@ -15,16 +15,7 @@ git clone git@github.com:EDS-Bioinformatics-Laboratory/Reproducibility.git
 mv Reproducibility/_LATEST-ENCORE-TEMPLATE/yyyymmdd_ProjectName/ ${RUN}
 mv ${RUN}/Processing/yyyymmdd_NameOfDataAnalysis/ ${RUN}/Processing/$OUTDIR/
 
-# Create directory if it is not there yet, the "raw", "reports" and "final" directories are made via execute-all.sh
-## LEGE DIRECTORIES WORDEN NIET NAAR WEBDAV GEKOPIEERD MET RCLONE
-## TO DO: deze aanmaken in het execute-all.sh script
-#mkdir -p $RUN/Processing/$OUTDIR/Settings # was: parameters
-#mkdir -p $RUN/Processing/$OUTDIR/Results/clones
-#mkdir -p $RUN/Processing/$OUTDIR/Results/run-report
-#mkdir -p $RUN/Processing/$OUTDIR/Results/similarity
-#mkdir -p $RUN/Processing/$OUTDIR/Results/shared-clones
-
-# # Create a branch for this specific dataset
+# Create a branch for this specific dataset
 mybranch=${RUN}
 #git branch ${mybranch}
 #git checkout ${mybranch}
