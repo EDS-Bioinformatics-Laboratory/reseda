@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Example URL: myurl="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/run246/data/"
+# Example URL: myurl="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/run246/Data/NameOfDataset_1/Raw/"
 
 myurl=$1; shift
 myfiles=$@

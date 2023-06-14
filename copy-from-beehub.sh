@@ -5,7 +5,7 @@ baseurl="https:\/\/researchdrive.surfsara.nl\/remote.php\/webdav\/amc-immunogeno
 
 starttime=`date +%s`
 
-samples=`cat SAMPLES`  # get all samples: /mnt/immunogenomics/RUNS/runXXX/data/*.fastq.gz
+samples=`cat SAMPLES`  # get all samples: /mnt/immunogenomics/RUNS/runXXX/Data/NameOfDataset_1/Raw/*.fastq.gz
 
 echo "Transferring files..."
 rm -f LOCAL_SAMPLES
