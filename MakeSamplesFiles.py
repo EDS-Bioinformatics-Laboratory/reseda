@@ -7,15 +7,15 @@ import argparse
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Checks sample sheet (json) and adds sample numbers. Creates a file -new.json')
     parser.add_argument('-r', '--runinfo', default='yyyymmdd-RUNnn-datasheet.json', type=str, help='Sample sheet in json format (default: %(default)s)')
-    parser.add_argument('-w', '--webdav', default='/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/data/', type=str, help='Webdav directory (default: %(default)s)')
+    parser.add_argument('-w', '--webdav', default='/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/Data/NameOfDataset_1/Raw/', type=str, help='Webdav directory (default: %(default)s)')
     args = parser.parse_args()
 
-    if args.webdav == '/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/data/' or args.runinfo == 'yyyymmdd-RUNnn-datasheet.json':
+    if args.webdav == '/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/Data/NameOfDataset_1/Raw/' or args.runinfo == 'yyyymmdd-RUNnn-datasheet.json':
         parser.print_help()
         exit()
 
     jsonFile = args.runinfo   # = "20170709_RUN015_Datasheet_finalV_Selection.json"
-    mountdir = args.webdav    # = "/mnt/immunogenomics/RUNS/run15-20170711-miseq/data/"
+    mountdir = args.webdav    # = "/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/Data/NameOfDataset_1/Raw/"
 
     # Read json with parsed sample sheet info (made with MetaData.py)
     try:
