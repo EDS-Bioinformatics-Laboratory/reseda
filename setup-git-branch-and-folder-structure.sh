@@ -17,8 +17,8 @@ mv ${RUN}/Processing/yyyymmdd_NameOfDataAnalysis/ ${RUN}/Processing/$OUTDIR/
 
 # Create a branch for this specific dataset
 mybranch=${RUN}
-#git branch ${mybranch}
-#git checkout ${mybranch}
+git branch ${mybranch}
+git checkout ${mybranch}
 
 # Create a github.md file
 echo "# Git" > $RUN/Processing/github.md
