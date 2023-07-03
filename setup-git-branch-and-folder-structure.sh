@@ -8,12 +8,12 @@
 source ENV.sh
 
 # Checkout latest FSS structure
-rm -rf Reproducibility
-git clone git@github.com:EDS-Bioinformatics-Laboratory/Reproducibility.git
+rm -rf ENCORE
+git clone git@github.com:EDS-Bioinformatics-Laboratory/ENCORE.git
 
 # Rename project directory name and analysis directory name
-mv Reproducibility/_LATEST-ENCORE-TEMPLATE/yyyymmdd_ProjectName/ ${RUN}
-mv ${RUN}/Processing/yyyymmdd_NameOfDataAnalysis/ ${RUN}/Processing/$OUTDIR/
+mv ENCORE/ ${RUN}
+mv ${RUN}/Processing/NameOfComputation/ ${RUN}/Processing/$OUTDIR/
 
 # Create a branch for this specific dataset
 mybranch=${RUN}
@@ -32,27 +32,27 @@ echo "git pull origin ${mybranch}" >> $RUN/Processing/github.md
 echo "\`\`\`" >> $RUN/Processing/github.md
 
 # Create a README.md file in the Processing/yyyymmdd_NameOfDataAnalysis directory
-echo "## Code and settings" > $RUN/Processing/$OUTDIR/README.md
-echo "" >> $RUN/Processing/$OUTDIR/README.md
-echo "* [Settings/](Settings/) - files that are used as input for RESEDA" >> $RUN/Processing/$OUTDIR/README.md
-echo "* [Code/](Code/) - information about code and versions" >> $RUN/Processing/$OUTDIR/README.md
-echo "" >> $RUN/Processing/$OUTDIR/README.md
-echo "## Standard output from RESEDA" >> $RUN/Processing/$OUTDIR/README.md
-echo "" >> $RUN/Processing/$OUTDIR/README.md
-echo "* [final/](final/) - contains all_info (per read) and clones files per sample" >> $RUN/Processing/$OUTDIR/README.md
-echo "* [raw/](raw/) - intermediate files" >> $RUN/Processing/$OUTDIR/README.md
-echo "* [reports/](reports/) - raw report files per sample" >> $RUN/Processing/$OUTDIR/README.md
-echo "" >> $RUN/Processing/$OUTDIR/README.md
-echo "## Post analysis with jupyter notebooks" >> $RUN/Processing/$OUTDIR/README.md
-echo "" >> $RUN/Processing/$OUTDIR/README.md
-echo "See git branch ${mybranch}" >> $RUN/Processing/$OUTDIR/README.md
-echo "" >> $RUN/Processing/$OUTDIR/README.md
-echo "* [run-report/](run-report/) - Performance of this run (e.g. identified MIDs, CDR3's, etc)" >> $RUN/Processing/$OUTDIR/README.md
-echo "* [similarity/](similarity/) - Bray-Curtis analysis" >> $RUN/Processing/$OUTDIR/README.md
-echo "* [shared-clones/](shared-clones/) - Shared clones analysis" >> $RUN/Processing/$OUTDIR/README.md
+echo "## Code and settings" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "* [Settings/](Settings/) - files that are used as input for RESEDA" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "* [Code/](Code/) - information about code and versions" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "## Standard output from RESEDA" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "* [final/](final/) - contains all_info (per read) and clones files per sample" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "* [raw/](raw/) - intermediate files" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "* [reports/](reports/) - raw report files per sample" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "## Post analysis with jupyter notebooks" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "See git branch ${mybranch}" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "* [run-report/](run-report/) - Performance of this run (e.g. identified MIDs, CDR3's, etc)" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "* [similarity/](similarity/) - Bray-Curtis analysis" >> $RUN/Processing/$OUTDIR/0_README.md
+echo "* [shared-clones/](shared-clones/) - Shared clones analysis" >> $RUN/Processing/$OUTDIR/0_README.md
 
 # Stub for lab journal LabJournal.md
-echo "# Data analysis ${RUN} with RESEDA" > $RUN/ProjectDocumentation/LabJournal.md
+echo "# Data analysis ${RUN} with RESEDA" >> $RUN/ProjectDocumentation/LabJournal.md
 echo "" >> $RUN/ProjectDocumentation/LabJournal.md
 echo "Git repository: reseda" >> $RUN/ProjectDocumentation/LabJournal.md
 echo "" >> $RUN/ProjectDocumentation/LabJournal.md
