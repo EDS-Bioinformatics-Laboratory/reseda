@@ -13,6 +13,7 @@ git clone git@github.com:EDS-Bioinformatics-Laboratory/ENCORE.git
 
 # Rename project directory name and analysis directory name
 mv ENCORE/ ${RUN}
+rm -rf ${RUN}/.git/
 mv ${RUN}/Processing/NameOfComputation/ ${RUN}/Processing/$OUTDIR/
 
 # Create a branch for this specific dataset
