@@ -61,8 +61,8 @@ def sortMIDS(umis, motifs, fastqFile, outdir):
                 primerTB = keepMatch.group(5)
             elif umis == "roche":
                 umi = ""
-                mid = keepMatch.group(1)
-                primerTB = keepMatch.group(2)
+                mid = keepMatch.group(2)
+                primerTB = keepMatch.group(3)
             elif umis == "race":
                 umi = keepMatch.group(2)
                 mid = keepMatch.group(3)
