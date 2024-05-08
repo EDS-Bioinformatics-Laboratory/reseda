@@ -65,12 +65,12 @@ if __name__ == "__main__":
     nr_hosts = len(ip_addresses)
     for token_index in range(len(mytokens)):
         host_index = token_index % nr_hosts
-        ip_tokens[ip_addresses[host_index]].append(mytokens[token_index])
+        ip_tokens[ip_addresses[host_index]].append(args.directory + mytokens[token_index])
 
     # Transfer the tokens to the cloud machines
     for ip in ip_tokens:
         command = "scp " + " ".join(ip_tokens[ip]) + " bschaikvan@" + ip + ":~/git/reseda/tokens/"
         print(command)
         command = command.split(" ")
-        # subprocess.run(command)
+        subprocess.run(command)
 
