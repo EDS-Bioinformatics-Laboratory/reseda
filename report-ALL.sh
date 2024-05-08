@@ -72,7 +72,7 @@ echo BARCODES        = "${BARCODES}"
 files="/mnt/immunogenomics/RUNS/${RUN}/Processing/${OUTDIR}/Results/reports/*-pear.log"
 wait
 echo $files > SAMPLES
-./copy-from-beehub.sh
+./copy-from-webdav.sh
 wait
 localfiles=`cat LOCAL_SAMPLES`
 grep '^Assembled reads \.' $localfiles > report-PEAR.txt
@@ -83,7 +83,7 @@ echo "Wrote report-PEAR.txt"
 files="/mnt/immunogenomics/RUNS/${RUN}/Processing/${OUTDIR}/Results/reports/*-midcount.txt"
 wait
 echo $files > SAMPLES
-./copy-from-beehub.sh
+./copy-from-webdav.sh
 wait
 localfiles=`cat LOCAL_SAMPLES`
 more $localfiles > report-MIDs.txt
@@ -94,7 +94,7 @@ echo "Wrote report-MIDs.txt"
 files="/mnt/immunogenomics/RUNS/${RUN}/Processing/${OUTDIR}/Results/reports/*HUMAN-report.txt /mnt/immunogenomics/RUNS/${RUN}/Processing/${OUTDIR}/Results/reports/*MOUSE-report.txt /mnt/immunogenomics/RUNS/${RUN}/Processing/${OUTDIR}/Results/reports/*RHESUS-report.txt"
 wait
 echo $files > SAMPLES
-./copy-from-beehub.sh
+./copy-from-webdav.sh
 wait
 localfiles=`cat LOCAL_SAMPLES`
 grep '^4' $localfiles > report-CDR3.txt
@@ -109,7 +109,7 @@ echo "Wrote report-ALT-J.txt"
 files="/mnt/immunogenomics/RUNS/${RUN}/Processing/${OUTDIR}/Results/reports/*-productive.txt"
 wait
 echo $files > SAMPLES
-./copy-from-beehub.sh
+./copy-from-webdav.sh
 wait
 localfiles=`cat LOCAL_SAMPLES`
 grep 'Unique reads with V and J in all_info' $localfiles > report-PRODUCTIVE.txt
@@ -120,7 +120,7 @@ echo "Wrote report-PRODUCTIVE.txt"
 files="/mnt/immunogenomics/RUNS/${RUN}/Processing/${OUTDIR}/Results/raw/*.sam"
 wait
 echo $files > SAMPLES
-./copy-from-beehub.sh
+./copy-from-webdav.sh
 wait
 localfiles=`cat LOCAL_SAMPLES`
 python report-alignments.py ${localfiles}
@@ -131,7 +131,7 @@ echo "Wrote report-ALIGNED-*"
 files="/mnt/immunogenomics/RUNS/${RUN}/Processing/${OUTDIR}/Results/final/*.rr.clones_subs.csv"
 wait
 echo $files > SAMPLES
-./copy-from-beehub.sh
+./copy-from-webdav.sh
 wait
 localfiles=`cat LOCAL_SAMPLES`
 python2 report-after-v-reassignment.py $localfiles
@@ -142,7 +142,7 @@ echo "Wrote report-AFTER-V-REASSIGNMENT.txt"
 files="/mnt/immunogenomics/RUNS/${RUN}/Processing/${OUTDIR}/Results/reports/*.quality-filter.log"
 wait
 echo $files > SAMPLES
-./copy-from-beehub.sh
+./copy-from-webdav.sh
 wait
 localfiles=`cat LOCAL_SAMPLES`
 perl -ne 'print if ! m/^datafile/;' $localfiles > report-QUALITY-FILTER.txt
@@ -153,7 +153,7 @@ echo "Wrote report-QUALITY-FILTER.txt"
 files="/mnt/immunogenomics/RUNS/${RUN}/Processing/${OUTDIR}/Results/reports/*-qual-reassign.log"
 wait
 echo $files > SAMPLES
-./copy-from-beehub.sh
+./copy-from-webdav.sh
 wait
 localfiles=`cat LOCAL_SAMPLES`
 grep '^Reads in allinfo before quality filter' $localfiles > report-ALLINFO.txt

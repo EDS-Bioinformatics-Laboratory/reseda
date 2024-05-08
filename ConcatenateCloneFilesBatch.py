@@ -66,7 +66,7 @@ if __name__ == '__main__':
         for chain_specie in chains_species:
             cmd = "ls" + " " + mydir + "*" + chain_specie + "*.rr.clones_subs.csv > SAMPLES ; wait"
             executeCmd(cmd)
-            cmd = "./copy-from-beehub.sh ; wait"
+            cmd = "./copy-from-webdav.sh ; wait"
             executeCmd(cmd)
             cmd = "myfiles=`cat LOCAL_SAMPLES`"
             executeCmd(cmd)
@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
             cmd = "ls" + " " + mydir + "*" + chain_specie + "*-all_info.csv.rr.csv > SAMPLES ;  wait"
             executeCmd(cmd)
-            cmd = "./copy-from-beehub.sh ; wait"
+            cmd = "./copy-from-webdav.sh ; wait"
             executeCmd(cmd)
             cmd = "myfiles=`cat LOCAL_SAMPLES`"
             executeCmd(cmd)
@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
             cmd = "ls" + " " + mydir + "*" + chain_specie + "-clones-mut-sites-reassigned.csv > SAMPLES ; wait"
             executeCmd(cmd)
-            cmd = "./copy-from-beehub.sh ; wait"
+            cmd = "./copy-from-webdav.sh ; wait"
             executeCmd(cmd)
             cmd = "myfiles=`cat LOCAL_SAMPLES`"
             executeCmd(cmd)
