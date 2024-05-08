@@ -35,6 +35,16 @@ def cleanUp():
         if "L001" in myfile:
             os.remove("split/" + myfile)
 
+    myfiles = os.listdir("./split/correct-mid")
+    for myfile in myfiles:
+        if "L001" in myfile:
+            shutil.rmtree("split/correct-mid/" + myfile, ignore_errors=True)
+
+    myfiles = os.listdir("./split/correct-mid")
+    for myfile in myfiles:
+        if "L001" in myfile:
+            os.remove("split/correct-mid/" + myfile)
+
     myfiles = os.listdir("./final")
     for myfile in myfiles:
         if "L001" in myfile or "mutations" in myfile:

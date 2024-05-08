@@ -28,8 +28,7 @@ The software packages below are included in this repository for convenience. Ple
 ## Other requirements
 
 The older scripts only work in Python 2 (see execute-all.sh)
-* Python 2.7 and 3.5 (or higher)
-    * future (print_function)
+* Python 3.5 (or higher)
     * sys
     * os
     * subprocess
@@ -48,7 +47,6 @@ The older scripts only work in Python 2 (see execute-all.sh)
     * shutil
     * argparse
     * csv
-    * couchdb (when using the PiCaS pilotjob server)
 * R
     * plyr
 * Bash
@@ -64,35 +62,45 @@ These scripts assume that the data is on the SurfSara ResearchDrive (webdav serv
 * MakeSamplesFiles.py
 * VerifyBasespaceCopy.py
 
-sudo mount -t davfs -o uid=bioinfo,gid=bioinfo,rw https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics /mnt/immunogenomics
+### Settings for curl
 
 Create a .netrc file in your home directory:
 * machine researchdrive.surfsara.nl
 * login YOUR_RESEARCHDRIVE_USER
 * password YOUR_PASSWORD
 
-## How to run - Using only the code in this repository
+### Mount ResearchDrive
+```
+# change "bioinfo" with your own user name on the machine you are working on
+sudo mount -t davfs -o uid=bioinfo,gid=bioinfo,rw https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics /mnt/immunogenomics
+```
 
-Copy/move the relevant (or all) database files from directories "reference", "reftables" and "mids" to the root directory of the repository (same directory as the execute-all.sh script)
+### Rclone installation and configuration
 
-The input files (in fastq format) can be specified by putting the paths in the file SAMPLES. Running ./execute-all.sh without arguments shows you which parameters can be set.
+You can download the deb package, or fetch it from the [ansible-playbooks](https://github.com/EDS-Bioinformatics-Laboratory/Ansible-Playbooks/tree/master/Reseda) git repository
 
-Example: ./execute-all.sh -r mytestrun -l local -m MIDS-miseq.txt -org human -cell IGH -celltype IGH_HUMAN -u no
+``sudo apt install ./rclone-v1.61.1-linux-amd64.deb``
 
-The results will be on the machine where you run this script, and if the webdav settings are configured well a new directory with all the files will appear on the ResearchDrive:
-https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/mytestrun
+Run: ``rclone config``
 
-## How to run - Using PiCaS for sending jobs
+```
+name> remote
+Storage> webdav
+url> https://researchdrive.surfsara.nl/remote.php/nonshib-webdav
+vendor> owncloud
+```
 
-Note: this is what Barbera does for each sequence run
+## How to run the code
 
-PiCaS: https://picas.surfsara.nl:6984/_utils/database.html?tbcellrep-bschaik-hpc
+You have received the raw data (fastq files) and sample information from the Immunogenomics group.
+These are stored on the ResearchDrive. Follow the steps below to store it on the right location.
 
-Ansible: [../ansible-playbooks/Reseda/README.md](../ansible-playbooks/Reseda/README.md)
+You might need to convert the sample information into the Miseq Datasheet format first.
+This can be done with the notebook ``MakeDatasheetFromPT.ipynb``.
 
 ### Setting up the FSS data structure and create a new git branch
 
-Note: this step can run on a Linux laptop or on a virtual machine. In the latter case you need to install the software on the VM first (with Ansible)
+Note: the following step can run on a Linux laptop or on a virtual machine. In the latter case you need to install the software on the VM first (with Ansible)
 
 Edit the ``ENV.sh`` file to specify the new directory on the ResearchDrive. Then run:
 
@@ -100,42 +108,46 @@ Edit the ``ENV.sh`` file to specify the new directory on the ResearchDrive. Then
 ./setup-git-branch-and-folder-structure.sh
 ```
 
+Transfer the fastq files to the appropriate directory on the ResearchDrive:
+```
+/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/Data/NameOfDataset_1/Raw/
+```
+
 ### Preparation ###
 
-Note: these steps can run on a Linux laptop or on a virtual machine. In the latter case you need to install the software on the VM first (with Ansible)
+* Start virtual machines for the analysis (in the [SurfSara cloud webinterface](https://portal.live.surfresearchcloud.nl/))
+* An Ansible script is used to install the machines
+    * See: [../ansible-playbooks/Reseda/README.md](../ansible-playbooks/Reseda/README.md)
 
-* Mount basespace. Instructions are in basespace.txt
-* Specify the run and the basespace sub-directories as argument to copy-basespace-data-to-beehub.py and run it. The file basespace-copy-data.sh and basespace-calc-checksum.sh will be created. Run these scripts to copy the data from basespace to the ResearchDrive and to calculate the SHA1 sums
-* Convert the MiSeq sample sheet with MetaData.py (creates a json file)
-    * An example of a datasheet can be found in the run directories on the ResearchDrive (data/meta/)
-* Mount the ResearchDrive webdav server
-* Add extra information to the json file with MakeSamplesFiles.py (this will also make the SAMPLE-* files)
-* Sort and split the SAMPLE-* files with: ./SortAndSplit.sh SAMPLE-* It does the following:
+### Create tokens (jobs) and upload them to the virtual machines
+
+Note: the following steps can run on a Linux laptop or on a virtual machine. In the latter case you need to install the software on the VM first (with Ansible)
+
+* Convert the MiSeq sample sheet with ``MetaData.py`` (creates a json file)
+    * An example of a datasheet can be found in the run directories on the ResearchDrive (Data/NameOfDataset_1/Meta/)
+* Mount the ResearchDrive webdav server, if you haven't done so already
+* Add extra information to the json file with ``MakeSamplesFiles.py`` (this will also make the SAMPLE-* files)
+* Sort and split the SAMPLE-* files with: ``./SortAndSplit.sh SAMPLE-*`` It does the following:
     * Sorts the SAMPLE-* files: sort SAMPLE-blah > SAMPLE-blah.sort
     * Makes manageable jobs by splitting the SAMPLE-\*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
-* Delete existing jobs from the PiCaS server:
-    * ``python deleteTokens.py Monitor/locked``
-    * ``python deleteTokens.py Monitor/todo``
-    * ``python deleteTokens.py Monitor/done``
-* Create PiCaS jobs with ToposCreateTokens.py (run with the -h option to see the arguments)
-* Upload PiCaS jobs with picas/createTokens.py JSON-FILES (json files that were created in the previous step)
-* Create a "view" in the database with picas/createViews.py
+* Create jobs with ``ToposCreateTokens.py`` (run with the ``-h`` option to see the arguments)
+* Upload the jobs to the VMs using the script ``TransferTokens.py`` (run with ``-h`` to see the options)
 
-### Starting the jobs ###
-
-* Start virtual machines for the analysis (in the SurfSara cloud webinterface)
-* Ansible scripts are used to install the machines and to start the data analysis
-    * See: [../ansible-playbooks/Reseda/README.md](../ansible-playbooks/Reseda/README.md)
+### Start the jobs on each virtual machine
+* Login to each virtual machine and do the following:
+  * Copy/move the relevant (or all) database files from directories "reference", "reftables" and "mids" to the root directory of the repository: ``git/reseda/``
+  * Start the script ``RUN-RESEDA.py tokens/``
 
 ### When all jobs are finished ###
 
-* In the jobs the data is automatically transferred to the ResearchDrive webdav server
-* Execute ConcatenateCloneFilesBatch.py to generate a bash script for concatenating clone files per project+organism+cell_type (run the generated script)
-* Run report-ALL.sh to generate reports about the sequence run (help is available for this script if you do not give arguments)
-* Check for contamination with contamination-figure.R or the pandas-sample-similarity.ipynb notebook
+* In the jobs the results are automatically transferred to the ResearchDrive webdav server
+* Check with the notebook ``CompareProcessedUnprocessed.ipynb`` if all result files are on the ResearchDrive
+* Execute ``ConcatenateCloneFilesBatch.py`` to generate a bash script for concatenating clone files per project+organism+cell_type (run the generated script)
+* Run ``report-ALL.sh`` to generate reports about the sequence run (help is available for this script if you do not provide arguments to the script)
+* Check for contamination with the notebooks ``SampleSimilarity.ipynb`` and ``SharedClonesDirection.ipynb``
     * Specify the files that were created by ConcatenateCloneFilesBatch.py
-    * Specify the pt.table.csv that you got from the immunogenomics group
-    * Check by hand if the column names in the pt.table are correct
+    * Specify the Datasheet table that you received from the immunogenomics group
+    * Check by hand if the column names in the Datasheet are correct
     * Run the script
     * Usually I make reports for all samples per cell_type
 
@@ -153,7 +165,7 @@ Barbera D. C. van Schaik, Paul L. Klarenbeek, Marieke E. Doorenspleet, Sabrina P
 
 ```
 RESEDA - REpertoire SEquencing Data Analysis
-Copyright (C) 2016-2020 Barbera DC van Schaik
+Copyright (C) 2016-2024 Barbera DC van Schaik
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

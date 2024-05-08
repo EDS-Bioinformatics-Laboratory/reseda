@@ -196,7 +196,7 @@ set_status ${ip} "RUNNING" "Started ${MIDS} ${CELLTYPE} analysis on ${starttime}
 
 if [ "${LOCATION}" == "webdav" ]; then
     # Remote files:
-    runcmd ./copy-from-beehub.sh
+    runcmd ./copy-from-webdav.sh
     wait
 else
     # Local files:
@@ -386,7 +386,7 @@ wait
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Webdav server"
 runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt report-*.txt
-runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/reports/ split/*.primers.count.txt split/*-report.txt split/*-midcount.txt split/*-extra.txt
+runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/reports/ split/*-report.txt split/*-midcount.txt split/*-extra.txt
 runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/reports/ final/*-productive.txt final/*.log
 
 #runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz

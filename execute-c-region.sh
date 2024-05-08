@@ -188,7 +188,7 @@ set_status ${ip} "RUNNING" "Started ${MIDS} ${CELLTYPE} analysis on ${starttime}
 
 if [ "${LOCATION}" == "webdav" ]; then
     # Remote files:
-    runcmd ./copy-from-beehub.sh
+    runcmd ./copy-from-webdav.sh
     wait
 else
     # Local files:
