@@ -1,0 +1,1 @@
+here is a new file that I do not want to add to the "reseda" repository
