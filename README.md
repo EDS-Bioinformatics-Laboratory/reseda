@@ -28,6 +28,7 @@ The software packages below are included in this repository for convenience. Ple
 ## Other requirements
 
 The older scripts only work in Python 2 (see execute-all.sh)
+
 * Python 3.5 (or higher)
     * sys
     * os
@@ -54,6 +55,7 @@ The older scripts only work in Python 2 (see execute-all.sh)
 ## Settings webdav server
 
 These scripts assume that the data is on the SurfSara ResearchDrive (webdav server) and that the drive is mounted in /mnt/immunogenomics
+
 * copy-from-beehub.sh
 * copy-basespace-data-to-beehub.py
 * execute-all.sh
@@ -65,6 +67,7 @@ These scripts assume that the data is on the SurfSara ResearchDrive (webdav serv
 ### Settings for curl
 
 Create a .netrc file in your home directory:
+
 * machine researchdrive.surfsara.nl
 * login YOUR_RESEARCHDRIVE_USER
 * password YOUR_PASSWORD
@@ -134,6 +137,7 @@ Note: the following steps can run on a Linux laptop or on a virtual machine. In 
 * Upload the jobs to the VMs using the script ``TransferTokens.py`` (run with ``-h`` to see the options)
 
 ### Start the jobs on each virtual machine
+
 * Login to each virtual machine and do the following:
   * Copy/move the relevant (or all) database files from directories "reference", "reftables" and "mids" to the root directory of the repository: ``git/reseda/``
   * Start the script ``RUN-RESEDA.py tokens/``
