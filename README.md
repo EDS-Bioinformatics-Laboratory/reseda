@@ -103,13 +103,9 @@ This can be done with the notebook ``MakeDatasheetFromPT.ipynb``.
 
 ### Setting up the FSS data structure and create a new git branch
 
-Note: the following step can run on a Linux laptop or on a virtual machine. In the latter case you need to install the software on the VM first (with Ansible)
+Use the script from the ENCORE_AUTOMATION repository:
 
-Edit the ``ENV.sh`` file to specify the new directory on the ResearchDrive. Then run:
-
-```
-./setup-git-branch-and-folder-structure.sh
-```
+https://github.com/EDS-Bioinformatics-Laboratory/ENCORE_AUTOMATION/blob/main/Processing/2-CREATE-TEMPLATE-REPSEQ/README.md
 
 Transfer the fastq files to the appropriate directory on the ResearchDrive:
 ```
