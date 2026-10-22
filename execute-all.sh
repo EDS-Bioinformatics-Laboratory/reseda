@@ -152,8 +152,8 @@ v="${CELL}V_${ORGANISM}"
 j="${CELL}J_${ORGANISM}"
 
 # Mount the Beehub webdav server and configure the location
-beehub_mount="/mnt/immunogenomics/RUNS/${RUN}"
-beehub_web="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/${RUN}"
+beehub_mount="remote:RUNS/${RUN}"
+#beehub_web="https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/${RUN}"
 
 # Then run ./execute-all.sh
 
@@ -196,7 +196,7 @@ set_status ${ip} "RUNNING" "Started ${MIDS} ${CELLTYPE} analysis on ${starttime}
 
 if [ "${LOCATION}" == "webdav" ]; then
     # Remote files:
-    runcmd ./copy-from-webdav.sh
+    runcmd ./rclone-copy-from-webdav.sh ${RUN}
     wait
 else
     # Local files:
@@ -370,37 +370,75 @@ if [[ ${CELLTYPE} -eq "IGH_HUMAN" ]]; then
 fi
 
 # Make output directories
-mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/versions
-mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/raw
-mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports
-mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/final
+rclone mkdir ${beehub_mount}/Processing/${RESULTSDIR}/Results/versions
+rclone mkdir ${beehub_mount}/Processing/${RESULTSDIR}/Results/raw
+rclone mkdir ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports
+rclone mkdir ${beehub_mount}/Processing/${RESULTSDIR}/Results/final
 
 # Also make these directories. The data analysis results for the directory below are uploaded manually
-mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/clones
-mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/run-report
-mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/similarity
-mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/shared-clones
+rclone mkdir ${beehub_mount}/Processing/${RESULTSDIR}/Results/clones
+rclone mkdir ${beehub_mount}/Processing/${RESULTSDIR}/Results/run-report
+rclone mkdir ${beehub_mount}/Processing/${RESULTSDIR}/Results/similarity
+rclone mkdir ${beehub_mount}/Processing/${RESULTSDIR}/Results/shared-clones
 
 wait
 
 # Transfer data to Beehub
 set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Webdav server"
-runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/reports/ *-pear.log *-pear.err *.quality-filter.log wc-*.txt report-*.txt
-runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/reports/ split/*-report.txt split/*-midcount.txt split/*-extra.txt
-runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/reports/ final/*-productive.txt final/*.log
+cpfiles=`ls *-pear.log *-pear.err *.quality-filter.log wc-*.txt report-*.txt`
+for file in ${cpfiles}; do
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/
+done
 
-#runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/raw/ *.sam *.snp.csv *.mut.txt *.short*.assembled.fastq.gz
-#runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/raw/ split/*.fastq.gz split/*_fastqc.zip split/*-alt-V-CDR3.csv split/*-alt-J-CDR3.csv
-#runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/raw/correct-mid/ final/*L001* final/*mutations*
-runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/versions/ versions-*
-runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/raw/ final/*CDR3*.csv final/*discarded*.txt
+cd split
+cpfiles=`ls *-report.txt *-midcount.txt *-extra.txt`
+for file in ${cpfiles}; do
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/
+done
+cd ..
 
-runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/final/ final/*.rr.* final/*mutations* final/*-allinfo-filtered.csv final/*-allinfo-filtered-mut.csv final/*-clones-mut-sites.csv final/*-clones-mut-sites-reassigned.csv
+cd final
+cpfiles=`ls *-productive.txt *.log`
+for file in ${cpfiles}; do
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/
+done
+cd ..   
+
+cpfiles=`ls versions-*`
+for file in ${cpfiles}; do
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/versions/"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/versions/
+done    
+
+cd final
+cpfiles=`ls *CDR3*.csv *discarded*.txt`
+for file in ${cpfiles}; do
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/raw/"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/raw/
+done
+cd ..
+
+cd final
+cpfiles=`ls *.rr.* *mutations* *-allinfo-filtered.csv *-allinfo-filtered-mut.csv *-clones-mut-sites.csv *-clones-mut-sites-reassigned.csv`
+for file in ${cpfiles}; do
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/final/"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/final/
+done
+cd ..
 
 # Transfer the split fastq files that were converted to tab
 if [ "${CREGION}" == "yes" ]; then
     mkdir -p ${beehub_mount}/Processing/${RESULTSDIR}/Results/fastq2tab
-    runcmd ./copy-to-webdav.sh ${beehub_web}/Processing/${RESULTSDIR}/Results/fastq2tab/ orig/correct-mid/*.tab.csv
+    cd orig/correct-mid
+    cpfiles=`ls *.tab.csv`
+    for file in ${cpfiles}; do
+        echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/fastq2tab/"
+        rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/fastq2tab/
+    done
+    cd ../..
 fi
 
 wait
