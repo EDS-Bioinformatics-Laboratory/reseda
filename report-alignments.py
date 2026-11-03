@@ -28,7 +28,7 @@ def countAlignments(sam):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print("Usage:", sys.argv[0], "*.sam")
+        sys.exit("Usage: " + sys.argv[0] + " *.sam")
 
     fhValign = open("report-ALIGNED-V.txt", "w")
     fhJalign = open("report-ALIGNED-J.txt", "w")
@@ -54,3 +54,4 @@ if __name__ == '__main__':
     fhJalign.close()
     fhValignAgain.close()
     fhJalignAgain.close()
+    fhOther.close()

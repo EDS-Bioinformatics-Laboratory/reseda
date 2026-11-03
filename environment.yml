@@ -1,0 +1,67 @@
+# RESEDA conda environment (Linux)
+#
+# Minimal, hand-maintained spec based on the imports in the Python scripts,
+# notebooks and R scripts in this directory. For the exact package build that
+# was used on the VMs, see environment-conda.yml.
+#
+# Create:   conda env create -f environment.yml
+# Update:   conda env update -f environment.yml --prune
+# Activate: conda activate reseda
+#
+# Not included (bundled in this repository and called by relative path):
+#   FastQC 0.11.3, PEAR 0.9.6, BWA 0.7.12, Picard 1.126, VarScan 2.3.7
+# Not included (external):
+#   PairwiseAlignment (lineage-tree repository), used by
+#   SCRIPTS-UNSORTED/CompareReferenceGenes.py and NOTEBOOKS/CheckHighSharedMutations.ipynb
+#   The older python2 scripts (execute-c-region.sh, report-ALL.sh, SCRIPTS-HLA)
+#   need a separate Python 2 environment.
+name: reseda
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  # Python and pipeline scripts
+  - python=3.9
+  - biopython>=1.78
+  - regex
+  - numpy>=1.21,<2
+  - pandas>=1.3,<2        # notebooks use DataFrame.append (removed in pandas 2)
+  - scipy
+  - matplotlib>=3.5
+  - editdistance
+  - openpyxl
+  - xlrd
+  - scikit-bio>=0.5.6,<0.6
+
+  # Notebooks
+  - jupyterlab
+  - ipykernel
+  - ipywidgets
+  - seaborn>=0.12
+  - scikit-learn
+  - python-igraph
+  - textdistance
+  - bokeh=2.4             # bokeh.sampledata.les_mis moved out in bokeh 3
+  - holoviews=1.15
+
+  # Tests (test/ uses nose, which does not run on Python >= 3.10)
+  - nose
+  - pytest
+
+  # R scripts
+  - r-base
+  - r-plyr
+  - r-reshape
+  - r-circlize
+  - r-httr
+  - r-xtable
+  - r-beeswarm
+
+  # Command line tools used by the shell scripts
+  - samtools
+  - openjdk=8             # for the bundled FastQC, Picard and VarScan jars
+  - perl
+  - sqlite
+  - curl
+  - rclone
+  - gzip

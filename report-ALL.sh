@@ -123,7 +123,7 @@ echo $files > SAMPLES
 ./copy-from-webdav.sh
 wait
 localfiles=`cat LOCAL_SAMPLES`
-python report-alignments.py ${localfiles}
+python3 report-alignments.py ${localfiles}
 wait
 rm -f $localfiles
 echo "Wrote report-ALIGNED-*"
@@ -134,7 +134,7 @@ echo $files > SAMPLES
 ./copy-from-webdav.sh
 wait
 localfiles=`cat LOCAL_SAMPLES`
-python2 report-after-v-reassignment.py $localfiles
+python3 report-after-v-reassignment.py $localfiles
 wait
 rm -f $localfiles
 echo "Wrote report-AFTER-V-REASSIGNMENT.txt"
@@ -168,7 +168,7 @@ wait
 rm -f $localfiles
 
 # First argument: were additional mids used, yes or no
-python2 report-combine-all.py ${BARCODES} ${INFO}
+python3 report-combine-all.py ${BARCODES} ${INFO}
 wait
 
 echo "FINISHED"

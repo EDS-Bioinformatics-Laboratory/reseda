@@ -295,9 +295,9 @@ def makeBarChart(plotfile, title, y_label, threshold, x, v, w, y, z, a, b):
 
     fig, ax = plt.subplots(figsize=(60, 10))
     fig.subplots_adjust(bottom=0.3)
-    cmap = plt.cm.get_cmap('YlGn')
+    cmap = plt.get_cmap('YlGn')
     ncolors = 5
-    colors = [cmap(i * (256 / ncolors)) for i in range(ncolors)]
+    colors = [cmap(i * (256 // ncolors)) for i in range(ncolors)]  # integer index into the colormap
 
     p = list()
     p.append(ax.bar(x_pos, v, align='center', color=colors[0], label='Total'))
@@ -324,7 +324,7 @@ def makeBarChart(plotfile, title, y_label, threshold, x, v, w, y, z, a, b):
 if __name__ == '__main__':
     if len(sys.argv) < 3:
         print("Usage:", sys.argv[0], "barcodes(yes/no) 2017etcetc-new.json (json file with run and sample information)")
-        exit()
+        sys.exit()
 
     barcodes = sys.argv[1]   # yes/no
     jsonFile = sys.argv[2]  # "20170224_Rheuma_MiSeqRUN013.json"

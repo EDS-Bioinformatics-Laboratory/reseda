@@ -387,45 +387,45 @@ wait
 set_status ${ip} "RUNNING" "Transferring ${CELLTYPE} data to Webdav server"
 cpfiles=`ls *-pear.log *-pear.err *.quality-filter.log wc-*.txt report-*.txt`
 for file in ${cpfiles}; do
-    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/"
-    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/${file}"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/${file}
 done
 
 cd split
 cpfiles=`ls *-report.txt *-midcount.txt *-extra.txt`
 for file in ${cpfiles}; do
-    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/"
-    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/${file}"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/${file}
 done
 cd ..
 
 cd final
 cpfiles=`ls *-productive.txt *.log`
 for file in ${cpfiles}; do
-    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/"
-    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/${file}"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/reports/${file}  
 done
 cd ..   
 
 cpfiles=`ls versions-*`
 for file in ${cpfiles}; do
-    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/versions/"
-    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/versions/
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/versions/${file}"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/versions/${file}
 done    
 
 cd final
 cpfiles=`ls *CDR3*.csv *discarded*.txt`
 for file in ${cpfiles}; do
-    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/raw/"
-    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/raw/
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/raw/${file}"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/raw/${file}
 done
 cd ..
 
 cd final
 cpfiles=`ls *.rr.* *mutations* *-allinfo-filtered.csv *-allinfo-filtered-mut.csv *-clones-mut-sites.csv *-clones-mut-sites-reassigned.csv`
 for file in ${cpfiles}; do
-    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/final/"
-    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/final/
+    echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/final/${file}"
+    rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/final/${file}
 done
 cd ..
 
@@ -435,8 +435,8 @@ if [ "${CREGION}" == "yes" ]; then
     cd orig/correct-mid
     cpfiles=`ls *.tab.csv`
     for file in ${cpfiles}; do
-        echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/fastq2tab/"
-        rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/fastq2tab/
+        echo "rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/fastq2tab/${file}"
+        rclone copyto ${file} ${beehub_mount}/Processing/${RESULTSDIR}/Results/fastq2tab/${file}
     done
     cd ../..
 fi
