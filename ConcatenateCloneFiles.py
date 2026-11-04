@@ -65,7 +65,7 @@ def getSamplesOfProject(project_name, runinfo):
     samples = list()
     for sample in js["Samples"]:
         if sample["Sample_Project"] == project_name:
-            samples.append(sample["Sample_Name"])
+            samples.append(sample["Sample_ID"]) # was sample["Sample_Name"]
 
     return(samples)
 

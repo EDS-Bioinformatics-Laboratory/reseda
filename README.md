@@ -27,9 +27,7 @@ The software packages below are included in this repository for convenience. Ple
 
 ## Other requirements
 
-The older scripts only work in Python 2 (see execute-all.sh)
-
-* Python 3.5 (or higher)
+* Python 3.5 - 3.9
     * sys
     * os
     * subprocess
@@ -52,17 +50,27 @@ The older scripts only work in Python 2 (see execute-all.sh)
     * plyr
 * Bash
 
+## Conda
+
+Dependencies can be installed with Conda.
+
+``conda env create -f environment.yml``
+
+or
+
+``conda create -n reseda -c conda-forge -c bioconda --file requirements-conda.txt``
+
 ## Settings webdav server
 
-These scripts assume that the data is on the SurfSara ResearchDrive (webdav server) and that the drive is mounted in /mnt/immunogenomics
+These scripts assumed that the data is on the SurfSara ResearchDrive (webdav server) and that the drive was mounted in /mnt/immunogenomics. Curl was used for data transfer. Per Oct 2026 we switched to using Rclone.
 
-* copy-from-beehub.sh
-* copy-basespace-data-to-beehub.py
-* execute-all.sh
+* copy-from-beehub.sh -> rclone-copy-from-webdav.sh
+* execute-all.sh -> uses rclone now
 * report-ALL.sh
 * ConcatenateCloneFilesBatch.py
-* MakeSamplesFiles.py
-* VerifyBasespaceCopy.py
+* MakeSamplesFiles.py (not changed yet)
+* copy-basespace-data-to-beehub.py (not changed yet)
+* VerifyBasespaceCopy.py (not changed yet)
 
 ### Settings for curl
 
