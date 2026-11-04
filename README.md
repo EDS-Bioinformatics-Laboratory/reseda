@@ -13,7 +13,19 @@ Prof. dr. Antoine HC van Kampen - a.h.vankampen@amsterdamumc.nl
 
 ![workflow](workflow.png)
 
-## Required software
+All dependencies can be installed using Ansible (See ../../0_SoftwareEnvironment/Ansible/README.md). Alternatively, you can use Conda, without using Ansible.
+
+### Conda
+
+Dependencies can be installed with Conda.
+
+``conda env create -f environment.yml``
+
+or
+
+``conda create -n reseda -c conda-forge -c bioconda --file requirements-conda.txt``
+
+### Required software
 
 * [Samtools](http://www.htslib.org/)
 
@@ -25,7 +37,7 @@ The software packages below are included in this repository for convenience. Ple
 * [VarScan](http://varscan.sourceforge.net/)
 * [Picard](https://broadinstitute.github.io/picard/)
 
-## Other requirements
+### Other requirements
 
 * Python 3.5 - 3.9
     * sys
@@ -50,56 +62,19 @@ The software packages below are included in this repository for convenience. Ple
     * plyr
 * Bash
 
-## Conda
-
-Dependencies can be installed with Conda.
-
-``conda env create -f environment.yml``
-
-or
-
-``conda create -n reseda -c conda-forge -c bioconda --file requirements-conda.txt``
-
 ## Settings webdav server
 
-These scripts assumed that the data is on the SurfSara ResearchDrive (webdav server) and that the drive was mounted in /mnt/immunogenomics. Curl was used for data transfer. Per Oct 2026 we switched to using Rclone.
+These scripts assumed that the data is on the SurfSara ResearchDrive (webdav server) and that the drive was mounted in /mnt/immunogenomics. Curl was used for data transfer.
+
+Per November 2026 we switched to Rclone.
 
 * copy-from-beehub.sh -> rclone-copy-from-webdav.sh
 * execute-all.sh -> uses rclone now
-* report-ALL.sh
-* ConcatenateCloneFilesBatch.py
+* ConcatenateCloneFilesBatch.py -> ConcatenateCloneFilesBatchRclone.py
+* report-ALL.sh (to do)
 * MakeSamplesFiles.py (not changed yet)
 * copy-basespace-data-to-beehub.py (not changed yet)
 * VerifyBasespaceCopy.py (not changed yet)
-
-### Settings for curl
-
-Create a .netrc file in your home directory:
-
-* machine researchdrive.surfsara.nl
-* login YOUR_RESEARCHDRIVE_USER
-* password YOUR_PASSWORD
-
-### Mount ResearchDrive
-```
-# change "bioinfo" with your own user name on the machine you are working on
-sudo mount -t davfs -o uid=bioinfo,gid=bioinfo,rw https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics /mnt/immunogenomics
-```
-
-### Rclone installation and configuration
-
-You can download the deb package, or fetch it from the [ansible-playbooks](https://github.com/EDS-Bioinformatics-Laboratory/Ansible-Playbooks/tree/master/Reseda) git repository
-
-``sudo apt install ./rclone-v1.61.1-linux-amd64.deb``
-
-Run: ``rclone config``
-
-```
-name> remote
-Storage> webdav
-url> https://researchdrive.surfsara.nl/remote.php/nonshib-webdav
-vendor> owncloud
-```
 
 ## How to run the code
 
@@ -117,14 +92,14 @@ https://github.com/EDS-Bioinformatics-Laboratory/ENCORE_AUTOMATION/blob/main/Pro
 
 Transfer the fastq files to the appropriate directory on the ResearchDrive:
 ```
-/mnt/immunogenomics/RUNS/runNN-yyyymmdd-miseq/Data/NameOfDataset_1/Raw/
+${PATH-TO-PROJECTS}/RUNS/runNN-yyyymmdd-miseq/Data/NameOfDataset_1/Raw/
 ```
 
 ### Preparation ###
 
 * Start virtual machines for the analysis (in the [SurfSara cloud webinterface](https://portal.live.surfresearchcloud.nl/))
 * An Ansible script is used to install the machines
-    * See: [../ansible-playbooks/Reseda/README.md](../ansible-playbooks/Reseda/README.md)
+    * See: [../../0_SoftwareEnvironment/Ansible/README.md](../../0_SoftwareEnvironment/Ansible/README.md)
 
 ### Create tokens (jobs) and upload them to the virtual machines
 
@@ -142,15 +117,18 @@ Note: the following steps can run on a Linux laptop or on a virtual machine. In 
 
 ### Start the jobs on each virtual machine
 
-* Login to each virtual machine and do the following:
-  * Copy/move the relevant (or all) database files from directories "reference", "reftables" and "mids" to the root directory of the repository: ``git/reseda/``
-  * Start the script ``RUN-RESEDA.py tokens/``
+Login to each virtual machine and execute
+
+```
+cd git/reseda/
+./setup-and-run.sh
+```
 
 ### When all jobs are finished ###
 
 * In the jobs the results are automatically transferred to the ResearchDrive webdav server
 * Check with the notebook ``CompareProcessedUnprocessed.ipynb`` if all result files are on the ResearchDrive
-* Execute ``ConcatenateCloneFilesBatch.py`` to generate a bash script for concatenating clone files per project+organism+cell_type (run the generated script)
+* Execute ``ConcatenateCloneFilesBatchRclone.py`` to generate a bash script for concatenating clone files per project+organism+cell_type (run the generated script)
 * Run ``report-ALL.sh`` to generate reports about the sequence run (help is available for this script if you do not provide arguments to the script)
 * Check for contamination with the notebooks ``SampleSimilarity.ipynb`` and ``SharedClonesDirection.ipynb``
     * Specify the files that were created by ConcatenateCloneFilesBatch.py
@@ -173,7 +151,7 @@ Barbera D. C. van Schaik, Paul L. Klarenbeek, Marieke E. Doorenspleet, Sabrina P
 
 ```
 RESEDA - REpertoire SEquencing Data Analysis
-Copyright (C) 2016-2024 Barbera DC van Schaik
+Copyright (C) 2016-2026 Barbera DC van Schaik
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
