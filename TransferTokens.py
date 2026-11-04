@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Transfers tokens (jobs) to cloud machines')
     parser.add_argument('-d', '--directory', default='tokens/', type=str, help='Directory with tokens, files start with SAMPLE- (default: %(default)s)')
-    parser.add_argument('-i', '--inventory', default='../ansible-playbooks/Reseda/hosts', type=str, help='File containing ip-addresses, also used for Ansible (default: %(default)s)')
+    parser.add_argument('-i', '--inventory', default='../../0_SoftwareEnvironment/Ansible/hosts', type=str, help='File containing ip-addresses, also used for Ansible (default: %(default)s)')
     args = parser.parse_args()
 
     # Read list of ip addresses for the Ansible hosts file
