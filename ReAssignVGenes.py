@@ -2,6 +2,8 @@ from __future__ import print_function
 import sys
 import sqlite3
 from CreateAndImportClonesSqlite import *
+import matplotlib
+matplotlib.use('Agg')  # no display needed, only write plot files (avoids Qt/xcb errors on VMs and WSL)
 import matplotlib.pyplot as plt
 import numpy as np
 

@@ -1,5 +1,4 @@
-# Source this file to have shortcuts to the webdav server (ResearchDrive)
-RUN=run55-20240514-miseq
-OUTDIR=20240514-reseda
-WEBDAV=https://researchdrive.surfsara.nl/remote.php/webdav/amc-immunogenomics/RUNS/${RUN}
+# Source this file to have handy shortcuts
+RUN=project-20261014-cea-cef
+OUTDIR=20261014-reseda
 

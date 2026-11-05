@@ -2,6 +2,8 @@ from __future__ import print_function
 import sys
 import json
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # no display needed, only write pdf files (avoids Qt/xcb errors on VMs and WSL)
 import matplotlib.pyplot as plt
 
 pear = "report-PEAR.txt"
@@ -341,7 +343,9 @@ if __name__ == '__main__':
     # Get all expected sample names
     expected_samples = list()
     for sample in js["Samples"]:
-        expected_samples.append(sample["Sample_Name"] + "_" + sample.get("Sample_Nr", ""))
+        # Sample_Nr is added by MakeSamplesFiles.py (-new.json), the datasheet json from MakeDatasheetFromPT.ipynb only has Nr
+        sample_nr = sample.get("Sample_Nr") or sample.get("Nr", "")
+        expected_samples.append(sample["Sample_ID"] + "_" + sample_nr)
     expected_samples.sort()
 
     # Parse log files

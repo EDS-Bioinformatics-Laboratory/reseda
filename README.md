@@ -64,17 +64,21 @@ The software packages below are included in this repository for convenience. Ple
 
 ## Settings webdav server
 
-These scripts assumed that the data is on the SurfSara ResearchDrive (webdav server) and that the drive was mounted in /mnt/immunogenomics. Curl was used for data transfer.
+These scripts assume that the data is on the Amsterdam UMC ResearchDrive (webdav server).
+In a previous version (using the Surf ResearchDrive) the scripts expected that the drive was mounted in /mnt/immunogenomics and curl was used for data transfer.
 
 Per November 2026 we switched to Rclone.
 
 * copy-from-beehub.sh -> rclone-copy-from-webdav.sh
 * execute-all.sh -> uses rclone now
 * ConcatenateCloneFilesBatch.py -> ConcatenateCloneFilesBatchRclone.py
-* report-ALL.sh (to do)
-* MakeSamplesFiles.py (not changed yet)
-* copy-basespace-data-to-beehub.py (not changed yet)
-* VerifyBasespaceCopy.py (not changed yet)
+* report-ALL.sh -> uses rclone now
+
+Not changed yet:
+
+* MakeSamplesFiles.py
+* copy-basespace-data-to-beehub.py
+* VerifyBasespaceCopy.py
 
 ## How to run the code
 
@@ -108,7 +112,7 @@ Note: the following steps can run on a Linux laptop or on a virtual machine. In 
 * Convert the MiSeq sample sheet with ``MetaData.py`` (creates a json file)
     * An example of a datasheet can be found in the run directories on the ResearchDrive (Data/NameOfDataset_1/Meta/)
 * Mount the ResearchDrive webdav server, if you haven't done so already
-* Add extra information to the json file with ``MakeSamplesFiles.py`` (this will also make the SAMPLE-* files)
+* Add extra information to the json file with ``MakeSamplesFiles.py`` (this will also make the SAMPLE-* files) - this step is not necessary when you include the Nr column yourself
 * Sort and split the SAMPLE-* files with: ``./SortAndSplit.sh SAMPLE-*`` It does the following:
     * Sorts the SAMPLE-* files: sort SAMPLE-blah > SAMPLE-blah.sort
     * Makes manageable jobs by splitting the SAMPLE-\*.sort files, e.g.: split -l 20 SAMPLES-run13-human-BCRh.sort SAMPLES-run13-human-BCRh-
@@ -136,12 +140,6 @@ cd git/reseda/
     * Check by hand if the column names in the Datasheet are correct
     * Run the script
     * Usually I make reports for all samples per cell_type
-
-## Preparation for Roche data (OBSOLETE) ##
-
-* Use MakePTtableFromAAreads.R - Create a pt.table (sample description) from AA.reads file
-* SplitAAreads.py - Splits the AA.reads table per sample (check the column names that you want to include in the file name!)
-* SeqToFastq.py - Convert the tab-delimited files to fastq format
 
 ## How to cite
 
